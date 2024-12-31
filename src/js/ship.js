@@ -4,11 +4,12 @@
 // isSunk() should be a function that calculates whether a ship is considered sunk based on its length and the number of hits it has received.
 
 class Ship {
-  constructor(name, length, numHits = 0, sunkStatus = false) {
+  constructor(name, length, code, numHits = 0, sunkStatus = false) {
     (this.name = name),
-      (this.length = length),
-      (this.numHits = numHits),
-      (this.sunkStatus = sunkStatus);
+    (this.length = length),
+    (this.code = code),
+    (this.numHits = numHits),
+    (this.sunkStatus = sunkStatus);
   }
 
   hit() {
@@ -21,16 +22,11 @@ class Ship {
   }
 }
 
-// const ship5C = new Ship("Carrier", 5)
-// const ship4B = new Ship("Battleship", 4);
-// const ship3D = new Ship("Destroyer", 3);
-// const ship3S = new Ship("Submarine", 3);
-// const ship2P = new Ship("Patrol Boat", 2);
+// const c5 = new Ship("carrier", 5, "c5")
+// const b4 = new Ship("battleship", 4, "b4");
+// const d3 = new Ship("destroyer", 3, "d3");
+// const s3 = new Ship("submarine", 3, "s3");
+// const p2 = new Ship("patrol boat", 2, "p2");
 
-// module.exports = { ship5C };
 module.exports = { Ship };
 
-
-// Create the Gameboard class
-
-// Create the Player class
