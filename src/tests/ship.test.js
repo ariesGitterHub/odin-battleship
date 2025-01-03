@@ -1,4 +1,5 @@
-const { Ship } = require("../js/ship.js");
+// const { Ship } = require("../js/ship.js");
+import { Ship } from "../js/ship.js";
 
 //Reminder that it and test do the same thing.
 
