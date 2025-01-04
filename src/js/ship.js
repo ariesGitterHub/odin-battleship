@@ -6,10 +6,10 @@
 class Ship {
   constructor(name, length, boardCode, numHits = 0, sunkStatus = false) {
     (this.name = name),
-    (this.length = length),
-    (this.boardCode = boardCode),
-    (this.numHits = numHits),
-    (this.sunkStatus = sunkStatus);
+      (this.length = length),
+      (this.boardCode = boardCode),
+      (this.numHits = numHits),
+      (this.sunkStatus = sunkStatus);
   }
 
   hit() {
@@ -18,9 +18,27 @@ class Ship {
     }
   }
 
+  // isSunk() {
+  //   this.sunkStatus = true
+  //   return this.numHits >= this.length; // WHY: ">="? If for some reason, a ship receives more hits than its length (which can happen if the game logic allows hitting a ship multiple times beyond its length), it would still be considered sunk, because it has received enough hits to exceed its capacity to stay afloat.
+  // }
+
+  //   isSunk() { // this function seems clumsy, wouldn't it be better to handle this immediately under hits? Maybe just do what's in the brief and call it a day...
+  //   if (this.numHits >= this.length) {
+  //     return this.sunkStatus = true;
+  //     // WHY: ">="? Answer: If for some reason, a ship receives more hits than its length (which can happen if the game logic allows hitting a ship multiple times beyond its length), it would still be considered sunk, because it has received enough hits to exceed its capacity to stay afloat.
+  //     }
+  //   }
+  // }
+
   isSunk() {
-    this.sunkStatus = true
-    return this.numHits >= this.length; // WHY >=??? If for some reason, a ship receives more hits than its length (which can happen if the game logic allows hitting a ship multiple times beyond its length), it would still be considered sunk, because it has received enough hits to exceed its capacity to stay afloat.
+    if (this.numHits >= this.length) {
+      if (!this.sunkStatus) {
+        this.sunkStatus = true;
+      }
+      return true;
+    }
+    return false;
   }
 }
 
