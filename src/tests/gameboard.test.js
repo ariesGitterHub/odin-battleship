@@ -112,7 +112,7 @@ describe("invalid ship placements", () => {
   });
 
   it("should render ship placement as 'invalid' when trying to place a ship that does not exist, e.g., a sixth ship at index [5] taht is beyond the five available ships", () => {
-    const result = testGame.placeShip(testGame.ships[5], "h", 0, 0);
+    const result = testGame.placeShip(testGame.ships[9], "h", 0, 0);
     expect(result).toBe("invalid");
   });
 });

@@ -1,24 +1,31 @@
-const path = require("path");
+import path from "path";
 
-module.exports = {
-  entry: "./src/index.js", // Entry point for the application
+export default {
+  entry: "./src/index.js", // Adjust to the entry file of your project
   output: {
-    filename: "bundle.js", // Output file
-    path: path.resolve(__dirname, "dist"), // Output directory
+    path: path.resolve("dist"), // The output directory
+    filename: "bundle.js", // The output file name
   },
   module: {
     rules: [
       {
-        test: /\.js$/, // Match all JavaScript files
-        exclude: /node_modules/, // Exclude node_modules from being transpiled
-        use: "babel-loader", // Use Babel to transpile the files
+        test: /\.js$/, // Babel will transpile JS files
+        exclude: /node_modules/, // Don't transpile node_modules
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"], // You can add other presets here if needed
+          },
+        },
       },
     ],
   },
-  devtool: "source-map", // Enable source maps for debugging
+  resolve: {
+    extensions: [".js", ".json"], // This allows you to import files without extensions
+  },
   devServer: {
-    static: path.join(__dirname, "dist"),
-    compress: true,
-    port: 9000,
+    static: "./dist", // Serve from the dist folder
+    port: 9000, // You can adjust the port
+    hot: true, // Enable hot module replacement for development
   },
 };

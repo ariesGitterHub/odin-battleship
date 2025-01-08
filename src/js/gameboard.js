@@ -10,33 +10,40 @@
 import { Ship } from "./ship.js";
 
 class Gameboard {
-  constructor(board, ships) {
+  constructor(
+    board,
+    ships = []
+    //, ships = [this.c5, this.b4, this.d3, this.s3, this.p2]
+  ) {
     this.board = board;
-  
-    this.c5 = new Ship("aircraft carrier", 5, "c5");
-    this.b4 = new Ship("battleship", 4, "b4");
-    this.d3 = new Ship("destroyer", 3, "d3");
-    this.s3 = new Ship("submarine", 3, "s3");
-    this.p2 = new Ship("patrol boat", 2, "p2");
+    // this.c5 = new Ship("aircraft carrier", 5, "c5");
+    // this.b4 = new Ship("battleship", 4, "b4");
+    // this.d3 = new Ship("destroyer", 3, "d3");
+    // this.s3 = new Ship("submarine", 3, "s3");
+    // this.p2 = new Ship("patrol boat", 2, "p2");
 
-    this.ships = ships || [this.c5, this.b4, this.d3, this.s3, this.p2];
-  }
-
-  checkGridPlacement(row, col) {
-    if (
-      row < 0 ||
-      row >= this.board.length ||
-      col < 0 ||
-      col >= this.board[0].length
-    ) {
-      return "invalid";
-    }
+    this.ships =
+      ships.length > 0
+        ? ships
+        : [
+            new Ship("aircraft carrier", 5, "a5"),
+            new Ship("battleship", 4, "b4"),
+            new Ship("destroyer", 3, "d3"),
+            new Ship("submarine", 3, "s3"),
+            new Ship("corvette", 2, "c2"),
+            new Ship("patrol boat", 1, "p1"),
+          ];
+    // this.ships = ships
+    // || [this.c5, this.b4, this.d3, this.s3, this.p2];
   }
 
   checkShipPlacementCell(ship, axis, row, col) {
+    // Checks if the ship is in the ships array
     if (ship) {
       for (let i = 0; i < ship.length; i++) {
+        // takes the initial, desired placement cell, and loops through the length of a particular ship and checks the horizontal axis...
         if (axis === "h") {
+          // ...to see if all cells are on the grid
           if (
             row < 0 ||
             row >= this.board.length ||
@@ -45,11 +52,14 @@ class Gameboard {
           ) {
             return "invalid";
           }
+          // ...and if all those same cells are "--", i.e., open for placement and not already occupied by another ship
           if (this.board[row][col + i] !== "--") {
             return "invalid";
           }
         }
+        // takes the initial, desired placement cell, and loops through the length of a particular ship and checks the vertical axis...
         if (axis === "v") {
+          // ...to see if all cells are on the grid
           if (
             row + i < 0 ||
             row + i >= this.board.length ||
@@ -58,26 +68,19 @@ class Gameboard {
           ) {
             return "invalid";
           }
+          // ...and if all those same cells are "--", i.e., open for placement and not already occupied by another ship
           if (this.board[row + i][col] !== "--") {
             return "invalid";
           }
         }
       }
-    } else {
+    }
+    // Returns invalid if the ship at that given index is not in the ships array
+    else {
       return "invalid";
     }
-      
-    }
-
-  isHit(row, col) {
-    let hitTarget = this.board[row][col];
-    hitTarget === this.c5.boardCode ? this.c5.hit() : null;
-    hitTarget === this.b4.boardCode ? this.b4.hit() : null;
-    hitTarget === this.d3.boardCode ? this.d3.hit() : null;
-    hitTarget === this.s3.boardCode ? this.s3.hit() : null;
-    hitTarget === this.p2.boardCode ? this.p2.hit() : null;
   }
-  
+
   // Method to place a ship
   placeShip(ship, axis, row, col) {
     // name the ship you want to place by ships array index
@@ -86,8 +89,8 @@ class Gameboard {
     // edge case...check each row/col using a loop to ensure all are within the bounds of the board
     // make sure two ships don't try to occupy or overwrite each other.
     // make sure you only place ships in the ship array, e.g., x5 ships have an index range of [0] to [4], ship [5] is not there. Use a look ahead?
-    
-    let placementCheck = this.checkShipPlacementCell(ship, axis, row, col)
+
+    let placementCheck = this.checkShipPlacementCell(ship, axis, row, col);
 
     if (placementCheck === "invalid") {
       return "invalid";
@@ -107,6 +110,52 @@ class Gameboard {
     }
   }
 
+  // Checks if receiveAttack() coordinates are on the grid
+  checkGridPlacement(row, col) {
+    if (
+      row < 0 ||
+      row >= this.board.length ||
+      col < 0 ||
+      col >= this.board[0].length
+    ) {
+      return "invalid";
+    }
+  }
+
+  // Checks the value this.board[row][col] to see if its value is a ship's boardCode (e.g., "c5", an aircraft carrier, or "d4", a destroyer); it then tells that given ship that it has been hit
+
+  // OLD CODE
+  // checkShipBoardCodeNotifyShip(row, col) {
+  //   let hitTarget = this.board[row][col];
+  //   hitTarget === this.c5.boardCode ? this.c5.hit() : null;
+  //   hitTarget === this.b4.boardCode ? this.b4.hit() : null;
+  //   hitTarget === this.d3.boardCode ? this.d3.hit() : null;
+  //   hitTarget === this.s3.boardCode ? this.s3.hit() : null;
+  //   hitTarget === this.p2.boardCode ? this.p2.hit() : null;
+  // }
+
+  // BETTER CODE -- KEEP THIS THOUGH...as opposed to BELOW, performance boost isn't a big deal and right now with learning TDD, getting 100% testing checks on this class is more satisfying
+  checkShipBoardCodeNotifyShip(row, col) {
+    let hitTarget = this.board[row][col];
+    // let ships = [this.c5, this.b4, this.d3, this.s3, this.p2];
+
+    this.ships.forEach((ship) => {
+      if (hitTarget === ship.boardCode) {
+        ship.hit();
+      }
+    });
+  }
+
+  // EVEN BETTER CODE, USES FIND() FOR BETTER PERFORMANCE
+  // checkShipBoardCodeNotifyShip(row, col) {
+  //   let hitTarget = this.board[row][col];
+
+  //   const ship = this.ships.find((ship) => hitTarget === ship.boardCode);
+  //   if (ship) {
+  //     ship.hit();
+  //   }
+  // }
+
   // Method to receive an attack
   receiveAttack(row, col) {
     let placementCheck = this.checkGridPlacement(row, col);
@@ -119,26 +168,46 @@ class Gameboard {
     // The target at [row][col]
     let target = this.board[row][col];
 
-    // If the target was already selected, it should have a "!"" or "m".
+    // If the target was already selected, it should have a "!!"" or "mm".
     if (target === "!!" || target === "mm") {
       return "retry"; // The cell has already been attacked or is not a valid target
     }
 
-    // Hit = "!": Change the target to "!" and return the result
-    if (target !== "--" && target !== "!!" && target !== "mm") {
-      // is this an example of DEPENDENCY INJECTION??????
+    // OLD CODE
+    // // Hit = "!!": Change the target to "!!" and return the result
+    // if (target !== "--" && target !== "!!" && target !== "mm") {
+    //   // is this an example of DEPENDENCY INJECTION??????
 
-      this.isHit(row, col);
-      this.board[row][col] = "!!"; // Marks the board cell as hit
+    //   // Checks which ship was hit and notifies it to update its numHits via hit()
+    //   this.checkShipBoardCodeNotifyShip(row, col);
+    //   this.board[row][col] = "!!";
+    //   return "hit";
+    // }
+
+    // // Miss = "mm": Change the target to "mm" and return the result
+    // if (target === "--") {
+    //   this.board[row][col] = "mm";
+    //   return "miss";
+    // }
+
+    // BETTER CODE
+    if (this.board[row][col] !== "--") {
+      // Hit = "!!": Change the target to "!!" and return the result
+      // Notify the correct ship that it was hit
+      this.checkShipBoardCodeNotifyShip(row, col);
+      this.board[row][col] = "!!";
       return "hit";
     }
-
-    // Miss = "m": Change the target to "m" and return the result
-    if (target === "--") {
-      this.board[row][col] = "mm"; // Marks the board cell as missed
+    // Miss = "mm": Change the target to "mm" and return the result
+    else {
+      this.board[row][col] = "mm";
       return "miss";
     }
   }
+  // USEFUL?
+  // checkIfAllShipsSunk() {
+  //   return this.ships.every((ship) => ship.sunkStatus);
+  // }
 }
 
 // module.exports = { Gameboard };

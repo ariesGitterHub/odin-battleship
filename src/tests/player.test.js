@@ -1,7 +1,18 @@
-it.skip("should increment numHits when hit is called", () => {
-  shipC5.hit();
-  expect(shipC5.numHits).toBe(1);
+import { Gameboard } from "../js/gameboard.js";
+import { Player } from "../js/player.js";
 
-  shipC5.hit();
-  expect(shipC5.numHits).toBe(2);
+describe("Player", () => {
+  let playerOne;
+  let playerTwo;
+
+  beforeEach(() => {
+    // const seaBoard = Array(10) //????????????
+    //   .fill()
+    //   .map(() => Array(10).fill("--"));
+    playerOne = new Player(1, "human");
+    playerTwo = new Player(2, "machine");
+  });
+
+  it("should console.log the results for now", () =>
+  console.log(playerOne));
 });
