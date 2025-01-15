@@ -3,7 +3,7 @@
 
 // Import your classes/factories into another file, and drive the game using event listeners to interact with your objects. Create a module that helps you manage actions that should happen in the DOM. SO HEAD OVER TO MAIN.JS and get busy.
 
-import { Gameboard } from "./gameboard.js";
+// import { Gameboard } from "./gameboard.js";
 
 class Player {
   //   constructor(playerNum, playerType, playerBoard = new Gameboard()) {

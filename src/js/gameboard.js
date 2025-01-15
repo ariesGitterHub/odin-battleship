@@ -26,12 +26,12 @@ class Gameboard {
       ships.length > 0
         ? ships
         : [
-            new Ship("aircraft carrier", 5, "a5"),
-            new Ship("battleship", 4, "b4"),
-            new Ship("destroyer", 3, "d3"),
-            new Ship("submarine", 3, "s3"),
-            new Ship("corvette", 2, "c2"),
-            new Ship("patrol boat", 1, "p1"),
+            new Ship("aircraft carrier", 5, "a"),
+            new Ship("battleship", 4, "b"),
+            new Ship("destroyer", 3, "d"),
+            new Ship("submarine", 3, "s"),
+            new Ship("corvette", 2, "c"),
+            // new Ship("patrol boat", 1, "p"), // Remove patrol boat, too small, slows down game-play
           ];
     // this.ships = ships
     // || [this.c5, this.b4, this.d3, this.s3, this.p2];
@@ -193,10 +193,40 @@ class Gameboard {
     // BETTER CODE
     if (this.board[row][col] !== "--") {
       // Hit = "!!": Change the target to "!!" and return the result
-      // Notify the correct ship that it was hit
+      // Notify the correct ship that it was 
+      
+      // TODO: rewrites as switch?
+      if (this.board[row][col] === "a"){
+        this.checkShipBoardCodeNotifyShip(row, col);
+        this.board[row][col] = "A!";
+        return "hit";
+      }
+      if (this.board[row][col] === "b") {
+        this.checkShipBoardCodeNotifyShip(row, col);
+        this.board[row][col] = "B!";
+        return "hit";
+      }
+      if (this.board[row][col] === "d") {
+        this.checkShipBoardCodeNotifyShip(row, col);
+        this.board[row][col] = "D!";
+        return "hit";
+      }
+      if (this.board[row][col] === "s") {
       this.checkShipBoardCodeNotifyShip(row, col);
-      this.board[row][col] = "!!";
+      this.board[row][col] = "S!";
       return "hit";
+      }
+      if (this.board[row][col] === "c") {
+      this.checkShipBoardCodeNotifyShip(row, col);
+      this.board[row][col] = "C!";
+      return "hit";
+      }
+      if (this.board[row][col] === "p") {
+      this.checkShipBoardCodeNotifyShip(row, col);
+      this.board[row][col] = "P!";
+      return "hit";
+      }
+
     }
     // Miss = "mm": Change the target to "mm" and return the result
     else {
