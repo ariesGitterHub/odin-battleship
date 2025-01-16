@@ -15,7 +15,12 @@ import {
   // randomRotate,
 } from "./js/uiBoardContent.js";
 import { addEmojiEffect1, addEmojiEffect2 } from "./js/uiHitMissGrid.js";
-import { addShipColor1, addShipColor2 } from "./js/uiShipGrid.js";
+import {
+  addShipColor1,
+  addShipColor2,
+  placeShipSvgs1,
+  placeShipSvgs2,
+} from "./js/uiShipGrid.js";
 
 // import { playerX } from "./js/uiPlayerContent.js";
 // import a5h from "../assets/a5h.png";
@@ -109,6 +114,32 @@ testGame1.receiveAttack(4, 0);
 testGame2.receiveAttack(2, 4);
 testGame1.receiveAttack(5, 0);
 
+// Turn 10, hit each side's destroyer in the middle spot ("d3")
+testGame2.receiveAttack(5, 2);
+testGame1.receiveAttack(3, 3);
+
+// Turn 11, hit each side's aircraft carrier in the middle spot ("a5")
+testGame2.receiveAttack(0, 4);
+testGame1.receiveAttack(3, 7);
+
+// Turn 12, misses at same location ("")
+testGame2.receiveAttack(5, 4);
+testGame1.receiveAttack(5, 4);
+
+// make player 1 lose prematurely...
+// testGame1.receiveAttack(2, 7);
+// testGame1.receiveAttack(3, 7);
+// testGame1.receiveAttack(4, 7);
+// testGame1.receiveAttack(5, 7);
+
+// testGame1.receiveAttack(3, 2);
+// testGame1.receiveAttack(3, 4);
+
+// testGame1.receiveAttack(5, 5);
+// testGame1.receiveAttack(6, 5);
+// testGame1.receiveAttack(7, 5);
+
+
 console.table(playerOne.playerBoard.board);
 console.log(`P1: a5 sunk status = ${testGame1.ships[0].isSunk()}`);
 console.log(`P1: b4 sunk status = ${testGame1.ships[1].isSunk()}`);
@@ -134,10 +165,23 @@ createContainers();
 createGameContent(playerOne.playerBoard.board, playerTwo.playerBoard.board);
 // createGameContent(playerTwo.playerBoard.board);
 
-addShipColor1(playerOne.playerBoard.board);
-addShipColor2(playerTwo.playerBoard.board);
+// addShipColor1(playerOne.playerBoard.board);
+// addShipColor2(playerTwo.playerBoard.board);
 addEmojiEffect1(playerOne.playerBoard.board);
 addEmojiEffect2(playerTwo.playerBoard.board);
+placeShipSvgs1("a", "v", 1, 7);
+placeShipSvgs1("b", "v", 2, 0);
+placeShipSvgs1("d", "h", 3, 2);
+placeShipSvgs1("s", "v", 5, 5);
+placeShipSvgs1("c", "h", 8, 7);
+
+placeShipSvgs2("a", "h", 0, 2);
+placeShipSvgs2("b", "h", 2, 1);
+placeShipSvgs2("d", "v", 4, 2);
+placeShipSvgs2("s", "h", 7, 2);
+placeShipSvgs2("c", "v", 6, 8);
+// placeShips1(playerOne.playerBoard.board);
+
 // randomRotate();
 // const test = document.querySelector("#test");
 
@@ -151,49 +195,120 @@ addEmojiEffect2(playerTwo.playerBoard.board);
 // let cell = document.getElementById('2,7');
 // cell.style.backgroundColor = "purple";
 
-const testCellP1A5 = document.getElementById("P1: (1,7)");
+// const testCellP1A5 = document.getElementById("SG1: (1,7)");
 
-const a51 = createImg({
-  src: ship5A,
-  alt: "aircraft carrier image",
-  class: "ship",
-});
-a51.style.transform = "translateY(4rem) rotate(90deg)";
+// const a51 = createImg({
+//   src: ship5A,
+//   alt: "aircraft carrier image",
+//   class: "ship",
+// });
+// a51.style.transform = "translateY(4rem) rotate(90deg)";
 
-testCellP1A5.appendChild(a51);
+// testCellP1A5.appendChild(a51);
 
-const testCellP2A5 = document.getElementById("P2: (0,2)");
+// const testCellP2A5 = document.getElementById("SG2: (0,2)");
 
-const a52 = createImg({
-  src: ship5A,
-  alt: "aircraft carrier image",
-  class: "ship",
-});
-//a52.style.transform = "rotate(90deg)";
-a52.style.transform = "translateX(4rem)";
-testCellP2A5.appendChild(a52);
+// const a52 = createImg({
+//   src: ship5A,
+//   alt: "aircraft carrier image",
+//   class: "ship",
+// });
+// //a52.style.transform = "rotate(90deg)";
+// a52.style.transform = "translateX(4rem)";
+// testCellP2A5.appendChild(a52);
 
-const testCellP1B4 = document.getElementById("P1: (2,0)");
+// const testCellP1B4 = document.getElementById("SG1: (2,0)");
 
-const b41 = createImg({
-  src: ship4B,
-  alt: "destroyer image",
-  class: "ship",
-});
-// b41.style.transform = "rotate(90deg)";
-b41.style.transform = "translateY(3rem) rotate(90deg)";
-// b41.style.transform = "rotate(90deg)";
+// const b41 = createImg({
+//   src: ship4B,
+//   alt: "destroyer image",
+//   class: "ship",
+// });
+// // b41.style.transform = "rotate(90deg)";
+// b41.style.transform = "translateY(3rem) rotate(90deg)";
+// // b41.style.transform = "rotate(90deg)";
 
-testCellP1B4.appendChild(b41);
+// testCellP1B4.appendChild(b41);
 
-const testCellP2B4 = document.getElementById("P2: (2,1)");
+// const testCellP2B4 = document.getElementById("SG2: (2,1)");
 
-const b42 = createImg({
-  src: ship4B,
-  alt: "destroyer image",
-  class: "ship",
-});
-//a52.style.transform = "rotate(90deg)";
-b42.style.transform = "translateX(3rem)";
+// const b42 = createImg({
+//   src: ship4B,
+//   alt: "destroyer image",
+//   class: "ship",
+// });
+// //a52.style.transform = "rotate(90deg)";
+// b42.style.transform = "translateX(3rem)";
 
-testCellP2B4.appendChild(b42);
+// testCellP2B4.appendChild(b42);
+
+// function renderSunkColor1(board) {
+//   for (let i = 0; i < 5; i++) {
+//     if (testGame1.ships[i].isSunk()) {
+//       const p1ShipGridCellIndex = document.getElementById(`SG1: ([j][k])`);
+//       for (let j = 0; j < board.length; j++) {
+//         for (let k = 0; k < board[k].length; k++) {
+//           if(p1ShipGridCellIndex === testGame1.ships[i].boardSunkCode) {
+//             p1ShipGridCellIndex.style.backgroundColor = "var(--sunk)";
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// renderSunkColor1(playerOne.playerBoard.board);
+
+// function renderBoardSunkCode1(board) {
+//   for (let i = 0; i < 5; i++) {
+//     if (testGame1.ships[i].isSunk()) {
+//       return console.log(testGame1.ships[i].boardSunkCode);
+//     }
+//   }
+// }
+// renderBoardSunkCode1(playerOne.playerBoard.board);
+
+function endGameColor() {
+  const shipCells1 = document.querySelectorAll(".ship-cells1");
+  const p1FullBoard =  document.querySelector("#p1-full-board");
+  const shipCells2 = document.querySelectorAll(".ship-cells2");
+  const p2FullBoard = document.querySelector("#p2-full-board");
+  if (
+    testGame1.ships[0].isSunk() &&
+    testGame1.ships[1].isSunk() &&
+    testGame1.ships[2].isSunk() &&
+    testGame1.ships[3].isSunk() &&
+    testGame1.ships[4].isSunk()
+  ) {
+    p1FullBoard.style.color = "var(--bkgd)";
+    shipCells1.forEach(cell => {
+      cell.style.backgroundColor = "var(--bkgd)";
+      cell.style.border = ".25px dashed var(--player1)";
+    })
+
+    p2FullBoard.style.color = "gold";
+    shipCells2.forEach((cell) => {
+      cell.style.border = ".25px dashed gold";
+    });
+  }
+
+  if (
+    testGame2.ships[0].isSunk() &&
+    testGame2.ships[1].isSunk() &&
+    testGame2.ships[2].isSunk() &&
+    testGame2.ships[3].isSunk() &&
+    testGame2.ships[4].isSunk()
+  ) {
+    p2FullBoard.style.color = "var(--bkgd)";
+    shipCells2.forEach((cell) => {
+      cell.style.backgroundColor = "var(--bkgd)";
+      cell.style.border = ".25px dashed var(--player2)";
+    });
+
+    p1FullBoard.style.color = "gold";
+    shipCells1.forEach((cell) => {
+      cell.style.border = ".25px dashed gold";
+    });
+  }
+}
+
+endGameColor();

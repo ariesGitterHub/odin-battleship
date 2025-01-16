@@ -47,8 +47,11 @@ export function addEmojiEffect1(board) {
         // board[i][j] === "P!"
       ) {
         cell.innerText = "💥";
+        cell.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
       } else if (board[i][j] === "mm") {
-        cell.innerText = "⚪";
+        // cell.innerText = "⚪";
+        cell.innerText = "💨";
+        cell.style.transform = "rotate(-90deg)"
       } else {
         cell.innerText = "  ";
       }
@@ -69,8 +72,11 @@ export function addEmojiEffect2(board) {
         // board[i][j] === "P!"
       ) {
         cell.innerText = "💥";
+        cell.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
       } else if (board[i][j] === "mm") {
-        cell.innerText = "⚪";
+        // cell.innerText = "⚪";
+        cell.innerText = "💨";
+        cell.style.transform = "rotate(-90deg)";
       } else {
         cell.innerText = "  ";
       }

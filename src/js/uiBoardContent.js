@@ -35,8 +35,8 @@ export function createContainers() {
     {
       id: "p1-full-board",
       // class: "flex-row",
-    }
-    // "Game Content follows..."
+    },
+    "Player One"
   );
 
   const p2FullBoard = createElement(
@@ -44,8 +44,8 @@ export function createContainers() {
     {
       id: "p2-full-board",
       // class: "flex-row",
-    }
-    // "Game Content follows..."
+    },
+    "Player Two"
   );
   const p1ShipBoard = createElement(
     "div",

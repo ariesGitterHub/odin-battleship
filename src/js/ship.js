@@ -4,10 +4,18 @@
 // isSunk() should be a function that calculates whether a ship is considered sunk based on its length and the number of hits it has received.
 
 class Ship {
-  constructor(name, length, boardCode, numHits = 0, sunkStatus = false) {
+  constructor(
+    name,
+    length,
+    boardCode,
+    boardSunkCode,
+    numHits = 0,
+    sunkStatus = false
+  ) {
     (this.name = name),
       (this.length = length),
       (this.boardCode = boardCode),
+      (this.boardSunkCode = boardSunkCode);
       (this.numHits = numHits),
       (this.sunkStatus = sunkStatus);
   }

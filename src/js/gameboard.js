@@ -26,11 +26,11 @@ class Gameboard {
       ships.length > 0
         ? ships
         : [
-            new Ship("aircraft carrier", 5, "a"),
-            new Ship("battleship", 4, "b"),
-            new Ship("destroyer", 3, "d"),
-            new Ship("submarine", 3, "s"),
-            new Ship("corvette", 2, "c"),
+            new Ship("aircraft carrier", 5, "a", "A!"),
+            new Ship("battleship", 4, "b", "B!"),
+            new Ship("destroyer", 3, "d", "D!"),
+            new Ship("submarine", 3, "s", "S!"),
+            new Ship("corvette", 2, "c", "C!"),
             // new Ship("patrol boat", 1, "p"), // Remove patrol boat, too small, slows down game-play
           ];
     // this.ships = ships
