@@ -18,6 +18,7 @@ import { addEmojiEffect1, addEmojiEffect2 } from "./js/uiHitMissGrid.js";
 import {
   addShipColor1,
   addShipColor2,
+  // colorTargetCells1,
   placeShipSvgs1,
   placeShipSvgs2,
 } from "./js/uiShipGrid.js";
@@ -127,18 +128,17 @@ testGame2.receiveAttack(5, 4);
 testGame1.receiveAttack(5, 4);
 
 // make player 1 lose prematurely...
-// testGame1.receiveAttack(2, 7);
-// testGame1.receiveAttack(3, 7);
-// testGame1.receiveAttack(4, 7);
-// testGame1.receiveAttack(5, 7);
+testGame1.receiveAttack(2, 7);
+testGame1.receiveAttack(3, 7);
+testGame1.receiveAttack(4, 7);
+testGame1.receiveAttack(5, 7);
 
-// testGame1.receiveAttack(3, 2);
-// testGame1.receiveAttack(3, 4);
+testGame1.receiveAttack(3, 2);
+testGame1.receiveAttack(3, 4);
 
-// testGame1.receiveAttack(5, 5);
-// testGame1.receiveAttack(6, 5);
-// testGame1.receiveAttack(7, 5);
-
+testGame1.receiveAttack(5, 5);
+testGame1.receiveAttack(6, 5);
+testGame1.receiveAttack(7, 5);
 
 console.table(playerOne.playerBoard.board);
 console.log(`P1: a5 sunk status = ${testGame1.ships[0].isSunk()}`);
@@ -165,8 +165,6 @@ createContainers();
 createGameContent(playerOne.playerBoard.board, playerTwo.playerBoard.board);
 // createGameContent(playerTwo.playerBoard.board);
 
-// addShipColor1(playerOne.playerBoard.board);
-// addShipColor2(playerTwo.playerBoard.board);
 addEmojiEffect1(playerOne.playerBoard.board);
 addEmojiEffect2(playerTwo.playerBoard.board);
 placeShipSvgs1("a", "v", 1, 7);
@@ -180,6 +178,9 @@ placeShipSvgs2("b", "h", 2, 1);
 placeShipSvgs2("d", "v", 4, 2);
 placeShipSvgs2("s", "h", 7, 2);
 placeShipSvgs2("c", "v", 6, 8);
+
+// addShipColor1(playerOne.playerBoard.board);
+// addShipColor2(playerTwo.playerBoard.board);
 // placeShips1(playerOne.playerBoard.board);
 
 // randomRotate();
@@ -267,48 +268,130 @@ placeShipSvgs2("c", "v", 6, 8);
 // }
 // renderBoardSunkCode1(playerOne.playerBoard.board);
 
-function endGameColor() {
-  const shipCells1 = document.querySelectorAll(".ship-cells1");
-  const p1FullBoard =  document.querySelector("#p1-full-board");
-  const shipCells2 = document.querySelectorAll(".ship-cells2");
-  const p2FullBoard = document.querySelector("#p2-full-board");
-  if (
-    testGame1.ships[0].isSunk() &&
-    testGame1.ships[1].isSunk() &&
-    testGame1.ships[2].isSunk() &&
-    testGame1.ships[3].isSunk() &&
-    testGame1.ships[4].isSunk()
-  ) {
-    p1FullBoard.style.color = "var(--bkgd)";
-    shipCells1.forEach(cell => {
-      cell.style.backgroundColor = "var(--bkgd)";
-      cell.style.border = ".25px dashed var(--player1)";
-    })
+// function endGameColor() {
+//   const shipCells1 = document.querySelectorAll(".ship-cells1");
+//   const p1FullBoard =  document.querySelector("#p1-full-board");
+//   const p1DeploymentZone = document.querySelector("#p1-deployment-zone");
+//   const shipCells2 = document.querySelectorAll(".ship-cells2");
+//   const p2FullBoard = document.querySelector("#p2-full-board");
+//   if (
+//     testGame1.ships[0].isSunk() &&
+//     testGame1.ships[1].isSunk() &&
+//     testGame1.ships[2].isSunk() &&
+//     testGame1.ships[3].isSunk() &&
+//     testGame1.ships[4].isSunk()
+//   ) {
+//     p1FullBoard.style.color = "var(--bkgd)";
+//     p1DeploymentZone.style.color = "red";
+//     shipCells1.forEach(cell => {
+//       cell.style.backgroundColor = "var(--bkgd)";
+//       cell.style.border = ".25px dashed var(--player1)";
+//     })
 
-    p2FullBoard.style.color = "gold";
-    shipCells2.forEach((cell) => {
-      cell.style.border = ".25px dashed gold";
-    });
-  }
+//     p2FullBoard.style.color = "gold";
+//     shipCells2.forEach((cell) => {
+//       cell.style.border = ".25px dashed gold";
+//     });
+//   }
 
-  if (
-    testGame2.ships[0].isSunk() &&
-    testGame2.ships[1].isSunk() &&
-    testGame2.ships[2].isSunk() &&
-    testGame2.ships[3].isSunk() &&
-    testGame2.ships[4].isSunk()
-  ) {
-    p2FullBoard.style.color = "var(--bkgd)";
-    shipCells2.forEach((cell) => {
-      cell.style.backgroundColor = "var(--bkgd)";
-      cell.style.border = ".25px dashed var(--player2)";
-    });
+//   if (
+//     testGame2.ships[0].isSunk() &&
+//     testGame2.ships[1].isSunk() &&
+//     testGame2.ships[2].isSunk() &&
+//     testGame2.ships[3].isSunk() &&
+//     testGame2.ships[4].isSunk()
+//   ) {
+//     p2FullBoard.style.color = "var(--bkgd)";
+//     shipCells2.forEach((cell) => {
+//       cell.style.backgroundColor = "var(--bkgd)";
+//       cell.style.border = ".25px dashed var(--player2)";
+//     });
 
-    p1FullBoard.style.color = "gold";
-    shipCells1.forEach((cell) => {
-      cell.style.border = ".25px dashed gold";
-    });
+//     p1FullBoard.style.color = "gold";
+//     shipCells1.forEach((cell) => {
+//       cell.style.border = ".25px dashed gold";
+//     });
+//   }
+// }
+
+// endGameColor();
+
+// colorTargetCells1(playerOne.playerBoard.board);
+
+function colorSunkShips1(board) {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      let cellShipTarget = document.getElementById(`T-SG1: (${i},${j})`);
+      const p1ShipBoard = document.querySelector("#p1-ship-board");
+      const p2TargetShipBoard = document.querySelector("#p2-target-ship-board");
+      if (testGame1.ships[0].isSunk() && board[i][j] === "A!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+
+      }
+      if (testGame1.ships[1].isSunk() && board[i][j] === "B!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+      if (testGame1.ships[2].isSunk() && board[i][j] === "D!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+      if (testGame1.ships[3].isSunk() && board[i][j] === "S!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+      if (testGame1.ships[4].isSunk() && board[i][j] === "C!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+
+      if (
+        testGame1.ships[0].isSunk() &&
+        testGame1.ships[1].isSunk() &&
+        testGame1.ships[2].isSunk() &&
+        testGame1.ships[3].isSunk() &&
+        testGame1.ships[4].isSunk()
+      ) {
+        p1ShipBoard.style.backgroundColor = "var(--loser)";
+        p2TargetShipBoard.style.backgroundColor = "var(--loser)";
+      }
+    }
   }
 }
 
-endGameColor();
+function colorSunkShips2(board) {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      let cellShipTarget = document.getElementById(`T-SG2: (${i},${j})`);
+      // const messages = document.querySelector("#p2-full-board");
+      const p2ShipBoard = document.querySelector("#p2-ship-board");
+      const p1TargetShipBoard = document.querySelector("#p1-target-ship-board");
+      if (testGame2.ships[0].isSunk() && board[i][j] === "A!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+      if (testGame2.ships[1].isSunk() && board[i][j] === "B!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+      if (testGame2.ships[2].isSunk() && board[i][j] === "D!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+      if (testGame2.ships[3].isSunk() && board[i][j] === "S!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+      if (testGame2.ships[4].isSunk() && board[i][j] === "C!") {
+        cellShipTarget.style.backgroundColor = "var(--text)";
+      }
+
+      if (
+        testGame2.ships[0].isSunk() &&
+        testGame2.ships[1].isSunk() &&
+        testGame2.ships[2].isSunk() &&
+        testGame2.ships[3].isSunk() &&
+        testGame2.ships[4].isSunk()
+      ) {
+        // p2FullBoard.innerText = "PLAYER TWO WINS";
+        p2ShipBoard.style.backgroundColor = "var(--loser)";
+        p1TargetShipBoard.style.backgroundColor = "var(--loser)";
+      }
+    }
+  }
+}
+
+colorSunkShips1(playerOne.playerBoard.board);
+colorSunkShips2(playerTwo.playerBoard.board);
