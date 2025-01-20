@@ -36,7 +36,7 @@ export function createContainers() {
       id: "p1-full-board",
       // class: "flex-row",
     },
-    "Player One "
+    "Player One"
   );
 
   const p2FullBoard = createElement(

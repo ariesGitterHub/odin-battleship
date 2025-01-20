@@ -54,7 +54,7 @@ export function createTargetHitMissGrid2(board) {
     for (let j = 0; j < board[i].length; j++) {
       const gridCell = createElement("div", {
         id: `T-HMG2: (${i},${j})`,
-        class: "hit-miss-cells2"
+        class: "hit-miss-cells2",
       });
       grid.push(gridCell);
     }
@@ -142,3 +142,39 @@ export function addEmojiEffect2(board) {
 //     }
 //   }
 // }
+
+export function targetEmptyCellOnHover1(board) {
+    for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      let cellTarget1 = document.getElementById(`T-HMG1: (${i},${j})`);
+      if (
+        board[i][j] === "--" ||
+        board[i][j] === "a" ||
+        board[i][j] === "b" ||
+        board[i][j] === "d" ||
+        board[i][j] === "s" ||
+        board[i][j] === "c" 
+      ) {
+        cellTarget1.classList.add("mouse-target");
+      }
+    }
+    }
+  }
+
+  export function targetEmptyCellOnHover2(board) {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        let cellTarget2 = document.getElementById(`T-HMG2: (${i},${j})`);
+        if (
+          board[i][j] === "--" ||
+          board[i][j] === "a" ||
+          board[i][j] === "b" ||
+          board[i][j] === "d" ||
+          board[i][j] === "s" ||
+          board[i][j] === "c"
+        ) {
+          cellTarget2.classList.add("mouse-target");
+        }
+      }
+    }
+  }

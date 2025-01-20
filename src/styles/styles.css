@@ -30,11 +30,12 @@
   /* loser colors are swapped */
   --loser: #903a3a;
 
-  --player1: #23233f;
-  --player2: #314434;
+  --player1: #2f2f4f;
+  --player1text: #9090cb;
+  --player2: #3c4a3e;
+  --player2text: #9ac7a1;
   /* --enemy: #812538; */
-    --enemy: #fecc03;
-
+  --enemy: #fecc03;
 
   /* --pur: #af9fb5;
   --blu: #9292c3; */
@@ -93,6 +94,7 @@ body {
 
 #title-text {
   font-size: 1.5rem;
+  text-transform: uppercase;
 }
 
 #MMM {
@@ -104,10 +106,9 @@ body {
   height: 3rem;
   width: 22rem;
   background-color: var(--line);
-    border-radius: 1rem;
+  border-radius: 1rem;
   font-family: var(--font-fancy);
   text-align: center;
-  
 }
 
 #game-content {
@@ -142,7 +143,7 @@ body {
   align-items: center;
   justify-content: center;
   /* background-color: red; */
-    border-left: 1rem solid;
+  border-left: 1rem solid;
   border-right: 1rem solid;
   border-bottom: 1rem solid;
   border-top: 0.25rem solid;
@@ -152,29 +153,33 @@ body {
   /* font-family: var(--font-emoji); */
   font-family: var(--font-fancy);
   font-size: 1.5rem;
-  
+
   /* margin: .5rem; */
-    margin: 0.25rem;
+  margin: 0.25rem;
   overflow: visible;
   text-transform: uppercase;
-    z-index: -2;
+  /* z-index: -1; */
 }
 
 #p1-full-board {
   background-color: var(--player1);
   /* border: 16px solid darkblue; */
   border-color: var(--player1);
+  color: var(--player1text);
   /* display: none; */
 }
 
 #p2-full-board {
   background-color: var(--player2);
   border-color: var(--player2);
+  color: var(--player2text);
   /* display: none; */
 }
 
-#p1-deployment-zone, #p1-target-zone,
-#p2-deployment-zone, #p2-target-zone {
+#p1-deployment-zone,
+#p1-target-zone,
+#p2-deployment-zone,
+#p2-target-zone {
   height: 23rem;
   width: 20rem;
   display: flex;
@@ -186,11 +191,17 @@ body {
   font-size: 1rem;
   margin: 0.25rem;
   overflow: visible;
-   text-transform: capitalize;
-  z-index: -2;
+  text-transform: capitalize;
+  /* z-index: 0; */
 }
 
-#p1-target-zone, #p2-target-zone {
+#p1-deployment-zone,
+#p2-deployment-zone {
+  color: var(--line);
+}
+
+#p1-target-zone,
+#p2-target-zone {
   color: var(--enemy);
 }
 
@@ -213,16 +224,16 @@ body {
 }
 
 #p1-ship-board,
-#p2-ship-board, 
+#p2-ship-board,
 #p1-target-ship-board,
 #p2-target-ship-board {
   background-color: var(--sea);
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 /* Negative margins cause the overlapping */
 #p1-status-board,
-#p2-status-board, 
+#p2-status-board,
 #p1-target-status-board,
 #p2-target-status-board {
   height: auto;
@@ -231,6 +242,11 @@ body {
   /* z-index: -2; */
   margin-top: -21rem;
 }
+
+/* #p1-target-status-board:hover,
+#p2-target-status-board:hover {
+  background-color: red;
+} */
 
 /* .board-cell1, .board-cell2 {
     height: 2rem;
@@ -271,19 +287,27 @@ body {
   /* z-index: 0 */
 }
 
-.hit-miss-cells1,
+/* .ship-cells2:hover, .ship-cells2:hover {
+scale: 5;
+} */
+
+/* .hit-miss-cells1,
 .hit-miss-cells2 {
-  /* background-color: none; */
-  /* z-index: 10 */
+  border: 0.25px dashed var(--enemy);
+} */
+
+/* .hit-miss-cells1:hover, .hit-miss-cells2:hover {
+  background-color: gold;
+} */
+
+.ship-target-cells1,
+.ship-target-cells2 {
+  border: 0.25px dashed var(--enemy);
 }
 
-.target-cells1,
-.target-cells2 {
-  /* background-color: red; */
-  /* background-color: var(--sea); */
-  border: 0.25px dashed var(--enemy);
-  /* z-index: 0 */
-}
+/* .ship-target-cells1:hover, .ship-target-cells2:hover {
+    border: 0.5px solid red;
+} */
 
 .sunk {
   background-color: var(--sunk);
@@ -312,4 +336,15 @@ body {
   /* transform: rotate(180deg); */
   /* transition: transform 0.5s ease; */
   /* z-index: 10; */
+}
+
+/* .top-target-cells1:hover, .top-target-cells2:hover {
+  background-color: gold;
+  scale: 1.25;
+} */
+
+.mouse-target:hover {
+  background-color: var(--enemy);
+  border: .25rem dashed var(--loser);
+  scale: 1.25;
 }

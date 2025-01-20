@@ -14,7 +14,12 @@ import {
   createGameContent,
   // randomRotate,
 } from "./js/uiBoardContent.js";
-import { addEmojiEffect1, addEmojiEffect2 } from "./js/uiHitMissGrid.js";
+import {
+  addEmojiEffect1,
+  addEmojiEffect2,
+  targetEmptyCellOnHover1,
+  targetEmptyCellOnHover2,
+} from "./js/uiHitMissGrid.js";
 import {
   addShipColor1,
   addShipColor2,
@@ -326,7 +331,6 @@ function colorSunkShips1(board) {
       const p2TargetShipBoard = document.querySelector("#p2-target-ship-board");
       if (testGame1.ships[0].isSunk() && board[i][j] === "A!") {
         cellShipTarget.style.backgroundColor = "var(--text)";
-
       }
       if (testGame1.ships[1].isSunk() && board[i][j] === "B!") {
         cellShipTarget.style.backgroundColor = "var(--text)";
@@ -395,3 +399,6 @@ function colorSunkShips2(board) {
 
 colorSunkShips1(playerOne.playerBoard.board);
 colorSunkShips2(playerTwo.playerBoard.board);
+targetEmptyCellOnHover1(playerOne.playerBoard.board);
+targetEmptyCellOnHover2(playerTwo.playerBoard.board);
+

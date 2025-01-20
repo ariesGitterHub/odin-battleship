@@ -1,5 +1,6 @@
 import { createElement } from "./basicFunctions.js";
-// import { Gameboard } from "./gameboard.js";
+import { Ship } from "./ship.js";
+import { Gameboard } from "./gameboard.js";
 import { createImg } from "./basicFunctions.js";
 import ship5A from "../assets/ship5A.svg";
 import ship4B from "../assets/ship4B.svg";
@@ -7,6 +8,12 @@ import ship3D from "../assets/ship3D.svg";
 import ship3S from "../assets/ship3S.svg";
 import ship2C from "../assets/ship2C.svg";
 // import ship1P from "../assets/ship1P.svg";
+import sunk5A from "../assets/sunk5A.svg";
+import sunk4B from "../assets/sunk4B.svg";
+import sunk3D from "../assets/sunk3D.svg";
+import sunk3S from "../assets/sunk3S.svg";
+import sunk2C from "../assets/sunk2C.svg";
+// import sunk1P from "../assets/sunk1P.svg";
 
 export function createShipGrid1(board) {
   let grid = [];
@@ -28,7 +35,7 @@ export function createTargetShipGrid1(board) {
     for (let j = 0; j < board[i].length; j++) {
       const gridCell = createElement("div", {
         id: `T-SG1: (${i},${j})`,
-        class: "ship-cells1 target-cells1",
+        class: "ship-cells1 ship-target-cells1",
       });
       grid.push(gridCell);
     }
@@ -56,7 +63,7 @@ export function createTargetShipGrid2(board) {
     for (let j = 0; j < board[i].length; j++) {
       const gridCell = createElement("div", {
         id: `T-SG2: (${i},${j})`,
-        class: "ship-cells2 target-cells1",
+        class: "ship-cells2 ship-target-cells2",
       });
       grid.push(gridCell);
     }
@@ -152,6 +159,7 @@ export function createTargetShipGrid2(board) {
 
 export function placeShipSvgs1(shipType, axis, x, y) {
   const p1ShipBoardCellIndex = document.getElementById(`SG1: (${x},${y})`);
+  // const p1TargetShipBoardCellIndex = document.getElementById(`T-SG1: (${x},${y})`);
   if (shipType === "a") {
     const p1A5 = createImg({
       src: ship5A,
@@ -165,6 +173,23 @@ export function placeShipSvgs1(shipType, axis, x, y) {
     }
     p1ShipBoardCellIndex.appendChild(p1A5);
   }
+
+    // if (shipType === "a") {
+    //   const pS1A5 = createImg({
+    //     // src: sunk5A,
+    //     // alt: "sunk aircraft carrier image",
+    //     // class: "ship",
+    //     src: ship5A,
+    //     alt: "aircraft carrier image",
+    //     class: "ship",
+    //   });
+    //   if (axis === "v") {
+    //     pS1A5.style.transform = "translateY(4rem) rotate(90deg)";
+    //   } else {
+    //     pS1A5.style.transform = "translateX(4rem)";
+    //   }
+    //   p1TargetShipBoardCellIndex.appendChild(pS1A5);
+    // }
 
   if (shipType === "b") {
     const p1B4 = createImg({
