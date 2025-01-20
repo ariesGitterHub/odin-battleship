@@ -20,30 +20,16 @@
   --bkgd: #86898f;
   --text: #1a1918;
   --sea: #8292a6;
-
-  /* --line: #337bcc; */
   --line: #ceced6;
-  /* --hit: #b1830c; */
   --hit: #aa7763;
   --miss: #52667f;
   --sunk: #524753;
-  /* loser colors are swapped */
   --loser: #903a3a;
-
   --player1: #2f2f4f;
   --player1text: #9090cb;
   --player2: #3c4a3e;
   --player2text: #9ac7a1;
-  /* --enemy: #812538; */
   --enemy: #fecc03;
-
-  /* --pur: #af9fb5;
-  --blu: #9292c3; */
-  /* --blu: black; */
-  /* --grn: #7b827b;
-  --yel: #dbcf90;
-  --org: #b49e74;
-  --red: #905e5e; */
   --font-fancy: "Black Ops One", serif;
   --font-emoji: "Noto Color Emoji", serif;
 }
@@ -65,20 +51,6 @@ body {
   background-color: var(--bkgd);
   margin: 0;
 }
-
-/* .flex-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.flex-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-} */
 
 #header {
   color: var(--text);
@@ -103,23 +75,101 @@ body {
 }
 
 #messages {
-  height: 3rem;
+  height: 5rem;
   width: 22rem;
-  background-color: var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--text);
   border-radius: 1rem;
+  color: var(--line);
   font-family: var(--font-fancy);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: .75rem;
   text-align: center;
 }
 
+#start-content {
+  height: auto;
+  width: 22rem;
+  /* background-color: var(--line); */
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-fancy);
+  margin: .25rem;
+  /* text-align: center; */
+}
+
+.btn {
+  height: 3rem;
+  width: 22rem;
+  background-color: var(--line);
+  border: none;
+  border-radius: 1rem;
+  color: var(--text);
+  font-family: var(--font-fancy);
+  font-size: 1.25rem;
+  margin: .25rem;
+  outline: none;
+  padding: .25rem;
+}
+
+.btn:hover {
+  background-color: var(--enemy);
+  scale: 1.05;
+}
+
+.btn:active {
+  background-color: var(--text);
+  color: var(--enemy);
+  scale: .95;
+}
+
+#btn-pvsc, #btn-pvsp {
+
+}
+
+/* #btn-pvsc:active {
+  background-color: var(--player1);
+}
+#btn-pvsp:active {
+  background-color: var(--player2);
+} */
+
+#gif-container {
+  height: auto;
+  width: 22rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: var(--text); */
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+/* @keyframes noise {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-2px, -2px); }
+} */
+
+.gif {
+  height: 22rem;
+  width: 22rem;
+  border: .5rem solid var(--text);
+    border-radius: 50%;
+    filter: grayscale(60%) sepia(60%);
+    /* transform: rotate(0.5deg); */
+      /* animation: noise 0.1s infinite alternate; */
+  /* filter: grayscale(80%) sepia(40%) contrast(120%) brightness(90%); */
+  /* padding: .5rem; */
+}
+
 #game-content {
-  /* height: fit-content;
-    width: 22rem;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center; */
-  /* background-color: #ffb6c1; */
 }
 
 #board-container {
@@ -129,32 +179,25 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  /* background-color: var(--sea); */
-  /* margin: 1rem; */
 }
 
 #p1-full-board,
 #p2-full-board {
-  height: 50rem;
+  height: 49rem;
   width: 22rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  /* background-color: red; */
   border-left: 1rem solid;
   border-right: 1rem solid;
   border-bottom: 1rem solid;
   border-top: 0.25rem solid;
   border-radius: 1rem;
-
   color: var(--line);
-  /* font-family: var(--font-emoji); */
   font-family: var(--font-fancy);
   font-size: 1.5rem;
-
-  /* margin: .5rem; */
   margin: 0.25rem;
   overflow: visible;
   text-transform: uppercase;
@@ -163,17 +206,16 @@ body {
 
 #p1-full-board {
   background-color: var(--player1);
-  /* border: 16px solid darkblue; */
   border-color: var(--player1);
   color: var(--player1text);
-  /* display: none; */
+  display: none;
 }
 
 #p2-full-board {
   background-color: var(--player2);
   border-color: var(--player2);
   color: var(--player2text);
-  /* display: none; */
+  display: none;
 }
 
 #p1-deployment-zone,
@@ -243,24 +285,6 @@ body {
   margin-top: -21rem;
 }
 
-/* #p1-target-status-board:hover,
-#p2-target-status-board:hover {
-  background-color: red;
-} */
-
-/* .board-cell1, .board-cell2 {
-    height: 2rem;
-    width: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: .25px solid var(--line);
-    font-size: 100%;
-
-    text-align: center;
-} */
-
 .ship-cells1,
 .ship-cells2,
 .hit-miss-cells1,
@@ -270,81 +294,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: var(--sea); */
-  /* border: .25px solid var(--line); */
   font-family: var(--font-emoji);
   font-size: 100%;
-  /* margin: .25rem; */
-  /* opacity: .5; */
   text-align: center;
 }
 
 .ship-cells1,
 .ship-cells2 {
-  /* background-color: red; */
-  /* background-color: var(--sea); */
   border: 0.25px dashed var(--line);
-  /* z-index: 0 */
 }
-
-/* .ship-cells2:hover, .ship-cells2:hover {
-scale: 5;
-} */
-
-/* .hit-miss-cells1,
-.hit-miss-cells2 {
-  border: 0.25px dashed var(--enemy);
-} */
-
-/* .hit-miss-cells1:hover, .hit-miss-cells2:hover {
-  background-color: gold;
-} */
 
 .ship-target-cells1,
 .ship-target-cells2 {
   border: 0.25px dashed var(--enemy);
 }
 
-/* .ship-target-cells1:hover, .ship-target-cells2:hover {
-    border: 0.5px solid red;
-} */
-
 .sunk {
   background-color: var(--sunk);
 }
 
-/* .test {
-    height: 5rem;
-    width: 5rem;
-    background-color: red;
-
-} */
-
 .ship {
   height: 2rem;
-  /* width: auto; */
-  /* change background if sunk!!! */
-  /* background-color: var(--sunk);  */
-  /* transform: rotate(90deg); */
-  /* z-index: 1; */
 }
 
 .hit {
-  /* height: 2rem; */
-  /* width: auto; */
-  /* background-color: none; */
-  /* transform: rotate(180deg); */
-  /* transition: transform 0.5s ease; */
-  /* z-index: 10; */
 }
-
-/* .top-target-cells1:hover, .top-target-cells2:hover {
-  background-color: gold;
-  scale: 1.25;
-} */
 
 .mouse-target:hover {
   background-color: var(--enemy);
-  border: .25rem dashed var(--loser);
+  border: 0.25rem dashed var(--loser);
   scale: 1.25;
 }

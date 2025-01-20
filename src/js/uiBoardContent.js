@@ -15,7 +15,7 @@ import {
   createTargetShipGrid2,
 } from "./uiShipGrid.js";
 
-export function createContainers() {
+export function createGameContentDivs() {
   // This is where the two player containers and board container are created; use this to alter the order of elements between mobile and large screen viewports.
   const gameContent = document.querySelector("#game-content");
   // gameContent.classList.add("flex-row");

@@ -79,3 +79,9 @@ These methods might get information from the outside (like a coord), checks its 
 
 E.g., if your ship has coords [22, 23], then the opponent shot on coord 23, then you should store the hit. If the opponent then shoots on 22, your object should store the information that the ship sank. Now, if the opponent shot on coord 24 instead, your ship object should not count that as a hit."
 
+# Images and Gifs
+All game ship markers were created for this app and are copyrighted by the Mad Muffin Man. 
+
+broadside1 = https://imgur.com/gallery/shockwave-from-battleship-broadside-h9SE7Fj#/t/broadside
+broadside2 = https://imgur.com/gallery/battleship-broadsides-d3U51G7#/t/broadside
+

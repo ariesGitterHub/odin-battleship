@@ -3,16 +3,18 @@ import "./styles/styles.css";
 // import ship5A from "./assets/ship5A.svg";
 // import ship4B from "./assets/ship4B.svg";
 import { createHeader } from "./js/uiHeader.js";
+import { createMessages } from "./js/uiMessages.js";
 // import { imgMaker } from "./js/uiImages.js";
 import {
   // addEmojiEffect1,
   // addEmojiEffect2,
   // addShipColor1,
   // addShipColor2,
-  createContainers,
+  createGameContentDivs,
   createGameContent,
   // randomRotate,
 } from "./js/uiBoardContent.js";
+import { createStartContentElements } from "./js/uiStartContent.js";
 import {
   addEmojiEffect1,
   addEmojiEffect2,
@@ -162,7 +164,7 @@ console.log(seaBoard1);
 console.log(seaBoard2);
 
 
-createContainers();
+createGameContentDivs();
 createGameContent(playerOne.playerBoard.board, playerTwo.playerBoard.board);
 
 addEmojiEffect1(playerOne.playerBoard.board);
@@ -257,3 +259,5 @@ colorSunkShips2(playerTwo.playerBoard.board);
 targetEmptyCellOnHover1(playerOne.playerBoard.board);
 targetEmptyCellOnHover2(playerTwo.playerBoard.board);
 
+createMessages("Below, select the number of players to begin your game.")
+createStartContentElements(); 
