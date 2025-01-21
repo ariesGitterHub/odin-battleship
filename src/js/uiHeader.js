@@ -12,7 +12,7 @@ export function createHeader() {
     "p",
     {
       id: "title-text",
-      class: "font-fancy",
+      class: "font-fancy text-effect-dark",
     },
     "Battleship: World War II"
   );
@@ -21,7 +21,7 @@ export function createHeader() {
     "p",
     {
       id: "MMM",
-      class: "font-fancy",
+      class: "font-fancy text-effect-dark",
     },
     "A Mad Muffin Man Design Studio, ©2025"
   );

@@ -22,7 +22,7 @@ export function createElement(tagName, attributes = {}, text = "") {
 
   // Set inner content if provided
   if (text) {
-    element.innerHTML = text; // Could also use innerText if you want plain text
+    element.innerText = text; // Could also use innerText if you want plain text
   }
 
   return element;

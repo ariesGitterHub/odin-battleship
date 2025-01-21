@@ -3,7 +3,7 @@ import "./styles/styles.css";
 // import ship5A from "./assets/ship5A.svg";
 // import ship4B from "./assets/ship4B.svg";
 import { createHeader } from "./js/uiHeader.js";
-import { createMessages } from "./js/uiMessages.js";
+import { addMessage, clearMessage, createMessageElements } from "./js/uiMessages.js";
 // import { imgMaker } from "./js/uiImages.js";
 import {
   // addEmojiEffect1,
@@ -259,5 +259,26 @@ colorSunkShips2(playerTwo.playerBoard.board);
 targetEmptyCellOnHover1(playerOne.playerBoard.board);
 targetEmptyCellOnHover2(playerTwo.playerBoard.board);
 
-createMessages("Below, select the number of players to begin your game.")
-createStartContentElements(); 
+// createMessages("Below, select the number of players to begin your game.")
+// createStartContentElements();
+createMessageElements(); 
+addMessage("Below, select the number of players to begin your game.");
+// function gameEngine() {
+
+
+// const btnPvsC = document.querySelector("#btn-pvsc");
+// const btnPvsP = document.querySelector("#btn-pvsp");
+// const gifContainer = document.querySelector("#gif-container");
+// const p1FullBoard = document.querySelector("#p1-full-board");
+// btnPvsC.addEventListener("click", () => {
+//   clearMessage();
+//   addMessage("Player One drag and position your fleet. Use the rotate button to change axis, or use the random button to auto-position ships.")
+//   btnPvsC.style.display = "none";
+//   btnPvsP.style.display = "none";
+//   gifContainer.style.display = "none";
+//   p1FullBoard.style.display = "flex";
+// })
+
+// }
+
+// gameEngine()

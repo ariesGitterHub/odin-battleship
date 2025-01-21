@@ -17,7 +17,11 @@
 
 :root {
   /* Colors */
-  --bkgd: #86898f;
+  --bkgd: #919692;
+    --bkgd2: #677063;
+      /* --gray: #7f8680; */
+  /* --green: #627264; */
+   --green: #444e45;
   --text: #1a1918;
   --sea: #8292a6;
   --line: #ceced6;
@@ -30,8 +34,10 @@
   --player2: #3c4a3e;
   --player2text: #9ac7a1;
   --enemy: #fecc03;
-  --font-fancy: "Black Ops One", serif;
-  --font-emoji: "Noto Color Emoji", serif;
+    /* --box-shadow-gray: 0 3px 6px var(--gray); */
+  --box-shadow-green: 0 5px 10px var(--green);
+  --font-fancy: "Black Ops One", sans-serif;
+  --font-emoji: "Noto Color Emoji", sans-serif;
 }
 
 .font-fancy {
@@ -45,10 +51,15 @@
 }
 
 body {
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--bkgd);
+  /* background-color: var(--bkgd); */
+
+  background: linear-gradient(70deg, var(--bkgd), var(--bkgd2));
+
   margin: 0;
 }
 
@@ -64,9 +75,13 @@ body {
   justify-content: center;
 }
 
+
+
 #title-text {
   font-size: 1.5rem;
   text-transform: uppercase;
+    /* color: #4b5320; */
+
 }
 
 #MMM {
@@ -74,27 +89,51 @@ body {
   text-align: center;
 }
 
+.text-effect-dark {
+    text-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 0.3), 
+    -1px -1px 2px rgba(0, 0, 0, 0.3),
+    2px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* .text-effect-light {
+    text-shadow: 
+    1px 1px 2px rgba(255, 255, 255, 0.4), 
+    -1px -1px 2px rgba(255, 255, 255, 0.4),
+    2px 2px 3px rgba(255, 253, 253, 0.4);
+} */
+
+
 #messages {
-  height: 5rem;
+  height: fit-content;
   width: 22rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--text);
   border-radius: 1rem;
+  box-shadow: var(--box-shadow-green);
   color: var(--line);
   font-family: var(--font-fancy);
   font-size: 1rem;
   margin-bottom: 1rem;
   padding: .75rem;
   text-align: center;
+      /* text-shadow: 
+    1px 1px 2px rgba(255, 255, 255, 0.25), 
+    -1px -1px 2px rgba(255, 255, 255, 0.25),
+    2px 2px 3px rgba(255, 253, 253, 0.25); */
 }
+
+/* #message-bar {  height: 5rem;
+  width: 22rem;} */
 
 #start-content {
   height: auto;
   width: 22rem;
   /* background-color: var(--line); */
   border-radius: 1rem;
+    /* box-shadow: var(--box-shadow-green); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,6 +149,7 @@ body {
   background-color: var(--line);
   border: none;
   border-radius: 1rem;
+    box-shadow: var(--box-shadow-green);
   color: var(--text);
   font-family: var(--font-fancy);
   font-size: 1.25rem;
@@ -148,6 +188,7 @@ body {
   justify-content: center;
   /* background-color: var(--text); */
   border-radius: 1rem;
+  
   margin: 1rem;
   padding: 1rem;
 }
@@ -162,6 +203,7 @@ body {
   width: 22rem;
   border: .5rem solid var(--text);
     border-radius: 50%;
+      box-shadow: var(--box-shadow-green);
     filter: grayscale(60%) sepia(60%);
     /* transform: rotate(0.5deg); */
       /* animation: noise 0.1s infinite alternate; */
@@ -208,7 +250,7 @@ body {
   background-color: var(--player1);
   border-color: var(--player1);
   color: var(--player1text);
-  display: none;
+  /* display: none; */
 }
 
 #p2-full-board {
@@ -320,8 +362,19 @@ body {
 .hit {
 }
 
+/* .mouse-target {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
 .mouse-target:hover {
   background-color: var(--enemy);
   border: 0.25rem dashed var(--loser);
   scale: 1.25;
+}
+
+.mouse-target:active {
+  background-color: var(--loser);
+  border: 0.25rem dashed var(--enemy);
+  /* scale: .9; */
 }
