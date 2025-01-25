@@ -23,6 +23,7 @@ import rC from "../assets/ship2C-r.svg";
 import { createImgShip } from "./uiImages.js";
 
 import {
+  createHitMissGrid,
   createHitMissGrid1,
   createHitMissGrid2,
   createTargetHitMissGrid1,
@@ -226,7 +227,8 @@ export function createGameContent(board) {
     p1ShipBoard.appendChild(cell);
   });
 
-  const hitMissGridCells1 = createHitMissGrid1(board);
+  // const hitMissGridCells1 = createHitMissGrid1(board);
+  const hitMissGridCells1 = createHitMissGrid(board, 1, "normal");
   hitMissGridCells1.forEach((cell) => {
     p1StatusBoard.appendChild(cell);
   });
@@ -236,7 +238,8 @@ export function createGameContent(board) {
     p1TargetShipBoard.appendChild(cell);
   });
 
-  const targetHitMissGridCells1 = createTargetHitMissGrid2(board);
+  // const targetHitMissGridCells1 = createTargetHitMissGrid2(board);
+   const targetHitMissGridCells1 = createHitMissGrid(board, 2, "target");
   targetHitMissGridCells1.forEach((cell) => {
     p1TargetStatusBoard.appendChild(cell);
   });
@@ -246,7 +249,8 @@ export function createGameContent(board) {
     p2ShipBoard.appendChild(cell);
   });
 
-  const hitMissGridCells2 = createHitMissGrid2(board);
+  // const hitMissGridCells2 = createHitMissGrid2(board);
+   const hitMissGridCells2 = createHitMissGrid(board, 2, "normal");
   hitMissGridCells2.forEach((cell) => {
     p2StatusBoard.appendChild(cell);
   });
@@ -256,7 +260,8 @@ export function createGameContent(board) {
     p2TargetShipBoard.appendChild(cell);
   });
 
-  const targetHitMissGridCells2 = createTargetHitMissGrid1(board);
+  // const targetHitMissGridCells2 = createTargetHitMissGrid1(board);
+    const targetHitMissGridCells2 = createHitMissGrid(board, 1, "target");
   targetHitMissGridCells2.forEach((cell) => {
     p2TargetStatusBoard.appendChild(cell);
   });

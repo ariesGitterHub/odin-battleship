@@ -23,8 +23,11 @@
   /* --green: #627264; */
    --green: #444e45;
   --text: #1a1918;
-  --sea-lt: #bdd2ed;
-    --sea-dk: #7ea3d1;
+  --sea: #8fa4bd;
+  /* --sea-lt: #bdd2ed; */
+    /* --sea-lt: #8297b1; */
+    /* --sea-dk: #2e64a6; */
+      /* --sea-dk: #0D79F2; */
   --line: #ceced6;
   --hit: #aa7763;
   --miss: #52667f;
@@ -350,7 +353,7 @@ body {
     /* background-color: var(--hit); */
     /* background-color: var(--sea); */
     background-image: url("/src/assets/radarScreen.svg");
-    background-color: var(--sea-lt);
+    background-color: var(--sea);
     /* border: .125rem dotted var(--green); */
     /* border-radius: .75rem; */
     border-radius: 50%;
@@ -444,10 +447,15 @@ body {
 }
 
 #p1-ship-board,
-#p2-ship-board,
+#p2-ship-board {
+  background-color: var(--sea);
+  /* z-index: -1; */
+}
+
+
 #p1-target-ship-board,
 #p2-target-ship-board {
-  background-color: var(--sea-dk);
+  background-color: var(--sea);
   /* z-index: -1; */
 }
 
@@ -460,13 +468,15 @@ body {
   width: 22rem;
   font-family: var(--font-emoji);
   /* z-index: -2; */
-  margin-top: -21rem;
+  margin-top: -21.25rem;
 }
 
 .ship-cells1,
 .ship-cells2,
 .hit-miss-cells1,
-.hit-miss-cells2 {
+.hit-miss-cells2,
+.hit-miss-target-cells1,
+.hit-miss-target-cells2 {
   height: 2rem;
   width: 2rem;
   display: flex;
@@ -479,12 +489,17 @@ body {
 
 .ship-cells1,
 .ship-cells2 {
-  border: 0.25px dashed var(--line);
+  border: 0.085rem dashed var(--line);
 }
 
 .ship-target-cells1,
 .ship-target-cells2 {
-  border: 0.25px dashed var(--enemy);
+  border: 0.085rem dashed var(--enemy);
+}
+
+.hit-miss-cells1,
+.hit-miss-cells2 {
+  z-index: 10;
 }
 
 .sunk {
@@ -501,32 +516,45 @@ body {
 .hit {
 }
 
-/* .mouse-target {
-  display: flex;
+.mouse-deploy {
+  /* display: flex;
   align-items: center;
-  justify-content: center;
-} */
+  justify-content: center; */
+
+}
+
+.mouse-target {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+
+}
 
 .mouse-deploy:hover {
-  background-color: var(--line);
-  border: 0.25rem dashed var(--loser);
-  scale: 1.25;
+    background-color: var(--line);
+  border: 0.125rem dashed var(--loser);
+  opacity: .65;
+  scale: 1.15;
 }
 
 .mouse-deploy:active {
-  background-color: var(--loser);
-  border: 0.25rem dashed var(--enemy);
+      /* background-color: var(--line);
+  border: 0.125rem dashed var(--loser); */
   /* scale: .9; */
 }
 
 .mouse-target:hover {
   background-color: var(--enemy);
-  border: 0.25rem dashed var(--loser);
-  scale: 1.25;
+  border: .5rem solid var(--loser);
+  border-radius: 50%;
+  opacity: .6;
+  scale: 2;
 }
 
 .mouse-target:active {
-  background-color: var(--loser);
-  border: 0.25rem dashed var(--enemy);
-  /* scale: .9; */
+  /* background-color: var(--loser);
+  border: 0.5rem solid var(--enemy); */
+    border-radius: 50%;
+    /* opacity: 1; */
+  scale: 1;
 }

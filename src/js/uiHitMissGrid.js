@@ -1,12 +1,77 @@
 import { createElement } from "./basicFunctions.js";
 
-export function createHitMissGrid1(board) {
+// export function createHitMissGrid1(board) {
+//   let grid = [];
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       const gridCell = createElement("div", {
+//         id: `HMG1: (${i},${j})`,
+//         class: "hit-miss-cells1",
+//       });
+//       grid.push(gridCell);
+//     }
+//   }
+//   return grid;
+// }
+
+// export function createTargetHitMissGrid1(board) {
+//   let grid = [];
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       const gridCell = createElement("div", {
+//         id: `T-HMG1: (${i},${j})`,
+//         class: "hit-miss-target-cells1",
+//       });
+//       grid.push(gridCell);
+//     }
+//   }
+//   return grid;
+// }
+
+// export function createHitMissGrid2(board) {
+//   let grid = [];
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       const gridCell = createElement("div", {
+//         id: `HMG2: (${i},${j})`,
+//         class: "hit-miss-cells2",
+//       });
+//       grid.push(gridCell);
+//     }
+//   }
+//   return grid;
+// }
+
+// export function createTargetHitMissGrid2(board) {
+//   let grid = [];
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       const gridCell = createElement("div", {
+//         id: `T-HMG2: (${i},${j})`,
+//         class: "hit-miss-target-cells2",
+//       });
+//       grid.push(gridCell);
+//     }
+//   }
+//   return grid;
+// }
+
+export function createHitMissGrid(board, gameboardNum, gridType) {
   let grid = [];
+
+  // Set up the ID and class based on the gameboard number and grid type
+  const idPrefix =
+    gridType === "target" ? `T-HMG${gameboardNum}` : `HMG${gameboardNum}`;
+  const cellClass =
+    gridType === "target"
+      ? `hit-miss-target-cells${gameboardNum}`
+      : `hit-miss-cells${gameboardNum}`;
+
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       const gridCell = createElement("div", {
-        id: `HMG1: (${i},${j})`,
-        class: "hit-miss-cells1",
+        id: `${idPrefix}: (${i},${j})`,
+        class: cellClass,
       });
       grid.push(gridCell);
     }
@@ -14,47 +79,6 @@ export function createHitMissGrid1(board) {
   return grid;
 }
 
-export function createTargetHitMissGrid1(board) {
-  let grid = [];
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      const gridCell = createElement("div", {
-        id: `T-HMG1: (${i},${j})`,
-        class: "hit-miss-cells1",
-      });
-      grid.push(gridCell);
-    }
-  }
-  return grid;
-}
-
-export function createHitMissGrid2(board) {
-  let grid = [];
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      const gridCell = createElement("div", {
-        id: `HMG2: (${i},${j})`,
-        class: "hit-miss-cells2",
-      });
-      grid.push(gridCell);
-    }
-  }
-  return grid;
-}
-
-export function createTargetHitMissGrid2(board) {
-  let grid = [];
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      const gridCell = createElement("div", {
-        id: `T-HMG2: (${i},${j})`,
-        class: "hit-miss-cells2",
-      });
-      grid.push(gridCell);
-    }
-  }
-  return grid;
-}
 
 export function addEmojiEffect1(board) {
   for (let i = 0; i < board.length; i++) {
@@ -62,9 +86,9 @@ export function addEmojiEffect1(board) {
       let cell = document.getElementById(`HMG1: (${i},${j})`);
       let cellTarget = document.getElementById(`T-HMG1: (${i},${j})`);
       let cellShipTarget = document.getElementById(`T-SG1: (${i},${j})`);
-      const explosionRotation = [0, 90, 180, 270];
-      const randomRotation = explosionRotation[Math.floor(Math.random() * explosionRotation.length)
-        ];
+      // const explosionRotation = [0, 90, 180, 270];
+      // const randomRotation = explosionRotation[Math.floor(Math.random() * explosionRotation.length)
+      //   ];
       if (
         board[i][j] === "A!" ||
         board[i][j] === "B!" ||
@@ -73,9 +97,9 @@ export function addEmojiEffect1(board) {
         board[i][j] === "C!"
       ) {
         cell.innerText = "💥";
-        cell.style.transform = `rotate(${randomRotation}deg)`;
+        // cell.style.transform = `rotate(${randomRotation}deg)`;
         cellTarget.innerText = "💥";
-        cellTarget.style.transform = `rotate(${randomRotation}deg)`;
+        // cellTarget.style.transform = `rotate(${randomRotation}deg)`;
         cellShipTarget.style.backgroundColor = "var(--hit)";
       } else if (board[i][j] === "mm") {
         cell.innerText = "💨";
@@ -98,11 +122,12 @@ export function addEmojiEffect2(board) {
       let cell = document.getElementById(`HMG2: (${i},${j})`);
       let cellTarget = document.getElementById(`T-HMG2: (${i},${j})`);
       let cellShipTarget = document.getElementById(`T-SG2: (${i},${j})`);
-      const explosionRotation = [0, 90, 180, 270];
-      const randomRotation =
-        explosionRotation[
-          Math.floor(Math.random() * explosionRotation.length)
-        ];
+      // const explosionRotation = [0, 90, 180, 270];
+      // const explosionRotation = [0];
+      // const randomRotation =
+      //   explosionRotation[
+      //     Math.floor(Math.random() * explosionRotation.length)
+      //   ];
       if (
         board[i][j] === "A!" ||
         board[i][j] === "B!" ||
@@ -111,9 +136,9 @@ export function addEmojiEffect2(board) {
         board[i][j] === "C!"
       ) {
         cell.innerText = "💥";
-        cell.style.transform = `rotate(${randomRotation}deg)`;
+        // cell.style.transform = `rotate(${randomRotation}deg)`;
         cellTarget.innerText = "💥";
-        cellTarget.style.transform = `rotate(${randomRotation}deg)`;
+        // cellTarget.style.transform = `rotate(${randomRotation}deg)`;
         cellShipTarget.style.backgroundColor = "var(--hit)";
       } else if (board[i][j] === "mm") {
         cell.innerText = "💨";
@@ -131,6 +156,7 @@ export function addEmojiEffect2(board) {
 
 export function highlightEmptyCellOnHover1(board) {
   const p0PlaceShips = document.querySelector("#p0-place-ships");
+
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       let cellDeploy1 = document.getElementById(`HMG1: (${i},${j})`);
@@ -147,6 +173,8 @@ export function highlightEmptyCellOnHover1(board) {
           cellDeploy1.classList.add("mouse-deploy");
         }
         cellTarget1.classList.add("mouse-target");
+      } else {
+        cellTarget1.classList.remove("mouse-target");
       }
     }
   }
@@ -154,6 +182,7 @@ export function highlightEmptyCellOnHover1(board) {
 
 export function highlightEmptyCellOnHover2(board) {
   const p0PlaceShips = document.querySelector("#p0-place-ships");
+
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       let cellDeploy2 = document.getElementById(`HMG2: (${i},${j})`);
@@ -170,6 +199,8 @@ export function highlightEmptyCellOnHover2(board) {
           cellDeploy2.classList.add("mouse-deploy");
         }
         cellTarget2.classList.add("mouse-target");
+      } else {
+        cellTarget2.classList.remove("mouse-target");
       }
     }
   }

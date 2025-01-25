@@ -144,7 +144,6 @@ testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
 // testGame1.receiveAttack(6, 5);
 // testGame1.receiveAttack(7, 5);
 
-
 // console.log(`P1: a5 sunk status = ${testGame1.ships[0].isSunk()}`);
 // console.log(`P1: b4 sunk status = ${testGame1.ships[1].isSunk()}`);
 // console.log(`P1: d3 sunk status = ${testGame1.ships[2].isSunk()}`);
@@ -159,11 +158,8 @@ testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
 // console.log(`P2: c2 sunk status = ${testGame2.ships[4].isSunk()}`);
 // console.log(`P2: p1 sunk status = ${testGame2.ships[5].isSunk()}`);
 
-
 createGameContentDivs();
 createGameContent(playerOne.playerBoard.board, playerTwo.playerBoard.board);
-
-
 
 placeShipSvgs1("a", "v", 1, 7);
 placeShipSvgs1("b", "v", 2, 0);
@@ -282,16 +278,16 @@ function colorSunkShips2(board) {
 function rotatePlaceShips() {
   const p0BtnRotate = document.querySelector("#p0-btn-rotate");
   const p0X5Grid = document.querySelector("#p0-x5-grid");
-const placeShipClass = document.querySelectorAll(".place-ship");
+  const placeShipClass = document.querySelectorAll(".place-ship");
   let currentRotation = 0; // 0 = horizontal axis
   let rotationCount = 0;
   p0BtnRotate.addEventListener("click", () => {
     rotationCount += 1;
     if (rotationCount % 2 !== 0) {
       currentRotation = 90;
-      placeShipClass.forEach(axis => {
+      placeShipClass.forEach((axis) => {
         axis.dataset.axis = "v";
-      })
+      });
     } else {
       currentRotation = 0;
       placeShipClass.forEach((axis) => {
@@ -329,7 +325,6 @@ function highlightPlaceShips() {
         shipS.dataset.selected = "";
         shipC.src = bC;
         shipC.dataset.selected = "";
-
       } else if (ship.src === rA && ship.dataset.selected === "yes") {
         ship.src = bA;
         ship.dataset.selected = "";
@@ -392,7 +387,7 @@ function highlightPlaceShips() {
         shipC.dataset.selected = "";
       } else if (ship.src === rS && ship.dataset.selected === "yes") {
         ship.src = bS;
-                ship.dataset.selected = "";
+        ship.dataset.selected = "";
         shipA.src = bA;
         shipB.src = bB;
         shipD.src = bD;
@@ -423,20 +418,11 @@ function highlightPlaceShips() {
 }
 highlightPlaceShips();
 
-
-
-
 // testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
 // placeShipSvgs1("a", "v", 1, 7);
 
-
 // testGame1.receiveAttack(1, 7);
 // testGame2.receiveAttack(0, 2);
-
-
-
-
-
 
 // function targetCoordinates1() {
 //   const hitMissCells1 = document.querySelectorAll(".hit-miss-cells1");
@@ -455,9 +441,9 @@ highlightPlaceShips();
 //       // console.log(row, col);
 //     }
 //     console.log(`${row}, ${col}`);
-    
+
 //     return (`${row}, ${col}`)
-    
+
 //   }))
 // }
 // // playGame1(playerOne.playerBoard.board);
@@ -466,48 +452,81 @@ highlightPlaceShips();
 // testGame1.receiveAttack(1, 7);
 // testGame1.receiveAttack(targetCoordinates1());
 
-function targetCoordinates1(board) {
-
-
-  const hitMissCells1 = document.querySelectorAll(".hit-miss-cells1");
-
-  hitMissCells1.forEach((cell) => {
-    cell.addEventListener("click", () => {
-      let targetId = cell.id;
-      let regex = /\((\d+),(\d+)\)/;
-      let matches = targetId.match(regex);
-      let row, col;
-
-      if (matches) {
-        row = +matches[1]; // Converts the string to a number
-        col = +matches[2]; // Converts the string to a number
-        console.log(`Coordinates clicked: ${row}, ${col}`);
-        console.log(typeof row === "number");
-        console.log(testGame1.receiveAttack(row, col));
-        addEmojiEffect1(playerOne.playerBoard.board);
-        colorSunkShips1(playerOne.playerBoard.board);
-      }
-        // You can now pass the coordinates to another function or update your state
-
-
-      // testGame1.receiveAttack(row, col);
-    });
-  });
-}
-    testGame1.receiveAttack(1, 7);
+// testGame1.receiveAttack(1, 7);
 // Call the function to set up the event listeners
 // targetCoordinates1();
 
-addEmojiEffect1(playerOne.playerBoard.board);
-addEmojiEffect2(playerTwo.playerBoard.board);
-colorSunkShips1(playerOne.playerBoard.board);
-colorSunkShips2(playerTwo.playerBoard.board);
-highlightEmptyCellOnHover1(playerOne.playerBoard.board);
-highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
-createMessageElements();
-addMessage("Below, select the number of players to begin your game.");
-// console.log(seaBoard1);
-// console.log(seaBoard2);
-targetCoordinates1();
+// addEmojiEffect1(playerOne.playerBoard.board);
+// addEmojiEffect2(playerTwo.playerBoard.board);
+// colorSunkShips1(playerOne.playerBoard.board);
+// colorSunkShips2(playerTwo.playerBoard.board);
+// highlightEmptyCellOnHover1(playerOne.playerBoard.board);
+// highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
+// createMessageElements();
+// // addMessage("Below, select the number of players to begin your game.");
+// targetCoordinates1();
+
+document.addEventListener("DOMContentLoaded", () => {
+  function attackTargetCoordinates1(board) {
+    const hitMissTargetCells1 = document.querySelectorAll(".hit-miss-target-cells1");
+    highlightEmptyCellOnHover1(playerOne.playerBoard.board);
+    hitMissTargetCells1.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        let targetId = cell.id;
+        let regex = /\((\d+),(\d+)\)/;
+        let matches = targetId.match(regex);
+        let row, col;
+
+        if (matches) {
+          row = +matches[1]; // Reminder, this converts the string to a number
+          col = +matches[2]; // Same as above
+          console.log(`Coordinates clicked: ${row}, ${col}`);
+          console.log(typeof row === "number");
+          console.log(testGame1.receiveAttack(row, col));
+          // addEmojiEffect1(playerOne.playerBoard.board);
+          addEmojiEffect1(playerOne.playerBoard.board);
+          colorSunkShips1(playerOne.playerBoard.board);
+          highlightEmptyCellOnHover1(playerOne.playerBoard.board);
+          
+        }
+      });
+    });
+  }
+
+  function attackTargetCoordinates2(board) {
+    const hitMissTargetCells2 = document.querySelectorAll(
+      ".hit-miss-target-cells2"
+    );
+    highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
+    hitMissTargetCells2.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        let targetId = cell.id;
+        let regex = /\((\d+),(\d+)\)/;
+        let matches = targetId.match(regex);
+        let row, col;
+
+        if (matches) {
+          row = +matches[1]; // Reminder, this converts the string to a number
+          col = +matches[2]; // Same as above
+          console.log(`Coordinates clicked: ${row}, ${col}`);
+          console.log(typeof row === "number");
+          console.log(testGame2.receiveAttack(row, col));
+          addEmojiEffect2(playerTwo.playerBoard.board);
+          colorSunkShips2(playerTwo.playerBoard.board);
+          highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
+        }
+      });
+    });
+  }
+  // addEmojiEffect1(playerOne.playerBoard.board);
+  // addEmojiEffect2(playerTwo.playerBoard.board);
+  // colorSunkShips1(playerOne.playerBoard.board);
+  // colorSunkShips2(playerTwo.playerBoard.board);
+  // highlightEmptyCellOnHover1(playerOne.playerBoard.board);
+  // highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
+  attackTargetCoordinates1();
+  attackTargetCoordinates2();
+});
+
 console.table(playerOne.playerBoard.board);
 console.table(playerTwo.playerBoard.board);
