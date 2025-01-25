@@ -5,13 +5,13 @@ export function createStartContentElements() {
   const startContent = document.querySelector("#start-content");
   const btnPvsC = createElement(
     "button",
-    { id: "btn-pvsc", class: "btn text-effect-dark" },
+    { id: "btn-pvsc", class: "btn-a text-effect-dark" },
     "Player One vs Computer"
   );
 
   const btnPvsP = createElement(
     "button",
-    { id: "btn-pvsp", class: "btn text-effect-dark" },
+    { id: "btn-pvsp", class: "btn-a text-effect-dark" },
     "Player One vs Player Two"
   );
 

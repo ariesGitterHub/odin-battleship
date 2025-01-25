@@ -1,6 +1,26 @@
 import { createElement } from "./basicFunctions.js";
 // import { imgMaker } from "./uiImages.js";
-// import { createImg } from "./basicFunctions.js";
+import { createImg } from "./basicFunctions.js";
+import compass from "../assets/compass.svg";
+import a from "../assets/ship5A.svg";
+import b from "../assets/ship4B.svg";
+import d from "../assets/ship3D.svg";
+import s from "../assets/ship3S.svg";
+import c from "../assets/ship2C.svg";
+// import p from "../assets/ship1P.svg";
+import bA from "../assets/ship5A-b.svg";
+import bB from "../assets/ship4B-b.svg";
+import bD from "../assets/ship3D-b.svg";
+import bS from "../assets/ship3S-b.svg";
+import bC from "../assets/ship2C-b.svg";
+// import bP from "../assets/ship1P-b.svg";
+import rA from "../assets/ship5A-r.svg";
+import rB from "../assets/ship4B-r.svg";
+import rD from "../assets/ship3D-r.svg";
+import rS from "../assets/ship3S-r.svg";
+import rC from "../assets/ship2C-r.svg";
+// import rP from "../assets/ship1P-r.svg";
+import { createImgShip } from "./uiImages.js";
 
 import {
   createHitMissGrid1,
@@ -37,6 +57,61 @@ export function createGameContentDivs() {
       id: "p2-full-board",
     },
     "Player Two"
+  );
+
+  const p0PlaceShips = createElement(
+    "div",
+    {
+      id: "p0-place-ships",
+    },
+    "Click on a ship type to highlight it, then drag it to the desired deployment zone square. Click the rotate button to change ship axis."
+  );
+
+  // const p1Compass = createElement("div", {
+  //   id: "p1-compass",
+  // });
+
+  // const imgCompass = createImg({
+  //   src: compass,
+  //   alt: "circle element",
+  //   class: "circle",
+  // });
+
+  const p0X5Grid = createElement("div", {
+    id: "p0-x5-grid",
+  });
+  const a = createImgShip("place-a", "a", `${bA}`, "place-ship");
+  const b = createImgShip("place-b", "b", `${bB}`, "place-ship");
+  const d = createImgShip("place-d", "d", `${bD}`, "place-ship");
+  const s = createImgShip("place-s", "s", `${bS}`, "place-ship");
+  const c = createImgShip("place-c", "c", `${bC}`, "place-ship");
+
+  const p0BtnContainer =  createElement("div", {
+    id: "p0-btn-container",
+  });
+
+  const p0BtnRotate = createElement(
+    "button",
+    { id: "p0-btn-rotate", class: "btn-b text-effect-dark" },
+    "Rotate"
+  );
+
+  const p0BtnUndo = createElement(
+    "button",
+    { id: "p0-btn-undo", class: "btn-b text-effect-dark" },
+    "Undo"
+  );
+
+    const p0BtnClear = createElement(
+      "button",
+      { id: "p0-btn-clear", class: "btn-b text-effect-dark" },
+      "Clear"
+    );
+
+  const p0BtnRandom = createElement(
+    "button",
+    { id: "p0-btn-random", class: "btn-b text-effect-dark" },
+    "Random"
   );
 
   const p1DeploymentZone = createElement(
@@ -111,7 +186,17 @@ export function createGameContentDivs() {
   // p2FullBoard.append(p2ShipBoard, p2StatusBoard)
 
   // HIDING BELOW SHOWS JUST "PLAYER ONE" TEXT AND GIVES PLAYER TWO CONTROL OF THE GAME VIEW
-  p1FullBoard.append(p1DeploymentZone, p1TargetZone);
+  p1FullBoard.append(p0PlaceShips, p1DeploymentZone, p1TargetZone);
+  p0PlaceShips.append(
+    p0X5Grid,
+    // p1Compass,
+     p0BtnContainer);
+  // p1Compass.append(imgCompass, p1X5Grid);
+  // p1Compass.append(p1X5Grid);
+  // p1X5Grid.append(b4, c2, d3, a5, s3);
+  p0X5Grid.append(a, b, d, s, c);
+p0BtnContainer.append(p0BtnRotate, p0BtnUndo, p0BtnClear, p0BtnRandom);
+
   p1DeploymentZone.append(p1ShipBoard, p1StatusBoard);
   // p1TargetZone.append(p2ShipBoard, p2StatusBoard);
   p1TargetZone.append(p1TargetShipBoard, p1TargetStatusBoard);

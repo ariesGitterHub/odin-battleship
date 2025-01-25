@@ -52,16 +52,41 @@ export function createElement(tagName, attributes = {}, text = "") {
  * @param {Object} attributes - An object of attributes to apply to the image element.
  * @returns {HTMLImageElement} The created image element.
  */
+// export function createImg(attributes = {}) {
+//   const img = document.createElement("img");
+
+//   // Set attributes dynamically
+//   for (const [key, value] of Object.entries(attributes)) {
+//     // Handle 'src' and 'alt' attributes specifically
+//     if (key === "id") {
+//       img.id = value;
+//     }
+//       else if (key === "src") {
+//       img.src = value;
+//     } else if (key === "alt") {
+//       img.alt = value;
+//     } else {
+//       img.setAttribute(key, value);
+//     }
+//   }
+
+//   return img;
+// }
 export function createImg(attributes = {}) {
   const img = document.createElement("img");
 
   // Set attributes dynamically
   for (const [key, value] of Object.entries(attributes)) {
-    // Handle 'src' and 'alt' attributes specifically
-    if (key === "src") {
+    // Handle 'id', 'src', and 'alt' attributes specifically
+    if (key === "id") {
+      img.id = value;
+    } else if (key === "src") {
       img.src = value;
     } else if (key === "alt") {
       img.alt = value;
+    } else if (key.startsWith("data-")) {
+      // Special case for data-* attributes (e.g., data-selected)
+      img.setAttribute(key, value);
     } else {
       img.setAttribute(key, value);
     }
@@ -75,6 +100,7 @@ export function createImg(attributes = {}) {
 
 // // Create an image with src, alt, and class attributes
 // const myImage = createImg({
+//   id: "boobs",
 //   src: "path/to/your/image.png",
 //   alt: "Description of the image",
 //   class: "game-marker",

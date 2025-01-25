@@ -2,18 +2,12 @@ import { createElement } from "./basicFunctions.js";
 // import { Ship } from "./ship.js";
 // import { Gameboard } from "./gameboard.js";
 import { createImg } from "./basicFunctions.js";
-import ship5A from "../assets/ship5A.svg";
-import ship4B from "../assets/ship4B.svg";
-import ship3D from "../assets/ship3D.svg";
-import ship3S from "../assets/ship3S.svg";
-import ship2C from "../assets/ship2C.svg";
-// import ship1P from "../assets/ship1P.svg";
-import sunk5A from "../assets/sunk5A.svg";
-import sunk4B from "../assets/sunk4B.svg";
-import sunk3D from "../assets/sunk3D.svg";
-import sunk3S from "../assets/sunk3S.svg";
-import sunk2C from "../assets/sunk2C.svg";
-// import sunk1P from "../assets/sunk1P.svg";
+import a from "../assets/ship5A.svg";
+import b from "../assets/ship4B.svg";
+import d from "../assets/ship3D.svg";
+import s from "../assets/ship3S.svg";
+import c from "../assets/ship2C.svg";
+// import p from "../assets/ship1P.svg";
 
 export function createShipGrid1(board) {
   let grid = [];
@@ -75,7 +69,7 @@ export function placeShipSvgs1(shipType, axis, x, y) {
   const p1ShipBoardCellIndex = document.getElementById(`SG1: (${x},${y})`);
   if (shipType === "a") {
     const p1A5 = createImg({
-      src: ship5A,
+      src: a,
       alt: "aircraft carrier image",
       class: "ship",
     });
@@ -89,7 +83,7 @@ export function placeShipSvgs1(shipType, axis, x, y) {
 
   if (shipType === "b") {
     const p1B4 = createImg({
-      src: ship4B,
+      src: b,
       alt: "battleship image",
       class: "ship",
     });
@@ -103,7 +97,7 @@ export function placeShipSvgs1(shipType, axis, x, y) {
 
   if (shipType === "d") {
     const p1D3 = createImg({
-      src: ship3D,
+      src: d,
       alt: "destroyer image",
       class: "ship",
     });
@@ -117,7 +111,7 @@ export function placeShipSvgs1(shipType, axis, x, y) {
 
   if (shipType === "s") {
     const p1S3 = createImg({
-      src: ship3S,
+      src: s,
       alt: "submarine image",
       class: "ship",
     });
@@ -131,7 +125,7 @@ export function placeShipSvgs1(shipType, axis, x, y) {
 
   if (shipType === "c") {
     const p1C2 = createImg({
-      src: ship2C,
+      src: c,
       alt: "corvette image",
       class: "ship",
     });
@@ -148,7 +142,7 @@ export function placeShipSvgs2(shipType, axis, x, y) {
   const p2ShipBoardCellIndex = document.getElementById(`SG2: (${x},${y})`);
   if (shipType === "a") {
     const p2A5 = createImg({
-      src: ship5A,
+      src: a,
       alt: "aircraft carrier image",
       class: "ship",
     });
@@ -162,7 +156,7 @@ export function placeShipSvgs2(shipType, axis, x, y) {
 
   if (shipType === "b") {
     const p2B4 = createImg({
-      src: ship4B,
+      src: b,
       alt: "battleship image",
       class: "ship",
     });
@@ -176,7 +170,7 @@ export function placeShipSvgs2(shipType, axis, x, y) {
 
   if (shipType === "d") {
     const p2D3 = createImg({
-      src: ship3D,
+      src: d,
       alt: "destroyer image",
       class: "ship",
     });
@@ -190,7 +184,7 @@ export function placeShipSvgs2(shipType, axis, x, y) {
 
   if (shipType === "s") {
     const p2S3 = createImg({
-      src: ship3S,
+      src: s,
       alt: "submarine image",
       class: "ship",
     });
@@ -204,7 +198,7 @@ export function placeShipSvgs2(shipType, axis, x, y) {
 
   if (shipType === "c") {
     const p2C2 = createImg({
-      src: ship2C,
+      src: c,
       alt: "corvette image",
       class: "ship",
     });
