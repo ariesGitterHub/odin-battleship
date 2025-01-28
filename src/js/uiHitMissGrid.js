@@ -58,12 +58,10 @@ import { createElement } from "./basicFunctions.js";
 
 export function createHitMissGrid(board, gameboardNum, gridType) {
   let grid = [];
-
-  // Set up the ID and class based on the gameboard number and grid type
   const idPrefix =
-    gridType === "target" ? `T-HMG${gameboardNum}` : `HMG${gameboardNum}`;
+    gridType === "targetZone" ? `T-HMG${gameboardNum}` : `HMG${gameboardNum}`;
   const cellClass =
-    gridType === "target"
+    gridType === "targetZone"
       ? `hit-miss-target-cells${gameboardNum}`
       : `hit-miss-cells${gameboardNum}`;
 
@@ -79,16 +77,89 @@ export function createHitMissGrid(board, gameboardNum, gridType) {
   return grid;
 }
 
+// export function addEmojiEffect1(board) {
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       let cell = document.getElementById(`HMG1: (${i},${j})`);
+//       let cellTarget = document.getElementById(`T-HMG1: (${i},${j})`);
+//       let cellShipTarget = document.getElementById(`T-SG1: (${i},${j})`);
+//       // const explosionRotation = [0, 90, 180, 270];
+//       // const randomRotation = explosionRotation[Math.floor(Math.random() * explosionRotation.length)
+//       //   ];
+//       if (
+//         board[i][j] === "A!" ||
+//         board[i][j] === "B!" ||
+//         board[i][j] === "D!" ||
+//         board[i][j] === "S!" ||
+//         board[i][j] === "C!"
+//       ) {
+//         cell.innerText = "💥";
+//         // cell.style.transform = `rotate(${randomRotation}deg)`;
+//         cellTarget.innerText = "💥";
+//         // cellTarget.style.transform = `rotate(${randomRotation}deg)`;
+//         cellShipTarget.style.backgroundColor = "var(--hit)";
+//       } else if (board[i][j] === "mm") {
+//         cell.innerText = "💨";
+//         cell.style.transform = "rotate(-90deg)";
+//         cellTarget.innerText = "💨";
+//         cellTarget.style.transform = "rotate(-90deg)";
+//         cellShipTarget.style.backgroundColor = "var(--miss)";
+//       } else {
+//         cell.innerText = "  ";
+//         cellTarget.innerText = "  ";
+//       }
+//     }
+//   }
+// }
 
-export function addEmojiEffect1(board) {
+// export function addEmojiEffect2(board) {
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       let cell = document.getElementById(`HMG2: (${i},${j})`);
+//       let cellTarget = document.getElementById(`T-HMG2: (${i},${j})`);
+//       let cellShipTarget = document.getElementById(`T-SG2: (${i},${j})`);
+//       // const explosionRotation = [0, 90, 180, 270];
+//       // const explosionRotation = [0];
+//       // const randomRotation =
+//       //   explosionRotation[
+//       //     Math.floor(Math.random() * explosionRotation.length)
+//       //   ];
+//       if (
+//         board[i][j] === "A!" ||
+//         board[i][j] === "B!" ||
+//         board[i][j] === "D!" ||
+//         board[i][j] === "S!" ||
+//         board[i][j] === "C!"
+//       ) {
+//         cell.innerText = "💥";
+//         // cell.style.transform = `rotate(${randomRotation}deg)`;
+//         cellTarget.innerText = "💥";
+//         // cellTarget.style.transform = `rotate(${randomRotation}deg)`;
+//         cellShipTarget.style.backgroundColor = "var(--hit)";
+//       } else if (board[i][j] === "mm") {
+//         cell.innerText = "💨";
+//         cell.style.transform = "rotate(-90deg)";
+//         cellTarget.innerText = "💨";
+//         cellTarget.style.transform = "rotate(-90deg)";
+//         cellShipTarget.style.backgroundColor = "var(--miss)";
+//       } else {
+//         cell.innerText = "  ";
+//         cellTarget.innerText = "  ";
+//       }
+//     }
+//   }
+// }
+
+export function addEmojiEffect(board, boardNum) {
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      let cell = document.getElementById(`HMG1: (${i},${j})`);
-      let cellTarget = document.getElementById(`T-HMG1: (${i},${j})`);
-      let cellShipTarget = document.getElementById(`T-SG1: (${i},${j})`);
-      // const explosionRotation = [0, 90, 180, 270];
-      // const randomRotation = explosionRotation[Math.floor(Math.random() * explosionRotation.length)
-      //   ];
+      const baseId = `${boardNum === 1 ? "HMG1" : "HMG2"}: (${i},${j})`;
+      let cell = document.getElementById(baseId);
+      let cellTarget = document.getElementById(`T-${baseId}`);
+      let cellShipTarget = document.getElementById(
+        `T-SG${boardNum}: (${i},${j})`
+      );
+
       if (
         board[i][j] === "A!" ||
         board[i][j] === "B!" ||
@@ -97,9 +168,7 @@ export function addEmojiEffect1(board) {
         board[i][j] === "C!"
       ) {
         cell.innerText = "💥";
-        // cell.style.transform = `rotate(${randomRotation}deg)`;
         cellTarget.innerText = "💥";
-        // cellTarget.style.transform = `rotate(${randomRotation}deg)`;
         cellShipTarget.style.backgroundColor = "var(--hit)";
       } else if (board[i][j] === "mm") {
         cell.innerText = "💨";
@@ -115,47 +184,9 @@ export function addEmojiEffect1(board) {
   }
 }
 
-export function addEmojiEffect2(board) {
-
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      let cell = document.getElementById(`HMG2: (${i},${j})`);
-      let cellTarget = document.getElementById(`T-HMG2: (${i},${j})`);
-      let cellShipTarget = document.getElementById(`T-SG2: (${i},${j})`);
-      // const explosionRotation = [0, 90, 180, 270];
-      // const explosionRotation = [0];
-      // const randomRotation =
-      //   explosionRotation[
-      //     Math.floor(Math.random() * explosionRotation.length)
-      //   ];
-      if (
-        board[i][j] === "A!" ||
-        board[i][j] === "B!" ||
-        board[i][j] === "D!" ||
-        board[i][j] === "S!" ||
-        board[i][j] === "C!"
-      ) {
-        cell.innerText = "💥";
-        // cell.style.transform = `rotate(${randomRotation}deg)`;
-        cellTarget.innerText = "💥";
-        // cellTarget.style.transform = `rotate(${randomRotation}deg)`;
-        cellShipTarget.style.backgroundColor = "var(--hit)";
-      } else if (board[i][j] === "mm") {
-        cell.innerText = "💨";
-        cell.style.transform = "rotate(-90deg)";
-        cellTarget.innerText = "💨";
-        cellTarget.style.transform = "rotate(-90deg)";
-        cellShipTarget.style.backgroundColor = "var(--miss)";
-      } else {
-        cell.innerText = "  ";
-        cellTarget.innerText = "  ";
-      }
-    }
-  }
-}
-
-export function highlightEmptyCellOnHover1(board) {
-  const p0PlaceShips = document.querySelector("#p0-place-ships");
+// TODO: merge these two once I figure out the details of design and workability.
+export function highlightEmptyCellOnlyOnHover1(board) {
+  const p1PlaceShips = document.querySelector("#p1-place-ships");
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
@@ -169,7 +200,7 @@ export function highlightEmptyCellOnHover1(board) {
         board[i][j] === "s" ||
         board[i][j] === "c"
       ) {
-        if (p0PlaceShips.style.display === "none") {
+        if (p1PlaceShips.style.display === "none") {
           cellDeploy1.classList.add("mouse-deploy");
         }
         cellTarget1.classList.add("mouse-target");
@@ -180,8 +211,8 @@ export function highlightEmptyCellOnHover1(board) {
   }
 }
 
-export function highlightEmptyCellOnHover2(board) {
-  const p0PlaceShips = document.querySelector("#p0-place-ships");
+export function highlightEmptyCellOnlyOnHover2(board) {
+  const p2PlaceShips = document.querySelector("#p2-place-ships");
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
@@ -195,7 +226,7 @@ export function highlightEmptyCellOnHover2(board) {
         board[i][j] === "s" ||
         board[i][j] === "c"
       ) {
-        if (p0PlaceShips.style.display === "none") {
+        if (p2PlaceShips.style.display === "none") {
           cellDeploy2.classList.add("mouse-deploy");
         }
         cellTarget2.classList.add("mouse-target");
@@ -205,3 +236,4 @@ export function highlightEmptyCellOnHover2(board) {
     }
   }
 }
+

@@ -12,11 +12,11 @@ import bD from "./assets/ship3D-b.svg";
 import bS from "./assets/ship3S-b.svg";
 import bC from "./assets/ship2C-b.svg";
 // import bP from "../assets/ship1P-b.svg";
-import rA from "./assets/ship5A-r.svg";
-import rB from "./assets/ship4B-r.svg";
-import rD from "./assets/ship3D-r.svg";
-import rS from "./assets/ship3S-r.svg";
-import rC from "./assets/ship2C-r.svg";
+import hA from "./assets/ship5A-h.svg";
+import hB from "./assets/ship4B-h.svg";
+import hD from "./assets/ship3D-h.svg";
+import hS from "./assets/ship3S-h.svg";
+import hC from "./assets/ship2C-h.svg";
 // import rP from "../assets/ship1P-r.svg";
 import { createHeader } from "./js/uiHeader.js";
 import {
@@ -36,12 +36,16 @@ import {
 } from "./js/uiBoardContent.js";
 import { createStartContentElements } from "./js/uiStartContent.js";
 import {
-  addEmojiEffect1,
-  addEmojiEffect2,
-  highlightEmptyCellOnHover1,
-  highlightEmptyCellOnHover2,
+  addEmojiEffect,
+  // addEmojiEffect1,
+  // addEmojiEffect2,
+  highlightEmptyCellOnlyOnHover1,
+  highlightEmptyCellOnlyOnHover2,
 } from "./js/uiHitMissGrid.js";
 import {
+  // colorSunkShips,
+  // colorSunkShips1,
+  // colorSunkShips2,
   // addShipColor1,
   // addShipColor2,
   // colorTargetCells1,
@@ -173,77 +177,7 @@ placeShipSvgs2("d", "v", 4, 2);
 placeShipSvgs2("s", "h", 7, 2);
 placeShipSvgs2("c", "v", 6, 8);
 
-function colorSunkShips1(board) {
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      let cellShipTarget = document.getElementById(`T-SG1: (${i},${j})`);
-      const p1ShipBoard = document.querySelector("#p1-ship-board");
-      const p2TargetShipBoard = document.querySelector("#p2-target-ship-board");
-      if (testGame1.ships[0].isSunk() && board[i][j] === "A!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame1.ships[1].isSunk() && board[i][j] === "B!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame1.ships[2].isSunk() && board[i][j] === "D!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame1.ships[3].isSunk() && board[i][j] === "S!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame1.ships[4].isSunk() && board[i][j] === "C!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
 
-      if (
-        testGame1.ships[0].isSunk() &&
-        testGame1.ships[1].isSunk() &&
-        testGame1.ships[2].isSunk() &&
-        testGame1.ships[3].isSunk() &&
-        testGame1.ships[4].isSunk()
-      ) {
-        p1ShipBoard.style.backgroundColor = "var(--loser)";
-        p2TargetShipBoard.style.backgroundColor = "var(--loser)";
-      }
-    }
-  }
-}
-
-function colorSunkShips2(board) {
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      let cellShipTarget = document.getElementById(`T-SG2: (${i},${j})`);
-      const p2ShipBoard = document.querySelector("#p2-ship-board");
-      const p1TargetShipBoard = document.querySelector("#p1-target-ship-board");
-      if (testGame2.ships[0].isSunk() && board[i][j] === "A!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame2.ships[1].isSunk() && board[i][j] === "B!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame2.ships[2].isSunk() && board[i][j] === "D!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame2.ships[3].isSunk() && board[i][j] === "S!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-      if (testGame2.ships[4].isSunk() && board[i][j] === "C!") {
-        cellShipTarget.style.backgroundColor = "var(--text)";
-      }
-
-      if (
-        testGame2.ships[0].isSunk() &&
-        testGame2.ships[1].isSunk() &&
-        testGame2.ships[2].isSunk() &&
-        testGame2.ships[3].isSunk() &&
-        testGame2.ships[4].isSunk()
-      ) {
-        p2ShipBoard.style.backgroundColor = "var(--loser)";
-        p1TargetShipBoard.style.backgroundColor = "var(--loser)";
-      }
-    }
-  }
-}
 
 // function gameEngine() {
 
@@ -264,7 +198,7 @@ function colorSunkShips2(board) {
 
 // gameEngine()
 
-// function rotatePlaceShips() {
+// function rotatePlaceShips1() {
 //   const p0BtnRotate = document.querySelector("#p0-btn-rotate");
 //   const p0X5Grid = document.querySelector("#p0-x5-grid");
 //   let currentRotation = 0
@@ -275,13 +209,13 @@ function colorSunkShips2(board) {
 //   })
 // }
 
-function rotatePlaceShips() {
-  const p0BtnRotate = document.querySelector("#p0-btn-rotate");
-  const p0X5Grid = document.querySelector("#p0-x5-grid");
+function rotatePlaceShips1() {
+  const p1BtnRotate = document.querySelector("#p1-btn-rotate");
+  const p1X5Grid = document.querySelector("#p1-x5-grid");
   const placeShipClass = document.querySelectorAll(".place-ship");
   let currentRotation = 0; // 0 = horizontal axis
   let rotationCount = 0;
-  p0BtnRotate.addEventListener("click", () => {
+  p1BtnRotate.addEventListener("click", () => {
     rotationCount += 1;
     if (rotationCount % 2 !== 0) {
       currentRotation = 90;
@@ -296,180 +230,305 @@ function rotatePlaceShips() {
     }
     console.log(rotationCount);
 
-    p0X5Grid.style.transform = `rotate(${currentRotation}deg`;
+    p1X5Grid.style.transform = `rotate(${currentRotation}deg`;
   });
 }
-rotatePlaceShips();
+rotatePlaceShips1();
 
-function highlightPlaceShips() {
-  const shipA = document.querySelector("#place-a");
-  const shipB = document.querySelector("#place-b");
-  const shipD = document.querySelector("#place-d");
-  const shipS = document.querySelector("#place-s");
-  const shipC = document.querySelector("#place-c");
-
+function rotatePlaceShips2() {
+  const p2BtnRotate = document.querySelector("#p2-btn-rotate");
+  const p2X5Grid = document.querySelector("#p2-x5-grid");
   const placeShipClass = document.querySelectorAll(".place-ship");
+  let currentRotation = 0; // 0 = horizontal axis
+  let rotationCount = 0;
+  p2BtnRotate.addEventListener("click", () => {
+    rotationCount += 1;
+    if (rotationCount % 2 !== 0) {
+      currentRotation = 90;
+      placeShipClass.forEach((axis) => {
+        axis.dataset.axis = "v";
+      });
+    } else {
+      currentRotation = 0;
+      placeShipClass.forEach((axis) => {
+        axis.dataset.axis = "h";
+      });
+    }
+    console.log(rotationCount);
 
-  placeShipClass.forEach((ship) =>
+    p2X5Grid.style.transform = `rotate(${currentRotation}deg`;
+  });
+}
+rotatePlaceShips2();
+
+function highlightPlaceShips1() {
+  const shipA1 = document.querySelector("#place-a1");
+  const shipB1 = document.querySelector("#place-b1");
+  const shipD1 = document.querySelector("#place-d1");
+  const shipS1 = document.querySelector("#place-s1");
+  const shipC1 = document.querySelector("#place-c1");
+
+  const allP1PlaceShips = document.querySelectorAll(".all-p1-place-ships");
+
+  allP1PlaceShips.forEach((ship) =>
     ship.addEventListener("click", () => {
       // Change if statements to a switch...later
       if (ship.src === bA && ship.dataset.selected === "") {
         // ship.style.scale = "2"
-        ship.src = rA;
+        ship.src = hA;
         ship.dataset.selected = "yes";
-        shipB.src = bB;
-        shipB.dataset.selected = "";
-        shipD.src = bD;
-        shipD.dataset.selected = "";
-        shipS.src = bS;
-        shipS.dataset.selected = "";
-        shipC.src = bC;
-        shipC.dataset.selected = "";
-      } else if (ship.src === rA && ship.dataset.selected === "yes") {
+        shipB1.src = bB;
+        shipB1.dataset.selected = "";
+        shipD1.src = bD;
+        shipD1.dataset.selected = "";
+        shipS1.src = bS;
+        shipS1.dataset.selected = "";
+        shipC1.src = bC;
+        shipC1.dataset.selected = "";
+      } else if (ship.src === hA && ship.dataset.selected === "yes") {
         ship.src = bA;
         ship.dataset.selected = "";
-        shipB.src = bB;
-        shipD.src = bD;
-        shipS.src = bS;
-        shipC.src = bC;
+        shipB1.src = bB;
+        shipD1.src = bD;
+        shipS1.src = bS;
+        shipC1.src = bC;
       }
 
       if (ship.src === bB && ship.dataset.selected === "") {
-        ship.src = rB;
+        ship.src = hB;
         ship.dataset.selected = "yes";
-        shipA.src = bA;
-        shipA.dataset.selected = "";
-        shipD.src = bD;
-        shipD.dataset.selected = "";
-        shipS.src = bS;
-        shipS.dataset.selected = "";
-        shipC.src = bC;
-        shipC.dataset.selected = "";
-      } else if (ship.src === rB && ship.dataset.selected === "yes") {
+        shipA1.src = bA;
+        shipA1.dataset.selected = "";
+        shipD1.src = bD;
+        shipD1.dataset.selected = "";
+        shipS1.src = bS;
+        shipS1.dataset.selected = "";
+        shipC1.src = bC;
+        shipC1.dataset.selected = "";
+      } else if (ship.src === hB && ship.dataset.selected === "yes") {
         ship.src = bB;
         ship.dataset.selected = "";
-        shipA.src = bA;
-        shipD.src = bD;
-        shipS.src = bS;
-        shipC.src = bC;
+        shipA1.src = bA;
+        shipD1.src = bD;
+        shipS1.src = bS;
+        shipC1.src = bC;
       }
 
       if (ship.src === bD && ship.dataset.selected === "") {
-        ship.src = rD;
+        ship.src = hD;
         ship.dataset.selected = "yes";
-        shipA.src = bA;
-        shipA.dataset.selected = "";
-        shipB.src = bB;
-        shipB.dataset.selected = "";
-        shipS.src = bS;
-        shipS.dataset.selected = "";
-        shipC.src = bC;
-        shipC.dataset.selected = "";
-      } else if (ship.src === rD && ship.dataset.selected === "yes") {
+        shipA1.src = bA;
+        shipA1.dataset.selected = "";
+        shipB1.src = bB;
+        shipB1.dataset.selected = "";
+        shipS1.src = bS;
+        shipS1.dataset.selected = "";
+        shipC1.src = bC;
+        shipC1.dataset.selected = "";
+      } else if (ship.src === hD && ship.dataset.selected === "yes") {
         ship.src = bD;
         ship.dataset.selected = "";
-        shipA.src = bA;
-        shipB.src = bB;
-        shipS.src = bS;
-        shipC.src = bC;
+        shipA1.src = bA;
+        shipB1.src = bB;
+        shipS1.src = bS;
+        shipC1.src = bC;
       }
 
       if (ship.src === bS && ship.dataset.selected === "") {
-        ship.src = rS;
+        ship.src = hS;
         ship.dataset.selected = "yes";
-        shipA.src = bA;
-        shipA.dataset.selected = "";
-        shipB.src = bB;
-        shipB.dataset.selected = "";
-        shipD.src = bD;
-        shipD.dataset.selected = "";
-        shipC.src = bC;
-        shipC.dataset.selected = "";
-      } else if (ship.src === rS && ship.dataset.selected === "yes") {
+        shipA1.src = bA;
+        shipA1.dataset.selected = "";
+        shipB1.src = bB;
+        shipB1.dataset.selected = "";
+        shipD1.src = bD;
+        shipD1.dataset.selected = "";
+        shipC1.src = bC;
+        shipC1.dataset.selected = "";
+      } else if (ship.src === hS && ship.dataset.selected === "yes") {
         ship.src = bS;
         ship.dataset.selected = "";
-        shipA.src = bA;
-        shipB.src = bB;
-        shipD.src = bD;
-        shipC.src = bC;
+        shipA1.src = bA;
+        shipB1.src = bB;
+        shipD1.src = bD;
+        shipC1.src = bC;
       }
 
       if (ship.src === bC && ship.dataset.selected === "") {
-        ship.src = rC;
+        ship.src = hC;
         ship.dataset.selected = "yes";
-        shipA.src = bA;
-        shipA.dataset.selected = "";
-        shipB.src = bB;
-        shipB.dataset.selected = "";
-        shipD.src = bD;
-        shipD.dataset.selected = "";
-        shipS.src = bS;
-        shipS.dataset.selected = "";
-      } else if (ship.src === rC && ship.dataset.selected === "yes") {
+        shipA1.src = bA;
+        shipA1.dataset.selected = "";
+        shipB1.src = bB;
+        shipB1.dataset.selected = "";
+        shipD1.src = bD;
+        shipD1.dataset.selected = "";
+        shipS1.src = bS;
+        shipS1.dataset.selected = "";
+      } else if (ship.src === hC && ship.dataset.selected === "yes") {
         ship.src = bC;
         ship.dataset.selected = "";
-        shipA.src = bA;
-        shipB.src = bB;
-        shipD.src = bD;
-        shipS.src = bS;
+        shipA1.src = bA;
+        shipB1.src = bB;
+        shipD1.src = bD;
+        shipS1.src = bS;
       }
     })
   );
 }
-highlightPlaceShips();
+highlightPlaceShips1();
 
-// testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
-// placeShipSvgs1("a", "v", 1, 7);
+function highlightPlaceShips2() {
+  const shipA2 = document.querySelector("#place-a2");
+  const shipB2 = document.querySelector("#place-b2");
+  const shipD2 = document.querySelector("#place-d2");
+  const shipS2 = document.querySelector("#place-s2");
+  const shipC2 = document.querySelector("#place-c2");
 
-// testGame1.receiveAttack(1, 7);
-// testGame2.receiveAttack(0, 2);
+  const allP2PlaceShips = document.querySelectorAll(".all-p2-place-ships");
 
-// function targetCoordinates1() {
-//   const hitMissCells1 = document.querySelectorAll(".hit-miss-cells1");
-//   // const hitMissCells2 = document.querySelectorAll(".hit-miss-cells2");
+  allP2PlaceShips.forEach((ship) =>
+    ship.addEventListener("click", () => {
+      // Change if statements to a switch...later
+      if (ship.src === bA && ship.dataset.selected === "") {
+        // ship.style.scale = "2"
+        ship.src = hA;
+        ship.dataset.selected = "yes";
+        shipB2.src = bB;
+        shipB2.dataset.selected = "";
+        shipD2.src = bD;
+        shipD2.dataset.selected = "";
+        shipS2.src = bS;
+        shipS2.dataset.selected = "";
+        shipC2.src = bC;
+        shipC2.dataset.selected = "";
+      } else if (ship.src === hA && ship.dataset.selected === "yes") {
+        ship.src = bA;
+        ship.dataset.selected = "";
+        shipB2.src = bB;
+        shipD2.src = bD;
+        shipS2.src = bS;
+        shipC2.src = bC;
+      }
 
-//   hitMissCells1.forEach(cell => cell.addEventListener("click", () => {
-//     let targetId = cell.id
-//     let regex = /\((\d+),(\d+)\)/;
-//     let matches = targetId.match(regex);
-//     let row;
-//     let col;
-//     // let target;
-//     if (matches) {
-//       row = matches[1]; // 1
-//       col = matches[2]; // 7
-//       // console.log(row, col);
-//     }
-//     console.log(`${row}, ${col}`);
+      if (ship.src === bB && ship.dataset.selected === "") {
+        ship.src = hB;
+        ship.dataset.selected = "yes";
+        shipA2.src = bA;
+        shipA2.dataset.selected = "";
+        shipD2.src = bD;
+        shipD2.dataset.selected = "";
+        shipS2.src = bS;
+        shipS2.dataset.selected = "";
+        shipC2.src = bC;
+        shipC2.dataset.selected = "";
+      } else if (ship.src === hB && ship.dataset.selected === "yes") {
+        ship.src = bB;
+        ship.dataset.selected = "";
+        shipA2.src = bA;
+        shipD2.src = bD;
+        shipS2.src = bS;
+        shipC2.src = bC;
+      }
 
-//     return (`${row}, ${col}`)
+      if (ship.src === bD && ship.dataset.selected === "") {
+        ship.src = hD;
+        ship.dataset.selected = "yes";
+        shipA2.src = bA;
+        shipA2.dataset.selected = "";
+        shipB2.src = bB;
+        shipB2.dataset.selected = "";
+        shipS2.src = bS;
+        shipS2.dataset.selected = "";
+        shipC2.src = bC;
+        shipC2.dataset.selected = "";
+      } else if (ship.src === hD && ship.dataset.selected === "yes") {
+        ship.src = bD;
+        ship.dataset.selected = "";
+        shipA2.src = bA;
+        shipB2.src = bB;
+        shipS2.src = bS;
+        shipC2.src = bC;
+      }
 
-//   }))
-// }
-// // playGame1(playerOne.playerBoard.board);
-// //  targetCoordinates1();
+      if (ship.src === bS && ship.dataset.selected === "") {
+        ship.src = hS;
+        ship.dataset.selected = "yes";
+        shipA2.src = bA;
+        shipA2.dataset.selected = "";
+        shipB2.src = bB;
+        shipB2.dataset.selected = "";
+        shipD2.src = bD;
+        shipD2.dataset.selected = "";
+        shipC2.src = bC;
+        shipC2.dataset.selected = "";
+      } else if (ship.src === hS && ship.dataset.selected === "yes") {
+        ship.src = bS;
+        ship.dataset.selected = "";
+        shipA2.src = bA;
+        shipB2.src = bB;
+        shipD2.src = bD;
+        shipC2.src = bC;
+      }
 
-// testGame1.receiveAttack(1, 7);
-// testGame1.receiveAttack(targetCoordinates1());
+      if (ship.src === bC && ship.dataset.selected === "") {
+        ship.src = hC;
+        ship.dataset.selected = "yes";
+        shipA2.src = bA;
+        shipA2.dataset.selected = "";
+        shipB2.src = bB;
+        shipB2.dataset.selected = "";
+        shipD2.src = bD;
+        shipD2.dataset.selected = "";
+        shipS2.src = bS;
+        shipS2.dataset.selected = "";
+      } else if (ship.src === hC && ship.dataset.selected === "yes") {
+        ship.src = bC;
+        ship.dataset.selected = "";
+        shipA2.src = bA;
+        shipB2.src = bB;
+        shipD2.src = bD;
+        shipS2.src = bS;
+      }
+    })
+  );
+}
+highlightPlaceShips2();
 
-// testGame1.receiveAttack(1, 7);
-// Call the function to set up the event listeners
-// targetCoordinates1();
+function colorSunkShips(board) {
+  const shipBoardId = board === testGame1 ? "#p1-ship-board" : "#p2-ship-board";
+  const targetShipBoardId =
+    board === testGame1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
 
-// addEmojiEffect1(playerOne.playerBoard.board);
-// addEmojiEffect2(playerTwo.playerBoard.board);
-// colorSunkShips1(playerOne.playerBoard.board);
-// colorSunkShips2(playerTwo.playerBoard.board);
-// highlightEmptyCellOnHover1(playerOne.playerBoard.board);
-// highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
-// createMessageElements();
-// // addMessage("Below, select the number of players to begin your game.");
-// targetCoordinates1();
+  for (let i = 0; i < board.board.length; i++) {
+    for (let j = 0; j < board.board[i].length; j++) {
+      let cellShipTarget = document.getElementById(
+        `T-SG${board === testGame1 ? 1 : 2}: (${i},${j})`
+      );
+
+      ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
+        if (board.ships[index].isSunk() && board.board[i][j] === shipCode) {
+          cellShipTarget.style.backgroundColor = "var(--text)";
+        }
+      });
+
+      if (board.ships.every((ship) => ship.isSunk())) {
+        document.querySelector(shipBoardId).style.backgroundColor =
+          "var(--loser)";
+        document.querySelector(targetShipBoardId).style.backgroundColor =
+          "var(--loser)";
+      }
+    }
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   function attackTargetCoordinates1(board) {
-    const hitMissTargetCells1 = document.querySelectorAll(".hit-miss-target-cells1");
-    highlightEmptyCellOnHover1(playerOne.playerBoard.board);
+    const hitMissTargetCells1 = document.querySelectorAll(
+      ".hit-miss-target-cells1"
+    );
+    highlightEmptyCellOnlyOnHover1(playerOne.playerBoard.board);
     hitMissTargetCells1.forEach((cell) => {
       cell.addEventListener("click", () => {
         let targetId = cell.id;
@@ -484,10 +543,11 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log(typeof row === "number");
           console.log(testGame1.receiveAttack(row, col));
           // addEmojiEffect1(playerOne.playerBoard.board);
-          addEmojiEffect1(playerOne.playerBoard.board);
-          colorSunkShips1(playerOne.playerBoard.board);
-          highlightEmptyCellOnHover1(playerOne.playerBoard.board);
-          
+          // addEmojiEffect1(playerOne.playerBoard.board);
+          addEmojiEffect(playerOne.playerBoard.board, 1);
+          // colorSunkShips1(testGame1);
+          colorSunkShips(testGame1, 1);
+          highlightEmptyCellOnlyOnHover1(playerOne.playerBoard.board);
         }
       });
     });
@@ -497,7 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hitMissTargetCells2 = document.querySelectorAll(
       ".hit-miss-target-cells2"
     );
-    highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
+    highlightEmptyCellOnlyOnHover2(playerTwo.playerBoard.board);
     hitMissTargetCells2.forEach((cell) => {
       cell.addEventListener("click", () => {
         let targetId = cell.id;
@@ -511,9 +571,11 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log(`Coordinates clicked: ${row}, ${col}`);
           console.log(typeof row === "number");
           console.log(testGame2.receiveAttack(row, col));
-          addEmojiEffect2(playerTwo.playerBoard.board);
-          colorSunkShips2(playerTwo.playerBoard.board);
-          highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
+          // addEmojiEffect2(playerTwo.playerBoard.board);
+          addEmojiEffect(playerTwo.playerBoard.board, 2);
+          // colorSunkShips2(testGame2);
+          colorSunkShips(testGame2, 2);
+          highlightEmptyCellOnlyOnHover2(playerTwo.playerBoard.board);
         }
       });
     });
@@ -522,11 +584,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // addEmojiEffect2(playerTwo.playerBoard.board);
   // colorSunkShips1(playerOne.playerBoard.board);
   // colorSunkShips2(playerTwo.playerBoard.board);
-  // highlightEmptyCellOnHover1(playerOne.playerBoard.board);
-  // highlightEmptyCellOnHover2(playerTwo.playerBoard.board);
+  // highlightEmptyCellOnlyOnHover1(playerOne.playerBoard.board);
+  // highlightEmptyCellOnlyOnHover2(playerTwo.playerBoard.board);
   attackTargetCoordinates1();
   attackTargetCoordinates2();
 });
+
+
 
 console.table(playerOne.playerBoard.board);
 console.table(playerTwo.playerBoard.board);
