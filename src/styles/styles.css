@@ -17,8 +17,8 @@
 
 :root {
   /* Colors */
-  --bkgd: #919692;
-  --bkgd2: #677063;
+  --bkgd: #2e312f;
+  --bkgd2: #858788;
   /* --gray: #7f8680; */
   /* --green: #627264; */
   --green: #444e45;
@@ -35,9 +35,9 @@
   --loser: #903a3a;
   --radar: #374713;
   --player1: #2f2f4f;
-  --player1text: #9090cb;
+  --player1text: #a8a8b4;
   --player2: #3c4a3e;
-  --player2text: #9ac7a1;
+  --player2text: #a8b4a9;
   --enemy: #fecc03;
   /* --box-shadow-gray: 0 3px 6px var(--gray); */
   --box-shadow-green: 0 5px 10px var(--green);
@@ -63,7 +63,7 @@ body {
   align-items: center;
   /* background-color: var(--bkgd); */
 
-  background: linear-gradient(70deg, var(--bkgd), var(--bkgd2));
+  background: linear-gradient(10deg, var(--bkgd), var(--bkgd2));
 
   margin: 0;
 }
@@ -106,13 +106,14 @@ body {
 #messages {
   height: fit-content;
   width: 22rem;
-  /* display: flex; */
-  display: none;
+  display: flex;
+  /* display: none; */
   align-items: center;
   justify-content: center;
   /* background-color: var(--text); */
-  background-color: var(--enemy);
-  border: 0.5rem solid var(--text);
+  /* background-color: var(--enemy); */
+    background-color: var(--line);
+  border: 0.5rem double var(--text);
   border-radius: 1rem;
   box-shadow: var(--box-shadow-green);
   /* color: var(--line); */
@@ -220,6 +221,7 @@ body {
   align-items: center;
   justify-content: center;
   /* background-color: var(--text); */
+
   border-radius: 1rem;
 
   margin: 1rem;
@@ -234,14 +236,15 @@ body {
 .gif {
   height: 22rem;
   width: 22rem;
-  border: 0.5rem solid var(--text);
+  /* border: 0.5rem solid var(--text); */
+    border: 0.5rem double var(--text);
   border-radius: 50%;
   box-shadow: var(--box-shadow-green);
   filter: grayscale(60%) sepia(60%);
   /* transform: rotate(0.5deg); */
   /* animation: noise 0.1s infinite alternate; */
   /* filter: grayscale(80%) sepia(40%) contrast(120%) brightness(90%); */
-  /* padding: .5rem; */
+  /* padding: 1rem; */
 }
 
 #game-content {
@@ -259,22 +262,25 @@ body {
 #p1-full-board,
 #p2-full-board {
   /* height: 49rem; */
-  height: 72.5rem;
-  width: 22rem;
+  /* height: 72.5rem; */
+  height: fit-content;
+  width: 24rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  border-left: 1rem solid;
+  border: .5rem double;
+  /* border-left: 1rem solid;
   border-right: 1rem solid;
   border-bottom: 1rem solid;
-  border-top: 0.75rem solid;
+  border-top: 0.75rem solid; */
   border-radius: 1rem;
   color: var(--line);
   font-family: var(--font-fancy);
   font-size: 1.5rem;
   margin: 0.25rem;
+  padding: 0.25rem;
   overflow: visible;
   text-transform: uppercase;
   /* z-index: -1; */
@@ -282,14 +288,14 @@ body {
 
 #p1-full-board {
   background-color: var(--player1);
-  border-color: var(--player1);
+  border-color: var(--player1text);
   color: var(--player1text);
   /* display: none; */
 }
 
 #p2-full-board {
   background-color: var(--player2);
-  border-color: var(--player2);
+  border-color: var(--player2text);
   color: var(--player2text);
   /* display: none; */
 }

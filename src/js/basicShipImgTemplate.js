@@ -1,5 +1,5 @@
 //import { createElement } from "./basicFunctions.js";
-import { createImg } from "./basicFunctions.js";
+import { createImg } from "./basicFunctionTemplates.js";
 // import shipA5hPNG from "../assets/a5h.png";
 // import sP from "../assets/ship1P.svg";
 // import sC from "../assets/ship2C.svg";
@@ -118,7 +118,7 @@ import { createImg } from "./basicFunctions.js";
 
 export function createImgShip(id, selectShip, src, classes) {
   if (selectShip === "a") {
-    const a5 = createImg({
+    const a = createImg({
       id: id,
       src: src,
       alt: "aircraft carrier image",
@@ -127,11 +127,11 @@ export function createImgShip(id, selectShip, src, classes) {
       "data-selected": "",
       class: classes,
     });
-    return a5;
+    return a;
   }
 
   if (selectShip === "b") {
-    const b4 = createImg({
+    const b = createImg({
       id: id,
       src: src,
       alt: "battleship image",
@@ -140,11 +140,11 @@ export function createImgShip(id, selectShip, src, classes) {
       "data-selected": "",
       class: classes,
     });
-    return b4;
+    return b;
   }
 
   if (selectShip === "d") {
-    const d3 = createImg({
+    const d = createImg({
       id: id,
       src: src,
       alt: "destroyer image",
@@ -153,11 +153,11 @@ export function createImgShip(id, selectShip, src, classes) {
       "data-selected": "",
       class: classes,
     });
-    return d3;
+    return d;
   }
 
   if (selectShip === "s") {
-    const s3 = createImg({
+    const s = createImg({
       id: id,
       src: src,
       alt: "submarine image",
@@ -166,11 +166,11 @@ export function createImgShip(id, selectShip, src, classes) {
       "data-selected": "",
       class: classes,
     });
-    return s3;
+    return s;
   }
 
   if (selectShip === "c") {
-    const c2 = createImg({
+    const c = createImg({
       id: id,
       src: src,
       alt: "corvette image",
@@ -179,18 +179,19 @@ export function createImgShip(id, selectShip, src, classes) {
       "data-selected": "",
       class: classes,
     });
-    return c2;
+    return c;
   }
 
   // if (selectShip === "p") {
-  //   const p1 = createImg({
+  //   const p = createImg({
   //     id: id,
-  //     src: ship1P,
-  //     alt: "patrol boat image",
+  //     src: src,
+  //     alt: "corvette image",
+  //     "data-ship": "p",
   //     "data-axis": "h",
   //     "data-selected": "",
   //     class: classes,
   //   });
-  //   return p1;
+  //   return p;
   // }
 }

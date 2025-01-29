@@ -1,4 +1,4 @@
-import { createElement } from "./basicFunctions.js";
+import { createElement } from "./basicFunctionTemplates.js";
 
 export function createMessageElements() {
   const messages = document.querySelector("#messages");

@@ -1,4 +1,4 @@
-import { createElement } from "./basicFunctions.js";
+import { createElement } from "./basicFunctionTemplates.js";
 
 // export function createHitMissGrid1(board) {
 //   let grid = [];
@@ -56,14 +56,14 @@ import { createElement } from "./basicFunctions.js";
 //   return grid;
 // }
 
-export function createHitMissGrid(board, gameboardNum, gridType) {
+export function createHitMissGrid(board, boardNum, gridType) {
   let grid = [];
   const idPrefix =
-    gridType === "targetZone" ? `T-HMG${gameboardNum}` : `HMG${gameboardNum}`;
+    gridType === "targetZone" ? `T-HMG${boardNum}` : `HMG${boardNum}`;
   const cellClass =
     gridType === "targetZone"
-      ? `hit-miss-target-cells${gameboardNum}`
-      : `hit-miss-cells${gameboardNum}`;
+      ? `hit-miss-target-cells${boardNum}`
+      : `hit-miss-cells${boardNum}`;
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
@@ -184,56 +184,93 @@ export function addEmojiEffect(board, boardNum) {
   }
 }
 
-// TODO: merge these two once I figure out the details of design and workability.
-export function highlightEmptyCellOnlyOnHover1(board) {
-  const p1PlaceShips = document.querySelector("#p1-place-ships");
+// export function highlightEmptyCellOnlyOnHover1(board) {
+//   const p1PlaceShips = document.querySelector("#p1-place-ships");
+
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       let cellDeploy1 = document.getElementById(`HMG1: (${i},${j})`);
+//       let cellTarget1 = document.getElementById(`T-HMG1: (${i},${j})`);
+//       if (
+//         board[i][j] === "--" ||
+//         board[i][j] === "a" ||
+//         board[i][j] === "b" ||
+//         board[i][j] === "d" ||
+//         board[i][j] === "s" ||
+//         board[i][j] === "c"
+//       ) {
+//         if (p1PlaceShips.style.display === "none") {
+//           cellDeploy1.classList.add("mouse-deploy");
+//         }
+//         cellTarget1.classList.add("mouse-target");
+//       } else {
+//         cellTarget1.classList.remove("mouse-target");
+//       }
+//     }
+//   }
+// }
+
+// export function highlightEmptyCellOnlyOnHover2(board) {
+//   const p2PlaceShips = document.querySelector("#p2-place-ships");
+
+//   for (let i = 0; i < board.length; i++) {
+//     for (let j = 0; j < board[i].length; j++) {
+//       let cellDeploy2 = document.getElementById(`HMG2: (${i},${j})`);
+//       let cellTarget2 = document.getElementById(`T-HMG2: (${i},${j})`);
+//       if (
+//         board[i][j] === "--" ||
+//         board[i][j] === "a" ||
+//         board[i][j] === "b" ||
+//         board[i][j] === "d" ||
+//         board[i][j] === "s" ||
+//         board[i][j] === "c"
+//       ) {
+//         if (p2PlaceShips.style.display === "none") {
+//           cellDeploy2.classList.add("mouse-deploy");
+//         }
+//         cellTarget2.classList.add("mouse-target");
+//       } else {
+//         cellTarget2.classList.remove("mouse-target");
+//       }
+//     }
+//   }
+// }
+
+export function highlightEmptyCellOnlyOnHover(board, boardNum) {
+  const placeShipsId = boardNum === 1 ? "#p1-place-ships" : "#p2-place-ships";
+  const validBoardSymbols = ["--", "a", "b", "d", "s", "c"];
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      let cellDeploy1 = document.getElementById(`HMG1: (${i},${j})`);
-      let cellTarget1 = document.getElementById(`T-HMG1: (${i},${j})`);
-      if (
-        board[i][j] === "--" ||
-        board[i][j] === "a" ||
-        board[i][j] === "b" ||
-        board[i][j] === "d" ||
-        board[i][j] === "s" ||
-        board[i][j] === "c"
-      ) {
-        if (p1PlaceShips.style.display === "none") {
-          cellDeploy1.classList.add("mouse-deploy");
+      let cellDeploy = document.getElementById(
+        `HMG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+      );
+      let cellTarget = document.getElementById(
+        `T-HMG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+      );
+
+      // if (
+      //   board[i][j] === "--" ||
+      //   board[i][j] === "a" ||
+      //   board[i][j] === "b" ||
+      //   board[i][j] === "d" ||
+      //   board[i][j] === "s" ||
+      //   board[i][j] === "c"
+      // ) 
+      // {
+      if (validBoardSymbols.includes(board[i][j])) {
+        // Works so far, but below might have side-effects
+        // if (`${placeShipsId}.style.display` === "none") {
+        //   cellDeploy.classList.add("mouse-deploy");
+        // }
+        // Changed to...
+        if (document.querySelector(placeShipsId).style.display === "none") {
+          cellDeploy.classList.add("mouse-deploy");
         }
-        cellTarget1.classList.add("mouse-target");
+        cellTarget.classList.add("mouse-target");
       } else {
-        cellTarget1.classList.remove("mouse-target");
+        cellTarget.classList.remove("mouse-target");
       }
     }
   }
 }
-
-export function highlightEmptyCellOnlyOnHover2(board) {
-  const p2PlaceShips = document.querySelector("#p2-place-ships");
-
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      let cellDeploy2 = document.getElementById(`HMG2: (${i},${j})`);
-      let cellTarget2 = document.getElementById(`T-HMG2: (${i},${j})`);
-      if (
-        board[i][j] === "--" ||
-        board[i][j] === "a" ||
-        board[i][j] === "b" ||
-        board[i][j] === "d" ||
-        board[i][j] === "s" ||
-        board[i][j] === "c"
-      ) {
-        if (p2PlaceShips.style.display === "none") {
-          cellDeploy2.classList.add("mouse-deploy");
-        }
-        cellTarget2.classList.add("mouse-target");
-      } else {
-        cellTarget2.classList.remove("mouse-target");
-      }
-    }
-  }
-}
-

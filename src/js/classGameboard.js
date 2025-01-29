@@ -7,7 +7,7 @@
 // Use indexing as coordinates, e.g., first cell in this 10 x 10 grid is [0][0], 100th is [9][9].
 // Idea: let "--" = neither hit nor miss, let "!!" = hit, let "mm" = miss, carrier = c5, battleship = b4, destroyer = d3, submarine = s3, patrol boat = p2
 
-import { Ship } from "./ship.js";
+import { Ship } from "./classShip.js";
 
 class Gameboard {
   constructor(

@@ -1,11 +1,12 @@
 import "./styles/styles.css";
+
 // import { createImg } from "./js/basicFunctions.js";
-import a from "./assets/ship5A.svg";
-import b from "./assets/ship4B.svg";
-import d from "./assets/ship3D.svg";
-import s from "./assets/ship3S.svg";
-import c from "./assets/ship2C.svg";
-// import p from "../assets/ship1P.svg";
+// import nA from "./assets/ship5A.svg";
+// import nB from "./assets/ship4B.svg";
+// import nD from "./assets/ship3D.svg";
+// import nS from "./assets/ship3S.svg";
+// import nC from "./assets/ship2C.svg";
+// import nP from "../assets/ship1P.svg";
 import bA from "./assets/ship5A-b.svg";
 import bB from "./assets/ship4B-b.svg";
 import bD from "./assets/ship3D-b.svg";
@@ -18,12 +19,12 @@ import hD from "./assets/ship3D-h.svg";
 import hS from "./assets/ship3S-h.svg";
 import hC from "./assets/ship2C-h.svg";
 // import rP from "../assets/ship1P-r.svg";
-import { createHeader } from "./js/uiHeader.js";
+import { createHeader } from "./js/ui0-0Header.js";
 import {
   addMessage,
   clearMessage,
   createMessageElements,
-} from "./js/uiMessages.js";
+} from "./js/ui1-0Messages.js";
 // import { imgMaker } from "./js/uiImages.js";
 import {
   // addEmojiEffect1,
@@ -33,30 +34,32 @@ import {
   createGameContentDivs,
   createGameContent,
   // randomRotate,
-} from "./js/uiBoardContent.js";
-import { createStartContentElements } from "./js/uiStartContent.js";
+} from "./js/ui3-0FullBoardElements.js";
+import { createStartContentElements } from "./js/ui2-0StartContent.js";
 import {
   addEmojiEffect,
   // addEmojiEffect1,
   // addEmojiEffect2,
-  highlightEmptyCellOnlyOnHover1,
-  highlightEmptyCellOnlyOnHover2,
-} from "./js/uiHitMissGrid.js";
+  highlightEmptyCellOnlyOnHover,
+  // highlightEmptyCellOnlyOnHover1,
+  // highlightEmptyCellOnlyOnHover2,
+} from "./js/ui3-2HitMissGrid.js";
 import {
-  // colorSunkShips,
+  colorSunkShips,
   // colorSunkShips1,
   // colorSunkShips2,
   // addShipColor1,
   // addShipColor2,
   // colorTargetCells1,
-  placeShipSvgs1,
-  placeShipSvgs2,
-} from "./js/uiShipGrid.js";
+  orientShipSvgOnShipGrid,
+  // orientShipSvgOnShipGrid1,
+  // orientShipSvgOnShipGrid2,
+} from "./js/ui3-1ShipGrid.js";
 
 createHeader();
 
-import { Gameboard } from "./js/gameboard.js";
-import { Player } from "./js/player.js";
+import { Gameboard } from "./js/classGameboard.js";
+import { Player } from "./js/classPlayer.js";
 
 const numRows = 10;
 const numCols = 10;
@@ -71,7 +74,7 @@ let seaBoard2 = Array(numRows)
 const testGame1 = new Gameboard(seaBoard1);
 const testGame2 = new Gameboard(seaBoard2);
 
-const playerOne = new Player(1, "human", testGame1);
+const player1 = new Player(1, "human", testGame1);
 testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
 testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
 testGame1.placeShip(testGame1.ships[2], "h", 3, 2);
@@ -79,7 +82,7 @@ testGame1.placeShip(testGame1.ships[3], "v", 5, 5);
 testGame1.placeShip(testGame1.ships[4], "h", 8, 7);
 testGame1.placeShip(testGame1.ships[5], "v", 9, 0);
 
-const playerTwo = new Player(2, "machine", testGame2);
+const player2 = new Player(2, "machine", testGame2);
 testGame2.placeShip(testGame2.ships[0], "h", 0, 2);
 testGame2.placeShip(testGame2.ships[1], "h", 2, 1);
 testGame2.placeShip(testGame2.ships[2], "v", 4, 2);
@@ -163,72 +166,41 @@ testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
 // console.log(`P2: p1 sunk status = ${testGame2.ships[5].isSunk()}`);
 
 createGameContentDivs();
-createGameContent(playerOne.playerBoard.board, playerTwo.playerBoard.board);
+createGameContent(player1.playerBoard.board, player2.playerBoard.board);
 
-placeShipSvgs1("a", "v", 1, 7);
-placeShipSvgs1("b", "v", 2, 0);
-placeShipSvgs1("d", "h", 3, 2);
-placeShipSvgs1("s", "v", 5, 5);
-placeShipSvgs1("c", "h", 8, 7);
+orientShipSvgOnShipGrid(1, "a", "v", 1, 7);
+orientShipSvgOnShipGrid(1, "b", "v", 2, 0);
+orientShipSvgOnShipGrid(1, "d", "h", 3, 2);
+orientShipSvgOnShipGrid(1, "s", "v", 5, 5);
+orientShipSvgOnShipGrid(1, "c", "h", 8, 7);
 
-placeShipSvgs2("a", "h", 0, 2);
-placeShipSvgs2("b", "h", 2, 1);
-placeShipSvgs2("d", "v", 4, 2);
-placeShipSvgs2("s", "h", 7, 2);
-placeShipSvgs2("c", "v", 6, 8);
+orientShipSvgOnShipGrid(2, "a", "h", 0, 2);
+orientShipSvgOnShipGrid(2, "b", "h", 2, 1);
+orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
+orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
+orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
 
-
-
-// function gameEngine() {
-
-// const btnPvsC = document.querySelector("#btn-pvsc");
-// const btnPvsP = document.querySelector("#btn-pvsp");
-// const gifContainer = document.querySelector("#gif-container");
-// const p1FullBoard = document.querySelector("#p1-full-board");
-// btnPvsC.addEventListener("click", () => {
-//   clearMessage();
-//   addMessage("Player One drag and position your fleet. Use the rotate button to change axis, or use the random button to auto-position ships.")
-//   btnPvsC.style.display = "none";
-//   btnPvsP.style.display = "none";
-//   gifContainer.style.display = "none";
-//   p1FullBoard.style.display = "flex";
-// })
-
-// }
-
-// gameEngine()
-
-// function rotatePlaceShips1() {
-//   const p0BtnRotate = document.querySelector("#p0-btn-rotate");
-//   const p0X5Grid = document.querySelector("#p0-x5-grid");
-//   let currentRotation = 0
-//   let rotationValue = 0
-//   p0BtnRotate.addEventListener("click", () => {
-//     currentRotation += 90
-//     p0X5Grid.style.transform = `rotate(${currentRotation}deg`;
-//   })
-// }
+createStartContentElements();
 
 function rotatePlaceShips1() {
   const p1BtnRotate = document.querySelector("#p1-btn-rotate");
   const p1X5Grid = document.querySelector("#p1-x5-grid");
-  const placeShipClass = document.querySelectorAll(".place-ship");
+  const allP1PlaceShips = document.querySelectorAll(".all-p1-place-ships");
   let currentRotation = 0; // 0 = horizontal axis
   let rotationCount = 0;
   p1BtnRotate.addEventListener("click", () => {
     rotationCount += 1;
     if (rotationCount % 2 !== 0) {
       currentRotation = 90;
-      placeShipClass.forEach((axis) => {
+      allP1PlaceShips.forEach((axis) => {
         axis.dataset.axis = "v";
       });
     } else {
       currentRotation = 0;
-      placeShipClass.forEach((axis) => {
+      allP1PlaceShips.forEach((axis) => {
         axis.dataset.axis = "h";
       });
     }
-    console.log(rotationCount);
 
     p1X5Grid.style.transform = `rotate(${currentRotation}deg`;
   });
@@ -254,13 +226,14 @@ function rotatePlaceShips2() {
         axis.dataset.axis = "h";
       });
     }
-    console.log(rotationCount);
 
     p2X5Grid.style.transform = `rotate(${currentRotation}deg`;
   });
 }
 rotatePlaceShips2();
 
+
+// WEDNESDAY START HERE...
 function highlightPlaceShips1() {
   const shipA1 = document.querySelector("#place-a1");
   const shipB1 = document.querySelector("#place-b1");
@@ -274,7 +247,6 @@ function highlightPlaceShips1() {
     ship.addEventListener("click", () => {
       // Change if statements to a switch...later
       if (ship.src === bA && ship.dataset.selected === "") {
-        // ship.style.scale = "2"
         ship.src = hA;
         ship.dataset.selected = "yes";
         shipB1.src = bB;
@@ -495,32 +467,9 @@ function highlightPlaceShips2() {
 }
 highlightPlaceShips2();
 
-function colorSunkShips(board) {
-  const shipBoardId = board === testGame1 ? "#p1-ship-board" : "#p2-ship-board";
-  const targetShipBoardId =
-    board === testGame1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
 
-  for (let i = 0; i < board.board.length; i++) {
-    for (let j = 0; j < board.board[i].length; j++) {
-      let cellShipTarget = document.getElementById(
-        `T-SG${board === testGame1 ? 1 : 2}: (${i},${j})`
-      );
 
-      ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
-        if (board.ships[index].isSunk() && board.board[i][j] === shipCode) {
-          cellShipTarget.style.backgroundColor = "var(--text)";
-        }
-      });
 
-      if (board.ships.every((ship) => ship.isSunk())) {
-        document.querySelector(shipBoardId).style.backgroundColor =
-          "var(--loser)";
-        document.querySelector(targetShipBoardId).style.backgroundColor =
-          "var(--loser)";
-      }
-    }
-  }
-}
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -528,7 +477,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const hitMissTargetCells1 = document.querySelectorAll(
       ".hit-miss-target-cells1"
     );
-    highlightEmptyCellOnlyOnHover1(playerOne.playerBoard.board);
+    // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
+    highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
     hitMissTargetCells1.forEach((cell) => {
       cell.addEventListener("click", () => {
         let targetId = cell.id;
@@ -542,12 +492,10 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log(`Coordinates clicked: ${row}, ${col}`);
           console.log(typeof row === "number");
           console.log(testGame1.receiveAttack(row, col));
-          // addEmojiEffect1(playerOne.playerBoard.board);
-          // addEmojiEffect1(playerOne.playerBoard.board);
-          addEmojiEffect(playerOne.playerBoard.board, 1);
-          // colorSunkShips1(testGame1);
+          addEmojiEffect(player1.playerBoard.board, 1);
           colorSunkShips(testGame1, 1);
-          highlightEmptyCellOnlyOnHover1(playerOne.playerBoard.board);
+          // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
+          highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
         }
       });
     });
@@ -557,7 +505,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const hitMissTargetCells2 = document.querySelectorAll(
       ".hit-miss-target-cells2"
     );
-    highlightEmptyCellOnlyOnHover2(playerTwo.playerBoard.board);
+    // highlightEmptyCellOnlyOnHover2(player2.playerBoard.board);
+        highlightEmptyCellOnlyOnHover(player2.playerBoard.board, 2);
     hitMissTargetCells2.forEach((cell) => {
       cell.addEventListener("click", () => {
         let targetId = cell.id;
@@ -571,26 +520,20 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log(`Coordinates clicked: ${row}, ${col}`);
           console.log(typeof row === "number");
           console.log(testGame2.receiveAttack(row, col));
-          // addEmojiEffect2(playerTwo.playerBoard.board);
-          addEmojiEffect(playerTwo.playerBoard.board, 2);
-          // colorSunkShips2(testGame2);
+          addEmojiEffect(player2.playerBoard.board, 2);
           colorSunkShips(testGame2, 2);
-          highlightEmptyCellOnlyOnHover2(playerTwo.playerBoard.board);
+          // highlightEmptyCellOnlyOnHover2(player2.playerBoard.board);
+          highlightEmptyCellOnlyOnHover(player2.playerBoard.board, 2);
         }
       });
     });
   }
-  // addEmojiEffect1(playerOne.playerBoard.board);
-  // addEmojiEffect2(playerTwo.playerBoard.board);
-  // colorSunkShips1(playerOne.playerBoard.board);
-  // colorSunkShips2(playerTwo.playerBoard.board);
-  // highlightEmptyCellOnlyOnHover1(playerOne.playerBoard.board);
-  // highlightEmptyCellOnlyOnHover2(playerTwo.playerBoard.board);
+
   attackTargetCoordinates1();
   attackTargetCoordinates2();
 });
 
 
 
-console.table(playerOne.playerBoard.board);
-console.table(playerTwo.playerBoard.board);
+console.table(player1.playerBoard.board);
+console.table(player2.playerBoard.board);

@@ -1,12 +1,12 @@
-import { createElement } from "./basicFunctions.js";
+import { createElement } from "./basicFunctionTemplates.js";
 // import { imgMaker } from "./uiImages.js";
-import { createImg } from "./basicFunctions.js";
+import { createImg } from "./basicFunctionTemplates.js";
 import radarScreen from "../assets/radarScreen.svg";
-import a from "../assets/ship5A.svg";
-import b from "../assets/ship4B.svg";
-import d from "../assets/ship3D.svg";
-import s from "../assets/ship3S.svg";
-import c from "../assets/ship2C.svg";
+// import a from "../assets/ship5A.svg";
+// import b from "../assets/ship4B.svg";
+// import d from "../assets/ship3D.svg";
+// import s from "../assets/ship3S.svg";
+// import c from "../assets/ship2C.svg";
 // import p from "../assets/ship1P.svg";
 import bA from "../assets/ship5A-b.svg";
 import bB from "../assets/ship4B-b.svg";
@@ -14,13 +14,13 @@ import bD from "../assets/ship3D-b.svg";
 import bS from "../assets/ship3S-b.svg";
 import bC from "../assets/ship2C-b.svg";
 // import bP from "../assets/ship1P-b.svg";
-import hA from "../assets/ship5A-h.svg";
-import hB from "../assets/ship4B-h.svg";
-import hD from "../assets/ship3D-h.svg";
-import hS from "../assets/ship3S-h.svg";
-import hC from "../assets/ship2C-h.svg";
+// import hA from "../assets/ship5A-h.svg";
+// import hB from "../assets/ship4B-h.svg";
+// import hD from "../assets/ship3D-h.svg";
+// import hS from "../assets/ship3S-h.svg";
+// import hC from "../assets/ship2C-h.svg";
 // import rP from "../assets/ship1P-r.svg";
-import { createImgShip } from "./uiImages.js";
+import { createImgShip } from "./basicShipImgTemplate.js";
 
 import {
   createHitMissGrid,
@@ -28,14 +28,14 @@ import {
   createHitMissGrid2,
   createTargetHitMissGrid1,
   createTargetHitMissGrid2,
-} from "./uiHitMissGrid.js";
+} from "./ui3-2HitMissGrid.js";
 import {
   createShipGrid,
   // createShipGrid1,
   // createShipGrid2,
   // createTargetShipGrid1,
   // createTargetShipGrid2,
-} from "./uiShipGrid.js";
+} from "./ui3-1ShipGrid.js";
 
 export function createGameContentDivs() {
   const p1 = "Player 1";

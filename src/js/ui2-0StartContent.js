@@ -1,4 +1,4 @@
-import { createElement, createImg } from "./basicFunctions.js";
+import { createElement, createImg } from "./basicFunctionTemplates.js";
 import broadside from "../assets/broadside1.gif";
 import compass from "../assets/compass.svg";
 export function createStartContentElements() {
@@ -6,13 +6,13 @@ export function createStartContentElements() {
   const btnPvsC = createElement(
     "button",
     { id: "btn-pvsc", class: "btn-a text-effect-dark" },
-    "Player One vs Computer"
+    "Player 1 vs Computer"
   );
 
   const btnPvsP = createElement(
     "button",
     { id: "btn-pvsp", class: "btn-a text-effect-dark" },
-    "Player One vs Player Two"
+    "Player 1 vs Player 2"
   );
 
   const gifContainer = createElement("div", { id: "gif-container" });
