@@ -68,14 +68,14 @@ import nC from "../assets/ship2C.svg";
 //   return grid;
 // }
 
-export function createShipGrid(board, gameboardNum, gridType) {
+export function createShipGrid(board, boardNum, gridType) {
   let grid = [];
   const idPrefix =
-    gridType === "targetZone" ? `T-SG${gameboardNum}` : `SG${gameboardNum}`;
+    gridType === "targetZone" ? `T-SG${boardNum}` : `SG${boardNum}`;
   const cellClass =
     gridType === "targetZone"
-      ? `ship-target-cells${gameboardNum}`
-      : `ship-cells${gameboardNum}`;
+      ? `ship-target-cells${boardNum}`
+      : `ship-cells${boardNum}`;
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
@@ -302,6 +302,7 @@ export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
 
   // Append the ship image to the grid cell
   shipBoardCellId.appendChild(ship);
+  // shipBoardCellId.append(ship);
 }
 
 

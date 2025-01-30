@@ -1,6 +1,5 @@
-import { createElement, createImg } from "./basicFunctionTemplates.js";
-import broadside from "../assets/broadside1.gif";
-import compass from "../assets/compass.svg";
+import { createElement} from "./basicFunctionTemplates.js";
+
 export function createStartContentElements() {
   const startContent = document.querySelector("#start-content");
   const btnPvsC = createElement(
@@ -15,22 +14,18 @@ export function createStartContentElements() {
     "Player 1 vs Player 2"
   );
 
-  const gifContainer = createElement("div", { id: "gif-container" });
+  const btnQuitGame = createElement(
+    "button",
+    { id: "btn-quit-game", class: "btn-a text-effect-dark" },
+    "Quit Game"
+  );
 
-  const battleshipGif = createImg({
-    src: broadside,
-    alt: "A destroyer fires a massive broadside during World War II",
-    class: "gif",
-  });
+    const btnStartGame = createElement(
+      "button",
+      { id: "btn-start-game", class: "btn-a text-effect-dark" },
+      "Start Game"
+    );
 
-  // const imgCompass = createImg({
-  //   src: compass,
-  //   alt: "Description of the image",
-  //   class: "circle",
-  // });
-
-  startContent.append(gifContainer, btnPvsC, btnPvsP);
-  gifContainer.appendChild(battleshipGif);
-  // startContent.append(imgCompass);
+  startContent.append(btnPvsC, btnPvsP, btnQuitGame, btnStartGame);
 }
 

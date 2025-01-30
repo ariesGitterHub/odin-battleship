@@ -1,4 +1,5 @@
-import { createElement } from "./basicFunctionTemplates.js";
+import { createElement, createImg } from "./basicFunctionTemplates.js";
+import broadside from "../assets/broadside1.gif";
 
 export function createHeader() {
   const header = document.querySelector("#header");
@@ -26,7 +27,16 @@ export function createHeader() {
     "A Mad Muffin Man Design Studio, ©2025"
   );
 
-  header.appendChild(titleContainer);
+    const gifContainer = createElement("div", { id: "gif-container" });
+
+    const battleshipGif = createImg({
+      src: broadside,
+      alt: "A destroyer fires a massive broadside during World War II",
+      class: "gif",
+    });
+
+  header.append(titleContainer, gifContainer);
   titleContainer.appendChild(titleText);
   titleContainer.appendChild(MMM);
+  gifContainer.appendChild(battleshipGif);
 }

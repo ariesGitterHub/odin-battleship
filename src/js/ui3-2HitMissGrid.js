@@ -238,7 +238,11 @@ export function addEmojiEffect(board, boardNum) {
 
 export function highlightEmptyCellOnlyOnHover(board, boardNum) {
   const placeShipsId = boardNum === 1 ? "#p1-place-ships" : "#p2-place-ships";
-  const validBoardSymbols = ["--", "a", "b", "d", "s", "c"];
+  const placeShips = document.getElementById(`"${placeShipsId}"`);
+  // const targetZoneId = boardNum === 1 ? "#p1-target-zone" : "#p2-target-zone";
+  // const targetZone = document.getElementById(`"${targetZoneId}"`);
+  const validDeploySymbols = ["--"];
+  const validTargetSymbols = ["--", "a", "b", "d", "s", "c"];
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
@@ -258,18 +262,19 @@ export function highlightEmptyCellOnlyOnHover(board, boardNum) {
       //   board[i][j] === "c"
       // ) 
       // {
-      if (validBoardSymbols.includes(board[i][j])) {
-        // Works so far, but below might have side-effects
-        // if (`${placeShipsId}.style.display` === "none") {
-        //   cellDeploy.classList.add("mouse-deploy");
-        // }
-        // Changed to...
-        if (document.querySelector(placeShipsId).style.display === "none") {
-          cellDeploy.classList.add("mouse-deploy");
-        }
+      if (validTargetSymbols.includes(board[i][j])) {
         cellTarget.classList.add("mouse-target");
       } else {
         cellTarget.classList.remove("mouse-target");
+      }
+
+      if (validDeploySymbols.includes(board[i][j])) {
+        cellDeploy.classList.add("mouse-deploy");
+        if (placeShips) {
+          cellDeploy.classList.remove("mouse-deploy");
+        }
+      } else {
+        cellDeploy.classList.remove("mouse-deploy");
       }
     }
   }

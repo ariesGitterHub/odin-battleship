@@ -567,3 +567,31 @@ export function highlightPlaceShips(boardNum) {
     })
   );
 }
+
+export function attackTargetCoordinates(boardNum) {
+    const hitMissTargetCells = document.querySelectorAll(
+      `.hit-miss-target-cells${boardNum}`
+    );
+    // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
+    highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+    hitMissTargetCells.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        let targetId = cell.id;
+        let regex = /\((\d+),(\d+)\)/;
+        let matches = targetId.match(regex);
+        let row, col;
+
+        if (matches) {
+          row = +matches[1]; // Reminder, this converts the string to a number
+          col = +matches[2]; // Same as above
+          console.log(`Coordinates clicked: ${row}, ${col}`);
+          console.log(typeof row === "number");
+          console.log(testGame1.receiveAttack(row, col));
+          addEmojiEffect(player1.playerBoard.board, 1);
+          colorSunkShips(testGame1, 1);
+          // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
+          highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+        }
+      });
+    });
+  }

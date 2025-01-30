@@ -47,7 +47,7 @@ export function createGameContentDivs() {
   const clear = "Clear";
   const random = "Random";
 
-  const shipPlacementInstructions = "Rotate ships to the desired vertical or horizontal axis. Click on a ship to highlight it in red, then drag it to the desired deployment zone square."
+  // const shipPlacementInstructions = "Rotate ships to the desired vertical or horizontal axis. Click on a ship to highlight it in red, then drag it to the desired deployment zone square."
   // This is where the two player containers and board container are created; use this to alter the order of elements between mobile and large screen viewports.
   const gameContent = document.querySelector("#game-content");
   // gameContent.classList.add("flex-row");
@@ -76,7 +76,7 @@ export function createGameContentDivs() {
     {
       id: "p1-place-ships",
     },
-    shipPlacementInstructions
+    // shipPlacementInstructions
   );
 
     const p2PlaceShips = createElement(
@@ -84,7 +84,7 @@ export function createGameContentDivs() {
       {
         id: "p2-place-ships",
       },
-      shipPlacementInstructions
+      // shipPlacementInstructions
     );
 
   const p1Circle = createElement("div", {

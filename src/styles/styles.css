@@ -69,6 +69,10 @@ body {
 }
 
 #header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: var(--text);
   padding: 1rem;
 }
@@ -78,17 +82,46 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
 }
 
 #title-text {
   font-size: 1.5rem;
+    text-decoration: underline;
   text-transform: uppercase;
   /* color: #4b5320; */
 }
 
 #MMM {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   text-align: center;
+}
+
+#gif-container {
+  height: auto;
+  width: 22rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: var(--text); */
+  border-radius: 1rem;
+  /* margin: 1rem; */
+  margin: -.25rem;
+  padding: 1rem;
+}
+
+.gif {
+  height: 22rem;
+  width: 22rem;
+  /* border: 0.5rem solid var(--text); */
+    border: 0.5rem double var(--text);
+  border-radius: 50%;
+  box-shadow: var(--box-shadow-green);
+  filter: grayscale(60%) sepia(60%);
+  /* transform: rotate(0.5deg); */
+  /* animation: noise 0.1s infinite alternate; */
+  /* filter: grayscale(80%) sepia(40%) contrast(120%) brightness(90%); */
+  /* padding: 1rem; */
 }
 
 .text-effect-dark {
@@ -117,11 +150,11 @@ body {
   border-radius: 1rem;
   box-shadow: var(--box-shadow-green);
   /* color: var(--line); */
-  color: var(--text);
+  color: var(--loser);
   font-family: var(--font-fancy);
-  font-size: 1rem;
+  font-size: 1.125rem;
   margin-bottom: 1rem;
-  padding: 0.75rem;
+  padding: 0.5rem;
   text-align: center;
   /* text-shadow: 
     1px 1px 2px rgba(255, 255, 255, 0.25), 
@@ -146,7 +179,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-fancy);
-  margin: 0.25rem;
+  /* margin: 5rem; */
   /* text-align: center; */
 }
 
@@ -203,9 +236,23 @@ body {
   scale: 0.95;
 }
 
-/* #btn-pvsc, #btn-pvsp {
+#btn-pvsc, #btn-pvsp {
+display: flex;
+align-items: center;
+justify-content: center;
+}
 
-} */
+#btn-quit-game {
+display: none;
+align-items: center;
+justify-content: center;
+}
+
+#btn-start-game {
+display: none;
+align-items: center;
+justify-content: center;
+}
 
 /* #btn-pvsc:active {
   background-color: var(--player1);
@@ -214,38 +261,10 @@ body {
   background-color: var(--player2);
 } */
 
-#gif-container {
-  height: auto;
-  width: 22rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* background-color: var(--text); */
-
-  border-radius: 1rem;
-
-  margin: 1rem;
-  padding: 1rem;
-}
-
 /* @keyframes noise {
   0% { transform: translate(0, 0); }
   100% { transform: translate(-2px, -2px); }
 } */
-
-.gif {
-  height: 22rem;
-  width: 22rem;
-  /* border: 0.5rem solid var(--text); */
-    border: 0.5rem double var(--text);
-  border-radius: 50%;
-  box-shadow: var(--box-shadow-green);
-  filter: grayscale(60%) sepia(60%);
-  /* transform: rotate(0.5deg); */
-  /* animation: noise 0.1s infinite alternate; */
-  /* filter: grayscale(80%) sepia(40%) contrast(120%) brightness(90%); */
-  /* padding: 1rem; */
-}
 
 #game-content {
 }
@@ -290,14 +309,14 @@ body {
   background-color: var(--player1);
   border-color: var(--player1text);
   color: var(--player1text);
-  /* display: none; */
+  display: none;
 }
 
 #p2-full-board {
   background-color: var(--player2);
   border-color: var(--player2text);
   color: var(--player2text);
-  /* display: none; */
+  display: none;
 }
 
 #p1-deployment-zone,
@@ -328,10 +347,10 @@ body {
 
 #p1-place-ships,
 #p2-place-ships {
-  height: 23rem;
+  height: fit-content;
   width: 20rem;
   /* display: none; */
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   /* flex-wrap: wrap; */
   align-items: center;
@@ -345,6 +364,13 @@ body {
   text-transform: none;
 }
 
+#p1-place-ships {
+  display: flex;
+}
+
+#p2-place-ships {
+  display: flex;
+}
 /* #p1-circle, #p2-circle {
   height: 14rem;
   width: 14rem;
@@ -450,11 +476,11 @@ margin: -1rem;
 }
 
 #p1-target-zone {
-  /* display: none; */
+  display: none;
 }
 
 #p2-target-zone {
-  /* display: none; */
+  display: none;
 }
 
 #p1-ship-board,
@@ -564,9 +590,10 @@ margin: -1rem;
 }
 
 .mouse-deploy:active {
-  /* background-color: var(--line);
-  border: 0.125rem dashed var(--loser); */
-  /* scale: .9; */
+
+  border-radius: 50%;
+
+  scale: 1;
 }
 
 .mouse-target:hover {
