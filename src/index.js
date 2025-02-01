@@ -141,7 +141,6 @@ import { Player } from "./js/classPlayer.js";
 // console.log(`P2: p1 sunk status = ${testGame2.ships[5].isSunk()}`);
 
 document.addEventListener("DOMContentLoaded", () => {
-
   // let player1;
   // let player2;
   const numRows = 10;
@@ -187,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   createHeader();
   createGameContentDivs();
-  createGameContent(player1.playerBoard.board, player2.playerBoard.board);
+  // createGameContent(player1.playerBoard.board, player2.playerBoard.board);
 
   rotatePlaceShips(1);
   rotatePlaceShips(2);
@@ -198,8 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
   createStartContentElements();
 
   function startGame() {
-    // const player1;
-    // const player2;
+    let player1 = 0;
+    let player2 = 0;
     const gifContainer = document.querySelector("#gif-container");
     const btnPvsC = document.querySelector("#btn-pvsc");
     const btnPvsP = document.querySelector("#btn-pvsp");
@@ -229,10 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
       addMessage(deployMsg);
       // p1TargetZone.style.display = "flex";
 
+      // WORKS HERE!!! HAVE A THINK ABOUT THIS!!!
+      player1 = new Player(1, "human", testGame1);
 
+      player2 = new Player(2, "machine", testGame2);
     });
-
-
 
     // TODO add btnStartGame once ships are deployed!
     btnQuitGame.addEventListener("click", () => {
@@ -247,14 +247,45 @@ document.addEventListener("DOMContentLoaded", () => {
       addMessage(startMsg);
     });
 
-    // return {
-    //   player1,
-    //   player2,
-    // };
+    return {
+      player1,
+      player2,
+    };
   }
   startGame();
 
+  createGameContent(player1.playerBoard.board, player2.playerBoard.board);
 
+  // HERE IS WHERE TO START THE PLACEMENT FUNCTIONS WHEREIN...
+  // review this: https://stackoverflow.com/questions/17992543/how-do-i-drag-an-image-smoothly-around-the-screen-using-pure-javascript/17992765
+  // -dragging the ship to the desired cell,
+  // -triggers the placeShip method below
+  testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
+  testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
+  testGame1.placeShip(testGame1.ships[2], "h", 3, 2);
+  testGame1.placeShip(testGame1.ships[3], "v", 5, 5);
+  testGame1.placeShip(testGame1.ships[4], "h", 8, 7);
+  testGame1.placeShip(testGame1.ships[5], "v", 9, 0);
+  // - which then triggers the orientShipSvgOnShipGrid below
+  orientShipSvgOnShipGrid(1, "a", "v", 1, 7);
+  orientShipSvgOnShipGrid(1, "b", "v", 2, 0);
+  orientShipSvgOnShipGrid(1, "d", "h", 3, 2);
+  orientShipSvgOnShipGrid(1, "s", "v", 5, 5);
+  orientShipSvgOnShipGrid(1, "c", "h", 8, 7);
+  // - need to handle undo, clear, and random buttons...
+
+  testGame2.placeShip(testGame2.ships[0], "h", 0, 2);
+  testGame2.placeShip(testGame2.ships[1], "h", 2, 1);
+  testGame2.placeShip(testGame2.ships[2], "v", 4, 2);
+  testGame2.placeShip(testGame2.ships[3], "h", 7, 2);
+  testGame2.placeShip(testGame2.ships[4], "v", 6, 8);
+  testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
+
+  orientShipSvgOnShipGrid(2, "a", "h", 0, 2);
+  orientShipSvgOnShipGrid(2, "b", "h", 2, 1);
+  orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
+  orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
+  orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
 
   // function attackTargetCoordinates1(board) {
   //   const hitMissTargetCells1 = document.querySelectorAll(
@@ -375,7 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initial set up, changes with attacks
   console.table(player1.playerBoard.board);
-  // console.table(player2.playerBoard.board);
+  console.table(player2.playerBoard.board);
   // console.log(testGame1);
   // console.log(testGame2);
 });
