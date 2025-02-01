@@ -238,11 +238,18 @@ export function addEmojiEffect(board, boardNum) {
 
 export function highlightEmptyCellOnlyOnHover(board, boardNum) {
   const placeShipsId = boardNum === 1 ? "#p1-place-ships" : "#p2-place-ships";
-  const placeShips = document.getElementById(`"${placeShipsId}"`);
-  // const targetZoneId = boardNum === 1 ? "#p1-target-zone" : "#p2-target-zone";
-  // const targetZone = document.getElementById(`"${targetZoneId}"`);
-  const validDeploySymbols = ["--"];
+  // console.log("placeShipsId:", placeShipsId);
+  const placeShips = document.querySelector(placeShipsId);
+  // console.log("placeShips:", placeShips);
+  
+  const targetZoneId = boardNum === 1 ? "#p1-target-zone" : "#p2-target-zone";
+  const targetZone = document.querySelector(targetZoneId);
+
+  // const targetZoneId1 = "#p1-target-zone";
+  // const targetZone1 = document.querySelector(targetZoneId1);
+ 
   const validTargetSymbols = ["--", "a", "b", "d", "s", "c"];
+  const validDeploySymbols = ["--"];
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
@@ -268,14 +275,24 @@ export function highlightEmptyCellOnlyOnHover(board, boardNum) {
         cellTarget.classList.remove("mouse-target");
       }
 
-      if (validDeploySymbols.includes(board[i][j])) {
-        cellDeploy.classList.add("mouse-deploy");
-        if (placeShips) {
-          cellDeploy.classList.remove("mouse-deploy");
-        }
-      } else {
+
+      // if (boardNum === 1 && targetZone1.style.display !== "none") {
+      //   cellDeploy.classList.remove("mouse-deploy");
+      // } 
+      if (placeShips.style === "none") {
         cellDeploy.classList.remove("mouse-deploy");
-      }
+      } else if (targetZone.style.display === "flex") {
+        cellDeploy.classList.remove("mouse-deploy");
+      } 
+      // else if (placeShips.style === "flex") {
+      //   cellDeploy.classList.add("mouse-deploy");
+      // }
+       else if (validDeploySymbols.includes(board[i][j])) {
+        cellDeploy.classList.add("mouse-deploy");
+      } 
+      // else {
+      //   cellDeploy.classList.remove("mouse-deploy");
+      // }
     }
   }
 }

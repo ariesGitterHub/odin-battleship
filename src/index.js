@@ -188,10 +188,10 @@ document.addEventListener("DOMContentLoaded", () => {
   createGameContentDivs();
   // createGameContent(player1.playerBoard.board, player2.playerBoard.board);
 
-  rotatePlaceShips(1);
-  rotatePlaceShips(2);
-  highlightPlaceShips(1);
-  highlightPlaceShips(2);
+  // rotatePlaceShips(1);
+  // rotatePlaceShips(2);
+  // highlightPlaceShips(1);
+  // highlightPlaceShips(2);
 
   createMessageElements();
   createStartContentElements();
@@ -256,36 +256,107 @@ document.addEventListener("DOMContentLoaded", () => {
 
   createGameContent(player1.playerBoard.board, player2.playerBoard.board);
 
-  // HERE IS WHERE TO START THE PLACEMENT FUNCTIONS WHEREIN...
+  // HERE IS WHERE TO START THE PLACEMENT FUNCTIONS..
   // review this: https://stackoverflow.com/questions/17992543/how-do-i-drag-an-image-smoothly-around-the-screen-using-pure-javascript/17992765
   // -dragging the ship to the desired cell,
   // -triggers the placeShip method below
-  testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
-  testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
-  testGame1.placeShip(testGame1.ships[2], "h", 3, 2);
-  testGame1.placeShip(testGame1.ships[3], "v", 5, 5);
-  testGame1.placeShip(testGame1.ships[4], "h", 8, 7);
-  testGame1.placeShip(testGame1.ships[5], "v", 9, 0);
+
+    const players = {
+      1: player1,
+      2: player2,
+    };
+
+    const testGame = {
+      1: testGame1,
+      2: testGame2,
+    };
+
+    // // Validate that the boardNum is valid
+    // if (!players[boardNum] || !testGame[boardNum]) {
+    //   console.error(`Invalid board number: ${boardNum}`);
+    //   return;
+    // }
+
+  function selectShipGameCoordinates(boardNum) {
+    // let selectedImg = document.querySelector("[data-selected='yes']");
+    // console.log(selectedImg);
+    
+    let getDataShip
+    let getDataAxis
+
+    const allP1PlaceShips = document.querySelectorAll(".all-p1-place-ships");
+
+    allP1PlaceShips.forEach((ship) => ship.addEventListener("click", () => {
+      if (ship.dataset.selected === "yes") {
+        console.log("true");
+        getDataShip = ship.dataset.ship;
+        console.log(getDataShip);
+        getDataAxis = ship.dataset.axis;
+        console.log(getDataAxis);
+      }
+    }))
+
+      const hitMissCells = document.querySelectorAll(
+        `.hit-miss-cells${boardNum}`
+      );
+
+    hitMissCells.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        let cellId = cell.id;
+        let regex = /\((\d+),(\d+)\)/;
+        let matches = cellId.match(regex);
+        let row, col;
+
+        if (matches) {
+          row = +matches[1]; // Converts string to number
+          col = +matches[2]; // Converts string to 
+          console.log(row, col);
+          console.log(getDataShip);
+          console.log(getDataAxis);
+          testGame1.placeShip(testGame1.ships[0], getDataAxis, row, col);
+          console.log(player1.playerBoard.board);
+          
+          orientShipSvgOnShipGrid(1, getDataShip, getDataAxis, row, col);
+        }
+      });
+    });
+  }
+
+    rotatePlaceShips(1);
+    rotatePlaceShips(2);
+      highlightPlaceShips(1);
+      highlightPlaceShips(2);
+    // selectShipGameCoordinates(player1.playerBoard.board, 1);
+    selectShipGameCoordinates(1);
+ selectShipGameCoordinates(2);
+
+  // testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
+  // testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
+  // testGame1.placeShip(testGame1.ships[2], "h", 3, 2);
+  // testGame1.placeShip(testGame1.ships[3], "v", 5, 5);
+  // testGame1.placeShip(testGame1.ships[4], "h", 8, 7);
+  // testGame1.placeShip(testGame1.ships[5], "v", 9, 0);
   // - which then triggers the orientShipSvgOnShipGrid below
-  orientShipSvgOnShipGrid(1, "a", "v", 1, 7);
-  orientShipSvgOnShipGrid(1, "b", "v", 2, 0);
-  orientShipSvgOnShipGrid(1, "d", "h", 3, 2);
-  orientShipSvgOnShipGrid(1, "s", "v", 5, 5);
-  orientShipSvgOnShipGrid(1, "c", "h", 8, 7);
+  // orientShipSvgOnShipGrid(1, "a", "v", 1, 7);
+  // orientShipSvgOnShipGrid(1, "b", "v", 2, 0);
+  // orientShipSvgOnShipGrid(1, "d", "h", 3, 2);
+  // orientShipSvgOnShipGrid(1, "s", "v", 5, 5);
+  // orientShipSvgOnShipGrid(1, "c", "h", 8, 7);
   // - need to handle undo, clear, and random buttons...
 
-  testGame2.placeShip(testGame2.ships[0], "h", 0, 2);
-  testGame2.placeShip(testGame2.ships[1], "h", 2, 1);
-  testGame2.placeShip(testGame2.ships[2], "v", 4, 2);
-  testGame2.placeShip(testGame2.ships[3], "h", 7, 2);
-  testGame2.placeShip(testGame2.ships[4], "v", 6, 8);
-  testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
+  // testGame2.placeShip(testGame2.ships[0], "h", 0, 2);
+  // testGame2.placeShip(testGame2.ships[1], "h", 2, 1);
+  // testGame2.placeShip(testGame2.ships[2], "v", 4, 2);
+  // testGame2.placeShip(testGame2.ships[3], "h", 7, 2);
+  // testGame2.placeShip(testGame2.ships[4], "v", 6, 8);
+  // testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
 
-  orientShipSvgOnShipGrid(2, "a", "h", 0, 2);
-  orientShipSvgOnShipGrid(2, "b", "h", 2, 1);
-  orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
-  orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
-  orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
+  // orientShipSvgOnShipGrid(2, "a", "h", 0, 2);
+  // orientShipSvgOnShipGrid(2, "b", "h", 2, 1);
+  // orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
+  // orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
+  // orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
+
 
   // function attackTargetCoordinates1(board) {
   //   const hitMissTargetCells1 = document.querySelectorAll(
@@ -344,15 +415,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // }
 
   function attackTargetCoordinates(boardNum) {
-    const players = {
-      1: player1,
-      2: player2,
-    };
+    // const players = {
+    //   1: player1,
+    //   2: player2,
+    // };
 
-    const testGame = {
-      1: testGame1,
-      2: testGame2,
-    };
+    // const testGame = {
+    //   1: testGame1,
+    //   2: testGame2,
+    // };
 
     // Validate that the boardNum is valid
     if (!players[boardNum] || !testGame[boardNum]) {
@@ -384,15 +455,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (matches) {
           row = +matches[1]; // Reminder, this converts the string to a number
           col = +matches[2]; // Same as above
-          console.log(`Coordinates clicked: ${row}, ${col}`);
-          console.log(typeof row === "number");
-          console.log(testGame[boardNum].receiveAttack(row, col));
+          // console.log(`Coordinates clicked: ${row}, ${col}`);
+          // console.log(typeof row === "number");
+          // console.log(testGame[boardNum].receiveAttack(row, col));
+          testGame[boardNum].receiveAttack(row, col);
           addEmojiEffect(board, boardNum);
           colorSunkShips(testGame[boardNum], boardNum);
-
           // Highlight the board again
           highlightEmptyCellOnlyOnHover(board, boardNum);
-          // highlightEmptyCellOnlyOnHover(board, boardNum);
         }
       });
     });
@@ -409,4 +479,5 @@ document.addEventListener("DOMContentLoaded", () => {
   console.table(player2.playerBoard.board);
   // console.log(testGame1);
   // console.log(testGame2);
+
 });

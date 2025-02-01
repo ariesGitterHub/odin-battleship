@@ -366,10 +366,12 @@ justify-content: center;
 
 #p1-place-ships {
   display: flex;
+  /* display: none; */
 }
 
 #p2-place-ships {
   display: flex;
+  /* display: none; */
 }
 /* #p1-circle, #p2-circle {
   height: 14rem;
@@ -590,9 +592,7 @@ margin: -1rem;
 }
 
 .mouse-deploy:active {
-
   border-radius: 50%;
-
   scale: 1;
 }
 

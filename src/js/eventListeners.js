@@ -512,13 +512,13 @@ export function highlightPlaceShips(boardNum) {
   //   s: { id: shipS, blackImg: bS, highlightImg: hS },
   //   c: { id: shipC, blackImg: bC, highlightImg: hC },
   // };
-    const shipData = {
-      a: { blackImg: bA, highlightImg: hA },
-      b: { blackImg: bB, highlightImg: hB },
-      d: { blackImg: bD, highlightImg: hD },
-      s: { blackImg: bS, highlightImg: hS },
-      c: { blackImg: bC, highlightImg: hC },
-    };
+  const shipData = {
+    a: { blackImg: bA, highlightImg: hA },
+    b: { blackImg: bB, highlightImg: hB },
+    d: { blackImg: bD, highlightImg: hD },
+    s: { blackImg: bS, highlightImg: hS },
+    c: { blackImg: bC, highlightImg: hC },
+  };
 
   allPlaceShipsClass.forEach((ship) =>
     ship.addEventListener("click", () => {
@@ -529,7 +529,7 @@ export function highlightPlaceShips(boardNum) {
       const allShipKeys = Object.keys(shipData);
       const otherShipKeys = allShipKeys.filter((key) => key !== shipKey);
 
-      // Black and highlight images 
+      // Black and highlight images
       const blackImg = shipData[shipKey].blackImg;
       const highlightImg = shipData[shipKey].highlightImg;
 
@@ -537,6 +537,7 @@ export function highlightPlaceShips(boardNum) {
       if (ship.src === blackImg && ship.dataset.selected === "") {
         ship.src = highlightImg;
         ship.dataset.selected = "yes";
+        // ship.classList.add("draggable");
 
         // Reset all other ships for this board to black images and unselect
         otherShipKeys.forEach((key) => {
@@ -545,13 +546,15 @@ export function highlightPlaceShips(boardNum) {
             `#place-${key}${boardNum}`
           );
           shipElement.src = otherShip.blackImg; // Reset to black image
-          shipElement.dataset.selected = ""; // Unselect 
+          shipElement.dataset.selected = ""; // Unselect
+          // shipElement.classList.remove("draggable");
         });
       }
       // If this ship is already highlighted, unhighlight it and reset others for this board
       else if (ship.src === highlightImg && ship.dataset.selected === "yes") {
         ship.src = blackImg;
         ship.dataset.selected = "";
+        // ship.classList.remove("draggable");
 
         // Reset all other ships for this board to black images and unselect
         otherShipKeys.forEach((key) => {
@@ -561,19 +564,84 @@ export function highlightPlaceShips(boardNum) {
             `#place-${key}${boardNum}`
           );
           shipElement.src = otherShip.blackImg; // Reset to black image
-          shipElement.dataset.selected = ""; // Unselect 
+          shipElement.dataset.selected = ""; // Unselect
         });
       }
     })
   );
 }
 
-export function attackTargetCoordinates(boardNum) {
+// export function attackTargetCoordinates(boardNum) {
+//     const hitMissTargetCells = document.querySelectorAll(
+//       `.hit-miss-target-cells${boardNum}`
+//     );
+//     // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
+//     highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+//     hitMissTargetCells.forEach((cell) => {
+//       cell.addEventListener("click", () => {
+//         let targetId = cell.id;
+//         let regex = /\((\d+),(\d+)\)/;
+//         let matches = targetId.match(regex);
+//         let row, col;
+
+//         if (matches) {
+//           row = +matches[1]; // Reminder, this converts the string to a number
+//           col = +matches[2]; // Same as above
+//           console.log(`Coordinates clicked: ${row}, ${col}`);
+//           console.log(typeof row === "number");
+//           console.log(testGame1.receiveAttack(row, col));
+//           addEmojiEffect(player1.playerBoard.board, 1);
+//           colorSunkShips(testGame1, 1);
+//           // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
+//           highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+//         }
+//       });
+//     });
+//   }
+
+// export function getRowAndColNums(boardNum) {
+//   const hitMissTargetCells = document.querySelectorAll(
+//     `.hit-miss-target-cells${boardNum}`
+//   );
+
+//   // Ensure the cells exist
+//   if (!hitMissTargetCells.length) {
+//     console.error(`No target cells found for board number: ${boardNum}`);
+//     return;
+//   }
+
+//   hitMissTargetCells.forEach((cell) => {
+//     cell.addEventListener("click", () => {
+//       let targetId = cell.id;
+//       let regex = /\((\d+),(\d+)\)/;
+//       let matches = targetId.match(regex);
+//       let row, col;
+
+//       if (matches) {
+//         row = +matches[1]; // Reminder, this converts the string to a number
+//         col = +matches[2]; // Same as above
+//       }
+//     });
+//   });
+//   return {
+//     row,
+//     col
+//   }
+// }
+
+export function getRowAndColNums(boardNum) {
+  return new Promise((resolve, reject) => {
     const hitMissTargetCells = document.querySelectorAll(
       `.hit-miss-target-cells${boardNum}`
     );
-    // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
-    highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+
+    // Ensure the cells exist
+    if (!hitMissTargetCells.length) {
+      console.error(`No target cells found for board number: ${boardNum}`);
+      reject(new Error("No target cells found"));
+      return;
+    }
+
     hitMissTargetCells.forEach((cell) => {
       cell.addEventListener("click", () => {
         let targetId = cell.id;
@@ -582,16 +650,11 @@ export function attackTargetCoordinates(boardNum) {
         let row, col;
 
         if (matches) {
-          row = +matches[1]; // Reminder, this converts the string to a number
-          col = +matches[2]; // Same as above
-          console.log(`Coordinates clicked: ${row}, ${col}`);
-          console.log(typeof row === "number");
-          console.log(testGame1.receiveAttack(row, col));
-          addEmojiEffect(player1.playerBoard.board, 1);
-          colorSunkShips(testGame1, 1);
-          // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
-          highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+          row = +matches[1]; // Converts string to number
+          col = +matches[2]; // Converts string to number
+          resolve({ row, col }); // Resolve the promise with the row and col
         }
       });
     });
-  }
+  });
+}
