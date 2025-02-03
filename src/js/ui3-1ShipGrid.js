@@ -89,6 +89,7 @@ export function createShipGrid(board, boardNum, gridType) {
   return grid;
 }
 
+
 // More concise version of above that is not what I am used to, read up on "flatMap":
 // export function createShipGrid(board, gameboardNum, gridType) {
 //   const idPrefix =

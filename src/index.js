@@ -277,46 +277,116 @@ document.addEventListener("DOMContentLoaded", () => {
     //   return;
     // }
 
+
+  // GOT IT TO START WORKING!!!!!!!
   function selectShipGameCoordinates(boardNum) {
-    // let selectedImg = document.querySelector("[data-selected='yes']");
-    // console.log(selectedImg);
-    
-    let getDataShip
-    let getDataAxis
-
-    const allP1PlaceShips = document.querySelectorAll(".all-p1-place-ships");
-
-    allP1PlaceShips.forEach((ship) => ship.addEventListener("click", () => {
-      if (ship.dataset.selected === "yes") {
-        console.log("true");
-        getDataShip = ship.dataset.ship;
-        console.log(getDataShip);
-        getDataAxis = ship.dataset.axis;
-        console.log(getDataAxis);
-      }
-    }))
 
       const hitMissCells = document.querySelectorAll(
         `.hit-miss-cells${boardNum}`
       );
 
+      const placeA = document.querySelector(`#place-a${boardNum}`);
+      const placeB = document.querySelector(`#place-b${boardNum}`);
+      const placeD = document.querySelector(`#place-d${boardNum}`);
+      const placeS = document.querySelector(`#place-s${boardNum}`);
+      const placeC = document.querySelector(`#place-c${boardNum}`);
+
     hitMissCells.forEach((cell) => {
       cell.addEventListener("click", () => {
+        let getDataShip;
+        let getDataAxis;
+        const selectedShipImg = document.querySelector('[data-selected="yes"]');
+        // let testGame = testGame`${boardNum}`;
         let cellId = cell.id;
         let regex = /\((\d+),(\d+)\)/;
         let matches = cellId.match(regex);
         let row, col;
+        let result;
 
         if (matches) {
           row = +matches[1]; // Converts string to number
           col = +matches[2]; // Converts string to 
           console.log(row, col);
-          console.log(getDataShip);
-          console.log(getDataAxis);
-          testGame1.placeShip(testGame1.ships[0], getDataAxis, row, col);
-          console.log(player1.playerBoard.board);
+          // console.log(getDataShip);
+          // console.log(getDataAxis);
+
+        if (selectedShipImg) {
+          getDataShip = selectedShipImg.dataset.ship;
+          getDataAxis = selectedShipImg.dataset.axis;
+
+          if (getDataShip === "a") {
+            result = testGame[boardNum].placeShip(
+              testGame[boardNum].ships[0],
+              getDataAxis,
+              row,
+              col
+            );
+          } else if (getDataShip === "b") {
+            result = testGame[boardNum].placeShip(
+              testGame[boardNum].ships[1],
+              getDataAxis,
+              row,
+              col
+            );
+          } else if (getDataShip === "d") {
+            result = testGame[boardNum].placeShip(
+              testGame[boardNum].ships[2],
+              getDataAxis,
+              row,
+              col
+            );
+          } else if (getDataShip === "s") {
+            result = testGame[boardNum].placeShip(
+              testGame[boardNum].ships[3],
+              getDataAxis,
+              row,
+              col
+            );
+          } else if (getDataShip === "c") {
+            result = testGame[boardNum].placeShip(
+              testGame[boardNum].ships[4],
+              getDataAxis,
+              row,
+              col
+            );
+          }
+
+            if (result !== "invalid" && getDataShip === "a") {
+              testGame[boardNum].placeShip(testGame[boardNum].ships[0], getDataAxis, row, col);
+              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
+              placeA.style.display = "none";
+              console.log(player1.playerBoard.board);
+            } else if (result !== "invalid" && getDataShip === "b") {
+              testGame[boardNum].placeShip(testGame[boardNum].ships[1], getDataAxis, row, col);
+              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
+              placeB.style.display = "none";
+              console.log(player1.playerBoard.board);
+            } else if (result !== "invalid" && getDataShip === "d") {
+              testGame[boardNum].placeShip(testGame[boardNum].ships[2], getDataAxis, row, col);
+              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
+              placeD.style.display = "none";
+              console.log(player1.playerBoard.board);
+            } else if (result !== "invalid" && getDataShip === "s") {
+              testGame[boardNum].placeShip(testGame[boardNum].ships[3], getDataAxis, row, col);
+              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
+              placeS.style.display = "none";
+              console.log(player1.playerBoard.board);
+            } else if (result !== "invalid" && getDataShip === "c") {
+              testGame[boardNum].placeShip(testGame[boardNum].ships[4], getDataAxis, row, col);
+              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
+              placeC.style.display = "none";
+              console.log(player1.playerBoard.board);
+            }
           
-          orientShipSvgOnShipGrid(1, getDataShip, getDataAxis, row, col);
+          
+          
+          
+
+        } else {
+          console.log(row, col);
+        }
+
+
         }
       });
     });

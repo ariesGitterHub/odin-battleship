@@ -629,32 +629,34 @@ export function highlightPlaceShips(boardNum) {
 //   }
 // }
 
-export function getRowAndColNums(boardNum) {
-  return new Promise((resolve, reject) => {
-    const hitMissTargetCells = document.querySelectorAll(
-      `.hit-miss-target-cells${boardNum}`
-    );
 
-    // Ensure the cells exist
-    if (!hitMissTargetCells.length) {
-      console.error(`No target cells found for board number: ${boardNum}`);
-      reject(new Error("No target cells found"));
-      return;
-    }
 
-    hitMissTargetCells.forEach((cell) => {
-      cell.addEventListener("click", () => {
-        let targetId = cell.id;
-        let regex = /\((\d+),(\d+)\)/;
-        let matches = targetId.match(regex);
-        let row, col;
+// export function getRowAndColNums(boardNum) {
+//   return new Promise((resolve, reject) => {
+//     const hitMissTargetCells = document.querySelectorAll(
+//       `.hit-miss-target-cells${boardNum}`
+//     );
 
-        if (matches) {
-          row = +matches[1]; // Converts string to number
-          col = +matches[2]; // Converts string to number
-          resolve({ row, col }); // Resolve the promise with the row and col
-        }
-      });
-    });
-  });
-}
+//     // Ensure the cells exist
+//     if (!hitMissTargetCells.length) {
+//       console.error(`No target cells found for board number: ${boardNum}`);
+//       reject(new Error("No target cells found"));
+//       return;
+//     }
+
+//     hitMissTargetCells.forEach((cell) => {
+//       cell.addEventListener("click", () => {
+//         let targetId = cell.id;
+//         let regex = /\((\d+),(\d+)\)/;
+//         let matches = targetId.match(regex);
+//         let row, col;
+
+//         if (matches) {
+//           row = +matches[1]; // Converts string to number
+//           col = +matches[2]; // Converts string to number
+//           resolve({ row, col }); // Resolve the promise with the row and col
+//         }
+//       });
+//     });
+//   });
+// }
