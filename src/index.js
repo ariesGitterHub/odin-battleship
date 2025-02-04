@@ -54,12 +54,15 @@ import {
   orientShipSvgOnShipGrid,
   // orientShipSvgOnShipGrid1,
   // orientShipSvgOnShipGrid2,
+  removeAllShipSvgsOnShipGrid,
 } from "./js/ui3-1ShipGrid.js";
 
 import {
   attackTargetCoordinates,
+  clearPlaceShips,
   highlightPlaceShips,
   rotatePlaceShips,
+  unHighlightPlaceShips,
 } from "./js/eventListeners.js";
 
 import { Gameboard } from "./js/classGameboard.js";
@@ -244,7 +247,16 @@ document.addEventListener("DOMContentLoaded", () => {
       btnQuitGame.style.display = "none";
       p1FullBoard.style.display = "none";
       clearMessage();
+      // unHighlightPlaceShips(1);
+      // unHighlightPlaceShips(2);
+      //    clearPlaceShips(1);
+      //    clearPlaceShips(2);
+      // removeAllShipSvgsOnShipGrid(1);
+      // removeAllShipSvgsOnShipGrid(2);
+
+      window.location.reload(); // Keep this????????, or do it the real way?
       addMessage(startMsg);
+       
     });
 
     return {
@@ -278,7 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // }
 
 
-  // GOT IT TO START WORKING!!!!!!!
+ // Select player 1 ships by clicking on grid cells...
+ // NEED A BETTER VERSION!
   function selectShipGameCoordinates(boardNum) {
 
       const hitMissCells = document.querySelectorAll(
@@ -355,32 +368,33 @@ document.addEventListener("DOMContentLoaded", () => {
               testGame[boardNum].placeShip(testGame[boardNum].ships[0], getDataAxis, row, col);
               orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
               placeA.style.display = "none";
+              placeA.dataset.selected = "";
               console.log(player1.playerBoard.board);
             } else if (result !== "invalid" && getDataShip === "b") {
               testGame[boardNum].placeShip(testGame[boardNum].ships[1], getDataAxis, row, col);
               orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
               placeB.style.display = "none";
+              placeB.dataset.selected = "";
               console.log(player1.playerBoard.board);
             } else if (result !== "invalid" && getDataShip === "d") {
               testGame[boardNum].placeShip(testGame[boardNum].ships[2], getDataAxis, row, col);
               orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
               placeD.style.display = "none";
+              placeD.dataset.selected = "";
               console.log(player1.playerBoard.board);
             } else if (result !== "invalid" && getDataShip === "s") {
               testGame[boardNum].placeShip(testGame[boardNum].ships[3], getDataAxis, row, col);
               orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
               placeS.style.display = "none";
+              placeS.dataset.selected = "";
               console.log(player1.playerBoard.board);
             } else if (result !== "invalid" && getDataShip === "c") {
               testGame[boardNum].placeShip(testGame[boardNum].ships[4], getDataAxis, row, col);
               orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
               placeC.style.display = "none";
+              placeC.dataset.selected = "";
               console.log(player1.playerBoard.board);
             }
-          
-          
-          
-          
 
         } else {
           console.log(row, col);
@@ -392,13 +406,56 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  
+
+
     rotatePlaceShips(1);
     rotatePlaceShips(2);
-      highlightPlaceShips(1);
-      highlightPlaceShips(2);
+
+function clearPlaceShips(boardNum) {
+  const btnClearId = document.querySelector(`#p${boardNum}-btn-clear`);
+  const shipCellsId = document.querySelectorAll(`.ship-cells${boardNum}`);
+  const placeA = document.querySelector(`#place-a${boardNum}`);
+  const placeB = document.querySelector(`#place-b${boardNum}`);
+  const placeD = document.querySelector(`#place-d${boardNum}`);
+  const placeS = document.querySelector(`#place-s${boardNum}`);
+  const placeC = document.querySelector(`#place-c${boardNum}`);
+
+  // const allPlaceShipsClass = document.querySelectorAll(
+  //   `.all-p${boardNum}-place-ships`
+  // );
+
+  btnClearId.addEventListener("click", () => {
+    placeA.style.display = "flex";
+    // placeA.dataset.selected = "";
+    placeB.style.display = "flex";
+    // placeB.dataset.selected = "";
+    placeD.style.display = "flex";
+    // placeD.dataset.selected = "";
+    placeS.style.display = "flex";
+    // placeS.dataset.selected = "";
+    placeC.style.display = "flex";
+    // placeC.dataset.selected = "";
+
+    testGame1.removeAllShips();
+    // highlightPlaceShips(boardNum);
+    unHighlightPlaceShips(boardNum);
+    removeAllShipSvgsOnShipGrid(boardNum);
+    
+    console.log(testGame1);
+    
+  });
+}
+
+
+
+    clearPlaceShips(1);
+    clearPlaceShips(2);
+    highlightPlaceShips(1);
+    highlightPlaceShips(2);
     // selectShipGameCoordinates(player1.playerBoard.board, 1);
     selectShipGameCoordinates(1);
- selectShipGameCoordinates(2);
+    selectShipGameCoordinates(2);
 
   // testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
   // testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
@@ -426,63 +483,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
   // orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
   // orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
-
-
-  // function attackTargetCoordinates1(board) {
-  //   const hitMissTargetCells1 = document.querySelectorAll(
-  //     ".hit-miss-target-cells1"
-  //   );
-  //   // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
-  //   highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-  //   hitMissTargetCells1.forEach((cell) => {
-  //     cell.addEventListener("click", () => {
-  //       let targetId = cell.id;
-  //       let regex = /\((\d+),(\d+)\)/;
-  //       let matches = targetId.match(regex);
-  //       let row, col;
-
-  //       if (matches) {
-  //         row = +matches[1]; // Reminder, this converts the string to a number
-  //         col = +matches[2]; // Same as above
-  //         console.log(`Coordinates clicked: ${row}, ${col}`);
-  //         console.log(typeof row === "number");
-  //         console.log(testGame1.receiveAttack(row, col));
-  //         addEmojiEffect(player1.playerBoard.board, 1);
-  //         colorSunkShips(testGame1, 1);
-  //         // highlightEmptyCellOnlyOnHover1(player1.playerBoard.board);
-  //         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-  //       }
-  //     });
-  //   });
-  // }
-
-  // function attackTargetCoordinates2(board) {
-  //   const hitMissTargetCells2 = document.querySelectorAll(
-  //     ".hit-miss-target-cells2"
-  //   );
-  //   // highlightEmptyCellOnlyOnHover2(player2.playerBoard.board);
-  //       highlightEmptyCellOnlyOnHover(player2.playerBoard.board, 2);
-  //   hitMissTargetCells2.forEach((cell) => {
-  //     cell.addEventListener("click", () => {
-  //       let targetId = cell.id;
-  //       let regex = /\((\d+),(\d+)\)/;
-  //       let matches = targetId.match(regex);
-  //       let row, col;
-
-  //       if (matches) {
-  //         row = +matches[1]; // Reminder, this converts the string to a number
-  //         col = +matches[2]; // Same as above
-  //         console.log(`Coordinates clicked: ${row}, ${col}`);
-  //         console.log(typeof row === "number");
-  //         console.log(testGame2.receiveAttack(row, col));
-  //         addEmojiEffect(player2.playerBoard.board, 2);
-  //         colorSunkShips(testGame2, 2);
-  //         // highlightEmptyCellOnlyOnHover2(player2.playerBoard.board);
-  //         highlightEmptyCellOnlyOnHover(player2.playerBoard.board, 2);
-  //       }
-  //     });
-  //   });
-  // }
 
   function attackTargetCoordinates(boardNum) {
     // const players = {

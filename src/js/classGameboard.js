@@ -37,6 +37,27 @@ class Gameboard {
     // || [this.c5, this.b4, this.d3, this.s3, this.p2];
   }
 
+  // Method to remove a ship
+  removeShip(ship) {
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        if (this.board[i][j] === ship.boardCode) {
+          this.board[i][j] = "--";
+        }
+      }
+    }
+  }
+
+  removeAllShips() {
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        if (this.board[i][j] !== "--") {
+          this.board[i][j] = "--";
+        }
+      }
+    }
+  }
+
   checkShipPlacementCell(ship, axis, row, col) {
     // Checks if the ship is in the ships array
     if (ship) {
@@ -193,10 +214,10 @@ class Gameboard {
     // BETTER CODE
     if (this.board[row][col] !== "--") {
       // Hit = "!!": Change the target to "!!" and return the result
-      // Notify the correct ship that it was 
-      
+      // Notify the correct ship that it was
+
       // TODO: rewrites as switch?
-      if (this.board[row][col] === "a"){
+      if (this.board[row][col] === "a") {
         this.checkShipBoardCodeNotifyShip(row, col);
         this.board[row][col] = "A!";
         return "hit";
@@ -212,21 +233,20 @@ class Gameboard {
         return "hit";
       }
       if (this.board[row][col] === "s") {
-      this.checkShipBoardCodeNotifyShip(row, col);
-      this.board[row][col] = "S!";
-      return "hit";
+        this.checkShipBoardCodeNotifyShip(row, col);
+        this.board[row][col] = "S!";
+        return "hit";
       }
       if (this.board[row][col] === "c") {
-      this.checkShipBoardCodeNotifyShip(row, col);
-      this.board[row][col] = "C!";
-      return "hit";
+        this.checkShipBoardCodeNotifyShip(row, col);
+        this.board[row][col] = "C!";
+        return "hit";
       }
       if (this.board[row][col] === "p") {
-      this.checkShipBoardCodeNotifyShip(row, col);
-      this.board[row][col] = "P!";
-      return "hit";
+        this.checkShipBoardCodeNotifyShip(row, col);
+        this.board[row][col] = "P!";
+        return "hit";
       }
-
     }
     // Miss = "mm": Change the target to "mm" and return the result
     else {
