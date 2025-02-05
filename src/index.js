@@ -1,71 +1,41 @@
 import "./styles/styles.css";
 
-// import { createImg } from "./js/basicFunctions.js";
-// import nA from "./assets/ship5A.svg";
-// import nB from "./assets/ship4B.svg";
-// import nD from "./assets/ship3D.svg";
-// import nS from "./assets/ship3S.svg";
-// import nC from "./assets/ship2C.svg";
-// import nP from "../assets/ship1P.svg";
-import bA from "./assets/ship5A-b.svg";
-import bB from "./assets/ship4B-b.svg";
-import bD from "./assets/ship3D-b.svg";
-import bS from "./assets/ship3S-b.svg";
-import bC from "./assets/ship2C-b.svg";
-// import bP from "../assets/ship1P-b.svg";
-import hA from "./assets/ship5A-h.svg";
-import hB from "./assets/ship4B-h.svg";
-import hD from "./assets/ship3D-h.svg";
-import hS from "./assets/ship3S-h.svg";
-import hC from "./assets/ship2C-h.svg";
-// import rP from "../assets/ship1P-r.svg";
-import { createHeader } from "./js/ui0-0Header.js";
+import { createHeader } from "./js/createHeader.js";
+
 import {
   addMessage,
   clearMessage,
   createMessageElements,
-} from "./js/ui1-0Messages.js";
-// import { imgMaker } from "./js/uiImages.js";
-import {
-  // addEmojiEffect1,
-  // addEmojiEffect2,
-  // addShipColor1,
-  // addShipColor2,
-  createGameContentDivs,
-  createGameContent,
-  // randomRotate,
-} from "./js/ui3-0FullBoardElements.js";
-import { createStartContentElements } from "./js/ui2-0StartContent.js";
-import {
-  addEmojiEffect,
-  // addEmojiEffect1,
-  // addEmojiEffect2,
-  highlightEmptyCellOnlyOnHover,
-  // highlightEmptyCellOnlyOnHover1,
-  // highlightEmptyCellOnlyOnHover2,
-} from "./js/ui3-2HitMissGrid.js";
-import {
-  colorSunkShips,
-  // colorSunkShips1,
-  // colorSunkShips2,
-  // addShipColor1,
-  // addShipColor2,
-  // colorTargetCells1,
-  orientShipSvgOnShipGrid,
-  // orientShipSvgOnShipGrid1,
-  // orientShipSvgOnShipGrid2,
-  removeAllShipSvgsOnShipGrid,
-} from "./js/ui3-1ShipGrid.js";
+} from "./js/createMessage.js";
 
 import {
-  attackTargetCoordinates,
-  clearPlaceShips,
+  createGameContentDivs,
+  createGameContent,
+} from "./js/createBoard.js";
+
+import { createBtnElements } from "./js/createBtns.js";
+
+import {
+  addEmojiEffect,
+  highlightEmptyCellOnlyOnHover,
+} from "./js/createHitMissGrid.js";
+
+import {
+  colorSunkShips,
+  orientShipSvgOnShipGrid,
+  removeAllShipSvgsOnShipGrid,
+} from "./js/createShipGrid.js";
+
+import {
+  // attackTargetCoordinates,
+  // clearPlaceShips,
   highlightPlaceShips,
   rotatePlaceShips,
   unHighlightPlaceShips,
 } from "./js/eventListeners.js";
 
 import { Gameboard } from "./js/classGameboard.js";
+
 import { Player } from "./js/classPlayer.js";
 
 // Turn 1, Player 1 starts with attack on Player 2, so start with testGame2, then alternate
@@ -189,17 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   createHeader();
   createGameContentDivs();
-  // createGameContent(player1.playerBoard.board, player2.playerBoard.board);
-
-  // rotatePlaceShips(1);
-  // rotatePlaceShips(2);
-  // highlightPlaceShips(1);
-  // highlightPlaceShips(2);
-
   createMessageElements();
-  createStartContentElements();
+  createBtnElements();
 
-  function startGame() {
+  function splashScreenBtns() {
     let player1 = 0;
     let player2 = 0;
     const gifContainer = document.querySelector("#gif-container");
@@ -207,15 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnPvsP = document.querySelector("#btn-pvsp");
     const btnQuitGame = document.querySelector("#btn-quit-game");
     const btnStartGame = document.querySelector("#btn-start-game");
-
     const p1FullBoard = document.querySelector("#p1-full-board");
-
-    // Temp
-    // const p1TargetZone = document.querySelector("#p1-target-zone");
-
     const startMsg = "Please select the number of players below.";
+
     const deployMsg =
-      "DEPLOY YOUR SHIPS. Rotate ships to the desired vertical or horizontal axis. Click on a ship to highlight it in red, then drag it to the desired deployment zone square.";
+      "DEPLOY YOUR SHIPS. Rotate ships to select vertical or horizontal axis. Click on a ship to highlight it in red, then click the desired deployment zone square to place ship.";
 
     addMessage(startMsg);
 
@@ -226,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnPvsC.style.display = "none";
       btnPvsP.style.display = "none";
       btnQuitGame.style.display = "flex";
+      btnStartGame.style.display = "none"; // should already be none in CSS!
       p1FullBoard.style.display = "flex";
       clearMessage();
       addMessage(deployMsg);
@@ -237,34 +197,34 @@ document.addEventListener("DOMContentLoaded", () => {
       player2 = new Player(2, "machine", testGame2);
     });
 
-    // TODO add btnStartGame once ships are deployed!
-    btnQuitGame.addEventListener("click", () => {
-      // player1 = null;
-      // player2 = null,
-      gifContainer.style.display = "flex";
-      btnPvsC.style.display = "flex";
-      btnPvsP.style.display = "flex";
-      btnQuitGame.style.display = "none";
-      p1FullBoard.style.display = "none";
+    btnPvsP.addEventListener("click", () => {
+      // player1 = new Player(1, "human", testGame1);
+      // player2 = new Player(2, "machine", testGame2);
+      gifContainer.style.display = "none";
+      btnPvsC.style.display = "none";
+      btnPvsP.style.display = "none";
+      btnQuitGame.style.display = "flex";
+      btnStartGame.style.display = "none"; // should already be none in CSS!
+      p1FullBoard.style.display = "flex";
       clearMessage();
-      // unHighlightPlaceShips(1);
-      // unHighlightPlaceShips(2);
-      //    clearPlaceShips(1);
-      //    clearPlaceShips(2);
-      // removeAllShipSvgsOnShipGrid(1);
-      // removeAllShipSvgsOnShipGrid(2);
+      addMessage(deployMsg);
+      // p1TargetZone.style.display = "flex";
 
-      window.location.reload(); // Keep this????????, or do it the real way?
-      addMessage(startMsg);
-       
+      // WORKS HERE!!! HAVE A THINK ABOUT THIS!!!
+      player1 = new Player(1, "human", testGame1);
+
+      player2 = new Player(2, "human", testGame2);
     });
+
+    // NEED A PASS SCREEN NEXT!!!
 
     return {
       player1,
       player2,
     };
   }
-  startGame();
+
+splashScreenBtns();
 
   createGameContent(player1.playerBoard.board, player2.playerBoard.board);
 
@@ -273,189 +233,151 @@ document.addEventListener("DOMContentLoaded", () => {
   // -dragging the ship to the desired cell,
   // -triggers the placeShip method below
 
-    const players = {
-      1: player1,
-      2: player2,
-    };
+  const players = {
+    1: player1,
+    2: player2,
+  };
 
-    const testGame = {
-      1: testGame1,
-      2: testGame2,
-    };
+  const testGame = {
+    1: testGame1,
+    2: testGame2,
+  };
 
-    // // Validate that the boardNum is valid
-    // if (!players[boardNum] || !testGame[boardNum]) {
-    //   console.error(`Invalid board number: ${boardNum}`);
-    //   return;
-    // }
+function deployScreenBtns() {
+    const btnQuitGame = document.querySelector("#btn-quit-game");
+    const btnStartGame = document.querySelector("#btn-start-game");
+  btnQuitGame.addEventListener("click", () => {
+    // player1 = null;
+    // player2 = null,
+    gifContainer.style.display = "flex";
+    btnPvsC.style.display = "flex";
+    btnPvsP.style.display = "flex";
+    btnQuitGame.style.display = "none";
+    btnStartGame.style.display = "none"; // should already be none in CSS!
+    p1FullBoard.style.display = "none";
+    clearMessage();
+    window.location.reload(); // Keep this????????, or do it the real way?
+    addMessage(startMsg);
+  });
 
 
- // Select player 1 ships by clicking on grid cells...
- // NEED A BETTER VERSION!
+}
+
+
+deployScreenBtns();
+  // Select player 1 ships by clicking on grid cells...
+
+  // Better version...
   function selectShipGameCoordinates(boardNum) {
+    const hitMissCells = document.querySelectorAll(
+      `.hit-miss-cells${boardNum}`
+    );
+    const shipPlaces = {
+      a: document.querySelector(`#place-a${boardNum}`),
+      b: document.querySelector(`#place-b${boardNum}`),
+      d: document.querySelector(`#place-d${boardNum}`),
+      s: document.querySelector(`#place-s${boardNum}`),
+      c: document.querySelector(`#place-c${boardNum}`),
+    };
 
-      const hitMissCells = document.querySelectorAll(
-        `.hit-miss-cells${boardNum}`
-      );
-
-      const placeA = document.querySelector(`#place-a${boardNum}`);
-      const placeB = document.querySelector(`#place-b${boardNum}`);
-      const placeD = document.querySelector(`#place-d${boardNum}`);
-      const placeS = document.querySelector(`#place-s${boardNum}`);
-      const placeC = document.querySelector(`#place-c${boardNum}`);
+    const ships = {
+      a: testGame[boardNum].ships[0],
+      b: testGame[boardNum].ships[1],
+      d: testGame[boardNum].ships[2],
+      s: testGame[boardNum].ships[3],
+      c: testGame[boardNum].ships[4],
+    };
 
     hitMissCells.forEach((cell) => {
       cell.addEventListener("click", () => {
-        let getDataShip;
-        let getDataAxis;
         const selectedShipImg = document.querySelector('[data-selected="yes"]');
-        // let testGame = testGame`${boardNum}`;
+        if (!selectedShipImg) return; // If no ship is selected, return
+
         let cellId = cell.id;
         let regex = /\((\d+),(\d+)\)/;
         let matches = cellId.match(regex);
-        let row, col;
-        let result;
 
         if (matches) {
-          row = +matches[1]; // Converts string to number
-          col = +matches[2]; // Converts string to 
-          console.log(row, col);
-          // console.log(getDataShip);
-          // console.log(getDataAxis);
+          const row = +matches[1];
+          const col = +matches[2];
+          const getDataShip = selectedShipImg.dataset.ship;
+          const getDataAxis = selectedShipImg.dataset.axis;
 
-        if (selectedShipImg) {
-          getDataShip = selectedShipImg.dataset.ship;
-          getDataAxis = selectedShipImg.dataset.axis;
+          const ship = ships[getDataShip]; // Get the ship object from the map
 
-          if (getDataShip === "a") {
-            result = testGame[boardNum].placeShip(
-              testGame[boardNum].ships[0],
+          if (ship) {
+            const result = testGame[boardNum].placeShip(
+              ship,
               getDataAxis,
               row,
               col
             );
-          } else if (getDataShip === "b") {
-            result = testGame[boardNum].placeShip(
-              testGame[boardNum].ships[1],
-              getDataAxis,
-              row,
-              col
-            );
-          } else if (getDataShip === "d") {
-            result = testGame[boardNum].placeShip(
-              testGame[boardNum].ships[2],
-              getDataAxis,
-              row,
-              col
-            );
-          } else if (getDataShip === "s") {
-            result = testGame[boardNum].placeShip(
-              testGame[boardNum].ships[3],
-              getDataAxis,
-              row,
-              col
-            );
-          } else if (getDataShip === "c") {
-            result = testGame[boardNum].placeShip(
-              testGame[boardNum].ships[4],
-              getDataAxis,
-              row,
-              col
-            );
-          }
 
-            if (result !== "invalid" && getDataShip === "a") {
-              testGame[boardNum].placeShip(testGame[boardNum].ships[0], getDataAxis, row, col);
-              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
-              placeA.style.display = "none";
-              placeA.dataset.selected = "";
-              console.log(player1.playerBoard.board);
-            } else if (result !== "invalid" && getDataShip === "b") {
-              testGame[boardNum].placeShip(testGame[boardNum].ships[1], getDataAxis, row, col);
-              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
-              placeB.style.display = "none";
-              placeB.dataset.selected = "";
-              console.log(player1.playerBoard.board);
-            } else if (result !== "invalid" && getDataShip === "d") {
-              testGame[boardNum].placeShip(testGame[boardNum].ships[2], getDataAxis, row, col);
-              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
-              placeD.style.display = "none";
-              placeD.dataset.selected = "";
-              console.log(player1.playerBoard.board);
-            } else if (result !== "invalid" && getDataShip === "s") {
-              testGame[boardNum].placeShip(testGame[boardNum].ships[3], getDataAxis, row, col);
-              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
-              placeS.style.display = "none";
-              placeS.dataset.selected = "";
-              console.log(player1.playerBoard.board);
-            } else if (result !== "invalid" && getDataShip === "c") {
-              testGame[boardNum].placeShip(testGame[boardNum].ships[4], getDataAxis, row, col);
-              orientShipSvgOnShipGrid(boardNum, getDataShip, getDataAxis, row, col);
-              placeC.style.display = "none";
-              placeC.dataset.selected = "";
+            if (result !== "invalid") {
+              orientShipSvgOnShipGrid(
+                boardNum,
+                getDataShip,
+                getDataAxis,
+                row,
+                col
+              );
+
+              // Hide the corresponding place element and reset selection
+              shipPlaces[getDataShip].style.display = "none";
+              shipPlaces[getDataShip].dataset.selected = "";
+              console.log(testGame1.allShipsArePlaced());
               console.log(player1.playerBoard.board);
             }
-
-        } else {
-          console.log(row, col);
-        }
-
-
+          }
         }
       });
     });
   }
 
-  
+  rotatePlaceShips(1);
+  rotatePlaceShips(2);
 
+  function clearPlaceShips(boardNum) {
+    const btnClearId = document.querySelector(`#p${boardNum}-btn-clear`);
+    const shipCellsId = document.querySelectorAll(`.ship-cells${boardNum}`);
+    const placeA = document.querySelector(`#place-a${boardNum}`);
+    const placeB = document.querySelector(`#place-b${boardNum}`);
+    const placeD = document.querySelector(`#place-d${boardNum}`);
+    const placeS = document.querySelector(`#place-s${boardNum}`);
+    const placeC = document.querySelector(`#place-c${boardNum}`);
 
-    rotatePlaceShips(1);
-    rotatePlaceShips(2);
+    // const allPlaceShipsClass = document.querySelectorAll(
+    //   `.all-p${boardNum}-place-ships`
+    // );
 
-function clearPlaceShips(boardNum) {
-  const btnClearId = document.querySelector(`#p${boardNum}-btn-clear`);
-  const shipCellsId = document.querySelectorAll(`.ship-cells${boardNum}`);
-  const placeA = document.querySelector(`#place-a${boardNum}`);
-  const placeB = document.querySelector(`#place-b${boardNum}`);
-  const placeD = document.querySelector(`#place-d${boardNum}`);
-  const placeS = document.querySelector(`#place-s${boardNum}`);
-  const placeC = document.querySelector(`#place-c${boardNum}`);
+    btnClearId.addEventListener("click", () => {
+      placeA.style.display = "flex";
+      // placeA.dataset.selected = "";
+      placeB.style.display = "flex";
+      // placeB.dataset.selected = "";
+      placeD.style.display = "flex";
+      // placeD.dataset.selected = "";
+      placeS.style.display = "flex";
+      // placeS.dataset.selected = "";
+      placeC.style.display = "flex";
+      // placeC.dataset.selected = "";
 
-  // const allPlaceShipsClass = document.querySelectorAll(
-  //   `.all-p${boardNum}-place-ships`
-  // );
+      testGame1.removeAllShips();
+      // highlightPlaceShips(boardNum);
+      unHighlightPlaceShips(boardNum);
+      removeAllShipSvgsOnShipGrid(boardNum);
 
-  btnClearId.addEventListener("click", () => {
-    placeA.style.display = "flex";
-    // placeA.dataset.selected = "";
-    placeB.style.display = "flex";
-    // placeB.dataset.selected = "";
-    placeD.style.display = "flex";
-    // placeD.dataset.selected = "";
-    placeS.style.display = "flex";
-    // placeS.dataset.selected = "";
-    placeC.style.display = "flex";
-    // placeC.dataset.selected = "";
+      console.log(testGame1);
+    });
+  }
 
-    testGame1.removeAllShips();
-    // highlightPlaceShips(boardNum);
-    unHighlightPlaceShips(boardNum);
-    removeAllShipSvgsOnShipGrid(boardNum);
-    
-    console.log(testGame1);
-    
-  });
-}
-
-
-
-    clearPlaceShips(1);
-    clearPlaceShips(2);
-    highlightPlaceShips(1);
-    highlightPlaceShips(2);
-    // selectShipGameCoordinates(player1.playerBoard.board, 1);
-    selectShipGameCoordinates(1);
-    selectShipGameCoordinates(2);
+  clearPlaceShips(1);
+  clearPlaceShips(2);
+  highlightPlaceShips(1);
+  highlightPlaceShips(2);
+  // selectShipGameCoordinates(player1.playerBoard.board, 1);
+  selectShipGameCoordinates(1);
+  selectShipGameCoordinates(2);
 
   // testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
   // testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
@@ -549,5 +471,4 @@ function clearPlaceShips(boardNum) {
   console.table(player2.playerBoard.board);
   // console.log(testGame1);
   // console.log(testGame2);
-
 });

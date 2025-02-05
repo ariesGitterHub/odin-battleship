@@ -37,6 +37,28 @@ class Gameboard {
     // || [this.c5, this.b4, this.d3, this.s3, this.p2];
   }
 
+
+  allShipsArePlaced() {
+    const requiredCodes = new Set(["a", "b", "d", "s", "c"]);
+    let foundCodes = new Set();
+
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        const cell = this.board[i][j];
+        if (requiredCodes.has(cell)) {
+          foundCodes.add(cell);
+        }
+        // If we've found all required board codes, return true early
+        if (foundCodes.size === requiredCodes.size) {
+          return true;
+        }
+      }
+    }
+
+    // If we finish and haven't found all the codes, return false
+    return false;
+  }
+
   // Method to remove a ship
   removeShip(ship) {
     for (let i = 0; i < this.board.length; i++) {

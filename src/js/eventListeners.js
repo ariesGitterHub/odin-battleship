@@ -166,30 +166,5 @@ export function unHighlightPlaceShips(boardNum) {
   );
 }
 
-// export function clearPlaceShips(boardNum) {
-//   const btnClearId = document.querySelector(`#p${boardNum}-btn-clear`);
-//   const shipCellsId = document.querySelectorAll(`.ship-cells${boardNum}`);
-//   const placeA = document.querySelector(`#place-a${boardNum}`);
-//   const placeB = document.querySelector(`#place-b${boardNum}`);
-//   const placeD = document.querySelector(`#place-d${boardNum}`);
-//   const placeS = document.querySelector(`#place-s${boardNum}`);
-//   const placeC = document.querySelector(`#place-c${boardNum}`);
 
-//   // const allPlaceShipsClass = document.querySelectorAll(
-//   //   `.all-p${boardNum}-place-ships`
-//   // );
 
-//   btnClearId.addEventListener("click", () => {
-//     placeA.style.display = "flex";
-//     placeB.style.display = "flex";
-//     placeD.style.display = "flex";
-//     placeS.style.display = "flex";
-//     placeC.style.display = "flex";
-//     const images = document.querySelectorAll("img");
-//     shipCellsId.forEach((cell) => {
-//       if (cell.hasChildNodes()) {
-//         cell.removeChild(images);
-//       }
-//     });
-//   });
-// }

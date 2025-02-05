@@ -1,56 +1,20 @@
 import { createElement } from "./basicFunctionTemplates.js";
-// import { imgMaker } from "./uiImages.js";
-import { createImg } from "./basicFunctionTemplates.js";
-import radarScreen from "../assets/radarScreen.svg";
-// import a from "../assets/ship5A.svg";
-// import b from "../assets/ship4B.svg";
-// import d from "../assets/ship3D.svg";
-// import s from "../assets/ship3S.svg";
-// import c from "../assets/ship2C.svg";
-// import p from "../assets/ship1P.svg";
 import bA from "../assets/ship5A-b.svg";
 import bB from "../assets/ship4B-b.svg";
 import bD from "../assets/ship3D-b.svg";
 import bS from "../assets/ship3S-b.svg";
 import bC from "../assets/ship2C-b.svg";
-// import bP from "../assets/ship1P-b.svg";
-// import hA from "../assets/ship5A-h.svg";
-// import hB from "../assets/ship4B-h.svg";
-// import hD from "../assets/ship3D-h.svg";
-// import hS from "../assets/ship3S-h.svg";
-// import hC from "../assets/ship2C-h.svg";
-// import rP from "../assets/ship1P-r.svg";
 import { createImgShip } from "./basicShipImgTemplate.js";
-
-import {
-  createHitMissGrid,
-  createHitMissGrid1,
-  createHitMissGrid2,
-  createTargetHitMissGrid1,
-  createTargetHitMissGrid2,
-} from "./ui3-2HitMissGrid.js";
-import {
-  createShipGrid,
-  // createShipGrid1,
-  // createShipGrid2,
-  // createTargetShipGrid1,
-  // createTargetShipGrid2,
-} from "./ui3-1ShipGrid.js";
+import { createHitMissGrid } from "./createHitMissGrid.js";
+import { createShipGrid } from "./createShipGrid.js";
 
 export function createGameContentDivs() {
   const p1 = "Player 1";
   const p2 = "Player 2";
   const deployMsg = "'s Ship Deployment Zone";
   const targetMsg = "'s Enemy Target Zone";
-  const rotate = "Rotate";
-  const undo = "Undo";
-  const clear = "Clear";
-  const random = "Random";
 
-  // const shipPlacementInstructions = "Rotate ships to the desired vertical or horizontal axis. Click on a ship to highlight it in red, then drag it to the desired deployment zone square."
-  // This is where the two player containers and board container are created; use this to alter the order of elements between mobile and large screen viewports.
   const gameContent = document.querySelector("#game-content");
-  // gameContent.classList.add("flex-row");
   const boardContainer = createElement("div", {
     id: "board-container",
   });
@@ -87,25 +51,25 @@ export function createGameContentDivs() {
       // shipPlacementInstructions
     );
 
-  const p1Circle = createElement("div", {
-    id: "p1-circle",
-  });
+  // const p1Circle = createElement("div", {
+  //   id: "p1-circle",
+  // });
 
-  const imgRadarScreen1 = createImg({
-    src: radarScreen,
-    alt: "radar screen",
-    class: "radar-screen",
-  });
+  // const imgRadarScreen1 = createImg({
+  //   src: radarScreen,
+  //   alt: "radar screen",
+  //   class: "radar-screen",
+  // });
 
-    const p2Circle = createElement("div", {
-      id: "p2-circle",
-    });
+    // const p2Circle = createElement("div", {
+    //   id: "p2-circle",
+    // });
 
-    const imgRadarScreen2 = createImg({
-      src: radarScreen,
-      alt: "radar screen",
-      class: "radar-screen",
-    });
+    // const imgRadarScreen2 = createImg({
+    //   src: radarScreen,
+    //   alt: "radar screen",
+    //   class: "radar-screen",
+    // });
 
   const p1X5Grid = createElement("div", {
     id: "p1-x5-grid",
@@ -135,54 +99,7 @@ export function createGameContentDivs() {
       id: "p2-btn-container",
     });
 
-  const p1BtnRotate = createElement(
-    "button",
-    { id: "p1-btn-rotate", class: "btn-b text-effect-dark" },
-    `${rotate}`
-  );
 
-    const p2BtnRotate = createElement(
-      "button",
-      { id: "p2-btn-rotate", class: "btn-b text-effect-dark" },
-      `${rotate}`
-    );
-
-  const p1BtnUndo = createElement(
-    "button",
-    { id: "p1-btn-undo", class: "btn-b text-effect-dark" },
-    `${undo}`
-  );
-
-    const p2BtnUndo = createElement(
-      "button",
-      { id: "p2-btn-undo", class: "btn-b text-effect-dark" },
-      `${undo}`
-    );
-
-
-  const p1BtnClear = createElement(
-    "button",
-    { id: "p1-btn-clear", class: "btn-b text-effect-dark" },
-    `${clear}`
-  );
-
-    const p2BtnClear = createElement(
-      "button",
-      { id: "p2-btn-clear", class: "btn-b text-effect-dark" },
-      `${clear}`
-    );
-
-  const p1BtnRandom = createElement(
-    "button",
-    { id: "p1-btn-random", class: "btn-b text-effect-dark" },
-    `${random}`
-  );
-
-    const p2BtnRandom = createElement(
-      "button",
-      { id: "p2-btn-random", class: "btn-b text-effect-dark" },
-      `${random}`
-    );
 
   const p1DeploymentZone = createElement(
     "div",
@@ -264,7 +181,7 @@ export function createGameContentDivs() {
   );
   p1X5Grid.append(s1, b1, a1, d1, c1);
   // p1Circle.appendChild(imgRadarScreen1);
-  p1BtnContainer.append(p1BtnRotate, p1BtnUndo, p1BtnClear, p1BtnRandom);
+  // p1BtnContainer.append(p1BtnRotate, p1BtnUndo, p1BtnClear, p1BtnRandom);
 
   p1DeploymentZone.append(p1ShipBoard, p1HitMissBoard);
   // p1TargetZone.append(p2ShipBoard, p2HitMissBoard);
@@ -279,7 +196,7 @@ export function createGameContentDivs() {
     );
     p2X5Grid.append(s2, b2, a2, d2, c2);
     // p2Circle.appendChild(imgRadarScreen2);
-    p2BtnContainer.append(p2BtnRotate, p2BtnUndo, p2BtnClear, p2BtnRandom);
+    // p2BtnContainer.append(p2BtnRotate, p2BtnUndo, p2BtnClear, p2BtnRandom);
 
   p2DeploymentZone.append(p2ShipBoard, p2HitMissBoard);
   // p2TargetZone.append(p1ShipBoard, p1HitMissBoard);
