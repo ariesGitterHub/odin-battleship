@@ -463,7 +463,7 @@ margin: -1rem;
   margin-top:-.25rem
  } */
 
-#p1-btn-container {
+#p1-place-ship-btn-container, #p2-place-ship-btn-container {
   height: auto;
   width: fit-content;
   display: flex;

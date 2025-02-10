@@ -1,4 +1,4 @@
-import { createElement, createImg } from "./basicFunctionTemplates.js";
+import { createElement, createImg } from "./functionTemplates.js";
 import { getHeaderElements } from "./domQueries.js";
 import broadside from "../assets/broadside1.gif";
 

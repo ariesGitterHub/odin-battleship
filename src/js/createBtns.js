@@ -1,7 +1,6 @@
-import { createElement } from "./basicFunctionTemplates.js";
+import { createElement } from "./functionTemplates.js";
 import { getBtnElements } from "./domQueries.js";
 import { getBoardElements } from "./domQueries.js";
-
 
 // export function createBtnElements() {
 //   // buttons in #main-btn-container
@@ -81,19 +80,15 @@ import { getBoardElements } from "./domQueries.js";
 // }
 
 export function createBtnElements() {
-
   // buttons in #main-btn-container
-
   const { mainBtnContainer } = getBtnElements();
+  const mainBtnConfigs = [
+    { label: "Player 1 vs Computer", id: "btn-pvsc" },
+    { label: "Player 1 vs Player 2", id: "btn-pvsp" },
+    { label: "Quit Game", id: "btn-quit-game" },
+    { label: "Start Game", id: "btn-start-game" },
+  ];
 
-    const mainBtnConfigs = [
-      { label: "Player 1 vs Computer", id: "btn-pvsc" },
-      { label: "Player 1 vs Player 2", id: "btn-pvsp" },
-      { label: "Quit Game", id: "btn-quit-game" },
-      { label: "Start Game", id: "btn-start-game" },
-    ];
-
-  // Function to create buttons dynamically
   function createMainActionButtons(buttonConfigs) {
     return buttonConfigs.map(({ label, id }) => {
       return createElement(
@@ -103,22 +98,18 @@ export function createBtnElements() {
       );
     });
   }
-
-  // Create the buttons and append to the container
   const mainBtns = createMainActionButtons(mainBtnConfigs);
+
   mainBtnContainer.append(...mainBtns);
 
   // buttons in #p1-place-ships and #p2-place-ships
-
   const { p1BtnContainer, p2BtnContainer } = getBoardElements();
-
-    const placeShipBtnConfigs = [
-      { label: "Rotate", idPrefix: "rotate" },
-      { label: "Undo", idPrefix: "undo" },
-      { label: "Clear", idPrefix: "clear" },
-      { label: "Random", idPrefix: "random" },
-    ];
-
+  const placeShipBtnConfigs = [
+    { label: "Rotate", idPrefix: "rotate" },
+    { label: "Undo", idPrefix: "undo" },
+    { label: "Clear", idPrefix: "clear" },
+    { label: "Random", idPrefix: "random" },
+  ];
   function createPlaceShipControlBtns(buttonConfigs, playerId) {
     return buttonConfigs.map(({ label, idPrefix }) => {
       const id = `${playerId}-btn-${idPrefix}`;

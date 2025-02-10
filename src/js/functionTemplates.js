@@ -108,3 +108,84 @@ export function createImg(attributes = {}) {
 
 // // Append the image to the document body
 // document.body.appendChild(myImage);
+
+
+export function createImgShip(id, selectShip, src, classes) {
+  if (selectShip === "a") {
+    const a = createImg({
+      id: id,
+      src: src,
+      alt: "aircraft carrier image",
+      "data-ship": "a",
+      "data-axis": "h",
+      "data-selected": "",
+      class: classes,
+    });
+    return a;
+  }
+
+  if (selectShip === "b") {
+    const b = createImg({
+      id: id,
+      src: src,
+      alt: "battleship image",
+      "data-ship": "b",
+      "data-axis": "h",
+      "data-selected": "",
+      class: classes,
+    });
+    return b;
+  }
+
+  if (selectShip === "d") {
+    const d = createImg({
+      id: id,
+      src: src,
+      alt: "destroyer image",
+      "data-ship": "d",
+      "data-axis": "h",
+      "data-selected": "",
+      class: classes,
+    });
+    return d;
+  }
+
+  if (selectShip === "s") {
+    const s = createImg({
+      id: id,
+      src: src,
+      alt: "submarine image",
+      "data-ship": "s",
+      "data-axis": "h",
+      "data-selected": "",
+      class: classes,
+    });
+    return s;
+  }
+
+  if (selectShip === "c") {
+    const c = createImg({
+      id: id,
+      src: src,
+      alt: "corvette image",
+      "data-ship": "c",
+      "data-axis": "h",
+      "data-selected": "",
+      class: classes,
+    });
+    return c;
+  }
+
+  // if (selectShip === "p") {
+  //   const p = createImg({
+  //     id: id,
+  //     src: src,
+  //     alt: "corvette image",
+  //     "data-ship": "p",
+  //     "data-axis": "h",
+  //     "data-selected": "",
+  //     class: classes,
+  //   });
+  //   return p;
+  // }
+}
