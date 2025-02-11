@@ -152,7 +152,7 @@ body {
   /* color: var(--line); */
   color: var(--loser);
   font-family: var(--font-fancy);
-  font-size: 1.125rem;
+  font-size: 1rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
   text-align: center;

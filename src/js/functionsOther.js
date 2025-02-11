@@ -51,11 +51,12 @@ export function clearMessage() {
 export function handleMessageContent() {
   const player1 = "PLAYER 1:";
   const player2 = "PLAYER 2:";
-  const deployShips = "DEPLOY YOUR SHIPS. Rotate ships to select vertical or horizontal axis. Click on a ship to highlight it in red, then click the desired deployment zone square to place ship."
+  const deployShips = "DEPLOY YOUR SHIPS. Rotate ships to select axis. Click on any ship to highlight it in red, then click the desired deployment zone square to place ship. Or, click RANDOM BUTTON to make random ship placemnets."
   const startMatchPvsC = "if your ship placement is satisfactory, click the START GAME BUTTON to begin a match against the computer.";
   const placeShipPassFromP1toP2 = "if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 2 to place their ships.";
   const placeShipPassFromP2toP1 = "if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 1 to start the game.";
   const startMatchPvsP = "click the START GAME BUTTON to begin a match against the PLAYER 2. ";
+  const gameTimeAttack = "select a cell in your ENEMY TARGET ZONE grid to attack."
   return {
     startGameMsg: "Please select the number of players below.",
     player1DeployShipsMsg: `${player1} ${deployShips}`,
@@ -64,6 +65,8 @@ export function handleMessageContent() {
     player1PassPlaceShip: `${player1} ${placeShipPassFromP1toP2}`,
     player2PassPlaceShip: `${player2} ${placeShipPassFromP2toP1}`,
     startMatchPvsP: `${player1} ${startMatchPvsP}`,
+    player1Attack: `${player1} ${gameTimeAttack}`,
+    player2Attack: `${player2} ${gameTimeAttack}`,
   };
 }
 
@@ -403,3 +406,24 @@ export function highlightEmptyCellOnlyOnHover(board, boardNum) {
     }
   }
 }
+
+  export function getRandomRow(min = 0, max = 9) {
+    const randomRow = Math.floor(Math.random() * (max - min + 1)) + min;
+    return randomRow;
+  }
+
+  export function getRandomCol(min = 0, max = 9) {
+    const randomCol = Math.floor(Math.random() * (max - min + 1)) + min;
+    return randomCol;
+  }
+
+  export function getRandomAxis(min = 0, max = 9) {
+    const randomAxisNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    let randomAxis;
+    if (randomAxisNum % 2 === 0) {
+      randomAxis = "v";
+    } else {
+      randomAxis = "h";
+    }
+    return randomAxis;
+  }

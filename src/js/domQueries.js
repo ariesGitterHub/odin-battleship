@@ -31,16 +31,24 @@ export function getBtnElements(boardNum) {
     ),
 
     btnClear: document.querySelector(`#p${boardNum}-btn-clear`),
+    p2BtnRandom: document.querySelector("#p2-btn-random"),
     btnRandom: document.querySelector(`#p${boardNum}-btn-random`),
     // const shipCellsId = document.querySelectorAll(`.ship-cells${boardNum}`);
   };
 }
-
+ // TODO - ORGANIZE THIS!!!!
 export function getBoardElements(boardNum) {
   return {
     boardContainer: document.querySelector("#board-container"),
     p1FullBoard: document.querySelector("#p1-full-board"),
     p2FullBoard: document.querySelector("#p2-full-board"),
+
+    p1PlaceShips: document.querySelector("#p1-place-ships"),
+    p2PlaceShips: document.querySelector("#p2-place-ships"),
+
+    p1TargetZone: document.querySelector("#p1-target-zone"),
+    p2TargetZone: document.querySelector("#p2-target-zone"),
+
     p1ShipBoard: document.querySelector("#p1-ship-board"),
     p1BtnContainer: document.querySelector("#p1-place-ship-btn-container"),
     p1HitMissBoard: document.querySelector("#p1-hit-miss-board"),
