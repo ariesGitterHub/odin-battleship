@@ -49,24 +49,36 @@ export function clearMessage() {
 }
 
 export function handleMessageContent() {
-  const player1 = "PLAYER 1:";
-  const player2 = "PLAYER 2:";
-  const deployShips = "DEPLOY YOUR SHIPS. Rotate ships to select axis. Click on any ship to highlight it in red, then click the desired deployment zone square to place ship. Or, click RANDOM BUTTON to make random ship placemnets."
-  const startMatchPvsC = "if your ship placement is satisfactory, click the START GAME BUTTON to begin a match against the computer.";
-  const placeShipPassFromP1toP2 = "if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 2 to place their ships.";
-  const placeShipPassFromP2toP1 = "if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 1 to start the game.";
-  const startMatchPvsP = "click the START GAME BUTTON to begin a match against the PLAYER 2. ";
-  const gameTimeAttack = "select a cell in your ENEMY TARGET ZONE grid to attack."
+  const player1 = "PLAYER 1";
+  const player2 = "PLAYER 2";
+  const noPlayersSelectedYet = "Please select the number of players."
+  const deployShips =
+    ": DEPLOY YOUR SHIPS. Rotate ships to select axis. Click on any ship to highlight it in red, then click the desired deployment zone square to place ship. Or, click RANDOM BUTTON to make random ship placements.";
+  const startMatchPvsC =
+    ": if your ship placement is satisfactory, click the START GAME BUTTON to begin a match against the computer.";
+  const placeShipPassFromP1toP2 =
+    ": if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 2 to place their ships.";
+  const placeShipPassFromP2toP1 =
+    ": if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 1 to start the game.";
+  const startMatchPvsP =
+    ": click the START GAME BUTTON to begin a match against the PLAYER 2. ";
+  const gameTimeAttack =
+    ": select a cell in your ENEMY TARGET ZONE grid to attack.";
+  const computerAttack = "attacks your fleet!";
+  const endGameWin = "wins, and has sunk the enemy fleet!";
   return {
-    startGameMsg: "Please select the number of players below.",
-    player1DeployShipsMsg: `${player1} ${deployShips}`,
-    player2DeployShipsMsg: `${player2} ${deployShips}`,
-    startMatchPvsC: `${player1} ${startMatchPvsC}`,
-    player1PassPlaceShip: `${player1} ${placeShipPassFromP1toP2}`,
-    player2PassPlaceShip: `${player2} ${placeShipPassFromP2toP1}`,
-    startMatchPvsP: `${player1} ${startMatchPvsP}`,
-    player1Attack: `${player1} ${gameTimeAttack}`,
-    player2Attack: `${player2} ${gameTimeAttack}`,
+    startGameMsg: noPlayersSelectedYet,
+    player1DeployShipsMsg: `${player1}${deployShips}`,
+    player2DeployShipsMsg: `${player2}${deployShips}`,
+    startMatchPvsC: `${player1}${startMatchPvsC}`,
+    player1PassPlaceShip: `${player1}${placeShipPassFromP1toP2}`,
+    player2PassPlaceShip: `${player2}${placeShipPassFromP2toP1}`,
+    startMatchPvsP: `${player1}${startMatchPvsP}`,
+    player1Attack: `${player1}${gameTimeAttack}`,
+    player2Attack: `${player2}${gameTimeAttack}`,
+    player2ComputerAttack: `${player2} ${computerAttack}`,
+    player1Wins: `${player1} ${endGameWin}`,
+    player2Wins: `${player1} ${endGameWin}`,
   };
 }
 
@@ -347,6 +359,25 @@ export function addEmojiEffect(board, boardNum) {
   }
 }
 
+export function clearEmojiEffect(board, boardNum) {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      const baseId = `${boardNum === 1 ? "HMG1" : "HMG2"}: (${i},${j})`;
+      let cell = document.getElementById(baseId);
+      let cellTarget = document.getElementById(`T-${baseId}`);
+      let cellShipTarget = document.getElementById(
+        `T-SG${boardNum}: (${i},${j})`
+      );
+
+      if (board[i][j] !== "  ") {
+        cell.innerText = "  ";
+        cellTarget.innerText = "  ";
+        cellShipTarget.style.backgroundColor = "var(--sea)";
+      }
+    }
+  }
+}
+
 export function highlightEmptyCellOnlyOnHover(board, boardNum) {
   const placeShipsId = boardNum === 1 ? "#p1-place-ships" : "#p2-place-ships";
   // console.log("placeShipsId:", placeShipsId);
@@ -407,23 +438,23 @@ export function highlightEmptyCellOnlyOnHover(board, boardNum) {
   }
 }
 
-  export function getRandomRow(min = 0, max = 9) {
-    const randomRow = Math.floor(Math.random() * (max - min + 1)) + min;
-    return randomRow;
-  }
+export function getRandomRow(min = 0, max = 9) {
+  const randomRow = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomRow;
+}
 
-  export function getRandomCol(min = 0, max = 9) {
-    const randomCol = Math.floor(Math.random() * (max - min + 1)) + min;
-    return randomCol;
-  }
+export function getRandomCol(min = 0, max = 9) {
+  const randomCol = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomCol;
+}
 
-  export function getRandomAxis(min = 0, max = 9) {
-    const randomAxisNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    let randomAxis;
-    if (randomAxisNum % 2 === 0) {
-      randomAxis = "v";
-    } else {
-      randomAxis = "h";
-    }
-    return randomAxis;
+export function getRandomAxis(min = 0, max = 9) {
+  const randomAxisNum = Math.floor(Math.random() * (max - min + 1)) + min;
+  let randomAxis;
+  if (randomAxisNum % 2 === 0) {
+    randomAxis = "v";
+  } else {
+    randomAxis = "h";
   }
+  return randomAxis;
+}

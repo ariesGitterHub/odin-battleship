@@ -21,6 +21,7 @@ import {
 import {
   addEmojiEffect,
   addMessage,
+  clearEmojiEffect,
   clearMessage,
   colorSunkShips,
   getRandomAxis,
@@ -222,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let placedShipListArr1 = [];
   let placedShipListArr2 = [];
+  let playerTurn = 0;
 
   // below, two
   let currentGameType = [];
@@ -245,6 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setUpQuitBtnEventListener(boardNum) {
     const { btnQuitGame } = getBtnElements();
+    const { p1PlaceShips, p2PlaceShips, p1TargetZone, p2TargetZone } = getBoardElements();
+    const board = player[boardNum].playerBoard.board;
     btnQuitGame.addEventListener("click", () => {
       // player1 = null;
       // player2 = null;
@@ -258,8 +262,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // handleBtnClearAllShips(2);
       // placedShipListArr1 = [];
       // placedShipListArr2 = [];
-      placedShipListArr[boardNum] = [];
+      
       handleBtnClearAllShips(boardNum);
+      clearEmojiEffect(board, boardNum);
+      placedShipListArr[boardNum] = [];
+      playerTurn = 0;
+      console.log(placedShipListArr[boardNum]);
+      
+      p1PlaceShips.style.display = "flex";
+      p2PlaceShips.style.display = "flex";
+      p1TargetZone.style.display = "none";
+      p2TargetZone.style.display = "none";
+
       // placedShipListArr2 = [];
       // removeAllShipSvgsOnShipGrid(1);
       // removeAllShipSvgsOnShipGrid(2);
@@ -624,6 +638,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       checkIfPlaceShipsAreAllPlaced(boardNum);
       console.log(testGame1);
+         console.log(testGame2);
     });
   }
 
@@ -680,6 +695,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
   // orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
 
+  testGame1.receiveAttack(1, 7);
+
   function attackTargetCoordinates(boardNum) {
     // const player = {
     //   1: player1,
@@ -690,6 +707,9 @@ document.addEventListener("DOMContentLoaded", () => {
     //   1: testGame1,
     //   2: testGame2,
     // };
+
+    // let randomRow = getRandomRow();
+    // let randomCol = getRandomCol();
 
     // Validate that the boardNum is valid
     if (!player[boardNum] || !testGame[boardNum]) {
@@ -729,6 +749,12 @@ document.addEventListener("DOMContentLoaded", () => {
           colorSunkShips(testGame[boardNum], boardNum);
           // Highlight the board again
           highlightEmptyCellOnlyOnHover(board, boardNum);
+          playerTurn += 1;
+          takeTurnsPvsC();
+
+          // testGame1.receiveAttack(0, 0);
+          console.log(`PLAYER TURN = ${playerTurn}`);
+          
         }
       });
     });
@@ -758,12 +784,62 @@ document.addEventListener("DOMContentLoaded", () => {
         addMessage(player1Attack);
       });
     }
+
+        // if (player2.playerType === "machine" && playerTurn > 0 && playerTurn % 2 === 0) {
+        //   // playerTurn +=1
+        //   console.log("this1");
+        //   clearMessage();
+        //   addMessage(player2Attack);
+        // }
+
+        // if (player2.playerType === "machine" && playerTurn % 2 !== 0) {
+        //   console.log("that2");
+        //   clearMessage();
+        //   addMessage(player2Attack);
+        // }
   }
   beginActualGameMatchPvsC();
+
+  function takeTurnsPvsC() {
+    const { player1Attack, player2Attack, player2ComputerAttack } = handleMessageContent();
+    console.log(playerTurn);
+    let randomRow = getRandomRow();
+    let randomCol = getRandomCol();
+    //     testGame1.receiveAttack(randomRow, randomCol);
+    if (player2.playerType === "machine") {
+      console.log(player2.playerType);
+      if (playerTurn > 0 && playerTurn % 2 === 0) {
+        clearMessage();
+        addMessage(player1Attack)
+      }
+      if (playerTurn > 0 && playerTurn % 2 !== 0) {
+        clearMessage();
+        addMessage(player2ComputerAttack);
+        
+        testGame1.receiveAttack(randomRow, randomCol);
+        addEmojiEffect(player1.playerBoard.board, 1);
+        colorSunkShips(testGame1, 1);
+        highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+        console.table(player1.playerBoard.board);
+      }
+    }
+  }
+
+  // function randomComputerAttack() {
+  // let randomRow = getRandomRow();
+  // let randomCol = getRandomCol();
+  //   if (player2.playerType === "machine") {
+  //     if (playerTurn > 0 && playerTurn % 2 !== 0) {
+  //       testGame1.receiveAttack(randomRow, randomCol);
+  //     }
+  //   }
+  // }
+
+  // takeTurnsPvsC();
   // Initial set up, changes with attacks
   console.table(player1.playerBoard.board);
   console.table(player2.playerBoard.board);
-
+// testGame1.receiveAttack(0, 0);
   // console.log(testGame1);
   // console.log(testGame2);
 });

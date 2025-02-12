@@ -317,6 +317,7 @@ justify-content: center;
   border-color: var(--player2text);
   color: var(--player2text);
   display: none;
+    /* display: flex; */
 }
 
 #p1-deployment-zone,
@@ -483,6 +484,7 @@ margin: -1rem;
 
 #p2-target-zone {
   display: none;
+  /* display: flex; */
 }
 
 #p1-ship-board,
