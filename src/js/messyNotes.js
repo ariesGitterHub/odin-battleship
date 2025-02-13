@@ -1142,3 +1142,110 @@ allShipsArePlaced() {
       }
     }
   }
+
+
+    // testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
+  // testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
+  // testGame1.placeShip(testGame1.ships[2], "h", 3, 2);
+  // testGame1.placeShip(testGame1.ships[3], "v", 5, 5);
+  // testGame1.placeShip(testGame1.ships[4], "h", 8, 7);
+  // testGame1.placeShip(testGame1.ships[5], "v", 9, 0);
+
+  // orientShipSvgOnShipGrid(1, "a", "v", 1, 7);
+  // orientShipSvgOnShipGrid(1, "b", "v", 2, 0);
+  // orientShipSvgOnShipGrid(1, "d", "h", 3, 2);
+  // orientShipSvgOnShipGrid(1, "s", "v", 5, 5);
+  // orientShipSvgOnShipGrid(1, "c", "h", 8, 7);
+
+    // testGame2.placeShip(testGame2.ships[0], "h", 0, 2);
+    // testGame2.placeShip(testGame2.ships[1], "h", 2, 1);
+    // testGame2.placeShip(testGame2.ships[2], "v", 4, 2);
+    // testGame2.placeShip(testGame2.ships[3], "h", 7, 2);
+    // testGame2.placeShip(testGame2.ships[4], "v", 6, 8);
+    // testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
+  
+    // orientShipSvgOnShipGrid(2, "a", "h", 0, 2);
+    // orientShipSvgOnShipGrid(2, "b", "h", 2, 1);
+    // orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
+    // orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
+    // orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
+
+      // HERE IS WHERE TO START THE PLACEMENT FUNCTIONS..
+  // review this: https://stackoverflow.com/questions/17992543/how-do-i-drag-an-image-smoothly-around-the-screen-using-pure-javascript/17992765
+  // -dragging the ship to the desired cell,
+  // -triggers the placeShip method below
+
+  // Turn 1, Player 1 starts with attack on Player 2, so start with testGame2, then alternate
+// testGame2.receiveAttack(0, 0); // Miss
+// testGame1.receiveAttack(0, 0); // Miss
+
+// Turn 2, hit 1st cell of each aircraft carrier ("a5")
+// testGame2.receiveAttack(0, 2);
+// testGame1.receiveAttack(1, 7);
+
+// Turn 3, hit each side's patrol boat ("p1")
+// testGame2.receiveAttack(0, 9);
+// testGame1.receiveAttack(9, 0);
+
+// Turn 4, hit each side's corvettes ("c2")
+// testGame2.receiveAttack(6, 8);
+// testGame1.receiveAttack(8, 7);
+
+// Turn 5, hit each side's corvettes ("c2")
+// testGame2.receiveAttack(7, 8);
+// testGame1.receiveAttack(8, 8);
+
+// Turn 6, hit each side's battleship ("b4")
+// testGame2.receiveAttack(2, 1);
+// testGame1.receiveAttack(2, 0);
+
+// Turn 7, hit each side's battleship ("b4")
+// testGame2.receiveAttack(2, 2);
+// testGame1.receiveAttack(3, 0);
+
+// Turn 8, hit each side's battleship ("b4")
+// testGame2.receiveAttack(2, 3);
+// testGame1.receiveAttack(4, 0);
+
+// Turn 9, hit each side's battleship ("b4")
+// testGame2.receiveAttack(2, 4);
+// testGame1.receiveAttack(5, 0);
+
+// Turn 10, hit each side's destroyer in the middle spot ("d3")
+// testGame2.receiveAttack(5, 2);
+// testGame1.receiveAttack(3, 3);
+
+// Turn 11, hit each side's aircraft carrier in the middle spot ("a5")
+// testGame2.receiveAttack(0, 4);
+// testGame1.receiveAttack(3, 7);
+
+// Turn 12, misses at same location ("")
+// testGame2.receiveAttack(5, 4);
+// testGame1.receiveAttack(5, 4);
+
+// make player 1 lose prematurely...
+// testGame1.receiveAttack(2, 7);
+// testGame1.receiveAttack(3, 7);
+// testGame1.receiveAttack(4, 7);
+// testGame1.receiveAttack(5, 7);
+
+// testGame1.receiveAttack(3, 2);
+// testGame1.receiveAttack(3, 4);
+
+// testGame1.receiveAttack(5, 5);
+// testGame1.receiveAttack(6, 5);
+// testGame1.receiveAttack(7, 5);
+
+// console.log(`P1: a5 sunk status = ${testGame1.ships[0].isSunk()}`);
+// console.log(`P1: b4 sunk status = ${testGame1.ships[1].isSunk()}`);
+// console.log(`P1: d3 sunk status = ${testGame1.ships[2].isSunk()}`);
+// console.log(`P1: s3 sunk status = ${testGame1.ships[3].isSunk()}`);
+// console.log(`P1: c2 sunk status = ${testGame1.ships[4].isSunk()}`);
+// console.log(`P1: p1 sunk status = ${testGame1.ships[5].isSunk()}`);
+
+// console.log(`P2: a5 sunk status = ${testGame2.ships[0].isSunk()}`);
+// console.log(`P2: b4 sunk status = ${testGame2.ships[1].isSunk()}`);
+// console.log(`P2: d3 sunk status = ${testGame2.ships[2].isSunk()}`);
+// console.log(`P2: s3 sunk status = ${testGame2.ships[3].isSunk()}`);
+// console.log(`P2: c2 sunk status = ${testGame2.ships[4].isSunk()}`);
+// console.log(`P2: p1 sunk status = ${testGame2.ships[5].isSunk()}`);

@@ -121,72 +121,37 @@ export function randomShipPlacementCoordinateHelper() {
   return randomShipCoordinateResult;
 }
 
-export function handleBtnRandomShipPlacement() {
+// export function handleBtnRandomShipPlacement() {
  
-    const hitMissCells = document.querySelectorAll(
-      `.hit-miss-cells${boardNum}`
-    );
-    // TODO-how do I rewrite below to account for domQueries references?
-    const shipPlaces = {
-      a: document.querySelector(`#place-a${boardNum}`),
-      b: document.querySelector(`#place-b${boardNum}`),
-      d: document.querySelector(`#place-d${boardNum}`),
-      s: document.querySelector(`#place-s${boardNum}`),
-      c: document.querySelector(`#place-c${boardNum}`),
-    };
 
-    const ships = {
-      a: testGame[boardNum].ships[0],
-      b: testGame[boardNum].ships[1],
-      d: testGame[boardNum].ships[2],
-      s: testGame[boardNum].ships[3],
-      c: testGame[boardNum].ships[4],
-    };
+//           if (ship) {
+//             const result = testGame[boardNum].placeShip(
+//               ship,
+//               getDataAxis,
+//               row,
+//               col
+//             );
 
-    hitMissCells.forEach((cell) => {
-      cell.addEventListener("click", () => {
-        const selectedShipImg = document.querySelector('[data-selected="yes"]');
-        if (!selectedShipImg) return; // If no ship is selected, return
+//             if (result !== "invalid") {
+//               orientShipSvgOnShipGrid(
+//                 boardNum,
+//                 getDataShip,
+//                 getDataAxis,
+//                 row,
+//                 col
+//               );
 
-        let cellId = cell.id;
-        let regex = /\((\d+),(\d+)\)/;
-        let matches = cellId.match(regex);
-
-        if (matches) {
-          const row = +matches[1];
-          const col = +matches[2];
-          const getDataShip = selectedShipImg.dataset.ship;
-          const getDataAxis = selectedShipImg.dataset.axis;
-          const ship = ships[getDataShip]; // Get the ship object from the map
-
-          if (ship) {
-            const result = testGame[boardNum].placeShip(
-              ship,
-              getDataAxis,
-              row,
-              col
-            );
-
-            if (result !== "invalid") {
-              orientShipSvgOnShipGrid(
-                boardNum,
-                getDataShip,
-                getDataAxis,
-                row,
-                col
-              );
-
-              // Hide the corresponding place element and reset selection
-              shipPlaces[getDataShip].style.display = "none";
-              shipPlaces[getDataShip].dataset.selected = "";
-              placedShipListArr[boardNum].push(ship.boardCode);
-              console.log(testGame[boardNum].allShipsArePlaced());
-              console.log(player[boardNum].playerBoard.board);
-              console.log(placedShipListArr[boardNum]);
-              checkIfPlaceShipsAreAllPlaced(boardNum);
-            }
-          }
-        }
-      });
-    });
-  }
+//               // Hide the corresponding place element and reset selection
+//               shipPlaces[getDataShip].style.display = "none";
+//               shipPlaces[getDataShip].dataset.selected = "";
+//               placedShipListArr[boardNum].push(ship.boardCode);
+//               console.log(testGame[boardNum].allShipsArePlaced());
+//               console.log(player[boardNum].playerBoard.board);
+//               console.log(placedShipListArr[boardNum]);
+//               checkIfPlaceShipsAreAllPlaced(boardNum);
+//             }
+//           }
+//         }
+//       });
+//     });
+//   }

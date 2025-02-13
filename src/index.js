@@ -10,13 +10,13 @@ import {
   getBoardElements,
   getBtnElements,
   getHeaderElements,
-  getMessageElements,
+  // getMessageElements,
 } from "./js/domQueries.js";
 import {
   handleBtnClearAllShips,
   handleBtnNumPlayer,
   handleBtnRotateShips,
-  handleBtnQuitGame,
+  // handleBtnQuitGame,
 } from "./js/functionsBtns.js";
 import {
   addEmojiEffect,
@@ -29,89 +29,14 @@ import {
   getRandomRow,
   handleHighlightPlaceShip,
   handleMessageContent,
-  handleResetPlaceShips,
+  // handleResetPlaceShips,
   highlightEmptyCellOnlyOnHover,
   highlightPlaceShipsHelper,
   orientShipSvgOnShipGrid,
-  removeAllShipSvgsOnShipGrid,
+  // removeAllShipSvgsOnShipGrid,
 } from "./js/functionsOther.js";
 import { Gameboard } from "./js/classGameboard.js";
 import { Player } from "./js/classPlayer.js";
-
-// Turn 1, Player 1 starts with attack on Player 2, so start with testGame2, then alternate
-// testGame2.receiveAttack(0, 0); // Miss
-// testGame1.receiveAttack(0, 0); // Miss
-
-// Turn 2, hit 1st cell of each aircraft carrier ("a5")
-// testGame2.receiveAttack(0, 2);
-// testGame1.receiveAttack(1, 7);
-
-// Turn 3, hit each side's patrol boat ("p1")
-// testGame2.receiveAttack(0, 9);
-// testGame1.receiveAttack(9, 0);
-
-// Turn 4, hit each side's corvettes ("c2")
-// testGame2.receiveAttack(6, 8);
-// testGame1.receiveAttack(8, 7);
-
-// Turn 5, hit each side's corvettes ("c2")
-// testGame2.receiveAttack(7, 8);
-// testGame1.receiveAttack(8, 8);
-
-// Turn 6, hit each side's battleship ("b4")
-// testGame2.receiveAttack(2, 1);
-// testGame1.receiveAttack(2, 0);
-
-// Turn 7, hit each side's battleship ("b4")
-// testGame2.receiveAttack(2, 2);
-// testGame1.receiveAttack(3, 0);
-
-// Turn 8, hit each side's battleship ("b4")
-// testGame2.receiveAttack(2, 3);
-// testGame1.receiveAttack(4, 0);
-
-// Turn 9, hit each side's battleship ("b4")
-// testGame2.receiveAttack(2, 4);
-// testGame1.receiveAttack(5, 0);
-
-// Turn 10, hit each side's destroyer in the middle spot ("d3")
-// testGame2.receiveAttack(5, 2);
-// testGame1.receiveAttack(3, 3);
-
-// Turn 11, hit each side's aircraft carrier in the middle spot ("a5")
-// testGame2.receiveAttack(0, 4);
-// testGame1.receiveAttack(3, 7);
-
-// Turn 12, misses at same location ("")
-// testGame2.receiveAttack(5, 4);
-// testGame1.receiveAttack(5, 4);
-
-// make player 1 lose prematurely...
-// testGame1.receiveAttack(2, 7);
-// testGame1.receiveAttack(3, 7);
-// testGame1.receiveAttack(4, 7);
-// testGame1.receiveAttack(5, 7);
-
-// testGame1.receiveAttack(3, 2);
-// testGame1.receiveAttack(3, 4);
-
-// testGame1.receiveAttack(5, 5);
-// testGame1.receiveAttack(6, 5);
-// testGame1.receiveAttack(7, 5);
-
-// console.log(`P1: a5 sunk status = ${testGame1.ships[0].isSunk()}`);
-// console.log(`P1: b4 sunk status = ${testGame1.ships[1].isSunk()}`);
-// console.log(`P1: d3 sunk status = ${testGame1.ships[2].isSunk()}`);
-// console.log(`P1: s3 sunk status = ${testGame1.ships[3].isSunk()}`);
-// console.log(`P1: c2 sunk status = ${testGame1.ships[4].isSunk()}`);
-// console.log(`P1: p1 sunk status = ${testGame1.ships[5].isSunk()}`);
-
-// console.log(`P2: a5 sunk status = ${testGame2.ships[0].isSunk()}`);
-// console.log(`P2: b4 sunk status = ${testGame2.ships[1].isSunk()}`);
-// console.log(`P2: d3 sunk status = ${testGame2.ships[2].isSunk()}`);
-// console.log(`P2: s3 sunk status = ${testGame2.ships[3].isSunk()}`);
-// console.log(`P2: c2 sunk status = ${testGame2.ships[4].isSunk()}`);
-// console.log(`P2: p1 sunk status = ${testGame2.ships[5].isSunk()}`);
 
 document.addEventListener("DOMContentLoaded", () => {
   const numRows = 10;
@@ -127,33 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const testGame1 = new Gameboard(seaBoard1);
   const testGame2 = new Gameboard(seaBoard2);
 
-  const player1 = new Player(1, "human", testGame1);
-  // testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
-  // testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
-  // testGame1.placeShip(testGame1.ships[2], "h", 3, 2);
-  // testGame1.placeShip(testGame1.ships[3], "v", 5, 5);
-  // testGame1.placeShip(testGame1.ships[4], "h", 8, 7);
-  // testGame1.placeShip(testGame1.ships[5], "v", 9, 0);
+  // const player1 = new Player(1, "human", testGame1);
+  // const player2 = new Player(2, "machine", testGame2);
 
-  // orientShipSvgOnShipGrid(1, "a", "v", 1, 7);
-  // orientShipSvgOnShipGrid(1, "b", "v", 2, 0);
-  // orientShipSvgOnShipGrid(1, "d", "h", 3, 2);
-  // orientShipSvgOnShipGrid(1, "s", "v", 5, 5);
-  // orientShipSvgOnShipGrid(1, "c", "h", 8, 7);
-
-  const player2 = new Player(2, "machine", testGame2);
-  // testGame2.placeShip(testGame2.ships[0], "h", 0, 2);
-  // testGame2.placeShip(testGame2.ships[1], "h", 2, 1);
-  // testGame2.placeShip(testGame2.ships[2], "v", 4, 2);
-  // testGame2.placeShip(testGame2.ships[3], "h", 7, 2);
-  // testGame2.placeShip(testGame2.ships[4], "v", 6, 8);
-  // testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
-
-  // orientShipSvgOnShipGrid(2, "a", "h", 0, 2);
-  // orientShipSvgOnShipGrid(2, "b", "h", 2, 1);
-  // orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
-  // orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
-  // orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
+  // let player1;
+  // let player2;
 
   createHeader();
   createBoardContainerDivs();
@@ -162,13 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // PHASE 1 - START
   function splashScreenStart() {
-    let player1 = 0;
-    let player2 = 0;
-
     const { gifContainer } = getHeaderElements();
     const { btnPvsC, btnPvsP, btnQuitGame, btnStartGame } = getBtnElements();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
-    const { startGameMsg, player1DeployShipsMsg, player2DeployShipsMsg } =
+    const { startGameMsg } =
       handleMessageContent();
 
     gifContainer.style.display = "flex";
@@ -181,15 +81,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     clearMessage();
     addMessage(startGameMsg);
-    // START HERE!!!
+  }
+
+  function setUpPlayerNumBtnEventListeners() {
+    const { btnPvsC, btnPvsP } = getBtnElements();
+    const { player1DeployShipsMsg, player2DeployShipsMsg } =
+      handleMessageContent();
+
     btnPvsC.addEventListener("click", () => {
       handleBtnNumPlayer(1);
       clearMessage();
       addMessage(player1DeployShipsMsg);
-      player1 = new Player(1, "human", testGame1);
-      player2 = new Player(2, "machine", testGame2);
+      player2.playerType = "machine";
       console.log(
-        `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
+        // `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
       );
     });
 
@@ -197,36 +102,27 @@ document.addEventListener("DOMContentLoaded", () => {
       handleBtnNumPlayer(2);
       clearMessage();
       addMessage(player2DeployShipsMsg);
-      player1 = new Player(1, "human", testGame1);
-      player2 = new Player(2, "human", testGame2);
+      player2.playerType = "human";
       console.log(
-        `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
+        // `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
       );
     });
-
-    // NEED A PASS SCREEN NEXT!!!
-
-    return {
-      player1,
-      player2,
-    };
   }
 
   splashScreenStart();
+  // setUpPlayerNumBtnEventListeners();
+
+  const player1 = new Player(1, "human", testGame1);
+  const player2 = new Player(2, "machine", testGame2);
+  // console.log(
+  //   `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
+  // );
 
   displayBoardContent(player1.playerBoard.board, player2.playerBoard.board);
-
-  // HERE IS WHERE TO START THE PLACEMENT FUNCTIONS..
-  // review this: https://stackoverflow.com/questions/17992543/how-do-i-drag-an-image-smoothly-around-the-screen-using-pure-javascript/17992765
-  // -dragging the ship to the desired cell,
-  // -triggers the placeShip method below
 
   let placedShipListArr1 = [];
   let placedShipListArr2 = [];
   let playerTurn = 0;
-
-  // below, two
-  let currentGameType = [];
 
   const player = {
     1: player1,
@@ -243,53 +139,29 @@ document.addEventListener("DOMContentLoaded", () => {
     2: placedShipListArr2,
   };
 
-  // Use this array below to track ships in order to create an undo last ship btn and its logic. Also use thsi to trigger the start match btn.
-
   function setUpQuitBtnEventListener(boardNum) {
     const { btnQuitGame } = getBtnElements();
-    const { p1PlaceShips, p2PlaceShips, p1TargetZone, p2TargetZone } = getBoardElements();
+    const { p1PlaceShips, p2PlaceShips, p1TargetZone, p2TargetZone } =
+      getBoardElements();
     const board = player[boardNum].playerBoard.board;
     btnQuitGame.addEventListener("click", () => {
-      // player1 = null;
-      // player2 = null;
-      // handleBtnQuitGame();
-      // testGame1.removeAllShips();
-      // testGame2.removeAllShips();
       testGame[boardNum].removeAllShips();
-      // handleResetPlaceShips(1);
-      // handleResetPlaceShips(2);
-      // handleBtnClearAllShips(1);
-      // handleBtnClearAllShips(2);
-      // placedShipListArr1 = [];
-      // placedShipListArr2 = [];
-      
       handleBtnClearAllShips(boardNum);
       clearEmojiEffect(board, boardNum);
       placedShipListArr[boardNum] = [];
       playerTurn = 0;
       console.log(placedShipListArr[boardNum]);
-      
+
       p1PlaceShips.style.display = "flex";
       p2PlaceShips.style.display = "flex";
       p1TargetZone.style.display = "none";
       p2TargetZone.style.display = "none";
-
-      // placedShipListArr2 = [];
-      // removeAllShipSvgsOnShipGrid(1);
-      // removeAllShipSvgsOnShipGrid(2);
       splashScreenStart();
     });
-    // btnQuitGame.addEventListener("click", splashScreenStart());
   }
 
-  setUpQuitBtnEventListener(1);
-  setUpQuitBtnEventListener(2);
-
-  // Select player 1 ships by clicking on grid cells...
-
-  // function recordAction(action) {
-  //   actionHistory.push(action); // push new actions into the stack
-  // }
+  // setUpQuitBtnEventListener(1);
+  // setUpQuitBtnEventListener(2);
 
   // Eventually refactor and move this...
   // Better version...
@@ -385,51 +257,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // rotatePlaceShips(1);
-  // rotatePlaceShips(2);
   function setupRotateBtnEventListener(boardNum) {
     const rotate = handleBtnRotateShips(boardNum); // Get the rotation handler function
     const { btnRotate } = getBtnElements(boardNum);
 
     btnRotate.addEventListener("click", rotate);
   }
-  setupRotateBtnEventListener(1);
-  setupRotateBtnEventListener(2);
-
-  // function clearPlaceShips(boardNum) {
-  //   const btnClearId = document.querySelector(`#p${boardNum}-btn-clear`);
-  //   const shipCellsId = document.querySelectorAll(`.ship-cells${boardNum}`);
-  //   const placeA = document.querySelector(`#place-a${boardNum}`);
-  //   const placeB = document.querySelector(`#place-b${boardNum}`);
-  //   const placeD = document.querySelector(`#place-d${boardNum}`);
-  //   const placeS = document.querySelector(`#place-s${boardNum}`);
-  //   const placeC = document.querySelector(`#place-c${boardNum}`);
-
-  //   // const allPlaceShipsClass = document.querySelectorAll(
-  //   //   `.all-p${boardNum}-place-ships`
-  //   // );
-
-  //   btnClearId.addEventListener("click", () => {
-  //     placeA.style.display = "flex";
-  //     // placeA.dataset.selected = "";
-  //     placeB.style.display = "flex";
-  //     // placeB.dataset.selected = "";
-  //     placeD.style.display = "flex";
-  //     // placeD.dataset.selected = "";
-  //     placeS.style.display = "flex";
-  //     // placeS.dataset.selected = "";
-  //     placeC.style.display = "flex";
-  //     // placeC.dataset.selected = "";
-
-  //     testGame1.removeAllShips();
-  //     // highlightPlaceShips(boardNum);
-  //     // unHighlightPlaceShips(boardNum);
-  //     handleUnhighlightPlaceShips(boardNum);
-  //     removeAllShipSvgsOnShipGrid(boardNum);
-
-  //     console.log(testGame1);
-  //   });
-  // }
+  // setupRotateBtnEventListener(1);
+  // setupRotateBtnEventListener(2);
 
   function setupClearBtnEventListener(boardNum) {
     const { btnClear } = getBtnElements(boardNum);
@@ -443,42 +278,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // clearPlaceShips(1);
-  // clearPlaceShips(2);
-  setupClearBtnEventListener(1);
-  setupClearBtnEventListener(2);
-
-  // function randomShipPlacementCoordinateHelper() {
-  //     let randomRow = Math.floor(Math.random() * 10);
-  //     let randomCol = Math.floor(Math.random() * 10);
-  //     let randomAxis;
-  //     let randomAxisNum = Math.floor(Math.random() * 10);
-  //     if (randomAxisNum % 2 === 0) {
-  //       randomAxis = "v"
-  //     } else {
-  //       randomAxis = "h"
-  //     }
-  //       // const randomShipCoordinateResult = `(${row}, ${col})`;
-  //       // return randomShipCoordinateResult;
-  //       return {
-  //         randomRow,
-  //         randomCol,
-  //         randomAxis,
-  //       };
-  //   }
+  // setupClearBtnEventListener(1);
+  // setupClearBtnEventListener(2);
 
   //REFACTOR THIS!
   function setupRandomBtnEventListener(boardNum) {
     let { btnRandom } = getBtnElements(boardNum);
-
-    // const hitMissCells = document.querySelectorAll(`.hit-miss-cells${boardNum}`);
-    // const shipPlaces = {
-    //   a: document.querySelector(`#place-a${boardNum}`),
-    //   b: document.querySelector(`#place-b${boardNum}`),
-    //   d: document.querySelector(`#place-d${boardNum}`),
-    //   s: document.querySelector(`#place-s${boardNum}`),
-    //   c: document.querySelector(`#place-c${boardNum}`),
-    // };
 
     const { placeA, placeB, placeD, placeC, placeS } =
       getBoardElements(boardNum);
@@ -638,15 +443,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       checkIfPlaceShipsAreAllPlaced(boardNum);
       console.log(testGame1);
-         console.log(testGame2);
+      console.log(testGame2);
     });
   }
 
-  setupRandomBtnEventListener(1);
-  setupRandomBtnEventListener(2);
 
-  // highlightPlaceShips(1);
-  // highlightPlaceShips(2);
 
   function setupHighlightPlaceShipsEventListener(boardNum) {
     //const boardNum = 1; // example, set to the correct board number
@@ -662,55 +463,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  setupHighlightPlaceShipsEventListener(1);
-  setupHighlightPlaceShipsEventListener(2);
-  // selectShipGameCoordinates(player1.playerBoard.board, 1);
-  selectShipGameCoordinates(1);
-  selectShipGameCoordinates(2);
+  // setupHighlightPlaceShipsEventListener(1);
+  // setupHighlightPlaceShipsEventListener(2);
 
-  // testGame1.placeShip(testGame1.ships[0], "v", 1, 7);
-  // testGame1.placeShip(testGame1.ships[1], "v", 2, 0);
-  // testGame1.placeShip(testGame1.ships[2], "h", 3, 2);
-  // testGame1.placeShip(testGame1.ships[3], "v", 5, 5);
-  // testGame1.placeShip(testGame1.ships[4], "h", 8, 7);
-  // testGame1.placeShip(testGame1.ships[5], "v", 9, 0);
-  // - which then triggers the orientShipSvgOnShipGrid below
-  // orientShipSvgOnShipGrid(1, "a", "v", 1, 7);
-  // orientShipSvgOnShipGrid(1, "b", "v", 2, 0);
-  // orientShipSvgOnShipGrid(1, "d", "h", 3, 2);
-  // orientShipSvgOnShipGrid(1, "s", "v", 5, 5);
-  // orientShipSvgOnShipGrid(1, "c", "h", 8, 7);
-  // - need to handle undo, clear, and random buttons...
+  // selectShipGameCoordinates(1);
+  // selectShipGameCoordinates(2);
 
-  // testGame2.placeShip(testGame2.ships[0], "h", 0, 2);
-  // testGame2.placeShip(testGame2.ships[1], "h", 2, 1);
-  // testGame2.placeShip(testGame2.ships[2], "v", 4, 2);
-  // testGame2.placeShip(testGame2.ships[3], "h", 7, 2);
-  // testGame2.placeShip(testGame2.ships[4], "v", 6, 8);
-  // testGame2.placeShip(testGame2.ships[5], "h", 0, 9);
-
-  // orientShipSvgOnShipGrid(2, "a", "h", 0, 2);
-  // orientShipSvgOnShipGrid(2, "b", "h", 2, 1);
-  // orientShipSvgOnShipGrid(2, "d", "v", 4, 2);
-  // orientShipSvgOnShipGrid(2, "s", "h", 7, 2);
-  // orientShipSvgOnShipGrid(2, "c", "v", 6, 8);
-
-  testGame1.receiveAttack(1, 7);
+  // testGame1.receiveAttack(1, 7);
 
   function attackTargetCoordinates(boardNum) {
-    // const player = {
-    //   1: player1,
-    //   2: player2,
-    // };
-
-    // const testGame = {
-    //   1: testGame1,
-    //   2: testGame2,
-    // };
-
-    // let randomRow = getRandomRow();
-    // let randomCol = getRandomCol();
-
     // Validate that the boardNum is valid
     if (!player[boardNum] || !testGame[boardNum]) {
       console.error(`Invalid board number: ${boardNum}`);
@@ -751,26 +512,23 @@ document.addEventListener("DOMContentLoaded", () => {
           highlightEmptyCellOnlyOnHover(board, boardNum);
           playerTurn += 1;
           takeTurnsPvsC();
-
-          // testGame1.receiveAttack(0, 0);
           console.log(`PLAYER TURN = ${playerTurn}`);
-          
         }
       });
     });
   }
-  // attackTargetCoordinates(player1.playerBoard.board, 1);
-  // attackTargetCoordinates(player2.playerBoard.board, 2);
+
   attackTargetCoordinates(1);
+  // setTimeout(() => {
+  //    attackTargetCoordinates(2);
+  // }, 5000);
   attackTargetCoordinates(2);
-  // attackTargetCoordinates1();
-  // attackTargetCoordinates2();
 
   // PHASE 3 - MATCH MECHANICS - PLAYER VS MACHINE
   function beginActualGameMatchPvsC() {
     const { btnStartGame, p2BtnRandom } = getBtnElements();
     const { p1PlaceShips, p1TargetZone } = getBoardElements();
-    const { player1Attack, player2Attack}  = handleMessageContent();
+    const { player1Attack, player2Attack } = handleMessageContent();
 
     if (player2.playerType === "machine") {
       btnStartGame.addEventListener("click", () => {
@@ -784,24 +542,13 @@ document.addEventListener("DOMContentLoaded", () => {
         addMessage(player1Attack);
       });
     }
-
-        // if (player2.playerType === "machine" && playerTurn > 0 && playerTurn % 2 === 0) {
-        //   // playerTurn +=1
-        //   console.log("this1");
-        //   clearMessage();
-        //   addMessage(player2Attack);
-        // }
-
-        // if (player2.playerType === "machine" && playerTurn % 2 !== 0) {
-        //   console.log("that2");
-        //   clearMessage();
-        //   addMessage(player2Attack);
-        // }
   }
+
   beginActualGameMatchPvsC();
 
   function takeTurnsPvsC() {
-    const { player1Attack, player2Attack, player2ComputerAttack } = handleMessageContent();
+    const { player1Attack, player2Attack, player2ComputerAttack } =
+      handleMessageContent();
     console.log(playerTurn);
     let randomRow = getRandomRow();
     let randomCol = getRandomCol();
@@ -810,13 +557,21 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(player2.playerType);
       if (playerTurn > 0 && playerTurn % 2 === 0) {
         clearMessage();
-        addMessage(player1Attack)
+        addMessage(player1Attack);
       }
       if (playerTurn > 0 && playerTurn % 2 !== 0) {
         clearMessage();
+        //TODO, add an "attack hits" or "attack misses" feature?
         addMessage(player2ComputerAttack);
-        
-        testGame1.receiveAttack(randomRow, randomCol);
+        // setTimeout(() => {
+        //   testGame1.receiveAttack(randomRow, randomCol);
+        // }, 0);
+
+console.log(testGame1.receiveAttack(randomRow, randomCol));
+
+// START HERE ON THURSDAY...
+
+        // testGame1.receiveAttack(randomRow, randomCol);
         addEmojiEffect(player1.playerBoard.board, 1);
         colorSunkShips(testGame1, 1);
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
@@ -825,21 +580,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // function randomComputerAttack() {
-  // let randomRow = getRandomRow();
-  // let randomCol = getRandomCol();
-  //   if (player2.playerType === "machine") {
-  //     if (playerTurn > 0 && playerTurn % 2 !== 0) {
-  //       testGame1.receiveAttack(randomRow, randomCol);
-  //     }
-  //   }
-  // }
+  setUpPlayerNumBtnEventListeners();
+  setUpQuitBtnEventListener(1);
+  setUpQuitBtnEventListener(2);
 
-  // takeTurnsPvsC();
-  // Initial set up, changes with attacks
+  setupRotateBtnEventListener(1);
+  setupRotateBtnEventListener(2);
+  setupClearBtnEventListener(1);
+  setupClearBtnEventListener(2);
+      setupRandomBtnEventListener(1);
+    setupRandomBtnEventListener(2);
+
+      setupHighlightPlaceShipsEventListener(1);
+      setupHighlightPlaceShipsEventListener(2);
+
+        selectShipGameCoordinates(1);
+        selectShipGameCoordinates(2);
+
   console.table(player1.playerBoard.board);
   console.table(player2.playerBoard.board);
-// testGame1.receiveAttack(0, 0);
-  // console.log(testGame1);
-  // console.log(testGame2);
+  // }
 });

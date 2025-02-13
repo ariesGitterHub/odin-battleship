@@ -63,8 +63,10 @@ export function handleMessageContent() {
   const startMatchPvsP =
     ": click the START GAME BUTTON to begin a match against the PLAYER 2. ";
   const gameTimeAttack =
-    ": select a cell in your ENEMY TARGET ZONE grid to attack.";
-  const computerAttack = "attacks your fleet!";
+    ": click on a cell in your ENEMY TARGET ZONE grid to attack.";
+  const computerAttack =
+    "attacks your fleet! (See results in your Deployment Zone.)";
+  // const matchIsUnderway = ""
   const endGameWin = "wins, and has sunk the enemy fleet!";
   return {
     startGameMsg: noPlayersSelectedYet,
@@ -305,12 +307,16 @@ export function colorSunkShips(board, boardNum) {
 
   for (let i = 0; i < board.board.length; i++) {
     for (let j = 0; j < board.board[i].length; j++) {
+      let cellShip = document.getElementById(
+        `SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+      );
       let cellShipTarget = document.getElementById(
         `T-SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
       );
 
       ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
         if (board.ships[index].isSunk() && board.board[i][j] === shipCode) {
+          cellShip.style.backgroundColor = "var(--text)";
           cellShipTarget.style.backgroundColor = "var(--text)";
         }
       });
@@ -331,6 +337,7 @@ export function addEmojiEffect(board, boardNum) {
       const baseId = `${boardNum === 1 ? "HMG1" : "HMG2"}: (${i},${j})`;
       let cell = document.getElementById(baseId);
       let cellTarget = document.getElementById(`T-${baseId}`);
+      let cellShip = document.getElementById(`SG${boardNum}: (${i},${j})`);
       let cellShipTarget = document.getElementById(
         `T-SG${boardNum}: (${i},${j})`
       );
@@ -344,12 +351,14 @@ export function addEmojiEffect(board, boardNum) {
       ) {
         cell.innerText = "💥";
         cellTarget.innerText = "💥";
+        cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
       } else if (board[i][j] === "mm") {
         cell.innerText = "💨";
         cell.style.transform = "rotate(-90deg)";
         cellTarget.innerText = "💨";
         cellTarget.style.transform = "rotate(-90deg)";
+        cellShip.style.backgroundColor = "var(--miss)";
         cellShipTarget.style.backgroundColor = "var(--miss)";
       } else {
         cell.innerText = "  ";
@@ -365,6 +374,7 @@ export function clearEmojiEffect(board, boardNum) {
       const baseId = `${boardNum === 1 ? "HMG1" : "HMG2"}: (${i},${j})`;
       let cell = document.getElementById(baseId);
       let cellTarget = document.getElementById(`T-${baseId}`);
+      let cellShip = document.getElementById(`SG${boardNum}: (${i},${j})`);
       let cellShipTarget = document.getElementById(
         `T-SG${boardNum}: (${i},${j})`
       );
@@ -372,6 +382,8 @@ export function clearEmojiEffect(board, boardNum) {
       if (board[i][j] !== "  ") {
         cell.innerText = "  ";
         cellTarget.innerText = "  ";
+        cellTarget.classList.add("mouse-target"); // THIS FIXED PROBLEM OF NOT SEEING TARGET CURSOR...
+        cellShip.style.backgroundColor = "var(--sea)";
         cellShipTarget.style.backgroundColor = "var(--sea)";
       }
     }
