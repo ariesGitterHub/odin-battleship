@@ -16,8 +16,7 @@ class Ship {
       (this.length = length),
       (this.boardCode = boardCode),
       (this.boardHitCode = boardHitCode);
-      (this.numHits = numHits),
-      (this.sunkStatus = sunkStatus);
+    (this.numHits = numHits), (this.sunkStatus = sunkStatus);
   }
 
   hit() {
@@ -47,6 +46,15 @@ class Ship {
       return true;
     }
     return false;
+  }
+
+  clearHitsAndSunkStatus() {
+    if (this.numHits > 0) {
+      this.numHits = 0;
+    }
+    if (this.sunkStatus) {
+      this.sunkStatus = false;
+    }
   }
 }
 

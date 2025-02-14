@@ -12,6 +12,8 @@ import {
   getMessageElements,
 } from "./domQueries.js";
 
+import anchorIcon from "../assets/anchor.svg";
+
 // Normal ships
 import nA from "../assets/ship5A.svg";
 import nB from "../assets/ship4B.svg";
@@ -35,6 +37,13 @@ import hD from "../assets/ship3D-h.svg";
 import hS from "../assets/ship3S-h.svg";
 import hC from "../assets/ship2C-h.svg";
 // import hP from "../assets/ship1P-r.svg";
+
+// Sound effects
+import btnClick from "../assets/soundClick.mp3";
+import fireAtTarget from "../assets/soundFireAtTarget.mp3";
+import hitExplosion from "../assets/soundHitExplosion.mp3";
+import missSplash from "../assets/soundMissSplash.mp3";
+import sinkIntoDarkness from "../assets/soundSinkIntoDarkness.mp3";
 
 // Message related
 
@@ -316,12 +325,14 @@ export function colorSunkShips(board, boardNum) {
 
       ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
         if (board.ships[index].isSunk() && board.board[i][j] === shipCode) {
+          // mp3Sink();
           cellShip.style.backgroundColor = "var(--text)";
           cellShipTarget.style.backgroundColor = "var(--text)";
         }
       });
 
       if (board.ships.every((ship) => ship.isSunk())) {
+        mp3Sink(); // When all ships are sunk...
         document.querySelector(shipBoardId).style.backgroundColor =
           "var(--loser)";
         document.querySelector(targetShipBoardId).style.backgroundColor =
@@ -330,6 +341,40 @@ export function colorSunkShips(board, boardNum) {
     }
   }
 }
+
+// export function clearColorSunkShips(board, boardNum) {
+//   const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";
+//   const targetShipBoardId =
+//     boardNum === 1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
+
+//   for (let i = 0; i < board.board.length; i++) {
+//     for (let j = 0; j < board.board[i].length; j++) {
+//       let cellShip = document.getElementById(
+//         `SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+//       );
+//       let cellShipTarget = document.getElementById(
+//         `T-SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+//       );
+
+//       ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
+//         if (
+//           board.ships[index].clearHitsAndSunkStatus() &&
+//           board.board[i][j] === shipCode
+//         ) {
+//           cellShip.style.backgroundColor = "var(--sea)";
+//           cellShipTarget.style.backgroundColor = "var(--sea)";
+//         }
+//       });
+
+//       // if (board.ships.every((ship) => ship.isSunk())) {
+//       //   document.querySelector(shipBoardId).style.backgroundColor =
+//       //     "var(--loser)";
+//       //   document.querySelector(targetShipBoardId).style.backgroundColor =
+//       //     "var(--loser)";
+//       // }
+//     }
+//   }
+// }
 
 export function addEmojiEffect(board, boardNum) {
   for (let i = 0; i < board.length; i++) {
@@ -349,11 +394,13 @@ export function addEmojiEffect(board, boardNum) {
         board[i][j] === "S!" ||
         board[i][j] === "C!"
       ) {
+        // mp3Fire();
         cell.innerText = "💥";
         cellTarget.innerText = "💥";
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
       } else if (board[i][j] === "mm") {
+        // mp3Miss();
         cell.innerText = "💨";
         cell.style.transform = "rotate(-90deg)";
         cellTarget.innerText = "💨";
@@ -455,6 +502,8 @@ export function getRandomRow(min = 0, max = 9) {
   return randomRow;
 }
 
+
+
 export function getRandomCol(min = 0, max = 9) {
   const randomCol = Math.floor(Math.random() * (max - min + 1)) + min;
   return randomCol;
@@ -469,4 +518,85 @@ export function getRandomAxis(min = 0, max = 9) {
     randomAxis = "h";
   }
   return randomAxis;
+}
+
+// export function getUniqueRandomCoordinates() {
+//   const noRepeatSet = new Set();
+//   let randomRow = getRandomRow;
+//   let randomCol = getRandomCol;
+//   let coordinates = [randomRow, randomCol]
+//     getUniqueRandomCoordinates();
+//   if (noRepeatSet.has(coordinates)) {
+
+//   } else {
+//     noRepeatSet.set(coordinates);
+//     return {
+//       randomRow,
+//       randomCol
+//     }
+//   }
+// }
+
+// Assuming getRandomRow and getRandomCol are functions that return random values for row and column.
+
+
+export function getUniqueRandomCoordinates() {
+  const noRepeatSet = new Set();
+  
+  // Repeat until we find unique coordinates
+  let randomRow, randomCol, coordinates;
+
+  do {
+    randomRow = getRandomRow();
+    randomCol = getRandomCol();
+    coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
+  } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
+  
+  // Store the unique coordinate
+  noRepeatSet.add(coordinates);
+  
+  return {
+    randomRow,
+    randomCol
+  };
+}
+
+const click = new Audio(btnClick);
+click.preload = "auto";
+
+export function mp3Click() {
+  click.currentTime = 0; // Reset the audio to the beginning
+  click.play();
+}
+
+const fire = new Audio(fireAtTarget);
+fire.preload = "auto";
+
+export function mp3Fire() {
+  fire.currentTime = 0; // Reset the audio to the beginning
+  fire.play();
+}
+
+const hit = new Audio(hitExplosion);
+hit.preload = "auto";
+
+export function mp3Hit() {
+  hit.currentTime = 0; // Reset the audio to the beginning
+  hit.play();
+}
+
+const miss = new Audio(missSplash);
+miss.preload = "auto";
+
+export function mp3Miss() {
+  miss.currentTime = 0; // Reset the audio to the beginning
+  miss.play();
+}
+
+const sink = new Audio(sinkIntoDarkness);
+sink.preload = "auto";
+
+export function mp3Sink() {
+  sink.currentTime = 0; // Reset the audio to the beginning
+  sink.play();
 }

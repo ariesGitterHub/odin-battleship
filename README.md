@@ -85,3 +85,4 @@ All game ship markers were created for this app and are copyrighted by the Mad M
 broadside1 = https://imgur.com/gallery/shockwave-from-battleship-broadside-h9SE7Fj#/t/broadside
 broadside2 = https://imgur.com/gallery/battleship-broadsides-d3U51G7#/t/broadside
 
+Anchor svg from https://www.svgrepo.com/svg/395772/anchor

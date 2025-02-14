@@ -24,6 +24,17 @@ export default {
         },
       },
       {
+        test: /\.(mp3)$/, // Match MP3 files
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "assets/[name].[hash].[ext]", // Output path and filename format
+            },
+          },
+        ],
+      },
+      {
         test: /\.(png|svg|jpg|gif)$/,
         type: "asset/resource", // This will handle the SVG as an asset
         generator: {

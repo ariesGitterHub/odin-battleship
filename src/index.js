@@ -21,17 +21,24 @@ import {
 import {
   addEmojiEffect,
   addMessage,
+  clearColorSunkShips,
   clearEmojiEffect,
   clearMessage,
   colorSunkShips,
   getRandomAxis,
   getRandomCol,
   getRandomRow,
+  getUniqueRandomCoordinates,
   handleHighlightPlaceShip,
   handleMessageContent,
   // handleResetPlaceShips,
   highlightEmptyCellOnlyOnHover,
   highlightPlaceShipsHelper,
+  mp3Click,
+  mp3Fire,
+  mp3Hit,
+  mp3Miss,
+  mp3Sink,
   orientShipSvgOnShipGrid,
   // removeAllShipSvgsOnShipGrid,
 } from "./js/functionsOther.js";
@@ -68,8 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { gifContainer } = getHeaderElements();
     const { btnPvsC, btnPvsP, btnQuitGame, btnStartGame } = getBtnElements();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
-    const { startGameMsg } =
-      handleMessageContent();
+    const { startGameMsg } = handleMessageContent();
 
     gifContainer.style.display = "flex";
     btnPvsC.style.display = "flex";
@@ -89,22 +95,25 @@ document.addEventListener("DOMContentLoaded", () => {
       handleMessageContent();
 
     btnPvsC.addEventListener("click", () => {
+      mp3Click();
       handleBtnNumPlayer(1);
       clearMessage();
       addMessage(player1DeployShipsMsg);
       player2.playerType = "machine";
-      console.log(
+      console
+        .log
         // `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
-      );
+        ();
     });
 
     btnPvsP.addEventListener("click", () => {
+      mp3Click();
       handleBtnNumPlayer(2);
       clearMessage();
       addMessage(player2DeployShipsMsg);
       player2.playerType = "human";
       console.log(
-        // `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
+        `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
       );
     });
   }
@@ -114,9 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const player1 = new Player(1, "human", testGame1);
   const player2 = new Player(2, "machine", testGame2);
-  // console.log(
-  //   `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
-  // );
+  console.log(
+    `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
+  );
 
   displayBoardContent(player1.playerBoard.board, player2.playerBoard.board);
 
@@ -143,20 +152,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const { btnQuitGame } = getBtnElements();
     const { p1PlaceShips, p2PlaceShips, p1TargetZone, p2TargetZone } =
       getBoardElements();
-    const board = player[boardNum].playerBoard.board;
+    // const board = player[boardNum].playerBoard.board;
+    // const boardShips = player[boardNum].playerBoard.ships;
     btnQuitGame.addEventListener("click", () => {
-      testGame[boardNum].removeAllShips();
-      handleBtnClearAllShips(boardNum);
-      clearEmojiEffect(board, boardNum);
-      placedShipListArr[boardNum] = [];
-      playerTurn = 0;
-      console.log(placedShipListArr[boardNum]);
+      mp3Click();
+      // TODO - come back to and fix this below...
+      window.location.reload();
+      // testGame[boardNum].removeAllShips();
+      // boardShips.forEach((ship) => {ship.clearHitsAndSunkStatus()});
+      // handleBtnClearAllShips(boardNum);
+      // // clearColorSunkShips(testGame[boardNum], boardNum);
+      // clearEmojiEffect(board, boardNum);
+      // placedShipListArr[boardNum] = [];
+      // playerTurn = 0;
+      // console.log(placedShipListArr[boardNum]);
 
-      p1PlaceShips.style.display = "flex";
-      p2PlaceShips.style.display = "flex";
-      p1TargetZone.style.display = "none";
-      p2TargetZone.style.display = "none";
-      splashScreenStart();
+      // p1PlaceShips.style.display = "flex";
+      // p2PlaceShips.style.display = "flex";
+      // p1TargetZone.style.display = "none";
+      // p2TargetZone.style.display = "none";
+      // splashScreenStart();
     });
   }
 
@@ -183,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
       b: testGame[boardNum].ships[1],
       d: testGame[boardNum].ships[2],
       s: testGame[boardNum].ships[3],
-      c: testGame[boardNum].ships[4],
+      c: testGame[boardNum].ships[4], 
     };
 
     hitMissCells.forEach((cell) => {
@@ -261,7 +276,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const rotate = handleBtnRotateShips(boardNum); // Get the rotation handler function
     const { btnRotate } = getBtnElements(boardNum);
 
-    btnRotate.addEventListener("click", rotate);
+    btnRotate.addEventListener("click", () => {
+      mp3Click();
+      rotate;
+  });
   }
   // setupRotateBtnEventListener(1);
   // setupRotateBtnEventListener(2);
@@ -270,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { btnClear } = getBtnElements(boardNum);
 
     btnClear.addEventListener("click", () => {
+      mp3Click();
       handleBtnClearAllShips(boardNum);
       placedShipListArr[boardNum] = [];
       checkIfPlaceShipsAreAllPlaced(boardNum);
@@ -301,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let randomCol;
 
     btnRandom.addEventListener("click", () => {
+      mp3Click();
       while (placeA.style.display !== "none") {
         console.log("checkA");
         randomAxis = getRandomAxis();
@@ -447,8 +467,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-
-
   function setupHighlightPlaceShipsEventListener(boardNum) {
     //const boardNum = 1; // example, set to the correct board number
     const shipData = highlightPlaceShipsHelper(boardNum); // Set up ships and get ship data
@@ -506,22 +524,26 @@ document.addEventListener("DOMContentLoaded", () => {
           // console.log(typeof row === "number");
           // console.log(testGame[boardNum].receiveAttack(row, col));
           testGame[boardNum].receiveAttack(row, col);
+          mp3Fire();
           addEmojiEffect(board, boardNum);
           colorSunkShips(testGame[boardNum], boardNum);
           // Highlight the board again
           highlightEmptyCellOnlyOnHover(board, boardNum);
+          
           playerTurn += 1;
           takeTurnsPvsC();
-          console.log(`PLAYER TURN = ${playerTurn}`);
+          console.log(`PLAYER 1!!! = ${playerTurn}`);
+            setTimeout(function() {
+              console.log("Slow your roll!!!");
+              
+            }, 50000);
         }
       });
     });
   }
 
-  attackTargetCoordinates(1);
-  // setTimeout(() => {
-  //    attackTargetCoordinates(2);
-  // }, 5000);
+  // attackTargetCoordinates(1);
+
   attackTargetCoordinates(2);
 
   // PHASE 3 - MATCH MECHANICS - PLAYER VS MACHINE
@@ -532,6 +554,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (player2.playerType === "machine") {
       btnStartGame.addEventListener("click", () => {
+        mp3Click();
         setTimeout(() => {
           p2BtnRandom.click(); // This simulates a user click
         }, 200);
@@ -549,9 +572,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function takeTurnsPvsC() {
     const { player1Attack, player2Attack, player2ComputerAttack } =
       handleMessageContent();
-    console.log(playerTurn);
-    let randomRow = getRandomRow();
-    let randomCol = getRandomCol();
+
+    // let randomRow = getRandomRow();
+    // let randomCol = getRandomCol();
+    // let coordinateCheckViaSet = new Set([]);
     //     testGame1.receiveAttack(randomRow, randomCol);
     if (player2.playerType === "machine") {
       console.log(player2.playerType);
@@ -566,10 +590,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // setTimeout(() => {
         //   testGame1.receiveAttack(randomRow, randomCol);
         // }, 0);
+        let { randomRow, randomCol } = getUniqueRandomCoordinates();
 
-console.log(testGame1.receiveAttack(randomRow, randomCol));
-
-// START HERE ON THURSDAY...
+        console.log(testGame1.receiveAttack(randomRow, randomCol));
+        playerTurn += 1
+        console.log(`PLAYER 2$ = ${playerTurn}`);
+        mp3Fire();
+        console.log(randomRow, randomCol);
+        // START HERE ON THURSDAY...
 
         // testGame1.receiveAttack(randomRow, randomCol);
         addEmojiEffect(player1.playerBoard.board, 1);
@@ -588,14 +616,14 @@ console.log(testGame1.receiveAttack(randomRow, randomCol));
   setupRotateBtnEventListener(2);
   setupClearBtnEventListener(1);
   setupClearBtnEventListener(2);
-      setupRandomBtnEventListener(1);
-    setupRandomBtnEventListener(2);
+  setupRandomBtnEventListener(1);
+  setupRandomBtnEventListener(2);
 
-      setupHighlightPlaceShipsEventListener(1);
-      setupHighlightPlaceShipsEventListener(2);
+  setupHighlightPlaceShipsEventListener(1);
+  setupHighlightPlaceShipsEventListener(2);
 
-        selectShipGameCoordinates(1);
-        selectShipGameCoordinates(2);
+  selectShipGameCoordinates(1);
+  selectShipGameCoordinates(2);
 
   console.table(player1.playerBoard.board);
   console.table(player2.playerBoard.board);
