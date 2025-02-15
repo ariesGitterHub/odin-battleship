@@ -24,8 +24,11 @@ export function getBtnElements(boardNum) {
     btnPvsP: document.querySelector("#btn-pvsp"),
     btnQuitGame: document.querySelector("#btn-quit-game"),
     btnStartGame: document.querySelector("#btn-start-game"),
+    btnPassDevice: document.querySelector("#btn-pass-device"),
     btnRotate: document.querySelector(`#p${boardNum}-btn-rotate`),
-    x5GridId: document.querySelector(`#p${boardNum}-x5-grid`),
+
+    // TODO - MOVE THESE TWO to getBoardElements
+    x5Grid: document.querySelector(`#p${boardNum}-x5-grid`),
     allPlaceShipsClass: document.querySelectorAll(
       `.all-p${boardNum}-place-ships`
     ),
@@ -64,6 +67,7 @@ export function getBoardElements(boardNum) {
     ships: document.querySelectorAll(".ship"),
 
     shipCellsClass: document.querySelectorAll(`.ship-cells${boardNum}`),
+    hitMissCellsClass: document.querySelectorAll(`.hit-miss-cells${boardNum}`),
     allPlaceShipsClass: document.querySelectorAll(
       `.all-p${boardNum}-place-ships`
     ),

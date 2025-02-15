@@ -28,7 +28,8 @@ export function handleBtnNumPlayer(playerNum) {
   if (playerNum === 1) {
     swapInPlaceShipScreenElements();
     p1FullBoard.style.display = "flex";
-    p2FullBoard.style.display = "none";
+    // p2FullBoard.style.display = "none"; // Commented out for testing
+    p2FullBoard.style.display = "flex";
   }
 
   if (playerNum === 2) {
@@ -62,7 +63,7 @@ export function handleBtnStartGame() {}
 
 export function handleBtnRotateShips(boardNum) {
   // const { btnRotateId } = getBtnElements(boardNum);
-  const { x5GridId } = getBtnElements(boardNum);
+  const { x5Grid } = getBtnElements(boardNum);
   const { allPlaceShipsClass } = getBtnElements(boardNum);
 
   let currentRotation = 0; // 0 = horizontal axis
@@ -83,8 +84,10 @@ export function handleBtnRotateShips(boardNum) {
       });
     }
 
-    x5GridId.style.transform = `rotate(${currentRotation}deg)`;
+    x5Grid.style.transform = `rotate(${currentRotation}deg)`;
   };
+
+  // console.log(x5Grid, allPlaceShipsClass); // Add a log to check if elements are being retrieved properly.
 
   // Return the rotation handler function to be called externally
   return rotateShips;

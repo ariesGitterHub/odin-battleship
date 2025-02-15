@@ -74,7 +74,8 @@ export function handleMessageContent() {
   const gameTimeAttack =
     ": click on a cell in your ENEMY TARGET ZONE grid to attack.";
   const computerAttack =
-    "attacks your fleet! (See results in your Deployment Zone.)";
+    "attacks your fleet,";
+    // "attacks your fleet! (See results in your Deployment Zone.)";
   // const matchIsUnderway = ""
   const endGameWin = "wins, and has sunk the enemy fleet!";
   return {
@@ -333,10 +334,19 @@ export function colorSunkShips(board, boardNum) {
 
       if (board.ships.every((ship) => ship.isSunk())) {
         mp3Sink(); // When all ships are sunk...
+
         document.querySelector(shipBoardId).style.backgroundColor =
           "var(--loser)";
         document.querySelector(targetShipBoardId).style.backgroundColor =
           "var(--loser)";
+          if (board === 1) {
+            clearMessage();
+            addMessage(player1Wins);
+          }
+          if (board === 2) {
+            clearMessage();
+            addMessage(player2Wins);
+          }
       }
     }
   }
@@ -394,13 +404,13 @@ export function addEmojiEffect(board, boardNum) {
         board[i][j] === "S!" ||
         board[i][j] === "C!"
       ) {
-        // mp3Fire();
+        mp3Hit();
         cell.innerText = "💥";
         cellTarget.innerText = "💥";
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
       } else if (board[i][j] === "mm") {
-        // mp3Miss();
+        mp3Miss();
         cell.innerText = "💨";
         cell.style.transform = "rotate(-90deg)";
         cellTarget.innerText = "💨";
@@ -539,9 +549,10 @@ export function getRandomAxis(min = 0, max = 9) {
 
 // Assuming getRandomRow and getRandomCol are functions that return random values for row and column.
 
+ const noRepeatSet = new Set(); // Put set outside of function so that it accumulate new coordinates and not refresh itself when called
 
 export function getUniqueRandomCoordinates() {
-  const noRepeatSet = new Set();
+  // const noRepeatSet = new Set();
   
   // Repeat until we find unique coordinates
   let randomRow, randomCol, coordinates;
@@ -554,12 +565,13 @@ export function getUniqueRandomCoordinates() {
   
   // Store the unique coordinate
   noRepeatSet.add(coordinates);
-  
+  console.log(noRepeatSet);
   return {
     randomRow,
     randomCol
   };
 }
+
 
 const click = new Audio(btnClick);
 click.preload = "auto";

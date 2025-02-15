@@ -46,9 +46,11 @@ import { Gameboard } from "./js/classGameboard.js";
 import { Player } from "./js/classPlayer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Input the number of desired rows and cols here.
   const numRows = 10;
   const numCols = 10;
 
+  // Create the grids
   let seaBoard1 = Array(numRows)
     .fill()
     .map(() => Array(numCols).fill("--"));
@@ -56,21 +58,34 @@ document.addEventListener("DOMContentLoaded", () => {
     .fill()
     .map(() => Array(numCols).fill("--"));
 
+  // Create instances of the gameboards
   const testGame1 = new Gameboard(seaBoard1);
   const testGame2 = new Gameboard(seaBoard2);
 
-  // const player1 = new Player(1, "human", testGame1);
-  // const player2 = new Player(2, "machine", testGame2);
+  // Create instances of the players and their gameboards
+  const player1 = new Player(1, "human", testGame1);
+  const player2 = new Player(2, "machine", testGame2);
 
-  // let player1;
-  // let player2;
+  // Helper array that tracks if all ships have been placed
+  let placedShipListArr1 = [];
+  let placedShipListArr2 = [];
+  let playerTurn = 0;
 
+  // Helpers that aid with boardNum parameters in later functions
+  const player = { 1: player1, 2: player2 };
+  const testGame = { 1: testGame1, 2: testGame2 };
+  const placedShipListArr = { 1: placedShipListArr1, 2: placedShipListArr2 };
+
+  // Create UI elements
   createHeader();
   createBoardContainerDivs();
   createMessageElements();
   createBtnElements();
 
-  // PHASE 1 - START
+  // Arrange gameboard content
+  displayBoardContent(player1.playerBoard.board, player2.playerBoard.board);
+
+  // PHASE 1 - Start with the basic splash screen
   function splashScreenStart() {
     const { gifContainer } = getHeaderElements();
     const { btnPvsC, btnPvsP, btnQuitGame, btnStartGame } = getBtnElements();
@@ -89,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addMessage(startGameMsg);
   }
 
+  // Set up btn eventListeners that handle the number of players
   function setUpPlayerNumBtnEventListeners() {
     const { btnPvsC, btnPvsP } = getBtnElements();
     const { player1DeployShipsMsg, player2DeployShipsMsg } =
@@ -100,54 +116,23 @@ document.addEventListener("DOMContentLoaded", () => {
       clearMessage();
       addMessage(player1DeployShipsMsg);
       player2.playerType = "machine";
-      console
-        .log
-        // `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
-        ();
+      // console.log(`Player 1: ${player1.playerType}, Player 2: $player2.playerType}`);
     });
 
     btnPvsP.addEventListener("click", () => {
       mp3Click();
-      handleBtnNumPlayer(2);
+      handleBtnNumPlayer(1);
       clearMessage();
-      addMessage(player2DeployShipsMsg);
+      addMessage(player1DeployShipsMsg);
       player2.playerType = "human";
-      console.log(
-        `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
-      );
+      // console.log(`Player 1: ${player1.playerType}, Player 2: $player2.playerType}`);
     });
   }
 
   splashScreenStart();
-  // setUpPlayerNumBtnEventListeners();
 
-  const player1 = new Player(1, "human", testGame1);
-  const player2 = new Player(2, "machine", testGame2);
-  console.log(
-    `Player 1: ${player1.playerType}, Player 2: ${player2.playerType}`
-  );
-
-  displayBoardContent(player1.playerBoard.board, player2.playerBoard.board);
-
-  let placedShipListArr1 = [];
-  let placedShipListArr2 = [];
-  let playerTurn = 0;
-
-  const player = {
-    1: player1,
-    2: player2,
-  };
-
-  const testGame = {
-    1: testGame1,
-    2: testGame2,
-  };
-
-  const placedShipListArr = {
-    1: placedShipListArr1,
-    2: placedShipListArr2,
-  };
-
+  // Set up btn eventListener to quit the game
+  // TODO - come back an properly implement this, do not rely on location.reload()
   function setUpQuitBtnEventListener(boardNum) {
     const { btnQuitGame } = getBtnElements();
     const { p1PlaceShips, p2PlaceShips, p1TargetZone, p2TargetZone } =
@@ -156,7 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // const boardShips = player[boardNum].playerBoard.ships;
     btnQuitGame.addEventListener("click", () => {
       mp3Click();
-      // TODO - come back to and fix this below...
       window.location.reload();
       // testGame[boardNum].removeAllShips();
       // boardShips.forEach((ship) => {ship.clearHitsAndSunkStatus()});
@@ -175,33 +159,291 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // setUpQuitBtnEventListener(1);
-  // setUpQuitBtnEventListener(2);
+  // Set up btn eventListener that handles place ship rotation from h to v
+  function setupRotateBtnEventListener(boardNum) {
+    const rotate = handleBtnRotateShips(boardNum);
+    const { btnRotate } = getBtnElements(boardNum);
+    btnRotate.addEventListener("click", () => {
+      mp3Click();
+      rotate();
+    });
+  }
 
-  // Eventually refactor and move this...
-  // Better version...
-  function selectShipGameCoordinates(boardNum) {
-    const hitMissCells = document.querySelectorAll(
-      `.hit-miss-cells${boardNum}`
-    );
-    // TODO-how do I rewrite below to account for domQueries references?
+  // Set up btn eventListener that handles clearing placed ships on the gameboard
+  function setupClearBtnEventListener(boardNum) {
+    const { btnClear } = getBtnElements(boardNum);
+    btnClear.addEventListener("click", () => {
+      mp3Click();
+      handleBtnClearAllShips(boardNum);
+      placedShipListArr[boardNum] = [];
+      checkIfPlaceShipsAreAllPlacedThenShowStartBtn(boardNum);
+      testGame[boardNum].removeAllShips();
+    });
+  }
+
+  // TODO - set up Undo Btn
+
+  // function setupRandomBtnEventListener(boardNum) {
+  //   let { btnRandom } = getBtnElements(boardNum);
+
+  //   const { placeA, placeB, placeD, placeC, placeS } =
+  //     getBoardElements(boardNum);
+
+  //   const ships = {
+  //     a: testGame[boardNum].ships[0],
+  //     b: testGame[boardNum].ships[1],
+  //     d: testGame[boardNum].ships[2],
+  //     s: testGame[boardNum].ships[3],
+  //     c: testGame[boardNum].ships[4],
+  //   };
+
+  //   let randomAxis;
+  //   let randomRow;
+  //   let randomCol;
+
+  //   btnRandom.addEventListener("click", () => {
+  //     mp3Click();
+  //     while (placeA.style.display !== "none") {
+  //       // console.log("checkA");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisA${boardNum}: ${randomAxis} , rowA${boardNum}: ${randomRow}, colA${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.a,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.a.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.a.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+
+  //         placeA.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeB.style.display !== "none") {
+  //       // console.log("checkB");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisB${boardNum}: ${randomAxis} , rowB${boardNum}: ${randomRow}, colB${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.b,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.b.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.b.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeB.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeD.style.display !== "none") {
+  //       // console.log("checkD");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisD${boardNum}: ${randomAxis} , rowD${boardNum}: ${randomRow}, colD${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.d,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.d.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.d.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeD.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeS.style.display !== "none") {
+  //       // console.log("checkS");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisS${boardNum}: ${randomAxis} , rowS${boardNum}: ${randomRow}, colS${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.s,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.s.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.s.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeS.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeC.style.display !== "none") {
+  //       // console.log("checkS");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisC${boardNum}: ${randomAxis} , rowC${boardNum}: ${randomRow}, colC${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.c,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.c.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.c.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeC.style.display = "none";
+  //       }
+  //     }
+  //     checkIfPlaceShipsAreAllPlacedThenShowStartBtn(boardNum);
+
+  //     console.log(`All player ${boardNum} ships are placed`);
+  //     console.log(testGame1);
+  //     console.log(testGame2);
+  //   });
+  // }
+
+  // Better DRY version of above
+  function setupRandomBtnEventListener(boardNum) {
+    let { btnRandom } = getBtnElements(boardNum);
+    const { placeA, placeB, placeD, placeC, placeS } =
+      getBoardElements(boardNum);
+
+    // Store the ships in an array for easier iteration
+    const ships = [
+      { ship: testGame[boardNum].ships[0], place: placeA },
+      { ship: testGame[boardNum].ships[1], place: placeB },
+      { ship: testGame[boardNum].ships[2], place: placeD },
+      { ship: testGame[boardNum].ships[3], place: placeS },
+      { ship: testGame[boardNum].ships[4], place: placeC },
+    ];
+
+    btnRandom.addEventListener("click", () => {
+      mp3Click();
+
+      // Iterate over the ships and place them
+      ships.forEach(({ ship, place }) => {
+        while (place.style.display !== "none") {
+          const randomAxis = getRandomAxis();
+          const randomRow = getRandomRow();
+          const randomCol = getRandomCol();
+
+          let result = testGame[boardNum].placeShip(
+            ship,
+            randomAxis,
+            randomRow,
+            randomCol
+          );
+
+          if (result !== "invalid") {
+            orientShipSvgOnShipGrid(
+              boardNum,
+              ship.boardCode,
+              randomAxis,
+              randomRow,
+              randomCol
+            );
+            placedShipListArr[boardNum].push(ship.boardCode);
+            place.style.display = "none"; // Hide the place once the ship is placed
+          }
+        }
+      });
+
+      checkIfPlaceShipsAreAllPlacedThenShowStartBtn(boardNum);
+      console.log(`All player ${boardNum} ships are placed`);
+      console.log(testGame1);
+      console.log(testGame2);
+    });
+  }
+
+  // For any highlighted ship, select the cell location where you want to place the beginning of that ship on the game grid
+  function manuallySelectShipPlacementCoordinates(boardNum) {
+    // const hitMissCells = document.querySelectorAll(
+    //   `.hit-miss-cells${boardNum}`
+    // );
+    const { hitMissCellsClass, placeA, placeB, placeD, placeS, placeC } =
+      getBoardElements(boardNum);
     const shipPlaces = {
-      a: document.querySelector(`#place-a${boardNum}`),
-      b: document.querySelector(`#place-b${boardNum}`),
-      d: document.querySelector(`#place-d${boardNum}`),
-      s: document.querySelector(`#place-s${boardNum}`),
-      c: document.querySelector(`#place-c${boardNum}`),
+      a: placeA,
+      b: placeB,
+      d: placeD,
+      s: placeS,
+      c: placeC,
     };
 
-    const ships = {
-      a: testGame[boardNum].ships[0],
-      b: testGame[boardNum].ships[1],
-      d: testGame[boardNum].ships[2],
-      s: testGame[boardNum].ships[3],
-      c: testGame[boardNum].ships[4], 
-    };
+    // const ships = {
+    //   a: testGame[boardNum].ships[0],
+    //   b: testGame[boardNum].ships[1],
+    //   d: testGame[boardNum].ships[2],
+    //   s: testGame[boardNum].ships[3],
+    //   c: testGame[boardNum].ships[4],
+    // };
 
-    hitMissCells.forEach((cell) => {
+    // Better code than above...
+    const shipKeys = ["a", "b", "d", "s", "c"];
+    const ships = shipKeys.reduce((accumulator, key, index) => {
+      accumulator[key] = testGame[boardNum].ships[index];
+      return accumulator;
+    }, {});
+
+    // Even shorter version of above, but too abstracted for my liking...
+    // const ships = ["a", "b", "d", "s", "c"].reduce(
+    //   (acc, key, i) => ({
+    //     ...acc,
+    //     [key]: testGame[boardNum].ships[i],
+    //   }),
+    //   {}
+    // );
+
+    hitMissCellsClass.forEach((cell) => {
       cell.addEventListener("click", () => {
         const selectedShipImg = document.querySelector('[data-selected="yes"]');
         if (!selectedShipImg) return; // If no ship is selected, return
@@ -225,6 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
               col
             );
 
+            // If placement is invalid, the player will know visually because the ship will not be placed in that location
             if (result !== "invalid") {
               orientShipSvgOnShipGrid(
                 boardNum,
@@ -238,10 +481,13 @@ document.addEventListener("DOMContentLoaded", () => {
               shipPlaces[getDataShip].style.display = "none";
               shipPlaces[getDataShip].dataset.selected = "";
               placedShipListArr[boardNum].push(ship.boardCode);
+              checkIfPlaceShipsAreAllPlacedThenShowStartBtn(boardNum);
+
+              // if (debug) {
               console.log(testGame[boardNum].allShipsArePlaced());
               console.log(player[boardNum].playerBoard.board);
               console.log(placedShipListArr[boardNum]);
-              checkIfPlaceShipsAreAllPlaced(boardNum);
+              // }
             }
           }
         }
@@ -249,222 +495,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // PHASE 2 - TRANSITION TO START OF MATCH
-  function checkIfPlaceShipsAreAllPlaced(boardNum) {
-    const { btnStartGame } = getBtnElements();
+  // PHASE 2 - Now that the ships are placed
+  function checkIfPlaceShipsAreAllPlacedThenShowStartBtn(boardNum) {
+    const { btnStartGame, btnPassDevice } = getBtnElements();
     const { p1TargetZone, p2TargetZone } = getBoardElements();
     // TODO, add more messages as needed...
-    const { startMatchPvsC } = handleMessageContent();
+    const { startMatchPvsC, player1PassPlaceShip, player2PassPlaceShip } =
+      handleMessageContent();
     if (
-      placedShipListArr[boardNum].length === 5 &&
+      // placedShipListArr[boardNum].length === 5 &&
+      placedShipListArr1.length === 5 &&
       p1TargetZone.style.display !== "flex" &&
       p2TargetZone.style.display !== "flex"
     ) {
-      console.log(`All p${boardNum} ships are placed`);
-      btnStartGame.style.display = "flex";
+      // btnStartGame.style.display = "flex";
+      // btnPassDevice.style.display = "none"; // It's none in CSS too, this is for clarity, for now
 
-      //TODO - ADD PLAYER VS PLAYER LATER
+      // Player vs Machine, only Player 1 needs to interact with UI
       if (player2.playerType === "machine") {
         addMessage(startMatchPvsC);
+        btnStartGame.style.display = "flex";
+        btnPassDevice.style.display = "none"; // It's none in CSS too, this is for clarity, for now
+      }
+      // Player vs Player, Player 1 starts interaction with UI
+      if (player2.playerType === "human") {
+        addMessage(player1PassPlaceShip);
+        // btnStartGame.innerText = "Pass to Player 2";
+        btnStartGame.style.display = "none";
+        btnPassDevice.style.display = "flex"; // It's none in CSS too, this is for clarity, for now
+      }
+
+      if (player2.playerType === "human" && placedShipListArr2.length === 5) {
+        addMessage(player2PassPlaceShip);
+        // btnStartGame.innerText = "Pass to Player 2";
+        btnStartGame.style.display = "none";
+        btnPassDevice.style.display = "flex"; // It's none in CSS too, this is for clarity, for now
       }
     } else {
       btnStartGame.style.display = "none";
+      btnPassDevice.style.display = "none";
     }
-  }
-
-  function setupRotateBtnEventListener(boardNum) {
-    const rotate = handleBtnRotateShips(boardNum); // Get the rotation handler function
-    const { btnRotate } = getBtnElements(boardNum);
-
-    btnRotate.addEventListener("click", () => {
-      mp3Click();
-      rotate;
-  });
-  }
-  // setupRotateBtnEventListener(1);
-  // setupRotateBtnEventListener(2);
-
-  function setupClearBtnEventListener(boardNum) {
-    const { btnClear } = getBtnElements(boardNum);
-
-    btnClear.addEventListener("click", () => {
-      mp3Click();
-      handleBtnClearAllShips(boardNum);
-      placedShipListArr[boardNum] = [];
-      checkIfPlaceShipsAreAllPlaced(boardNum);
-      testGame[boardNum].removeAllShips();
-      console.log(testGame[boardNum]);
-    });
-  }
-
-  // setupClearBtnEventListener(1);
-  // setupClearBtnEventListener(2);
-
-  //REFACTOR THIS!
-  function setupRandomBtnEventListener(boardNum) {
-    let { btnRandom } = getBtnElements(boardNum);
-
-    const { placeA, placeB, placeD, placeC, placeS } =
-      getBoardElements(boardNum);
-
-    const ships = {
-      a: testGame[boardNum].ships[0],
-      b: testGame[boardNum].ships[1],
-      d: testGame[boardNum].ships[2],
-      s: testGame[boardNum].ships[3],
-      c: testGame[boardNum].ships[4],
-    };
-
-    let randomAxis;
-    let randomRow;
-    let randomCol;
-
-    btnRandom.addEventListener("click", () => {
-      mp3Click();
-      while (placeA.style.display !== "none") {
-        console.log("checkA");
-        randomAxis = getRandomAxis();
-        randomRow = getRandomRow();
-        randomCol = getRandomCol();
-        console.log(
-          `axisA${boardNum}: ${randomAxis} , rowA${boardNum}: ${randomRow}, colA${boardNum}: ${randomCol}`
-        );
-        let result = testGame[boardNum].placeShip(
-          ships.a,
-          randomAxis,
-          randomRow,
-          randomCol
-        );
-        if (result !== "invalid") {
-          orientShipSvgOnShipGrid(
-            boardNum,
-            ships.a.boardCode,
-            randomAxis,
-            randomRow,
-            randomCol
-          );
-          placedShipListArr[boardNum].push(ships.a.boardCode);
-          console.log(placedShipListArr[boardNum]);
-
-          placeA.style.display = "none";
-        }
-      }
-
-      while (placeB.style.display !== "none") {
-        console.log("checkB");
-        randomAxis = getRandomAxis();
-        randomRow = getRandomRow();
-        randomCol = getRandomCol();
-        console.log(
-          `axisB${boardNum}: ${randomAxis} , rowB${boardNum}: ${randomRow}, colB${boardNum}: ${randomCol}`
-        );
-        let result = testGame[boardNum].placeShip(
-          ships.b,
-          randomAxis,
-          randomRow,
-          randomCol
-        );
-        if (result !== "invalid") {
-          orientShipSvgOnShipGrid(
-            boardNum,
-            ships.b.boardCode,
-            randomAxis,
-            randomRow,
-            randomCol
-          );
-          placedShipListArr[boardNum].push(ships.b.boardCode);
-          console.log(placedShipListArr[boardNum]);
-          placeB.style.display = "none";
-        }
-      }
-
-      while (placeD.style.display !== "none") {
-        console.log("checkD");
-        randomAxis = getRandomAxis();
-        randomRow = getRandomRow();
-        randomCol = getRandomCol();
-        console.log(
-          `axisD${boardNum}: ${randomAxis} , rowD${boardNum}: ${randomRow}, colD${boardNum}: ${randomCol}`
-        );
-        let result = testGame[boardNum].placeShip(
-          ships.d,
-          randomAxis,
-          randomRow,
-          randomCol
-        );
-        if (result !== "invalid") {
-          orientShipSvgOnShipGrid(
-            boardNum,
-            ships.d.boardCode,
-            randomAxis,
-            randomRow,
-            randomCol
-          );
-          placedShipListArr[boardNum].push(ships.d.boardCode);
-          console.log(placedShipListArr[boardNum]);
-          placeD.style.display = "none";
-        }
-      }
-
-      while (placeS.style.display !== "none") {
-        console.log("checkS");
-        randomAxis = getRandomAxis();
-        randomRow = getRandomRow();
-        randomCol = getRandomCol();
-        console.log(
-          `axisS${boardNum}: ${randomAxis} , rowS${boardNum}: ${randomRow}, colS${boardNum}: ${randomCol}`
-        );
-        let result = testGame[boardNum].placeShip(
-          ships.s,
-          randomAxis,
-          randomRow,
-          randomCol
-        );
-        if (result !== "invalid") {
-          orientShipSvgOnShipGrid(
-            boardNum,
-            ships.s.boardCode,
-            randomAxis,
-            randomRow,
-            randomCol
-          );
-          placedShipListArr[boardNum].push(ships.s.boardCode);
-          console.log(placedShipListArr[boardNum]);
-          placeS.style.display = "none";
-        }
-      }
-
-      while (placeC.style.display !== "none") {
-        console.log("checkS");
-        randomAxis = getRandomAxis();
-        randomRow = getRandomRow();
-        randomCol = getRandomCol();
-        console.log(
-          `axisC${boardNum}: ${randomAxis} , rowC${boardNum}: ${randomRow}, colC${boardNum}: ${randomCol}`
-        );
-        let result = testGame[boardNum].placeShip(
-          ships.c,
-          randomAxis,
-          randomRow,
-          randomCol
-        );
-        if (result !== "invalid") {
-          orientShipSvgOnShipGrid(
-            boardNum,
-            ships.c.boardCode,
-            randomAxis,
-            randomRow,
-            randomCol
-          );
-          placedShipListArr[boardNum].push(ships.c.boardCode);
-          console.log(placedShipListArr[boardNum]);
-          placeC.style.display = "none";
-        }
-      }
-      checkIfPlaceShipsAreAllPlaced(boardNum);
-      console.log(testGame1);
-      console.log(testGame2);
-    });
   }
 
   function setupHighlightPlaceShipsEventListener(boardNum) {
@@ -480,14 +550,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-
-  // setupHighlightPlaceShipsEventListener(1);
-  // setupHighlightPlaceShipsEventListener(2);
-
-  // selectShipGameCoordinates(1);
-  // selectShipGameCoordinates(2);
-
-  // testGame1.receiveAttack(1, 7);
 
   function attackTargetCoordinates(boardNum) {
     // Validate that the boardNum is valid
@@ -529,14 +591,13 @@ document.addEventListener("DOMContentLoaded", () => {
           colorSunkShips(testGame[boardNum], boardNum);
           // Highlight the board again
           highlightEmptyCellOnlyOnHover(board, boardNum);
-          
+          // console.log(`Turn before P! = ${playerTurn}`);
           playerTurn += 1;
           takeTurnsPvsC();
-          console.log(`PLAYER 1!!! = ${playerTurn}`);
-            setTimeout(function() {
-              console.log("Slow your roll!!!");
-              
-            }, 50000);
+          // console.log(`Turn after P! = ${playerTurn}`);
+          // setTimeout(function () {
+          //   console.log("Slow your roll!!!");
+          // }, 50000);
         }
       });
     });
@@ -554,11 +615,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (player2.playerType === "machine") {
       btnStartGame.addEventListener("click", () => {
-        mp3Click();
+        // mp3Click();
         setTimeout(() => {
           p2BtnRandom.click(); // This simulates a user click
-        }, 200);
-        // console.table(player2.playerBoard.board);
+        }, 0);
         p1PlaceShips.style.display = "none";
         p1TargetZone.style.display = "flex";
         // btnStartGame.style.display = "none"; // handled in phase 2
@@ -570,40 +630,42 @@ document.addEventListener("DOMContentLoaded", () => {
   beginActualGameMatchPvsC();
 
   function takeTurnsPvsC() {
-    const { player1Attack, player2Attack, player2ComputerAttack } =
-      handleMessageContent();
-
-    // let randomRow = getRandomRow();
-    // let randomCol = getRandomCol();
-    // let coordinateCheckViaSet = new Set([]);
-    //     testGame1.receiveAttack(randomRow, randomCol);
+    const { player1Attack, player2ComputerAttack } = handleMessageContent();
     if (player2.playerType === "machine") {
-      console.log(player2.playerType);
+      // console.log(player2.playerType);
       if (playerTurn > 0 && playerTurn % 2 === 0) {
-        clearMessage();
-        addMessage(player1Attack);
+        // clearMessage();
+        // addMessage(player1Attack);
+        
       }
       if (playerTurn > 0 && playerTurn % 2 !== 0) {
         clearMessage();
-        //TODO, add an "attack hits" or "attack misses" feature?
-        addMessage(player2ComputerAttack);
-        // setTimeout(() => {
-        //   testGame1.receiveAttack(randomRow, randomCol);
-        // }, 0);
-        let { randomRow, randomCol } = getUniqueRandomCoordinates();
 
-        console.log(testGame1.receiveAttack(randomRow, randomCol));
-        playerTurn += 1
-        console.log(`PLAYER 2$ = ${playerTurn}`);
+        let { randomRow, randomCol } = getUniqueRandomCoordinates();
+        let hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        // setTimeout(() => {
+        // hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        // }, 500);
+        addMessage(
+          `${player2ComputerAttack} and it is a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}).`
+        );
+        // console.log(
+        //   `Last attack by P2 was a ${hitOrMiss} at (${randomRow}, ${randomCol})`
+        // );
+
+        //console.log(testGame1.receiveAttack(randomRow, randomCol));
+        // console.log(`Turn before P2 = ${playerTurn}`);
+        playerTurn += 1;
+        // console.log(`Turn after P2 = ${playerTurn}`);
         mp3Fire();
-        console.log(randomRow, randomCol);
+        // console.log(randomRow, randomCol);
         // START HERE ON THURSDAY...
 
         // testGame1.receiveAttack(randomRow, randomCol);
         addEmojiEffect(player1.playerBoard.board, 1);
         colorSunkShips(testGame1, 1);
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-        console.table(player1.playerBoard.board);
+        // console.table(player1.playerBoard.board);
       }
     }
   }
@@ -622,10 +684,10 @@ document.addEventListener("DOMContentLoaded", () => {
   setupHighlightPlaceShipsEventListener(1);
   setupHighlightPlaceShipsEventListener(2);
 
-  selectShipGameCoordinates(1);
-  selectShipGameCoordinates(2);
+  manuallySelectShipPlacementCoordinates(1);
+  manuallySelectShipPlacementCoordinates(2);
 
-  console.table(player1.playerBoard.board);
-  console.table(player2.playerBoard.board);
+  // console.table(player1.playerBoard.board);
+  // console.table(player2.playerBoard.board);
   // }
 });
