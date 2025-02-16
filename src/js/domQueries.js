@@ -68,6 +68,8 @@ export function getBoardElements(boardNum) {
 
     shipCellsClass: document.querySelectorAll(`.ship-cells${boardNum}`),
     hitMissCellsClass: document.querySelectorAll(`.hit-miss-cells${boardNum}`),
+    hitMissTargetCellsClass: document.querySelectorAll(`.hit-miss-target-cells${boardNum}`),
+
     allPlaceShipsClass: document.querySelectorAll(
       `.all-p${boardNum}-place-ships`
     ),
@@ -79,3 +81,44 @@ export function getBoardElements(boardNum) {
     placeC: document.querySelector(`#place-c${boardNum}`),
   };
 }
+
+
+  function takeTurnsPvsC() {
+    const { player1Attack, player2ComputerAttack } = handleMessageContent();
+    if (player2.playerType === "machine") {
+      // console.log(player2.playerType);
+      if (playerTurn > 0 && playerTurn % 2 === 0) {
+        // clearMessage();
+        // addMessage(player1Attack);
+      }
+      if (playerTurn > 0 && playerTurn % 2 !== 0) {
+        clearMessage();
+
+        let { randomRow, randomCol } = getUniqueRandomCoordinates();
+        let hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        // setTimeout(() => {
+        // hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        // }, 500);
+        addMessage(
+          `${player2ComputerAttack} and it is a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}).`
+        );
+        // console.log(
+        //   `Last attack by P2 was a ${hitOrMiss} at (${randomRow}, ${randomCol})`
+        // );
+
+        //console.log(testGame1.receiveAttack(randomRow, randomCol));
+        // console.log(`Turn before P2 = ${playerTurn}`);
+        playerTurn += 1;
+        // console.log(`Turn after P2 = ${playerTurn}`);
+        mp3Fire();
+        // console.log(randomRow, randomCol);
+        // START HERE ON THURSDAY...
+
+        // testGame1.receiveAttack(randomRow, randomCol);
+        addEmojiEffect(player1.playerBoard.board, 1);
+        colorSunkShips(testGame1, 1);
+        highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+        // console.table(player1.playerBoard.board);
+      }
+    }
+  }

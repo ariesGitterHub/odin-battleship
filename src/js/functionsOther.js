@@ -550,12 +550,13 @@ export function getRandomAxis(min = 0, max = 9) {
 // Assuming getRandomRow and getRandomCol are functions that return random values for row and column.
 
  const noRepeatSet = new Set(); // Put set outside of function so that it accumulate new coordinates and not refresh itself when called
+ let randomRow, randomCol, coordinates; // Make these global so that enhanced player2Computer targeting will work
 
 export function getUniqueRandomCoordinates() {
   // const noRepeatSet = new Set();
   
   // Repeat until we find unique coordinates
-  let randomRow, randomCol, coordinates;
+  // let randomRow, randomCol, coordinates;
 
   do {
     randomRow = getRandomRow();
@@ -571,6 +572,49 @@ export function getUniqueRandomCoordinates() {
     randomCol
   };
 }
+
+// export function getEnhancedUniqueCoordinates() {
+//   // const noRepeatSet = new Set();
+
+//   // Repeat until we find unique coordinates
+
+//     let randomRowA = randomRow + 1;
+//     let randomRowBD = randomRow + 0;
+//     let randomRowC = randomRow - 1;
+//     let randomColB = randomCol + 1;
+//     let randomColAC = randomCol + 0;
+//     let randomColD = randomCol - 1;
+//     let newCoordinates1 = `${randomRowA},${randomColAC}`;
+//     let newCoordinates2 = `${randomRowBD},${randomColB}`;
+//     let newCoordinates3 = `${randomRowC},${randomColAC}`;
+//     let newCoordinates4 = `${randomRowBD},${randomColD}`;
+
+//     const variables = [
+//       newCoordinates1,
+//       newCoordinates2,
+//       newCoordinates3,
+//       newCoordinates4,
+//     ];
+
+//     // Select a random index
+//     const randomIndex = Math.floor(Math.random() * variables.length);
+
+//     // Get the random variable
+//     const randomVariable = variables[randomIndex];
+//   //  (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
+
+//   if (!noRepeatSet.has(randomVariable) {
+
+//   }
+
+//   // Store the unique coordinate
+//   noRepeatSet.add(coordinates);
+//   console.log(noRepeatSet);
+//   return {
+//     randomRow,
+//     randomCol,
+//   };
+// }
 
 
 const click = new Audio(btnClick);
