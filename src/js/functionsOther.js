@@ -76,7 +76,7 @@ export function handleMessageContent() {
   const computerAttack = "attacks your fleet,";
   // "attacks your fleet! (See results in your Deployment Zone.)";
   // const matchIsUnderway = ""
-  const endGameWin = "wins, and has sunk the enemy fleet!";
+  const endGameWin = "WINS, and has defeated";
   return {
     startGameMsg: noPlayersSelectedYet,
     player1DeployShipsMsg: `${player1}${deployShips}`,
@@ -88,8 +88,8 @@ export function handleMessageContent() {
     player1Attack: `${player1}${gameTimeAttack}`,
     player2Attack: `${player2}${gameTimeAttack}`,
     player2ComputerAttack: `${player2} ${computerAttack}`,
-    player1Wins: `${player1} ${endGameWin}`,
-    player2Wins: `${player1} ${endGameWin}`,
+    player1Wins: `${player1} ${endGameWin} ${player2}!!!`,
+    player2Wins: `${player2} ${endGameWin} ${player1}!!!`,
   };
 }
 
@@ -310,6 +310,7 @@ export function handleResetPlaceShips(boardNum) {
 }
 
 export function colorSunkShips(board, boardNum) {
+
   const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";
   const targetShipBoardId =
     boardNum === 1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
@@ -333,19 +334,24 @@ export function colorSunkShips(board, boardNum) {
 
       if (board.ships.every((ship) => ship.isSunk())) {
         mp3Sink(); // When all ships are sunk...
-
         document.querySelector(shipBoardId).style.backgroundColor =
           "var(--loser)";
         document.querySelector(targetShipBoardId).style.backgroundColor =
           "var(--loser)";
-        if (board === 1) {
-          clearMessage();
-          addMessage(player1Wins);
-        }
-        if (board === 2) {
-          clearMessage();
-          addMessage(player2Wins);
-        }
+        // if (
+        //   (document.querySelector("#p1-ship-board").style.backgroundColor ===
+        //     "var(--loser)")
+        // ) {
+        //   clearMessage();
+        //   addMessage(player1Wins);
+        // }
+        // if (
+        //   (document.querySelector("#p2-ship-board").style.backgroundColor ===
+        //     "var(--loser)")
+        // ) {
+        //   clearMessage();
+        //   addMessage(player2Wins);
+        // }
       }
     }
   }
@@ -543,8 +549,6 @@ export function getRandomAxis(min = 0, max = 9) {
 //     }
 //   }
 // }
-
-// Assuming getRandomRow and getRandomCol are functions that return random values for row and column.
 
 
 // TODO - REFACTOR!!! A mess
@@ -827,4 +831,18 @@ sink.preload = "auto";
 export function mp3Sink() {
   sink.currentTime = 0; // Reset the audio to the beginning
   sink.play();
+}
+
+
+export function stopGameThereIsAWinner() {
+  const { p1ShipBoard, p2ShipBoard } = getBoardElements();
+    const { player1Wins, player2Wins } = handleMessageContent();
+      if (p1ShipBoard.style.backgroundColor === "var(--loser)") {
+        clearMessage();
+        addMessage(player1Wins);
+      }
+      if (p2ShipBoard.style.backgroundColor === "var(--loser)") {
+        clearMessage();
+        addMessage(player2Wins);
+      }
 }

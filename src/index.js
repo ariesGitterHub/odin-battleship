@@ -42,6 +42,7 @@ import {
   mp3Sink,
   orientShipSvgOnShipGrid,
   // removeAllShipSvgsOnShipGrid,
+  stopGameThereIsAWinner,
 } from "./js/functionsOther.js";
 import { Gameboard } from "./js/classGameboard.js";
 import { Player } from "./js/classPlayer.js";
@@ -692,6 +693,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addEmojiEffect(player1.playerBoard.board, 1);
         colorSunkShips(testGame1, 1);
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+        stopGameThereIsAWinner();
 
         if (hitOrMiss === "hit") {
           console.log("This attack was a hit!");
@@ -699,17 +701,20 @@ document.addEventListener("DOMContentLoaded", () => {
           randomRowStored = randomRow;
           randomColStored = randomCol;
           lastPlayer2ComputerPriorAttack = true;
+          stopGameThereIsAWinner();
           // randomRowPriorStored = randomRowStored;
           // randomColPriorStored = randomColStored;
         } else if (hitOrMiss === "miss" && lastPlayer2ComputerPriorAttack) {
           console.log("Double or nothing!!");
           lastPlayer2ComputerAttack = "Double or nothing!!";
-          randomRowStored = randomRow;
-          randomColStored = randomCol;
+          // randomRowStored = randomRow;
+          // randomColStored = randomCol;
           lastPlayer2ComputerPriorAttack = false;
+          stopGameThereIsAWinner();
         } else {
           console.log("missed...");
           lastPlayer2ComputerAttack = "miss";
+          stopGameThereIsAWinner();
         }
       }, 0);
     }
