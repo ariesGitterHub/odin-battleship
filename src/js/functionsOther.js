@@ -60,7 +60,7 @@ export function clearMessage() {
 export function handleMessageContent() {
   const player1 = "PLAYER 1";
   const player2 = "PLAYER 2";
-  const noPlayersSelectedYet = "Please select the number of players."
+  const noPlayersSelectedYet = "Please select the number of players.";
   const deployShips =
     ": DEPLOY YOUR SHIPS. Rotate ships to select axis. Click on any ship to highlight it in red, then click the desired deployment zone square to place ship. Or, click RANDOM BUTTON to make random ship placements.";
   const startMatchPvsC =
@@ -73,9 +73,8 @@ export function handleMessageContent() {
     ": click the START GAME BUTTON to begin a match against the PLAYER 2. ";
   const gameTimeAttack =
     ": click on a cell in your ENEMY TARGET ZONE grid to attack.";
-  const computerAttack =
-    "attacks your fleet,";
-    // "attacks your fleet! (See results in your Deployment Zone.)";
+  const computerAttack = "attacks your fleet,";
+  // "attacks your fleet! (See results in your Deployment Zone.)";
   // const matchIsUnderway = ""
   const endGameWin = "wins, and has sunk the enemy fleet!";
   return {
@@ -339,14 +338,14 @@ export function colorSunkShips(board, boardNum) {
           "var(--loser)";
         document.querySelector(targetShipBoardId).style.backgroundColor =
           "var(--loser)";
-          if (board === 1) {
-            clearMessage();
-            addMessage(player1Wins);
-          }
-          if (board === 2) {
-            clearMessage();
-            addMessage(player2Wins);
-          }
+        if (board === 1) {
+          clearMessage();
+          addMessage(player1Wins);
+        }
+        if (board === 2) {
+          clearMessage();
+          addMessage(player2Wins);
+        }
       }
     }
   }
@@ -404,19 +403,19 @@ export function addEmojiEffect(board, boardNum) {
         board[i][j] === "S!" ||
         board[i][j] === "C!"
       ) {
-        mp3Hit();
         cell.innerText = "💥";
         cellTarget.innerText = "💥";
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
+        mp3Hit();
       } else if (board[i][j] === "mm") {
-        mp3Miss();
         cell.innerText = "💨";
         cell.style.transform = "rotate(-90deg)";
         cellTarget.innerText = "💨";
         cellTarget.style.transform = "rotate(-90deg)";
         cellShip.style.backgroundColor = "var(--miss)";
         cellShipTarget.style.backgroundColor = "var(--miss)";
+        mp3Miss();
       } else {
         cell.innerText = "  ";
         cellTarget.innerText = "  ";
@@ -512,8 +511,6 @@ export function getRandomRow(min = 0, max = 9) {
   return randomRow;
 }
 
-
-
 export function getRandomCol(min = 0, max = 9) {
   const randomCol = Math.floor(Math.random() * (max - min + 1)) + min;
   return randomCol;
@@ -549,63 +546,36 @@ export function getRandomAxis(min = 0, max = 9) {
 
 // Assuming getRandomRow and getRandomCol are functions that return random values for row and column.
 
- const noRepeatSet = new Set(); // Put set outside of function so that it accumulate new coordinates and not refresh itself when called
- let randomRow, randomCol, coordinates; // Make these global so that enhanced player2Computer targeting will work
 
-export function getUniqueRandomCoordinates() {
-  // const noRepeatSet = new Set();
-  
-  // Repeat until we find unique coordinates
-  // let randomRow, randomCol, coordinates;
+// TODO - REFACTOR!!! A mess
+const noRepeatSet = new Set(); // Put set outside of function so that it accumulate new coordinates and not refresh itself when called
+let randomRow, randomCol, coordinates;
 
-  do {
-    randomRow = getRandomRow();
-    randomCol = getRandomCol();
-    coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
-  } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
-  
-  // Store the unique coordinate
-  noRepeatSet.add(coordinates);
-  console.log(noRepeatSet);
-  return {
-    randomRow,
-    randomCol
-  };
-}
+const onlyHitsSet = new Set();
+const onlyHitsArray = Array.from(onlyHitsSet);
+const lastHitTargetTheseCoordinates = onlyHitsArray[onlyHitsArray.length - 1];
 
-// export function getEnhancedUniqueCoordinates() {
+// function getRandomValueFromArray(array) {
+//   const randomIndex = Math.floor(Math.random() * array.length);
+//   return array[randomIndex];
+// }
+
+// const myArray = [-1, 1];
+// const randomValue = getRandomValueFromArray(myArray);
+
+// console.log(randomValue);
+
+// export function getUniqueRandomCoordinates() {
 //   // const noRepeatSet = new Set();
 
 //   // Repeat until we find unique coordinates
+//   // let randomRow, randomCol, coordinates;
 
-//     let randomRowA = randomRow + 1;
-//     let randomRowBD = randomRow + 0;
-//     let randomRowC = randomRow - 1;
-//     let randomColB = randomCol + 1;
-//     let randomColAC = randomCol + 0;
-//     let randomColD = randomCol - 1;
-//     let newCoordinates1 = `${randomRowA},${randomColAC}`;
-//     let newCoordinates2 = `${randomRowBD},${randomColB}`;
-//     let newCoordinates3 = `${randomRowC},${randomColAC}`;
-//     let newCoordinates4 = `${randomRowBD},${randomColD}`;
-
-//     const variables = [
-//       newCoordinates1,
-//       newCoordinates2,
-//       newCoordinates3,
-//       newCoordinates4,
-//     ];
-
-//     // Select a random index
-//     const randomIndex = Math.floor(Math.random() * variables.length);
-
-//     // Get the random variable
-//     const randomVariable = variables[randomIndex];
-//   //  (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
-
-//   if (!noRepeatSet.has(randomVariable) {
-
-//   }
+//   do {
+//     randomRow = getRandomRow();
+//     randomCol = getRandomCol();
+//     coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
+//   } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
 
 //   // Store the unique coordinate
 //   noRepeatSet.add(coordinates);
@@ -615,6 +585,208 @@ export function getUniqueRandomCoordinates() {
 //     randomCol,
 //   };
 // }
+
+// export function getUniqueEnhancedCoordinates(
+// export function getUniqueRandomCoordinates(
+//   lastPlayer2ComputerAttack,
+//   randomRowStored,
+//   randomColStored
+// ) {
+//   // const noRepeatSet = new Set();
+
+//   // Repeat until we find unique coordinates
+//   // let randomRow, randomCol, coordinates;
+
+//   if (lastPlayer2ComputerAttack === "HIT!!!") {
+//     let randomRow1 = randomRowStored + randomValue;
+//     randomCol = randomColStored;
+//     let coordinates1 = `${randomRow1},${randomCol}`;
+
+//     randomRow = randomRowStored;
+//     let randomCol2 = randomColStored + randomValue;
+//     let coordinates2 = `${randomRow},${randomCol2}`;
+
+//     if (randomRow1 >= 0 && randomRow1 < 10 && !noRepeatSet.has(coordinates1)) {
+//       randomRow = randomRow1;
+//       return {
+//         randomRow,
+//         randomCol,
+//       };
+//     } else if (
+//       randomCol2 >= 0 &&
+//       randomCol2 < 10 &&
+//       !noRepeatSet.has(coordinates2)
+//     ) {
+//       randomCol = randomCol2;
+//       return {
+//         randomRow,
+//         randomCol,
+//       };
+//     }
+//   } else if (lastPlayer2ComputerAttack !== "HIT!!!") {
+//       do {
+//         randomRow = getRandomRow();
+//         randomCol = getRandomCol();
+//         coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
+//       } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
+//       // Store the unique coordinate
+//       noRepeatSet.add(coordinates);
+//       console.log(noRepeatSet);
+//       return {
+//         randomRow,
+//         randomCol,
+//       };
+//   }
+// }
+
+// This function ensures that all random coordinates are unique and that a player2Computer hit will snoop around with attacks on adjacent squares if its last attack was a hit.
+export function getUniqueRandomCoordinates(
+  lastPlayer2ComputerAttack,
+  randomRowStored,
+  randomColStored,
+  // lastPlayer2ComputerPriorAttack,
+  // randomRowPriorStored,
+  // randomColPriorStored
+) {
+  // let randomRow, randomCol, coordinates;
+
+  // Random value from [-1, 0, 1] to target neighboring cells
+  // const myArray = [-1, 0, 1];
+  // const randomValue = getRandomValueFromArray(myArray);
+
+
+  // If last attack was a hit, attempt to target nearby coordinates
+  if (lastPlayer2ComputerAttack === "HIT!!!") {
+    let lastHitCoordinates = `${randomRowStored},${randomColStored}`;
+    onlyHitsSet.add(lastHitCoordinates);
+
+    console.log(lastHitCoordinates); // Output: "4,5"
+    console.log(onlyHitsSet);
+
+    let adjacentCoordinates = [
+      `${randomRowStored + 1},${randomColStored}`, // Down
+      `${randomRowStored - 1},${randomColStored}`, // Up
+      `${randomRowStored},${randomColStored + 1}`, // Right
+      `${randomRowStored},${randomColStored - 1}`, // Left
+      // `${randomRowStored + 1},${randomColStored + 1}`, // Down-right (diagonal)
+      // `${randomRowStored - 1},${randomColStored - 1}`, // Up-left (diagonal)
+      // `${randomRowStored + 1},${randomColStored - 1}`, // Down-left (diagonal)
+      // `${randomRowStored - 1},${randomColStored + 1}`, // Up-right (diagonal)
+    ];
+
+    let attempts = 0;
+    let foundValidCoordinate = false;
+
+    // randomRowPriorStored = randomRowStored;
+    // randomColPriorStored = randomColStored;
+
+    // Try to find a valid adjacent coordinate that hasn't been used
+    while (attempts < 10 && !foundValidCoordinate) {
+      let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
+      coordinates = adjacentCoordinates[randomIndex];
+      [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
+
+      // Check if the coordinates are valid (within bounds and not used before)
+      if (
+        randomRow >= 0 &&
+        randomRow < 10 && // Ensure it's within bounds
+        randomCol >= 0 &&
+        randomCol < 10 &&
+        !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
+      ) {
+        foundValidCoordinate = true; // A valid coordinate is found
+      } else {
+        attempts++; // Increase the number of attempts
+      }
+    }
+
+    // If no valid coordinate found after 10 attempts, default to a random one
+    if (!foundValidCoordinate) {
+      console.log(
+        "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
+      );
+      do {
+        randomRow = getRandomRow();
+        randomCol = getRandomCol();
+        coordinates = `${randomRow},${randomCol}`;
+      } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
+    }
+  } else if (lastPlayer2ComputerAttack === "Double or nothing!!") {
+    // Get the last hit coordinates from the set
+    const onlyHitsArray = Array.from(onlyHitsSet);
+    const lastHitTargetTheseCoordinates =
+      onlyHitsArray[onlyHitsArray.length - 1];
+    const [randomRowDoubleOrNothing, randomColDoubleOrNothing] =
+      lastHitTargetTheseCoordinates.split(",").map(Number); // Split and map to row and col
+
+    console.log(
+      `Prior coordinates: ${randomRowDoubleOrNothing},${randomColDoubleOrNothing}`
+    );
+
+    let adjacentCoordinates = [
+      `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing}`, // Down
+      `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing}`, // Up
+      `${randomRowDoubleOrNothing},${randomColDoubleOrNothing + 1}`, // Right
+      `${randomRowDoubleOrNothing},${randomColDoubleOrNothing - 1}`, // Left
+      // Uncomment these if you want to include diagonals
+      // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing + 1}`, // Down-right (diagonal)
+      // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing - 1}`, // Up-left (diagonal)
+      // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing - 1}`, // Down-left (diagonal)
+      // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing + 1}`, // Up-right (diagonal)
+    ];
+
+    let attempts = 0;
+    let foundValidCoordinate = false;
+
+    // Try to find a valid adjacent coordinate that hasn't been used
+    while (attempts < 10 && !foundValidCoordinate) {
+      let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
+      coordinates = adjacentCoordinates[randomIndex];
+      [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
+
+      // Check if the coordinates are valid (within bounds and not used before)
+      if (
+        randomRow >= 0 &&
+        randomRow < 10 && // Ensure it's within bounds
+        randomCol >= 0 &&
+        randomCol < 10 &&
+        !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
+      ) {
+        foundValidCoordinate = true; // A valid coordinate is found
+      } else {
+        attempts++; // Increase the number of attempts
+      }
+    }
+
+    // If no valid coordinate found after 10 attempts, default to a random one
+    if (!foundValidCoordinate) {
+      console.log(
+        "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
+      );
+      do {
+        randomRow = getRandomRow();
+        randomCol = getRandomCol();
+        coordinates = `${randomRow},${randomCol}`;
+      } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
+    }
+  } else {
+    // If last attack was a miss, generate a random coordinate
+    do {
+      randomRow = getRandomRow();
+      randomCol = getRandomCol();
+      coordinates = `${randomRow},${randomCol}`;
+    } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
+  }
+
+  // Add the unique coordinate to the set
+  noRepeatSet.add(coordinates);
+  console.log(noRepeatSet);
+
+  return {
+    randomRow,
+    randomCol,
+  };
+}
 
 
 const click = new Audio(btnClick);

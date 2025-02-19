@@ -28,6 +28,7 @@ import {
   getRandomAxis,
   getRandomCol,
   getRandomRow,
+  getUniqueEnhancedCoordinates,
   getUniqueRandomCoordinates,
   handleHighlightPlaceShip,
   handleMessageContent,
@@ -73,6 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let lastPlayer2ComputerAttack;
   let randomRowStored;
   let randomColStored;
+  let lastPlayer2ComputerPriorAttack;
+  let randomRowPriorStored;
+  let randomColPriorStored;
 
   // Helpers that aid with boardNum parameters in later functions
   const player = { 1: player1, 2: player2 };
@@ -662,17 +666,25 @@ document.addEventListener("DOMContentLoaded", () => {
   function player2ComputerAttack() {
     if (
       player2.playerType == "machine" &&
-      playerTurn % 2 !== 0 &&
-      lastPlayer2ComputerAttack !== "HIT!!!"
+      playerTurn % 2 !== 0 
+      // &&
+      // lastPlayer2ComputerAttack !== "HIT!!!"
     ) {
       setTimeout(() => {
-        const { player2ComputerAttack } = handleMessageContent();
+        // const { player2ComputerAttack } = handleMessageContent();
         clearMessage();
-        let { randomRow, randomCol } = getUniqueRandomCoordinates();
+        let { randomRow, randomCol } = getUniqueRandomCoordinates(
+          lastPlayer2ComputerAttack,
+          randomRowStored,
+          randomColStored,
+          lastPlayer2ComputerPriorAttack,
+          randomRowPriorStored,
+          randomColPriorStored
+        );
         let hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
         // TODO - fix below later in handleMessageContent
         addMessage(
-          `PLAYER 2 attacks! It's a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1's turn.`
+          `PLAYER 2 attacked! It's a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1's turn.`
         );
         playerTurn += 1;
         console.log(`Attack on testGame1 by P2, Turn flips to: ${playerTurn}`);
@@ -682,53 +694,30 @@ document.addEventListener("DOMContentLoaded", () => {
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
 
         if (hitOrMiss === "hit") {
-          console.log("FUCKTASTIC!!!!");
+          console.log("This attack was a hit!");
           lastPlayer2ComputerAttack = "HIT!!!";
           randomRowStored = randomRow;
           randomColStored = randomCol;
+          lastPlayer2ComputerPriorAttack = true;
+          // randomRowPriorStored = randomRowStored;
+          // randomColPriorStored = randomColStored;
+        } else if (hitOrMiss === "miss" && lastPlayer2ComputerPriorAttack) {
+          console.log("Double or nothing!!");
+          lastPlayer2ComputerAttack = "Double or nothing!!";
+          randomRowStored = randomRow;
+          randomColStored = randomCol;
+          lastPlayer2ComputerPriorAttack = false;
         } else {
-          console.log("Boooooos-ville...");
+          console.log("missed...");
+          lastPlayer2ComputerAttack = "miss";
         }
-      }, 3000);
+      }, 0);
     }
-        if (
-          player2.playerType == "machine" &&
-          playerTurn % 2 !== 0 &&
-          lastPlayer2ComputerAttack === "HIT!!!"
-        ) {
-          setTimeout(() => {
-            const { player2ComputerAttack } = handleMessageContent();
-            clearMessage();
-            let { randomRow, randomCol } = getUniqueRandomCoordinates();
-            let hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-            // TODO - fix below later in handleMessageContent
-            addMessage(
-              `PLAYER 2 attacks! It's a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1's turn.`
-            );
-            playerTurn += 1;
-            console.log(
-              `Attack on testGame1 by P2, Turn flips to: ${playerTurn}`
-            );
-            mp3Fire();
-            addEmojiEffect(player1.playerBoard.board, 1);
-            colorSunkShips(testGame1, 1);
-            highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-
-            if (hitOrMiss === "hit") {
-              console.log("FUCKTASTIC!!!!");
-              lastPlayer2ComputerAttack = "HIT!!!";
-              randomRowStored = randomRow;
-              randomColStored = randomCol;
-            } else {
-              console.log("Boooooos-ville...");
-            }
-          }, 3000);
-        } 
   }
 
-  function player2ComputerEnhancedAttack() {
+  // function player2ComputerEnhancedAttack() {
 
-  }
+  // }
 
   manuallyAttackTargetCoordinates(1);
   manuallyAttackTargetCoordinates(2);
