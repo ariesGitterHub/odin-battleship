@@ -87,7 +87,8 @@ export function createBtnElements() {
     { label: "Player 1 vs Player 2", id: "btn-pvsp" },
     { label: "Quit Game", id: "btn-quit-game" },
     { label: "Start Game", id: "btn-start-game" },
-    { label: "Enter Pass Device Mode", id: "btn-pass-device" },
+    { label: "Pass Device to Opponent", id: "btn-pass-device" },
+    { label: "Unlock Device", id: "btn-unlock-device" },
   ];
 
   function createMainActionButtons(buttonConfigs) {

@@ -262,6 +262,12 @@ align-items: center;
 justify-content: center;
 }
 
+#btn-unlock-device {
+display: none;
+align-items: center;
+justify-content: center;
+}
+
 /* #btn-pvsc:active {
   background-color: var(--player1);
 }
@@ -382,6 +388,7 @@ justify-content: center;
   display: flex;
   /* display: none; */
 }
+
 /* #p1-circle, #p2-circle {
   height: 14rem;
   width: 14rem;

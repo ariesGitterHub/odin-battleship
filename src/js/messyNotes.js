@@ -1249,3 +1249,175 @@ allShipsArePlaced() {
 // console.log(`P2: s3 sunk status = ${testGame2.ships[3].isSunk()}`);
 // console.log(`P2: c2 sunk status = ${testGame2.ships[4].isSunk()}`);
 // console.log(`P2: p1 sunk status = ${testGame2.ships[5].isSunk()}`);
+
+
+
+  // function setupRandomBtnEventListener(boardNum) {
+  //   let { btnRandom } = getBtnElements(boardNum);
+
+  //   const { placeA, placeB, placeD, placeC, placeS } =
+  //     getBoardElements(boardNum);
+
+  //   const ships = {
+  //     a: testGame[boardNum].ships[0],
+  //     b: testGame[boardNum].ships[1],
+  //     d: testGame[boardNum].ships[2],
+  //     s: testGame[boardNum].ships[3],
+  //     c: testGame[boardNum].ships[4],
+  //   };
+
+  //   let randomAxis;
+  //   let randomRow;
+  //   let randomCol;
+
+  //   btnRandom.addEventListener("click", () => {
+  //     mp3Click();
+  //     while (placeA.style.display !== "none") {
+  //       // console.log("checkA");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisA${boardNum}: ${randomAxis} , rowA${boardNum}: ${randomRow}, colA${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.a,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.a.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.a.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+
+  //         placeA.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeB.style.display !== "none") {
+  //       // console.log("checkB");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisB${boardNum}: ${randomAxis} , rowB${boardNum}: ${randomRow}, colB${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.b,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.b.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.b.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeB.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeD.style.display !== "none") {
+  //       // console.log("checkD");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisD${boardNum}: ${randomAxis} , rowD${boardNum}: ${randomRow}, colD${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.d,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.d.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.d.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeD.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeS.style.display !== "none") {
+  //       // console.log("checkS");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisS${boardNum}: ${randomAxis} , rowS${boardNum}: ${randomRow}, colS${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.s,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.s.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.s.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeS.style.display = "none";
+  //       }
+  //     }
+
+  //     while (placeC.style.display !== "none") {
+  //       // console.log("checkS");
+  //       randomAxis = getRandomAxis();
+  //       randomRow = getRandomRow();
+  //       randomCol = getRandomCol();
+  //       // console.log(
+  //       //   `axisC${boardNum}: ${randomAxis} , rowC${boardNum}: ${randomRow}, colC${boardNum}: ${randomCol}`
+  //       // );
+  //       let result = testGame[boardNum].placeShip(
+  //         ships.c,
+  //         randomAxis,
+  //         randomRow,
+  //         randomCol
+  //       );
+  //       if (result !== "invalid") {
+  //         orientShipSvgOnShipGrid(
+  //           boardNum,
+  //           ships.c.boardCode,
+  //           randomAxis,
+  //           randomRow,
+  //           randomCol
+  //         );
+  //         placedShipListArr[boardNum].push(ships.c.boardCode);
+  //         // console.log(placedShipListArr[boardNum]);
+  //         placeC.style.display = "none";
+  //       }
+  //     }
+  //     forPvsCMatchesCheckIfPlaceShipsAreAllPlacedThenShowStartBtn(boardNum);
+
+  //     console.log(`All player ${boardNum} ships are placed`);
+  //     console.log(testGame1);
+  //     console.log(testGame2);
+  //   });
+  // }
+
+  // Better DRY version of above

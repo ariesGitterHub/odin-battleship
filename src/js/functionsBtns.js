@@ -28,8 +28,8 @@ export function handleBtnNumPlayer(playerNum) {
   if (playerNum === 1) {
     swapInPlaceShipScreenElements();
     p1FullBoard.style.display = "flex";
-    // p2FullBoard.style.display = "none"; // Commented out for testing
-    p2FullBoard.style.display = "flex";
+    p2FullBoard.style.display = "none"; // Commented out for testing
+    // p2FullBoard.style.display = "flex";
   }
 
   if (playerNum === 2) {

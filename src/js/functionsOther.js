@@ -88,8 +88,8 @@ export function handleMessageContent() {
     player1Attack: `${player1}${gameTimeAttack}`,
     player2Attack: `${player2}${gameTimeAttack}`,
     player2ComputerAttack: `${player2} ${computerAttack}`,
-    player1Wins: `${player1} ${endGameWin} ${player2}!!!`,
-    player2Wins: `${player2} ${endGameWin} ${player1}!!!`,
+    player1Wins: `${player1} ${endGameWin} ${player2}'s fleet!!!`,
+    player2Wins: `${player2} ${endGameWin} ${player1}'s fleet!!!`,
   };
 }
 
@@ -310,7 +310,6 @@ export function handleResetPlaceShips(boardNum) {
 }
 
 export function colorSunkShips(board, boardNum) {
-
   const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";
   const targetShipBoardId =
     boardNum === 1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
@@ -533,158 +532,171 @@ export function getRandomAxis(min = 0, max = 9) {
   return randomAxis;
 }
 
-// export function getUniqueRandomCoordinates() {
-//   const noRepeatSet = new Set();
-//   let randomRow = getRandomRow;
-//   let randomCol = getRandomCol;
-//   let coordinates = [randomRow, randomCol]
-//     getUniqueRandomCoordinates();
-//   if (noRepeatSet.has(coordinates)) {
+// function everyOtherColDependingOnRow(row) {
+//   const even = [0, 2, 4, 6, 8];
+//   const odd = [1, 3, 5, 7, 9];
+//   const randomIndex = Math.floor(Math.random() * even.length); // Generates a random index
+//   const randomEvenNumber = even[randomIndex]; // Gets the random number from the array
+//   const randomOddNumber = odd[randomIndex]; // Gets the random number from the array
 
-//   } else {
-//     noRepeatSet.set(coordinates);
-//     return {
-//       randomRow,
-//       randomCol
-//     }
+//   let everyOtherColEven = randomEvenNumber;
+//   let everyOtherColOdd = randomOddNumber;
+//   if (row % 2 === 0) {
+//     return everyOtherColEven;
+//   } else if (row % 2 !== 0) {
+//     return everyOtherColOdd;
 //   }
 // }
 
+function everyOtherColDependingOnRow(row) {
+  const even = [0, 2, 4, 6, 8];
+  const odd = [1, 3, 5, 7, 9];
 
-// TODO - REFACTOR!!! A mess
-const noRepeatSet = new Set(); // Put set outside of function so that it accumulate new coordinates and not refresh itself when called
-let randomRow, randomCol, coordinates;
+  if (row % 2 === 0) {
+    return even[Math.floor(Math.random() * even.length)];
+  } else {
+    return odd[Math.floor(Math.random() * odd.length)];
+  }
+}
 
-const onlyHitsSet = new Set();
-const onlyHitsArray = Array.from(onlyHitsSet);
-const lastHitTargetTheseCoordinates = onlyHitsArray[onlyHitsArray.length - 1];
+// Put these sets outside of function so that it accumulate new coordinates and not refresh itself when called
+const noRepeatCoordinatesSet = new Set();
+const priorHitCoordinatesSet = new Set();
+const hunterCoordinatesSet = new Set();
+let randomRow, randomCol, coordinates, hunterCoordinates;
 
-// function getRandomValueFromArray(array) {
-//   const randomIndex = Math.floor(Math.random() * array.length);
-//   return array[randomIndex];
-// }
+const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
+const lastHitTargetCoordinates =
+  priorHitCoordinatesArray[priorHitCoordinatesArray.length - 1];
+const hunterCoordinatesArray = Array.from(hunterCoordinatesSet);
 
-// const myArray = [-1, 1];
-// const randomValue = getRandomValueFromArray(myArray);
 
-// console.log(randomValue);
 
-// export function getUniqueRandomCoordinates() {
-//   // const noRepeatSet = new Set();
 
-//   // Repeat until we find unique coordinates
-//   // let randomRow, randomCol, coordinates;
 
-//   do {
-//     randomRow = getRandomRow();
-//     randomCol = getRandomCol();
-//     coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
-//   } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
+// export function getUniqueRandomCoordinates(
+//   hitOrMiss,
+//   // lastPlayer2ComputerAttack,
+//   randomRowStored,
+//   randomColStored
+// ) {
+//   let attempts = 0;
+//   let foundValidCoordinate = false;
+//   let coordinateDistance = 1;
+//   let lastAttackWasAHit;
+//   let lastLastAttackWasAHit;
 
-//   // Store the unique coordinate
-//   noRepeatSet.add(coordinates);
-//   console.log(noRepeatSet);
+//   let adjacentCoordinates = [
+//     `${randomRowStored + coordinateDistance},${randomColStored}`, // Down
+//     `${randomRowStored - coordinateDistance},${randomColStored}`, // Up
+//     `${randomRowStored},${randomColStored + coordinateDistance}`, // Right
+//     `${randomRowStored},${randomColStored - coordinateDistance}`, // Left
+//     // `${randomRowStored + 1},${randomColStored + 1}`, // Down-right (diagonal)
+//     // `${randomRowStored - 1},${randomColStored - 1}`, // Up-left (diagonal)
+//     // `${randomRowStored + 1},${randomColStored - 1}`, // Down-left (diagonal)
+//     // `${randomRowStored - 1},${randomColStored + 1}`, // Up-right (diagonal)
+//   ];
+
+//   if (hitOrMiss === "hit") {
+//     lastAttackWasAHit = true;
+//     const currentHitCoordinates = `${randomRowStored},${randomColStored}`;
+//     priorHitCoordinatesSet.add(currentHitCoordinates);
+//   } else if (hitOrMiss === "miss" && lastAttackWasAHit) {
+//     lastLastAttackWasAHit = true;
+//   } else {
+//     lastAttackWasAHit = false;
+//     lastLastAttackWasAHit = false;
+//   }
+
+//   // Try to find a valid adjacent coordinate that hasn't been used
+//   while (
+//     attempts < 10 &&
+//     !foundValidCoordinate &&
+//     (lastAttackWasAHit || lastLastAttackWasAHit)
+//   ) {
+//     let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
+//     coordinates = adjacentCoordinates[randomIndex];
+//     [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
+
+//     // Check if the coordinates are valid (within bounds and not used before)
+//     if (
+//       randomRow >= 0 &&
+//       randomRow < 10 && // Ensure it's within bounds
+//       randomCol >= 0 &&
+//       randomCol < 10 &&
+//       !noRepeatCoordinatesSet.has(coordinates) // Ensure it's not a previously used coordinate
+//     ) {
+//       foundValidCoordinate = true; // A valid coordinate is found
+//     } else {
+//       attempts++; // Increase the number of attempts
+//     }
+//   }
+
+//   // If no valid coordinate found after 10 attempts, default to a random one
+//   if (!foundValidCoordinate && hunterCoordinatesArray.length < 20) {
+//     console.log(
+//       "Hunter Mode."
+//     );
+//     do {
+//       randomRow = getRandomRow();
+//       randomCol = everyOtherColDependingOnRow(randomRow);
+//       coordinates = `${randomRow},${randomCol}`;
+//       hunterCoordinates = coordinates;
+//     } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
+//   }
+
+//   // If no valid coordinate found after 10 attempts, default to a random one
+//   if (!foundValidCoordinate) {
+//     console.log(
+//       "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
+//     );
+//     do {
+//       randomRow = getRandomRow();
+//       randomCol = getRandomCol();
+//       coordinates = `${randomRow},${randomCol}`;
+//     } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
+//   }
+
+//   // Add the unique coordinate to the set
+//   noRepeatCoordinatesSet.add(coordinates);
+//   hunterCoordinatesSet.add(hunterCoordinates);
+//   console.log(priorHitCoordinatesSet);
+//   console.log(hunterCoordinatesSet);
+//   console.log(noRepeatCoordinatesSet);
+
 //   return {
 //     randomRow,
 //     randomCol,
 //   };
 // }
 
-// export function getUniqueEnhancedCoordinates(
-// export function getUniqueRandomCoordinates(
-//   lastPlayer2ComputerAttack,
-//   randomRowStored,
-//   randomColStored
-// ) {
-//   // const noRepeatSet = new Set();
 
-//   // Repeat until we find unique coordinates
-//   // let randomRow, randomCol, coordinates;
-
-//   if (lastPlayer2ComputerAttack === "HIT!!!") {
-//     let randomRow1 = randomRowStored + randomValue;
-//     randomCol = randomColStored;
-//     let coordinates1 = `${randomRow1},${randomCol}`;
-
-//     randomRow = randomRowStored;
-//     let randomCol2 = randomColStored + randomValue;
-//     let coordinates2 = `${randomRow},${randomCol2}`;
-
-//     if (randomRow1 >= 0 && randomRow1 < 10 && !noRepeatSet.has(coordinates1)) {
-//       randomRow = randomRow1;
-//       return {
-//         randomRow,
-//         randomCol,
-//       };
-//     } else if (
-//       randomCol2 >= 0 &&
-//       randomCol2 < 10 &&
-//       !noRepeatSet.has(coordinates2)
-//     ) {
-//       randomCol = randomCol2;
-//       return {
-//         randomRow,
-//         randomCol,
-//       };
-//     }
-//   } else if (lastPlayer2ComputerAttack !== "HIT!!!") {
-//       do {
-//         randomRow = getRandomRow();
-//         randomCol = getRandomCol();
-//         coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
-//       } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
-//       // Store the unique coordinate
-//       noRepeatSet.add(coordinates);
-//       console.log(noRepeatSet);
-//       return {
-//         randomRow,
-//         randomCol,
-//       };
-//   }
-// }
-
-// This function ensures that all random coordinates are unique and that a player2Computer hit will snoop around with attacks on adjacent squares if its last attack was a hit.
 export function getUniqueRandomCoordinates(
-  lastPlayer2ComputerAttack,
+  hitOrMiss,
   randomRowStored,
-  randomColStored,
-  // lastPlayer2ComputerPriorAttack,
-  // randomRowPriorStored,
-  // randomColPriorStored
+  randomColStored
 ) {
-  // let randomRow, randomCol, coordinates;
+  let attempts = 0;
+  let foundValidCoordinate = false;
+  let coordinateDistance = 1;
 
-  // Random value from [-1, 0, 1] to target neighboring cells
-  // const myArray = [-1, 0, 1];
-  // const randomValue = getRandomValueFromArray(myArray);
+  // List of adjacent coordinates to target after a hit
+  let adjacentCoordinates = [
+    `${randomRowStored + coordinateDistance},${randomColStored}`, // Down
+    `${randomRowStored - coordinateDistance},${randomColStored}`, // Up
+    `${randomRowStored},${randomColStored + coordinateDistance}`, // Right
+    `${randomRowStored},${randomColStored - coordinateDistance}`, // Left
+  ];
 
+  // Handle hit or miss updates
+  if (hitOrMiss === "hit") {
+    const currentHitCoordinates = `${randomRowStored},${randomColStored}`;
+    priorHitCoordinatesSet.add(currentHitCoordinates); // Add the hit coordinates to the set
+  }
 
-  // If last attack was a hit, attempt to target nearby coordinates
-  if (lastPlayer2ComputerAttack === "HIT!!!") {
-    let lastHitCoordinates = `${randomRowStored},${randomColStored}`;
-    onlyHitsSet.add(lastHitCoordinates);
-
-    console.log(lastHitCoordinates); // Output: "4,5"
-    console.log(onlyHitsSet);
-
-    let adjacentCoordinates = [
-      `${randomRowStored + 1},${randomColStored}`, // Down
-      `${randomRowStored - 1},${randomColStored}`, // Up
-      `${randomRowStored},${randomColStored + 1}`, // Right
-      `${randomRowStored},${randomColStored - 1}`, // Left
-      // `${randomRowStored + 1},${randomColStored + 1}`, // Down-right (diagonal)
-      // `${randomRowStored - 1},${randomColStored - 1}`, // Up-left (diagonal)
-      // `${randomRowStored + 1},${randomColStored - 1}`, // Down-left (diagonal)
-      // `${randomRowStored - 1},${randomColStored + 1}`, // Up-right (diagonal)
-    ];
-
-    let attempts = 0;
-    let foundValidCoordinate = false;
-
-    // randomRowPriorStored = randomRowStored;
-    // randomColPriorStored = randomColStored;
-
-    // Try to find a valid adjacent coordinate that hasn't been used
+  // If the AI has hit something before, prioritize adjacent cells for the next move
+  if (priorHitCoordinatesSet.size > 0) {
+    // Search for a valid adjacent coordinate to the last hit
     while (attempts < 10 && !foundValidCoordinate) {
       let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
       coordinates = adjacentCoordinates[randomIndex];
@@ -693,105 +705,46 @@ export function getUniqueRandomCoordinates(
       // Check if the coordinates are valid (within bounds and not used before)
       if (
         randomRow >= 0 &&
-        randomRow < 10 && // Ensure it's within bounds
+        randomRow < 10 &&
         randomCol >= 0 &&
         randomCol < 10 &&
-        !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
+        !noRepeatCoordinatesSet.has(coordinates) // Ensure it's not a previously used coordinate
       ) {
         foundValidCoordinate = true; // A valid coordinate is found
       } else {
         attempts++; // Increase the number of attempts
       }
     }
+  }
 
-    // If no valid coordinate found after 10 attempts, default to a random one
-    if (!foundValidCoordinate) {
-      console.log(
-        "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
-      );
+  // If no valid adjacent coordinate is found after 10 attempts, or there are no hits yet
+  if (!foundValidCoordinate || priorHitCoordinatesSet.size === 0) {
+    // If the checkerboard pattern cells are exhausted, go back to random coordinates
+    if (hunterCoordinatesSet.size >= 50) {
+      // We assume 50 is the number of cells already targeted in the checkerboard pattern
       do {
+        console.log("Attack Style: Basic Random Approach");
         randomRow = getRandomRow();
         randomCol = getRandomCol();
         coordinates = `${randomRow},${randomCol}`;
-      } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-    }
-  } else if (lastPlayer2ComputerAttack === "Double or nothing!!") {
-    // Get the last hit coordinates from the set
-    const onlyHitsArray = Array.from(onlyHitsSet);
-    const lastHitTargetTheseCoordinates =
-      onlyHitsArray[onlyHitsArray.length - 1];
-    const [randomRowDoubleOrNothing, randomColDoubleOrNothing] =
-      lastHitTargetTheseCoordinates.split(",").map(Number); // Split and map to row and col
-
-    console.log(
-      `Prior coordinates: ${randomRowDoubleOrNothing},${randomColDoubleOrNothing}`
-    );
-
-    let adjacentCoordinates = [
-      `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing}`, // Down
-      `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing}`, // Up
-      `${randomRowDoubleOrNothing},${randomColDoubleOrNothing + 1}`, // Right
-      `${randomRowDoubleOrNothing},${randomColDoubleOrNothing - 1}`, // Left
-      // Uncomment these if you want to include diagonals
-      // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing + 1}`, // Down-right (diagonal)
-      // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing - 1}`, // Up-left (diagonal)
-      // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing - 1}`, // Down-left (diagonal)
-      // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing + 1}`, // Up-right (diagonal)
-    ];
-
-    let attempts = 0;
-    let foundValidCoordinate = false;
-
-    // Try to find a valid adjacent coordinate that hasn't been used
-    while (attempts < 10 && !foundValidCoordinate) {
-      let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
-      coordinates = adjacentCoordinates[randomIndex];
-      [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
-
-      // Check if the coordinates are valid (within bounds and not used before)
-      if (
-        randomRow >= 0 &&
-        randomRow < 10 && // Ensure it's within bounds
-        randomCol >= 0 &&
-        randomCol < 10 &&
-        !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
-      ) {
-        foundValidCoordinate = true; // A valid coordinate is found
-      } else {
-        attempts++; // Increase the number of attempts
-      }
-    }
-
-    // If no valid coordinate found after 10 attempts, default to a random one
-    if (!foundValidCoordinate) {
-      console.log(
-        "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
-      );
+      } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
+    } else {
+      // Continue targeting in the checkerboard pattern if not all cells have been targeted
       do {
+        console.log("Attack Style: Checkerboard 'Hunter' Approach");
         randomRow = getRandomRow();
-        randomCol = getRandomCol();
+        randomCol = everyOtherColDependingOnRow(randomRow);
         coordinates = `${randomRow},${randomCol}`;
-      } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
+      } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
     }
-  } else {
-    // If last attack was a miss, generate a random coordinate
-    do {
-      randomRow = getRandomRow();
-      randomCol = getRandomCol();
-      coordinates = `${randomRow},${randomCol}`;
-    } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
   }
 
   // Add the unique coordinate to the set
-  noRepeatSet.add(coordinates);
-  console.log(noRepeatSet);
+  noRepeatCoordinatesSet.add(coordinates);
+  hunterCoordinatesSet.add(coordinates);
 
-  return {
-    randomRow,
-    randomCol,
-  };
+  return { randomRow, randomCol };
 }
-
 
 const click = new Audio(btnClick);
 click.preload = "auto";
@@ -833,16 +786,22 @@ export function mp3Sink() {
   sink.play();
 }
 
-
-export function stopGameThereIsAWinner() {
+export function stopGameThereIsAWinner(boardNum) {
   const { p1ShipBoard, p2ShipBoard } = getBoardElements();
-    const { player1Wins, player2Wins } = handleMessageContent();
-      if (p1ShipBoard.style.backgroundColor === "var(--loser)") {
-        clearMessage();
-        addMessage(player1Wins);
-      }
-      if (p2ShipBoard.style.backgroundColor === "var(--loser)") {
-        clearMessage();
-        addMessage(player2Wins);
-      }
+  const { player1Wins, player2Wins } = handleMessageContent();
+  // const { hitMissTargetCellsClass } = getBoardElements(boardNum);
+  if (p1ShipBoard.style.backgroundColor === "var(--loser)") {
+    clearMessage();
+    addMessage(player2Wins);
+  }
+  if (p2ShipBoard.style.backgroundColor === "var(--loser)") {
+    clearMessage();
+    addMessage(player1Wins);
+  }
+
+  // hitMissTargetCellsClass.forEach((cell) => {
+  //   // Assuming 'cell' is the element, and you want to remove an event listener
+  //   // You need to specify the event type and the handler function
+  //   cell.removeEventListener("click", () => {}); // Replace `yourEventHandler` with the actual function name you want to remove
+  // });
 }
