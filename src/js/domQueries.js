@@ -25,6 +25,7 @@ export function getBtnElements(boardNum) {
     btnQuitGame: document.querySelector("#btn-quit-game"),
     btnStartGame: document.querySelector("#btn-start-game"),
     btnPassDevice: document.querySelector("#btn-pass-device"),
+    btnUnlockDevice: document.querySelector("#btn-unlock-device"),
     btnRotate: document.querySelector(`#p${boardNum}-btn-rotate`),
 
     // TODO - MOVE THESE TWO to getBoardElements
@@ -45,9 +46,14 @@ export function getBoardElements(boardNum) {
     boardContainer: document.querySelector("#board-container"),
     p1FullBoard: document.querySelector("#p1-full-board"),
     p2FullBoard: document.querySelector("#p2-full-board"),
+    // TODO - keep this below? or delete and just reference the full boards themselves
+    flipFullBoard: document.querySelector(".flip-full-board"),
 
     p1PlaceShips: document.querySelector("#p1-place-ships"),
     p2PlaceShips: document.querySelector("#p2-place-ships"),
+
+    p1DeploymentZone: document.querySelector("#p1-deployment-zone"),
+    p2DeploymentZone: document.querySelector("#p2-deployment-zone"),
 
     p1TargetZone: document.querySelector("#p1-target-zone"),
     p2TargetZone: document.querySelector("#p2-target-zone"),
@@ -68,7 +74,9 @@ export function getBoardElements(boardNum) {
 
     shipCellsClass: document.querySelectorAll(`.ship-cells${boardNum}`),
     hitMissCellsClass: document.querySelectorAll(`.hit-miss-cells${boardNum}`),
-    hitMissTargetCellsClass: document.querySelectorAll(`.hit-miss-target-cells${boardNum}`),
+    hitMissTargetCellsClass: document.querySelectorAll(
+      `.hit-miss-target-cells${boardNum}`
+    ),
 
     allPlaceShipsClass: document.querySelectorAll(
       `.all-p${boardNum}-place-ships`

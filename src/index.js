@@ -71,13 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Helper array that tracks if all ships have been placed
   let placedShipListArr1 = [];
   let placedShipListArr2 = [];
+  let isPvsPStarted = false;
   let playerTurn = 0;
   let hitOrMiss;
   let randomRowStored;
   let randomColStored;
   let lastPlayer2ComputerPriorAttack;
-  // const currentSetTimeoutValue = 3200;
-   const currentSetTimeoutValue = 0;
+  const currentSetTimeoutValue = 3200;
+  // const currentSetTimeoutValue = 0;
 
   // Helpers that aid with boardNum parameters in later functions
   const player = { 1: player1, 2: player2 };
@@ -170,6 +171,82 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function setUpPassDeviceBtnEventListener(boardNum) {
+    const { btnPassDevice, btnUnlockDevice } = getBtnElements();
+    const {
+      p1FullBoard,
+      p1PlaceShips,
+      p1DeploymentZone,
+      p1TargetZone,
+      p2FullBoard,
+      p2PlaceShips,
+      p2DeploymentZone,
+      p2TargetZone,
+    } = getBoardElements();
+
+    btnPassDevice.addEventListener("click", () => {
+      mp3Click();
+      btnPassDevice.style.display = "none";
+      btnUnlockDevice.style.display = "flex";
+      // Clicking means you accept ship placements...it also switches btn to say Unlock Device
+      if (p1FullBoard.style.display === "flex" && placedShipListArr1 !== 5) {
+        p1FullBoard.style.display = "none";
+        p1PlaceShips.style.display = "none";
+        // Add a function call here, player 1 has effectively approved their ship placements for the match.
+      }
+      if (p2FullBoard.style.display === "flex" && placedShipListArr2 !== 5) {
+        p2FullBoard.style.display = "none";
+        p2PlaceShips.style.display = "none";
+        // Add a function call here, player 2 has effectively approved their ship placements for the match. THE MATCH IS NOW READY TO BEGIN AFTER THE DEVICE IS PASSED AND UNLOCKED...
+      }
+    });
+  }
+
+  // forPvsPMatchesShowPassDeviceBtn()
+  function setUpUnlockDeviceBtnEventListener(boardNum) {
+    const { btnPassDevice, btnUnlockDevice } = getBtnElements();
+    const {
+      p1FullBoard,
+      p1PlaceShips,
+      p1DeploymentZone,
+      p1TargetZone,
+      p2FullBoard,
+      p2PlaceShips,
+      p2DeploymentZone,
+      p2TargetZone,
+    } = getBoardElements();
+
+    btnUnlockDevice.addEventListener("click", () => {
+      mp3Click();
+      // btnPassDevice.style.display = "flex"; // Delete this.
+      btnUnlockDevice.style.display = "none";
+      // Now in to unlocking the device and letting player2 place ships.
+      if (p2PlaceShips.style.display !== "none" && placedShipListArr2 !== 5) {
+        p2FullBoard.style.display = "flex";
+      }
+      // START PvsP GAME
+      if (playerTurn === 0 && p2FullBoard.style.display === "none") {
+        p1FullBoard.style.display = "flex";
+        p1TargetZone.style.display = "flex";
+        // forPvsPMatchesBeginActualPlayByTurns();
+      }
+      // if (playerTurn === 0 && placedShipListArr1 === 5 && placedShipListArr2 === 5) {
+      //     p1FullBoard.style.display = "flex";
+      //     p1TargetZone.style.display = "flex";
+      // }
+       if (isPvsPStarted && playerTurn > 0 && playerTurn % 2 !== 0) {
+          p2FullBoard.style.display = "flex";
+          p2TargetZone.style.display = "flex";
+          p1FullBoard.style.display === "none";
+      }
+       if (isPvsPStarted && playerTurn > 0 && playerTurn % 2 === 0) {
+        p1FullBoard.style.display = "flex";
+        p1TargetZone.style.display = "flex";
+        p2FullBoard.style.display === "none";
+      }
+    });
+  }
+
   // Set up btn eventListener that handles place ship rotation from h to v
   function setupRotateBtnEventListener(boardNum) {
     const rotate = handleBtnRotateShips(boardNum);
@@ -182,7 +259,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Set up btn eventListener that handles clearing placed ships on the gameboard
   function setupClearBtnEventListener(boardNum) {
-    const { btnClear, btnStartGame, btnPassDevice } = getBtnElements(boardNum);
+    const { btnClear, btnStartGame, btnPassDevice, btnUnlockDevice } =
+      getBtnElements(boardNum);
     btnClear.addEventListener("click", () => {
       mp3Click();
       handleBtnClearAllShips(boardNum);
@@ -192,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // forPvsPMatchesShowPassDeviceBtn();
       btnStartGame.style.display = "none";
       btnPassDevice.style.display = "none";
+      btnUnlockDevice.style.display = "none";
       testGame[boardNum].removeAllShips();
     });
   }
@@ -347,9 +426,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // PHASE 2 - Now that the ships are placed
   // Two different tracks here: 1) PvsC, 2) PvsP
 
-  function forPvsCMatchesCheckIfPlaceShipsAreAllPlacedThenShowStartBtn(
+  function forPvsCMatchesCheckIfPlaceShipsAreAllPlacedThenShowStartBtn() {
     // boardNum
-  ) {
     const { btnStartGame, p2BtnRandom } = getBtnElements();
     const { p1PlaceShips, p1TargetZone } = getBoardElements();
     const { startMatchPvsC } = handleMessageContent();
@@ -367,41 +445,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-    function forPvsPMatchesShowPassDeviceBtn() {
-      const { btnStartGame, btnPassDevice } = getBtnElements();
-      const {
-        p1FullBoard,
-        p1PlaceShips,
-        p1TargetZone,
-        p2FullBoard,
-        p2PlaceShips,
-        p2TargetZone,
-      } = getBoardElements();
-      const { startMatchPvsC } = handleMessageContent();
-      if (
-        player2.playerType === "human" &&
-        placedShipListArr1.length === 5 &&
-        p1TargetZone.style.display !== "flex"
-      ) {
-        console.log(player2.playerType);
-        // btnStartGame.style.display = "none";
-        btnPassDevice.style.display = "flex";
-        // addMessage(startMatchPvsC);
-      } else if (
-        player2.playerType === "human" &&
-        placedShipListArr2.length === 5 &&
-        p2TargetZone.style.display !== "flex"
-      ) {
-        console.log(player2.playerType);
-        // btnStartGame.style.display = "none";
-        btnPassDevice.style.display = "flex";
-        // addMessage(startMatchPvsC);
-      } else {
-        // btnStartGame.style.display = "none";
-        btnPassDevice.style.display = "none";
-      }
+  function forPvsPMatchesShowPassDeviceBtn() {
+    const { btnStartGame, btnPassDevice } = getBtnElements();
+    const {
+      p1FullBoard,
+      p1PlaceShips,
+      p1TargetZone,
+      p2FullBoard,
+      p2PlaceShips,
+      p2TargetZone,
+    } = getBoardElements();
+    // const { startMatchPvsC } = handleMessageContent();
+    if (
+      player2.playerType === "human" &&
+      isPvsPStarted === false &&
+      placedShipListArr1.length === 5 &&
+      p1TargetZone.style.display !== "flex"
+    ) {
+      console.log(player2.playerType);
+      // btnStartGame.style.display = "none";
+      btnPassDevice.style.display = "flex";
+      // btnPassDevice.innerText = "Pass device to PLAYER 2"
+      // addMessage(startMatchPvsC);
+    } else if (
+      player2.playerType === "human" &&
+      isPvsPStarted === false &&
+      placedShipListArr2.length === 5 &&
+      p2TargetZone.style.display !== "flex"
+    ) {
+      console.log(player2.playerType);
+      // btnStartGame.style.display = "none";
+      btnPassDevice.style.display = "flex";
+      // addMessage(startMatchPvsC);
+    } else if (
+      player2.playerType === "human" &&
+      isPvsPStarted === true &&
+      placedShipListArr1.length === 5 &&
+      p1PlaceShips.style.display !== "flex" &&
+      playerTurn % 2 !== 0
+    ) {
+      btnPassDevice.style.display = "flex";
+    } else if (
+      player2.playerType === "human" &&
+      isPvsPStarted === true &&
+      placedShipListArr2.length === 5 &&
+      p2PlaceShips.style.display !== "flex" &&
+      playerTurn % 2 === 0
+    ) {
+      btnPassDevice.style.display = "flex";
+    } else {
+      // btnStartGame.style.display = "none";
+      btnPassDevice.style.display = "none";
     }
-
+  }
 
   function setupHighlightPlaceShipsEventListener(boardNum) {
     //const boardNum = 1; // example, set to the correct board number
@@ -439,6 +535,13 @@ document.addEventListener("DOMContentLoaded", () => {
         let matches = targetId.match(regex);
         let row, col;
 
+        if (player2.playerType === "human") {
+          isPvsPStarted = true;
+          console.log(`humanA: ${isPvsPStarted}`);
+        } else {
+          isPvsPStarted = false;
+          console.log(`humanB: ${isPvsPStarted}`);
+        }
         if (matches && cell.innerText === "" && playerTurn % 2 === 0) {
           // const { player1Attack } = handleMessageContent();
 
@@ -450,7 +553,9 @@ document.addEventListener("DOMContentLoaded", () => {
           testGame[boardNum].receiveAttack(row, col);
           clearMessage();
           // TODO - add below to handleMessageContent
-          addMessage(`PLAYER 1 attacks coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`);
+          addMessage(
+            `PLAYER 1 attacks coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
+          );
           mp3Fire();
           addEmojiEffect(board, boardNum);
           colorSunkShips(testGame[boardNum], boardNum);
@@ -464,7 +569,37 @@ document.addEventListener("DOMContentLoaded", () => {
             `Attack on testGame${boardNum} by P1, Turn flips to: ${playerTurn}`
           );
           player2ComputerAttack();
+          forPvsPMatchesShowPassDeviceBtn();
         }
+                if (matches && cell.innerText === "" && player2.playerType === "human" && playerTurn % 2 !== 0) {
+                  // const { player1Attack } = handleMessageContent();
+
+                  row = +matches[1]; // Reminder, +matches converts the string to a number
+                  col = +matches[2]; // Same as above
+                  // console.log(`Coordinates clicked: ${row}, ${col}`);
+                  // console.log(typeof row === "number");
+                  // console.log(testGame[boardNum].receiveAttack(row, col));
+                  testGame[boardNum].receiveAttack(row, col);
+                  clearMessage();
+                  // TODO - add below to handleMessageContent
+                  addMessage(
+                    `PLAYER 2 attacks coordinates (${row}, ${col}). Wait for PLAYER 1's counterattack.`
+                  );
+                  mp3Fire();
+                  addEmojiEffect(board, boardNum);
+                  colorSunkShips(testGame[boardNum], boardNum);
+                  // Highlight the board again
+                  highlightEmptyCellOnlyOnHover(board, boardNum);
+                  // stopGameThereIsAWinner(1);
+                  stopGameThereIsAWinner(2);
+                  // console.log(`Turn before P! = ${playerTurn}`);
+                  playerTurn += 1;
+                  console.log(
+                    `Attack on testGame${boardNum} by P2, Turn flips to: ${playerTurn}`
+                  );
+                  // player2ComputerAttack();
+                  forPvsPMatchesShowPassDeviceBtn();
+                }
       });
     });
   }
@@ -477,7 +612,7 @@ document.addEventListener("DOMContentLoaded", () => {
           hitOrMiss,
           randomRowStored,
           randomColStored,
-          lastPlayer2ComputerPriorAttack,
+          lastPlayer2ComputerPriorAttack
         );
         hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
         // TODO - fix below later in handleMessageContent
@@ -490,7 +625,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addEmojiEffect(player1.playerBoard.board, 1);
         colorSunkShips(testGame1, 1);
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-                  stopGameThereIsAWinner();
+        stopGameThereIsAWinner();
 
         if (hitOrMiss === "hit") {
           console.log("This attack was a hit!");
@@ -531,11 +666,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // function forPvsPMatchesBeginActualPlayByTurns() {
+  //   const { btnPassDevice, btnUnlockDevice } = getBtnElements();
+  //   const {
+  //     p1FullBoard,
+  //     p1PlaceShips,
+  //     p1DeploymentZone,
+  //     p1TargetZone,
+  //     p2FullBoard,
+  //     p2PlaceShips,
+  //     p2DeploymentZone,
+  //     p2TargetZone,
+  //   } = getBoardElements();
+
+  //   if (p1FullBoard.style.display === "flex" && playerTurn % 2 !== 0) {
+  //     btnPassDevice.style.display = "flex";
+  //   } else {
+  //     btnPassDevice.style.display = "none";
+  //     btnUnlockDevice.style.display = "none";
+  //   }
+  // }
+
   forPvsCMatchesBeginActualGameWithStartBtn();
-  
+
   setUpPlayerNumBtnEventListeners();
-  setUpQuitBtnEventListener(1);
-  setUpQuitBtnEventListener(2);
+  // setUpQuitBtnEventListener(1);
+  // setUpQuitBtnEventListener(2);
+  // TODO - maybe - change this to above if I decide to dive in and improve the function.
+  setUpQuitBtnEventListener();
+  setUpPassDeviceBtnEventListener();
+  setUpUnlockDeviceBtnEventListener();
 
   setupRotateBtnEventListener(1);
   setupRotateBtnEventListener(2);

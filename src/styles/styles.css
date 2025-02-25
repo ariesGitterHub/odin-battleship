@@ -317,13 +317,14 @@ justify-content: center;
   overflow: visible;
   text-transform: uppercase;
   /* z-index: -1; */
-}
+ }
 
 #p1-full-board {
   background-color: var(--player1);
   border-color: var(--player1text);
   color: var(--player1text);
   display: none;
+  /* perspective: 1000px; */
 }
 
 #p2-full-board {
@@ -332,6 +333,11 @@ justify-content: center;
   color: var(--player2text);
   display: none;
     /* display: flex; */
+}
+
+.flip-full-board {
+  background-color: red;
+
 }
 
 #p1-deployment-zone,
@@ -628,3 +634,7 @@ margin: -1rem;
   /* opacity: 1; */
   scale: 1;
 }
+
+/* .flip-full-board {
+  background-color: var(--loser);
+} */
