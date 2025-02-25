@@ -33,7 +33,7 @@ export function getBtnElements(boardNum) {
     allPlaceShipsClass: document.querySelectorAll(
       `.all-p${boardNum}-place-ships`
     ),
-
+    btnUndo: document.querySelector(`#p${boardNum}-btn-undo`),
     btnClear: document.querySelector(`#p${boardNum}-btn-clear`),
     p2BtnRandom: document.querySelector("#p2-btn-random"),
     btnRandom: document.querySelector(`#p${boardNum}-btn-random`),

@@ -73,8 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // let placedShipListArr2 = [];
   const placedShipListSet1 = new Set();
   const placedShipListSet2 = new Set();
-  // const placedShipListArr1 = Array.from(placedShipListSet1);
-  // const placedShipListArr2 = Array.from(placedShipListSet2);
+  const placedShipListArr1 = Array.from(placedShipListSet1);
+  const placedShipListArr2 = Array.from(placedShipListSet2);
 
   let isPvsPStarted = false;
   let playerTurn = 0;
@@ -88,9 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Helpers that aid with boardNum parameters in later functions
   const player = { 1: player1, 2: player2 };
   const testGame = { 1: testGame1, 2: testGame2 };
-
+ 
   const placedShipListSet = { 1: placedShipListSet1, 2: placedShipListSet2 };
-  // const placedShipListArr = { 1: placedShipListArr1, 2: placedShipListArr2 };
+  const placedShipListArr = { 1: placedShipListArr1, 2: placedShipListArr2 };
 
   // Create UI elements
   createHeader();
@@ -198,8 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Clicking means you accept ship placements...it also switches btn to say Unlock Device
       if (
         p1FullBoard.style.display === "flex" &&
-        // placedShipListArr1.length !== 5
-        placedShipListSet1.size !== 5
+        placedShipListArr1.length !== 5
       ) {
         p1FullBoard.style.display = "none";
         p1PlaceShips.style.display = "none";
@@ -207,8 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (
         p2FullBoard.style.display === "flex" &&
-        // placedShipListArr2.length !== 5
-        placedShipListSet2.size !== 5
+        placedShipListArr2.length !== 5
       ) {
         p2FullBoard.style.display = "none";
         p2PlaceShips.style.display = "none";
@@ -272,50 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // TODO - set up Undo Btn
-  function setupUndoBtnEventListener(boardNum) {
-    const { btnUndo } = getBtnElements(boardNum);
-
-    btnUndo.addEventListener("click", () => {
-      mp3Click(); 
-    if (placedShipListSet[boardNum].size === 0) {
-      console.log("Nothing to undo.");
-      return;
-    } else {
-      // Get the last item from the order array
-      // let lastShip = placedShipListArr[boardNum][placedShipListArr[boardNum].length -1];
-      // let lastShip = placedShipListArr[boardNum].at(-1);
-
-      const placedShipListArr1 = Array.from(placedShipListSet1);
-      const placedShipListArr2 = Array.from(placedShipListSet2);
-      const placedShipListArr = { 1: placedShipListArr1, 2: placedShipListArr2 };
-
-      console.log(placedShipListArr1);
-      console.log(placedShipListArr2);
-
-      let lastShip;
-      if (boardNum === 1) {
-        lastShip = placedShipListArr1[placedShipListArr1.length - 1];
-      } else if (boardNum === 2) {
-        lastShip = placedShipListArr2[placedShipListArr2.length - 1];
-      }
-
-      testGame[boardNum].removeShip(lastShip);
-      console.log(`lastShip = ${lastShip}`);
-
-      let removeLastShip = placedShipListArr[boardNum].pop();
-      // Remove it from the Set
-      placedShipListSet[boardNum].delete(removeLastShip);
-    }
-console.log(placedShipListSet1);
-// console.log(placedShipListSet2);
-
-    })
-  }
-
-  setupUndoBtnEventListener(1);
-  setupUndoBtnEventListener(2);
-
   // Set up btn eventListener that handles clearing placed ships on the gameboard
   function setupClearBtnEventListener(boardNum) {
     const { btnClear, btnStartGame, btnPassDevice, btnUnlockDevice } =
@@ -335,10 +289,12 @@ console.log(placedShipListSet1);
       // placedShipListArr2 = [];
       placedShipListSet1.clear();
       placedShipListSet2.clear();
-      // console.log(placedShipListArr1);
-      // console.log(placedShipListArr2);
+      console.log(placedShipListArr1);
+      console.log(placedShipListArr2);
     });
   }
+
+  // TODO - set up Undo Btn
 
   function setupRandomBtnEventListener(boardNum) {
     let { btnRandom } = getBtnElements(boardNum);
@@ -381,11 +337,9 @@ console.log(placedShipListSet1);
             );
             // placedShipListArr[boardNum].push(ship.boardCode);
             placedShipListSet[boardNum].add(ship.boardCode);
-            console.log(
-              `random btn click input = ${placedShipListSet[boardNum]}`
-            );
+            console.log(`random btn click input = ${placedShipListArr[boardNum]}`);
             console.log(placedShipListSet[boardNum]);
-
+            
             place.style.display = "none"; // Hide the place once the ship is placed
           }
         }
@@ -506,7 +460,7 @@ console.log(placedShipListSet1);
     if (
       player2.playerType === "machine" &&
       // placedShipListArr1.length === 5 &&
-      placedShipListSet1.size === 5 &&
+      placedShipListSet1.size === 5 &&     
       p1TargetZone.style.display !== "flex"
     ) {
       console.log(player2.playerType);
@@ -590,6 +544,7 @@ console.log(placedShipListSet1);
   }
 
   function manuallyAttackTargetCoordinates(boardNum) {
+
     const { p1FullBoard, p2FullBoard } = getBoardElements();
     // Validate that the boardNum is valid
     // if (!player[boardNum] || !testGame[boardNum]) {
@@ -634,6 +589,7 @@ console.log(placedShipListSet1);
           // console.log(testGame[boardNum].receiveAttack(row, col));
           testGame[boardNum].receiveAttack(row, col);
 
+
           mp3Fire();
           addEmojiEffect(board, boardNum);
           colorSunkShips(testGame[boardNum], boardNum);
@@ -651,19 +607,19 @@ console.log(placedShipListSet1);
           clearMessage();
           if (player2.playerType === "machine") {
             addMessage(
-              `PLAYER 1 attacks coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
-            );
+            `PLAYER 1 attacks coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
+          );
           } else {
             addMessage(
-              `PLAYER 1 attacks coordinates (${row}, ${col}). Use PASS DEVICE BUTTON and pass device to PLAYER 2.`
-            );
+            `PLAYER 1 attacks coordinates (${row}, ${col}). Use PASS DEVICE BUTTON and pass device to PLAYER 2.`
+          );
           }
-        }
+        } 
         if (
           matches &&
           cell.innerText === "" &&
           player2.playerType === "human" &&
-          playerTurn % 2 !== 0 &&
+          playerTurn % 2 !== 0 && 
           p2FullBoard.style.display === "flex"
         ) {
           // const { player1Attack } = handleMessageContent();
@@ -699,7 +655,7 @@ console.log(placedShipListSet1);
             addMessage(
               `PLAYER 2 attacks coordinates (${row}, ${col}). Use PASS DEVICE BUTTON and pass device to PLAYER 1.`
             );
-          }
+          } 
         }
       });
     });
@@ -753,10 +709,14 @@ console.log(placedShipListSet1);
   //   } else {
   //   }
   //   return manuallyAttackTargetCoordinates(1);
-  // }
+  // } 
 
+
+  
   manuallyAttackTargetCoordinates(1);
   manuallyAttackTargetCoordinates(2);
+
+
 
   // PHASE 3 - MATCH MECHANICS - PLAYER VS MACHINE
   function forPvsCMatchesBeginActualGameWithStartBtn() {
