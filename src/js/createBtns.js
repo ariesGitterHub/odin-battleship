@@ -87,8 +87,8 @@ export function createBtnElements() {
     { label: "Player 1 vs Player 2", id: "btn-pvsp" },
     { label: "Quit Game", id: "btn-quit-game" },
     { label: "Start Game", id: "btn-start-game" },
-    { label: "Hide Screen", id: "btn-pass-device" },
-    { label: "Unlock Screen", id: "btn-unlock-device" },
+    { label: "Hide Screen", id: "btn-hide-screen" },
+    { label: "Unlock Screen", id: "btn-unlock-screen" },
   ];
 
   function createMainActionButtons(buttonConfigs) {

@@ -22,6 +22,7 @@ function swapInPlaceShipScreenElements() {
   btnQuitGame.style.display = "flex";
 }
 
+// TODO - Delete this?
 export function handleBtnNumPlayer(playerNum) {
   const { p1FullBoard, p2FullBoard } = getBoardElements();
 

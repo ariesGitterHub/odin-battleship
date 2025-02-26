@@ -17,8 +17,8 @@
 
 :root {
   /* Colors */
-  --bkgd: #2e312f;
-  --bkgd2: #858788;
+  --bkgd: #242a26;
+  --bkgd2: #a7aaac;
   /* --gray: #7f8680; */
   /* --green: #627264; */
   --green: #444e45;
@@ -35,10 +35,11 @@
   --loser: #903a3a;
   --radar: #374713;
   --player1: #2f2f4f;
-  --player1text: #a8a8b4;
+  --player1-text: #a8a8b4;
   --player2: #3c4a3e;
-  --player2text: #a8b4a9;
-  --enemy: #fecc03;
+  --player2-text: #a8b4a9;
+  /* --enemy: #fecc03; */
+    --enemy: #fec803;
   /* --box-shadow-gray: 0 3px 6px var(--gray); */
   --box-shadow-green: 0 5px 10px var(--green);
   --font-fancy: "Black Ops One", sans-serif;
@@ -63,7 +64,7 @@ body {
   align-items: center;
   /* background-color: var(--bkgd); */
 
-  background: linear-gradient(10deg, var(--bkgd), var(--bkgd2));
+  background: linear-gradient(5deg, var(--bkgd), var(--bkgd2));
 
   margin: 0;
 }
@@ -138,7 +139,7 @@ body {
 
 #messages {
   height: fit-content;
-  width: 22rem;
+  width: 24rem;
   display: flex;
   /* display: none; */
   align-items: center;
@@ -146,16 +147,18 @@ body {
   /* background-color: var(--text); */
   /* background-color: var(--enemy); */
     background-color: var(--line);
-  border: 0.5rem double var(--text);
+  /* border: 0.5rem double var(--text); */
+    /* border: .125rem solid var(--text); */
+        border: .125rem solid var(--loser);
   border-radius: 1rem;
   box-shadow: var(--box-shadow-green);
   /* color: var(--line); */
   color: var(--loser);
   font-family: var(--font-fancy);
   font-size: 1rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  text-align: center;
+  /* margin-bottom: 1rem; */
+  /* padding: 0.5rem; */
+  /* text-align: center; */
   /* text-shadow: 
     1px 1px 2px rgba(255, 255, 255, 0.25), 
     -1px -1px 2px rgba(255, 255, 255, 0.25),
@@ -163,14 +166,20 @@ body {
 }
 
 #message-bar {
-  height: fit-content;
+  /* height: fit-content; */
+  height: 7rem;
   width: 22rem;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  padding: 0.25rem;
+  /* text-wrap: wrap; */
   /* background-color: var(--enemy); */
 }
 
 #main-btn-container {
   height: auto;
-  width: 22rem;
+  width: 24rem;
   /* background-color: var(--line); */
   border-radius: 1rem;
   /* box-shadow: var(--box-shadow-green); */
@@ -186,19 +195,21 @@ body {
 .btn-a {
   /* height: 3rem; */
   /* height: auto; */
-  height: fit-content;
-  width: 22rem;
+  /* height: fit-content; */
+  height: 3.75rem;
+  width: 24rem;
+  /* width: fit-content; */
   background-color: var(--line);
-  border: none;
+  border: .125rem solid var(--text);
   border-radius: 1rem;
   box-shadow: var(--box-shadow-green);
   color: var(--text);
   font-family: var(--font-fancy);
   font-size: 1.25rem;
-  margin: 0.25rem;
+  margin: 0.5rem;
   outline: none;
-  padding: 0.25rem;
-  text-align: center;
+  /* padding: 0.25rem; */
+  padding: .5rem;
 }
 
 .btn-a:hover {
@@ -241,34 +252,15 @@ body {
 
 
 /* TODO - CONSOLIDATE THESE IF THERE ARE NO ADDITIONAL CHANGES! */
-#btn-pvsc, #btn-pvsp {
+#btn-pvsc, #btn-pvsp, #btn-quit-game, #btn-start-game, #btn-hide-screen, #btn-unlock-screen  {
 display: flex;
 align-items: center;
 justify-content: center;
 }
 
-#btn-quit-game {
-display: none;
-align-items: center;
-justify-content: center;
-}
-
-#btn-start-game {
-display: none;
-align-items: center;
-justify-content: center;
-}
-
-#btn-pass-device {
-display: none;
-align-items: center;
-justify-content: center;
-}
-
-#btn-unlock-device {
-display: none;
-align-items: center;
-justify-content: center;
+#btn-unlock-screen {
+  background-color: var(--loser);
+  color: var(--enemy);
 }
 
 /* #btn-pvsc:active {
@@ -324,16 +316,16 @@ justify-content: center;
 
 #p1-full-board {
   background-color: var(--player1);
-  border-color: var(--player1text);
-  color: var(--player1text);
+  border-color: var(--player1-text);
+  color: var(--player1-text);
   display: none;
   /* perspective: 1000px; */
 }
 
 #p2-full-board {
   background-color: var(--player2);
-  border-color: var(--player2text);
-  color: var(--player2text);
+  border-color: var(--player2-text);
+  color: var(--player2-text);
   display: none;
     /* display: flex; */
 }

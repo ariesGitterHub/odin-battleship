@@ -146,6 +146,7 @@ export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
 //   })
 // }
 
+// TODO - IS THIS FUNCTION STILL BEING USED?????
 export function removeAllShipSvgsOnShipGrid(boardNum) {
   // const shipCellsClass = document.querySelectorAll(`.ship-cells${boardNum}`);
   // const ships = document.querySelectorAll(".ship");

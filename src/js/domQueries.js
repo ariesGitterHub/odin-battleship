@@ -24,8 +24,8 @@ export function getBtnElements(boardNum) {
     btnPvsP: document.querySelector("#btn-pvsp"),
     btnQuitGame: document.querySelector("#btn-quit-game"),
     btnStartGame: document.querySelector("#btn-start-game"),
-    btnPassDevice: document.querySelector("#btn-pass-device"),
-    btnUnlockDevice: document.querySelector("#btn-unlock-device"),
+    btnHideScreen: document.querySelector("#btn-hide-screen"),
+    btnUnlockScreen: document.querySelector("#btn-unlock-screen"),
     btnRotate: document.querySelector(`#p${boardNum}-btn-rotate`),
 
     // TODO - MOVE THESE TWO to getBoardElements
