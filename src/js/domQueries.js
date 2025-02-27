@@ -87,6 +87,12 @@ export function getBoardElements(boardNum) {
     placeD: document.querySelector(`#place-d${boardNum}`),
     placeS: document.querySelector(`#place-s${boardNum}`),
     placeC: document.querySelector(`#place-c${boardNum}`),
+
+    shipA: document.querySelector(`#ship-a${boardNum}`),
+    shipB: document.querySelector(`#ship-b${boardNum}`),
+    shipD: document.querySelector(`#ship-d${boardNum}`),
+    shipS: document.querySelector(`#ship-s${boardNum}`),
+    shipC: document.querySelector(`#ship-c${boardNum}`),
   };
 }
 
@@ -665,3 +671,4 @@ const hunterCoordinateArray = Array.from(hunterCoordinateSet);
 //     randomCol,
 //   };
 // }
+// PLAYER 1: DEPLOY YOUR SHIPS. Rotate ships to select axis. Click on any ship to highlight it in red, then click the desired deployment zone square to place ship. Or, click RANDOM BUTTON to make random ship placements.

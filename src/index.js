@@ -36,12 +36,15 @@ import {
   highlightEmptyCellOnlyOnHover,
   highlightPlaceShipsHelper,
   mp3Click,
+  mp3PlacePop,
+  mp3RemovePop,
   mp3Fire,
   mp3Hit,
   mp3Miss,
   mp3Sink,
   orientShipSvgOnShipGrid,
   // removeAllShipSvgsOnShipGrid,
+  removeSingleShipSvgOnShipGrid,
   stopGameThereIsAWinner,
 } from "./js/functionsOther.js";
 import { Gameboard } from "./js/classGameboard.js";
@@ -125,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
     p2FullBoard.style.display = "none";
 
     clearMessage();
-    addMessage("Please select the desired number of PLAYERs.");
+    addMessage("Please select the number of players.");
   }
 
   // Set up btn eventListeners that handle the number of players
@@ -347,10 +350,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // TODO - set up Undo Btn
   function setupUndoBtnEventListener(boardNum) {
-    const { btnUndo } = getBtnElements(boardNum);
+    const { btnHideScreen, btnUndo } = getBtnElements(boardNum);
 
     btnUndo.addEventListener("click", () => {
       mp3Click();
+      btnHideScreen.style.display = "none";
+
       if (placedShipListSet[boardNum].size === 0) {
         console.log("Nothing to undo.");
         return;
@@ -359,8 +364,8 @@ document.addEventListener("DOMContentLoaded", () => {
         placedShipListArr1 = Array.from(placedShipListSet1);
         placedShipListArr2 = Array.from(placedShipListSet2);
 
-        console.log(placedShipListArr1);
-        console.log(placedShipListArr2);
+        console.log(`Arr1 = ${placedShipListArr1}`);
+        console.log(`Arr2 = ${placedShipListArr2}`);
 
         let lastShip;
         if (boardNum === 1) {
@@ -372,12 +377,18 @@ document.addEventListener("DOMContentLoaded", () => {
         testGame[boardNum].removeShip(lastShip);
         console.log(`lastShip = ${lastShip}`);
 
-        let removeLastShip = placedShipListArr[boardNum].pop();
+        // let removeLastShip = placedShipListArr[boardNum].pop();
         // Remove it from the Set
-        placedShipListSet[boardNum].delete(removeLastShip);
+        placedShipListSet[boardNum].delete(lastShip);
+        removeSingleShipSvgOnShipGrid(boardNum, lastShip);
+        console.log(placedShipListSet1);
+        console.log(placedShipListSet2);
+
+        console.log(testGame1);
+        console.log(testGame2);
       }
-      console.log(placedShipListSet1);
-      console.log(placedShipListSet2);
+      // console.log(placedShipListSet1);
+      // console.log(placedShipListSet2);
     });
   }
 
@@ -391,6 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { p1FullBoard, p2FullBoard } = getBoardElements();
     btnClear.addEventListener("click", () => {
       mp3Click();
+      
       handleBtnClearAllShips(boardNum);
       btnStartGame.style.display = "none";
       btnHideScreen.style.display = "none";
@@ -402,6 +414,10 @@ document.addEventListener("DOMContentLoaded", () => {
       placedShipListSet2.clear();
       // console.log(placedShipListArr1);
       // console.log(placedShipListArr2);
+
+    if (placedShipListSet[boardNum] === 0) {
+      mp3RemovePop();
+    }
 
     clearMessage();
     if (p1FullBoard.style.display === "flex") {
@@ -446,7 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
             randomRow,
             randomCol
           );
-
+          mp3PlacePop();
           if (result !== "invalid") {
             orientShipSvgOnShipGrid(
               boardNum,
@@ -512,6 +528,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hitMissCellsClass.forEach((cell) => {
       cell.addEventListener("click", () => {
+        
         const selectedShipImg = document.querySelector('[data-selected="yes"]');
         if (!selectedShipImg) return; // If no ship is selected, return
 
@@ -545,6 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
               );
 
               // Hide the corresponding place element and reset selection
+              mp3PlacePop();
               shipPlaces[getDataShip].style.display = "none";
               shipPlaces[getDataShip].dataset.selected = "";
               placedShipListSet[boardNum].add(ship.boardCode);

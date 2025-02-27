@@ -40,6 +40,8 @@ import hC from "../assets/ship2C-h.svg";
 
 // Sound effects
 import btnClick from "../assets/soundClick.mp3";
+import placeShipPop from "../assets/soundPop1.mp3";
+import removeShipPop from "../assets/soundPop2.mp3";
 import fireAtTarget from "../assets/soundFireAtTarget.mp3";
 import hitExplosion from "../assets/soundHitExplosion.mp3";
 import missSplash from "../assets/soundMissSplash.mp3";
@@ -159,11 +161,50 @@ export function removeAllShipSvgsOnShipGrid(boardNum) {
     // For each ship, check if it's a child of the current div
     ships.forEach((ship) => {
       if (div.contains(ship)) {
+        mp3RemovePop();
         div.removeChild(ship); // Remove the ship from the div
       }
     });
   });
 }
+
+// export function removeSingleShipSvgOnShipGrid(boardNum, lastShip) {
+//   // const shipCellsClass = document.querySelectorAll(`.ship-cells${boardNum}`);
+//   // const ships = document.querySelectorAll(".ship");
+
+//   // const { shipCellsClass } = getBoardElements(boardNum);
+//   const { placeA, placeB, placeD, placeS, placeC, shipA, shipB, shipD, shipS, shipC } = getBoardElements(boardNum);
+
+//   const ships = [
+//     { boardCode: "a", ship: shipA, place: placeA },
+//     { boardCode: "b", ship: shipB, place: placeB },
+//     { boardCode: "d", ship: shipD, place: placeD },
+//     { boardCode: "s", ship: shipS, place: placeS },
+//     { boardCode: "c", ship: shipC, place: placeC },
+//   ];
+
+//     if (lastShip === "a") {
+//       shipA.remove();
+//       placeA.style.display = "flex";
+//     }
+//     if (lastShip === "b") {
+//       shipB.remove();
+//       placeB.style.display = "flex";
+//     }
+//     if (lastShip === "d") {
+//       shipD.remove();
+//       placeD.style.display = "flex";
+//     }
+//     if (lastShip === "s") {
+//       shipS.remove();
+//       placeS.style.display = "flex";
+//     }
+//     if (lastShip === "c") {
+//       shipC.remove();
+//       placeC.style.display = "flex";
+//     }
+//   }
+
 
 // export function highlightPlaceShips(boardNum) {
 // //   const allPlaceShipsClass = document.querySelectorAll(
@@ -228,6 +269,41 @@ export function removeAllShipSvgsOnShipGrid(boardNum) {
 // }
 
 // Game function related
+
+export function removeSingleShipSvgOnShipGrid(boardNum, lastShip) {
+  const {
+    placeA,
+    placeB,
+    placeD,
+    placeS,
+    placeC,
+    shipA,
+    shipB,
+    shipD,
+    shipS,
+    shipC,
+  } = getBoardElements(boardNum);
+
+  // Define the ships and their corresponding elements
+  const ships = [
+    { boardCode: "a", ship: shipA, place: placeA },
+    { boardCode: "b", ship: shipB, place: placeB },
+    { boardCode: "d", ship: shipD, place: placeD },
+    { boardCode: "s", ship: shipS, place: placeS },
+    { boardCode: "c", ship: shipC, place: placeC },
+  ];
+
+  // Find the ship with the matching `lastShip` code
+  const shipToRemove = ships.find((ship) => ship.boardCode === lastShip);
+
+  // If a matching ship is found, remove it and update its place display
+  if (shipToRemove) {
+    mp3RemovePop();
+    shipToRemove.ship.remove();
+    shipToRemove.place.style.display = "flex";
+  }
+}
+
 
 export function highlightPlaceShipsHelper(boardNum) {
   const { allPlaceShipsClass } = getBoardElements(boardNum);
@@ -755,6 +831,22 @@ export function mp3Click() {
   click.play();
 }
 
+const placePop = new Audio(placeShipPop);
+placePop.preload = "auto";
+
+export function mp3PlacePop() {
+  placePop.currentTime = 0; // Reset the audio to the beginning
+  placePop.play();
+}
+
+const removePop = new Audio(removeShipPop);
+removePop.preload = "auto";
+
+export function mp3RemovePop() {
+  removePop.currentTime = 0; // Reset the audio to the beginning
+  removePop.play();
+}
+
 const fire = new Audio(fireAtTarget);
 fire.preload = "auto";
 
@@ -806,3 +898,51 @@ export function stopGameThereIsAWinner(boardNum) {
   //   cell.removeEventListener("click", () => {}); // Replace `yourEventHandler` with the actual function name you want to remove
   // });
 }
+
+
+// export function isSunkChecker(board, boardNum) {
+//   const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";
+//   const targetShipBoardId =
+//     boardNum === 1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
+
+//   for (let i = 0; i < board.board.length; i++) {
+//     for (let j = 0; j < board.board[i].length; j++) {
+//       let cellShip = document.getElementById(
+//         `SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+//       );
+//       let cellShipTarget = document.getElementById(
+//         `T-SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+//       );
+
+//       ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
+//         if (board.ships[index].isSunk() && board.board[i][j] === shipCode) {
+//           // mp3Sink();
+//           cellShip.style.backgroundColor = "var(--text)";
+//           cellShipTarget.style.backgroundColor = "var(--text)";
+//         }
+//       });
+
+//       if (board.ships.every((ship) => ship.isSunk())) {
+//         mp3Sink(); // When all ships are sunk...
+//         document.querySelector(shipBoardId).style.backgroundColor =
+//           "var(--loser)";
+//         document.querySelector(targetShipBoardId).style.backgroundColor =
+//           "var(--loser)";
+//         // if (
+//         //   (document.querySelector("#p1-ship-board").style.backgroundColor ===
+//         //     "var(--loser)")
+//         // ) {
+//         //   clearMessage();
+//         //   addMessage(player1Wins);
+//         // }
+//         // if (
+//         //   (document.querySelector("#p2-ship-board").style.backgroundColor ===
+//         //     "var(--loser)")
+//         // ) {
+//         //   clearMessage();
+//         //   addMessage(player2Wins);
+//         // }
+//       }
+//     }
+//   }
+// }
