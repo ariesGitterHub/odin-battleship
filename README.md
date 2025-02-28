@@ -86,3 +86,5 @@ broadside1 = https://imgur.com/gallery/shockwave-from-battleship-broadside-h9SE7
 broadside2 = https://imgur.com/gallery/battleship-broadsides-d3U51G7#/t/broadside
 
 Anchor svg from https://www.svgrepo.com/svg/395772/anchor
+
+*** Having issues with deploying this on gitHub presently...
