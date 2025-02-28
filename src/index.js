@@ -721,8 +721,9 @@ document.addEventListener("DOMContentLoaded", () => {
           clearMessage();
           if (player2.playerType === "computer") {
             addMessage(
-              `PLAYER 1 attacks. It's ${hitOrMiss} at coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
+              `PLAYER 1 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
             );
+            endGame();
           } else {
             // addMessage(
             //   `PLAYER 1 attacks. It's ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 2 to start the next turn.`
@@ -730,6 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
             addMessage(
               `PLAYER 1 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 2.`
             );
+            endGame();
           }
         }
         if (
@@ -762,15 +764,9 @@ document.addEventListener("DOMContentLoaded", () => {
             addMessage(
               `PLAYER 2 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1.`
             );
+            endGame();
           }
-        } else if (stopGameHaveWinner) {
-          clearMessage ()
-          if (player1IsVictorious) {
-            addMessage(player1Wins);
-          } else if (player2IsVictorious) {
-            addMessage(player1Wins);
-          }
-        }
+        } 
       });
     });
   
@@ -791,14 +787,15 @@ document.addEventListener("DOMContentLoaded", () => {
         addMessage(
           `PLAYER 2 attacked! It's a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1, it is now your turn to attack.`
         );
+        
         playerTurn += 1;
         console.log(`Attack on testGame1 by P2, Turn flips to: ${playerTurn}`);
         mp3Fire();
         addEmojiEffect(player1.playerBoard.board, 1);
         colorSunkShips(testGame1, 1);
-        checkForSunkFleet(testGame1, 1);
+        checkForSunkFleet(testGame1);
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-
+        endGame();
         if (hitOrMiss === "hit") {
           console.log("This attack was a hit!");
           randomRowStored = randomRow;
@@ -863,12 +860,36 @@ document.addEventListener("DOMContentLoaded", () => {
       stopGameHaveWinner = true; // When all ships are sunk...
       console.log(`!!!!stopGameHaveWinner indicates ${stopGameHaveWinner}`);
       if (board === testGame1) {
-        player1IsVictorious = true
-      } else if (board === testGame2) {
         player2IsVictorious = true
+      } else if (board === testGame2) {
+        player1IsVictorious = true
       }
+      console.log(`Player 1 WINS  = ${player1IsVictorious}`);
+            console.log(`Player 2 WINS  = ${player2IsVictorious}`);
     }
   }
+
+  function endGame() {   
+    const { messages } = getMessageElements();
+    const { player1Wins, player2Wins } = handleMessageContent();
+
+    if (player1IsVictorious) {
+      clearMessage();
+       addMessage(player1Wins);
+       messages.style.backgroundColor = "var(--player1)";
+       messages.style.borderColor = "var(--player1-text)";
+       messages.style.color = "var(--enemy)";
+    } else if (player2IsVictorious) {
+      clearMessage();
+      addMessage(player2Wins);
+      messages.style.backgroundColor = "var(--player2)";
+      messages.style.borderColor = "var(--player1-text)";
+      messages.style.color = "var(--enemy)";
+    }
+
+  }
+
+
 
   // function winnerGetsAModal(board) {
   //   if (stopGameHaveWinner) {
@@ -923,5 +944,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // console.table(player2.playerBoard.board);
 
   console.log(`!!!!stopGameHaveWinner indicates ${stopGameHaveWinner}`);
-
+  // endGame();
 });
