@@ -49,9 +49,30 @@ import sinkIntoDarkness from "../assets/soundSinkIntoDarkness.mp3";
 
 // Message related
 
+// export function addMessage(msg) {
+//   const { messageBar } = getMessageElements();
+//   messageBar.innerText = msg;
+// }
+
 export function addMessage(msg) {
   const { messageBar } = getMessageElements();
+  checkMessageFontSize(msg);
   messageBar.innerText = msg;
+}
+
+function checkMessageFontSize(msg) {
+  const { messages } = getMessageElements();
+  const { player1DeployShipsMsg, player2DeployShipsMsg } =
+    handleMessageContent();
+
+  if (
+    msg === player1DeployShipsMsg ||
+    msg === player2DeployShipsMsg
+  ) {
+    messages.style.fontSize = "1rem";
+  } else {
+    messages.style.fontSize = "1.5rem";
+  }
 }
 
 export function clearMessage() {
@@ -62,34 +83,23 @@ export function clearMessage() {
 export function handleMessageContent() {
   const player1 = "PLAYER 1";
   const player2 = "PLAYER 2";
-  const noPlayersSelectedYet = "Please select the number of players.";
-  const deployShips =
-    ": DEPLOY YOUR SHIPS. Rotate ships to select axis. Click on any ship to highlight it in red, then click the desired deployment zone square to place ship. Or, click RANDOM BUTTON to make random ship placements.";
-  const startMatchPvsC =
-    ": if your ship placement is satisfactory, click the START GAME BUTTON to begin a match against the computer.";
-  const placeShipPassFromP1toP2 =
-    ": if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 2 to place their ships.";
-  const placeShipPassFromP2toP1 =
-    ": if your ship placement is satisfactory, click the PASS GAME BUTTON to allow PLAYER 1 to start the game.";
-  const startMatchPvsP =
-    ": click the START GAME BUTTON to begin a match against the PLAYER 2. ";
-  const gameTimeAttack =
-    ": click on a cell in your ENEMY TARGET ZONE grid to attack.";
-  const computerAttack = "attacks your fleet,";
-  // "attacks your fleet! (See results in your Deployment Zone.)";
-  // const matchIsUnderway = ""
+   const deployShips =
+    `: Deploy your ships. ROTATE to select axis. Click a ship to highlight it in RED. Then, click on the desired "deployment zone" square below to place that ship. Or, click RANDOM to auto-deploy ships.`; 
+    const unlockScreen = `: Unlock screen.`;
+    const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
+    // Player vs Computer matches only.
+    const clickStartGameInPvsC = `Click START GAME to begin your match against PLAYER 2 (run by the computer).`;
   const endGameWin = "WINS, and has defeated";
   return {
-    startGameMsg: noPlayersSelectedYet,
     player1DeployShipsMsg: `${player1}${deployShips}`,
     player2DeployShipsMsg: `${player2}${deployShips}`,
-    startMatchPvsC: `${player1}${startMatchPvsC}`,
-    player1PassPlaceShip: `${player1}${placeShipPassFromP1toP2}`,
-    player2PassPlaceShip: `${player2}${placeShipPassFromP2toP1}`,
-    startMatchPvsP: `${player1}${startMatchPvsP}`,
-    player1Attack: `${player1}${gameTimeAttack}`,
-    player2Attack: `${player2}${gameTimeAttack}`,
-    player2ComputerAttack: `${player2} ${computerAttack}`,
+    player1UnlockScreen: `${player1}${unlockScreen}`,
+    player2UnlockScreen: `${player2}${unlockScreen}`,
+    player1ClickCellToAttack: `${player1}${clickCellToAttack}`,
+    player2ClickCellToAttack: `${player2}${clickCellToAttack}`,
+
+    clickStartGameInPvsC: `${clickStartGameInPvsC}`,
+
     player1Wins: `${player1} ${endGameWin} ${player2}'s fleet!!!`,
     player2Wins: `${player2} ${endGameWin} ${player1}'s fleet!!!`,
   };
@@ -161,7 +171,6 @@ export function removeAllShipSvgsOnShipGrid(boardNum) {
     // For each ship, check if it's a child of the current div
     ships.forEach((ship) => {
       if (div.contains(ship)) {
-        mp3RemovePop();
         div.removeChild(ship); // Remove the ship from the div
       }
     });
@@ -386,6 +395,8 @@ export function handleResetPlaceShips(boardNum) {
   });
 }
 
+
+
 export function colorSunkShips(board, boardNum) {
   const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";
   const targetShipBoardId =
@@ -407,27 +418,12 @@ export function colorSunkShips(board, boardNum) {
           cellShipTarget.style.backgroundColor = "var(--text)";
         }
       });
-
       if (board.ships.every((ship) => ship.isSunk())) {
-        mp3Sink(); // When all ships are sunk...
+        // mp3Sink(); // When all ships are sunk...
         document.querySelector(shipBoardId).style.backgroundColor =
           "var(--loser)";
         document.querySelector(targetShipBoardId).style.backgroundColor =
           "var(--loser)";
-        // if (
-        //   (document.querySelector("#p1-ship-board").style.backgroundColor ===
-        //     "var(--loser)")
-        // ) {
-        //   clearMessage();
-        //   addMessage(player1Wins);
-        // }
-        // if (
-        //   (document.querySelector("#p2-ship-board").style.backgroundColor ===
-        //     "var(--loser)")
-        // ) {
-        //   clearMessage();
-        //   addMessage(player2Wins);
-        // }
       }
     }
   }
@@ -879,25 +875,25 @@ export function mp3Sink() {
   sink.play();
 }
 
-export function stopGameThereIsAWinner(boardNum) {
-  const { p1ShipBoard, p2ShipBoard } = getBoardElements();
-  const { player1Wins, player2Wins } = handleMessageContent();
-  // const { hitMissTargetCellsClass } = getBoardElements(boardNum);
-  if (p1ShipBoard.style.backgroundColor === "var(--loser)") {
-    clearMessage();
-    addMessage(player2Wins);
-  }
-  if (p2ShipBoard.style.backgroundColor === "var(--loser)") {
-    clearMessage();
-    addMessage(player1Wins);
-  }
+// export function stopGameThereIsAWinner(boardNum) {
+//   const { p1ShipBoard, p2ShipBoard } = getBoardElements();
+//   const { player1Wins, player2Wins } = handleMessageContent();
+//   // const { hitMissTargetCellsClass } = getBoardElements(boardNum);
+//   if (p1ShipBoard.style.backgroundColor === "var(--loser)") {
+//     clearMessage();
+//     addMessage(player2Wins);
+//   }
+//   if (p2ShipBoard.style.backgroundColor === "var(--loser)") {
+//     clearMessage();
+//     addMessage(player1Wins);
+//   }
 
   // hitMissTargetCellsClass.forEach((cell) => {
   //   // Assuming 'cell' is the element, and you want to remove an event listener
   //   // You need to specify the event type and the handler function
   //   cell.removeEventListener("click", () => {}); // Replace `yourEventHandler` with the actual function name you want to remove
   // });
-}
+//}
 
 
 // export function isSunkChecker(board, boardNum) {

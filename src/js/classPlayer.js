@@ -9,7 +9,7 @@ class Player {
   //   constructor(playerNum, playerType, playerBoard = new Gameboard()) {
   constructor(playerNum, playerType, playerBoard) {
     this.playerNum = playerNum; // playerOne or playerTwo
-    this.playerType = playerType; // human or machine
+    this.playerType = playerType; // human or computer
     this.playerBoard = playerBoard;
   }
 }

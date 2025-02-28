@@ -21,7 +21,6 @@ import {
 import {
   addEmojiEffect,
   addMessage,
-  // checkForSunkFleet,
   // clearColorSunkShips,
   // clearEmojiEffect,
   clearMessage,
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Create instances of the players and their gameboards
   const player1 = new Player(1, "human", testGame1);
-  const player2 = new Player(2, "computer", testGame2);
+  const player2 = new Player(2, "machine", testGame2);
 
   // Helper array that tracks if all ships have been placed
   let placedShipListArr1 = [];
@@ -85,10 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let randomColStored;
   let lastPlayer2ComputerPriorAttack;
   const currentSetTimeoutValue = 0;
-  let stopGameHaveWinner = false;
-  let player1IsVictorious = false;
-  let player2IsVictorious = false;
-
+  let stopGameHaveWinner = false
+ 
   // Helpers that aid with boardNum parameters in later functions
   const player = { 1: player1, 2: player2 };
   const testGame = { 1: testGame1, 2: testGame2 };
@@ -121,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnUnlockScreen,
     } = getBtnElements();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
+    const { startGameMsg } = handleMessageContent();
 
     gifContainer.style.display = "flex";
     messages.style.display = "none";
@@ -133,44 +131,54 @@ document.addEventListener("DOMContentLoaded", () => {
     btnUnlockScreen.style.display = "none";
     p1FullBoard.style.display = "none";
     p2FullBoard.style.display = "none";
+
+    // clearMessage();
+    // addMessage("Please select the number of players.");
   }
 
   // Set up btn eventListeners that handle the number of players
   function setupPlayerNumBtnEventListeners() {
     const { gifContainer } = getHeaderElements();
     const { messages } = getMessageElements();
-    const { mainBtnContainer, btnPvsC, btnPvsP, btnQuitGame } =
+    const { mainBtnContainer, btnPvsC, btnPvsP, btnQuitGame, btnStartGame } =
       getBtnElements();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
-    const { player1DeployShipsMsg } = handleMessageContent();
+    const { player1DeployShipsMsg } =
+      handleMessageContent();
 
     btnPvsC.addEventListener("click", () => {
       mp3Click();
       gifContainer.style.display = "none";
       messages.style.display = "flex";
+      // messages.style.fontSize = "1rem";
       mainBtnContainer.style.flexDirection = "row";
       btnPvsC.style.display = "none";
       btnPvsP.style.display = "none";
       btnQuitGame.style.display = "flex";
+      // handleBtnNumPlayer(1);
       p1FullBoard.style.display = "flex";
       p2FullBoard.style.display = "none";
 
       clearMessage();
       addMessage(player1DeployShipsMsg);
-      player2.playerType = "computer";
+      player2.playerType = "machine";
+      // console.log(`Player 1: ${player1.playerType}, Player 2: $player2.playerType}`);
     });
 
     btnPvsP.addEventListener("click", () => {
       mp3Click();
       gifContainer.style.display = "none";
       messages.style.display = "flex";
+      // messages.style.fontSize = "1rem";
       mainBtnContainer.style.flexDirection = "row";
       btnPvsC.style.display = "none";
       btnPvsP.style.display = "none";
       btnQuitGame.style.display = "flex";
+      // handleBtnNumPlayer(1);
       p1FullBoard.style.display = "flex";
       p2FullBoard.style.display = "none";
       player2.playerType = "human";
+      // console.log(`Player 1: ${player1.playerType}, Player 2: $player2.playerType}`);
       clearMessage();
       addMessage(player1DeployShipsMsg);
     });
@@ -208,8 +216,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setupHideScreenBtnEventListener(boardNum) {
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
-    const { p1FullBoard, p1PlaceShips, p2FullBoard, p2PlaceShips } =
-      getBoardElements();
+    const {
+      p1FullBoard,
+      p1PlaceShips,
+      p2FullBoard,
+      p2PlaceShips,
+    } = getBoardElements();
     const { player1UnlockScreen, player2UnlockScreen } = handleMessageContent();
 
     btnHideScreen.addEventListener("click", () => {
@@ -261,6 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // forPvsPMatchesShowHideScreenBtn()
   function setupUnlockScreenBtnEventListener(boardNum) {
     const { btnUnlockScreen } = getBtnElements();
     const {
@@ -279,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnUnlockScreen.addEventListener("click", () => {
       mp3Click();
       btnUnlockScreen.style.display = "none";
-      // Player 1 has clicked ACCEPT DEPLOYMENT, now to unhide player 2 so they can place ships
+      // Player 1 has clicked ACCEPT DEPLOYMENT, now to unhide player 2 so they can place ships...
       if (
         player2.playerType === "human" &&
         !isPvsPStarted &&
@@ -342,6 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // TODO - set up Undo Btn
   function setupUndoBtnEventListener(boardNum) {
     const { btnHideScreen, btnUndo } = getBtnElements(boardNum);
 
@@ -353,6 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Nothing to undo.");
         return;
       } else {
+        // Get the last item from the order array
         placedShipListArr1 = Array.from(placedShipListSet1);
         placedShipListArr2 = Array.from(placedShipListSet2);
 
@@ -368,15 +383,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         testGame[boardNum].removeShip(lastShip);
         console.log(`lastShip = ${lastShip}`);
+
+        // let removeLastShip = placedShipListArr[boardNum].pop();
+        // Remove it from the Set
         placedShipListSet[boardNum].delete(lastShip);
         removeSingleShipSvgOnShipGrid(boardNum, lastShip);
-
         console.log(placedShipListSet1);
         console.log(placedShipListSet2);
 
         console.log(testGame1);
         console.log(testGame2);
       }
+      // console.log(placedShipListSet1);
+      // console.log(placedShipListSet2);
     });
   }
 
@@ -385,14 +404,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Set up btn eventListener that handles clearing placed ships on the gameboard
   function setupClearBtnEventListener(boardNum) {
-    const { btnClear, btnStartGame, btnHideScreen, btnUnlockScreen } =
-      getBtnElements(boardNum);
+    const { btnClear, btnStartGame, btnHideScreen, btnUnlockScreen } = getBtnElements(boardNum);
     const { player1DeployShipsMsg, player2DeployShipsMsg } =
       handleMessageContent();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
     btnClear.addEventListener("click", () => {
       mp3Click();
-
+      
       handleBtnClearAllShips(boardNum);
       btnStartGame.style.display = "none";
       btnHideScreen.style.display = "none";
@@ -402,17 +420,20 @@ document.addEventListener("DOMContentLoaded", () => {
       placedShipListArr2 = [];
       placedShipListSet1.clear();
       placedShipListSet2.clear();
+      // console.log(placedShipListArr1);
+      // console.log(placedShipListArr2);
 
-      if (placedShipListSet[boardNum] === 0) {
-        mp3RemovePop();
-      }
+    if (placedShipListSet[boardNum] === 0) {
+      mp3RemovePop();
+    }
 
-      clearMessage();
-      if (p1FullBoard.style.display === "flex") {
-        addMessage(player1DeployShipsMsg);
-      } else if (p2FullBoard.style.display === "flex") {
-        addMessage(player2DeployShipsMsg);
-      }
+    clearMessage();
+    if (p1FullBoard.style.display === "flex") {
+      addMessage(player1DeployShipsMsg);     
+    } else if (p2FullBoard.style.display === "flex") {
+     addMessage(player2DeployShipsMsg); 
+    }
+
     });
   }
 
@@ -512,6 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hitMissCellsClass.forEach((cell) => {
       cell.addEventListener("click", () => {
+        
         const selectedShipImg = document.querySelector('[data-selected="yes"]');
         if (!selectedShipImg) return; // If no ship is selected, return
 
@@ -571,7 +593,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { p1PlaceShips, p1TargetZone } = getBoardElements();
     const { clickStartGameInPvsC } = handleMessageContent();
     if (
-      player2.playerType === "computer" &&
+      player2.playerType === "machine" &&
       placedShipListSet1.size === 5 &&
       p1TargetZone.style.display !== "flex"
     ) {
@@ -580,6 +602,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btnStartGame.style.display = "flex";
       p2BtnRandom.click();
+      // clearMessage();
+      // addMessage("PLAYER 1: click on a cell in your ENEMY TARGET ZONE grid to attack.");
       clearMessage();
       addMessage(clickStartGameInPvsC);
     } else {
@@ -589,13 +613,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function forPvsPMatchesShowHideScreenBtn() {
     const { btnHideScreen } = getBtnElements();
-    const { p1FullBoard, p2FullBoard } = getBoardElements();
-
+    const {
+      p1FullBoard,
+      p1PlaceShips,
+      p1TargetZone,
+      p2FullBoard,
+      p2PlaceShips,
+      p2TargetZone,
+    } = getBoardElements();
+    // const { startMatchPvsC } = handleMessageContent();
     if (
       player2.playerType === "human" &&
       !isPvsPStarted &&
       placedShipListSet1.size === 5 &&
       placedShipListSet2.size !== 5 &&
+      // p1TargetZone.style.display !== "flex"
       p2FullBoard.style.display !== "flex"
     ) {
       console.log(player2.playerType);
@@ -604,11 +636,13 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.borderColor = "var(--player1-text)";
       btnHideScreen.style.color = "var(--enemy)";
       btnHideScreen.innerText = "Accept Deployment";
+
     } else if (
       player2.playerType === "human" &&
       !isPvsPStarted &&
       placedShipListSet2.size === 5 &&
-      p1FullBoard.style.display !== "flex"
+      // p2TargetZone.style.display !== "flex"
+       p1FullBoard.style.display !== "flex"
     ) {
       console.log(player2.playerType);
       btnHideScreen.style.display = "flex";
@@ -616,9 +650,11 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.borderColor = "var(--player2-text)";
       btnHideScreen.style.color = "var(--enemy)";
       btnHideScreen.innerText = "Accept Deployment";
+      // addMessage(startMatchPvsC);
     } else if (
       player2.playerType === "human" &&
       isPvsPStarted &&
+      // p1PlaceShips.style.display !== "flex" &&
       p2FullBoard.style.display !== "flex" &&
       playerTurn % 2 !== 0
     ) {
@@ -630,6 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (
       player2.playerType === "human" &&
       isPvsPStarted &&
+      // p2PlaceShips.style.display !== "flex" &&
       p1FullBoard.style.display !== "flex" &&
       playerTurn % 2 === 0
     ) {
@@ -659,7 +696,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function manuallyAttackTargetCoordinates(boardNum) {
     const { p1FullBoard, p2FullBoard } = getBoardElements();
-    const { player1Wins, player2Wins } = handleMessageContent();
     // Validate that the boardNum is valid
     // if (!player[boardNum] || !testGame[boardNum]) {
     //   console.error(`Invalid board number: ${boardNum}`);
@@ -674,7 +710,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const board = player[boardNum].playerBoard.board;
     highlightEmptyCellOnlyOnHover(board, boardNum);
 
-  
     hitMissTargetCellsClass.forEach((cell) => {
       cell.addEventListener("click", () => {
         let targetId = cell.id;
@@ -707,10 +742,11 @@ document.addEventListener("DOMContentLoaded", () => {
           mp3Fire();
           addEmojiEffect(board, boardNum);
           colorSunkShips(testGame[boardNum], boardNum);
-          checkForSunkFleet(testGame[boardNum], boardNum);
+          stopGameThereIsAWinner(testGame[boardNum], boardNum);
           // Highlight the board again
           highlightEmptyCellOnlyOnHover(board, boardNum);
-
+          // stopGameThereIsAWinner(1);
+          // stopGameThereIsAWinner(2);
           // console.log(`Turn before P! = ${playerTurn}`);
           playerTurn += 1;
           console.log(
@@ -719,7 +755,7 @@ document.addEventListener("DOMContentLoaded", () => {
           player2ComputerAttack();
           forPvsPMatchesShowHideScreenBtn();
           clearMessage();
-          if (player2.playerType === "computer") {
+          if (player2.playerType === "machine") {
             addMessage(
               `PLAYER 1 attacks. It's ${hitOrMiss} at coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
             );
@@ -733,51 +769,57 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
         if (
-          !stopGameHaveWinner && 
           matches &&
           cell.innerText === "" &&
           player2.playerType === "human" &&
           playerTurn % 2 !== 0 &&
           p2FullBoard.style.display === "flex"
         ) {
+          // const { player1Attack } = handleMessageContent();
+
           row = +matches[1]; // Reminder, +matches converts the string to a number
           col = +matches[2]; // Same as above
-
+          // console.log(`Coordinates clicked: ${row}, ${col}`);
+          // console.log(typeof row === "number");
+          // console.log(testGame[boardNum].receiveAttack(row, col));
           hitOrMiss = testGame[boardNum].receiveAttack(row, col);
 
+          // clearMessage();
+          // // TODO - add below to handleMessageContent
+          // addMessage(
+          //   `PLAYER 2 attacks coordinates (${row}, ${col}). Wait for PLAYER 1's counterattack.`
+          // );
           mp3Fire();
           addEmojiEffect(board, boardNum);
           colorSunkShips(testGame[boardNum], boardNum);
-          checkForSunkFleet(testGame[boardNum], boardNum);
+          stopGameThereIsAWinner(testGame[boardNum], boardNum);
           // Highlight the board again
           highlightEmptyCellOnlyOnHover(board, boardNum);
-
+          // stopGameThereIsAWinner(1);
+          // stopGameThereIsAWinner(2);
+          // console.log(`Turn before P! = ${playerTurn}`);
           playerTurn += 1;
           console.log(
             `Attack on testGame${boardNum} by P2, Turn flips to: ${playerTurn}`
           );
+          // player2ComputerAttack();
           forPvsPMatchesShowHideScreenBtn();
           clearMessage();
           if (player2.playerType === "human") {
-            addMessage(
-              `PLAYER 2 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1.`
-            );
-          }
-        } else if (stopGameHaveWinner) {
-          clearMessage ()
-          if (player1IsVictorious) {
-            addMessage(player1Wins);
-          } else if (player2IsVictorious) {
-            addMessage(player1Wins);
+            // addMessage(
+            //   `PLAYER 2 attacks. It's ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1 to start the next turn.`
+            // );
+          addMessage(
+            `PLAYER 2 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1.`
+          );
           }
         }
       });
     });
-  
   }
 
   function player2ComputerAttack() {
-    if (!stopGameHaveWinner && player2.playerType === "computer" && playerTurn % 2 !== 0) {
+    if (player2.playerType === "machine" && playerTurn % 2 !== 0) {
       setTimeout(() => {
         clearMessage();
         let { randomRow, randomCol } = getUniqueRandomCoordinates(
@@ -787,7 +829,10 @@ document.addEventListener("DOMContentLoaded", () => {
           lastPlayer2ComputerPriorAttack
         );
         hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        // TODO - fix below later in handleMessageContent
+        // if (hitOrMiss === "hit"){
 
+        // }
         addMessage(
           `PLAYER 2 attacked! It's a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1, it is now your turn to attack.`
         );
@@ -796,19 +841,39 @@ document.addEventListener("DOMContentLoaded", () => {
         mp3Fire();
         addEmojiEffect(player1.playerBoard.board, 1);
         colorSunkShips(testGame1, 1);
-        checkForSunkFleet(testGame1, 1);
+        stopGameThereIsAWinner(testGame1, 1)
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+        // stopGameThereIsAWinner(1);
+        // stopGameThereIsAWinner(2);
 
         if (hitOrMiss === "hit") {
           console.log("This attack was a hit!");
           randomRowStored = randomRow;
           randomColStored = randomCol;
+          // stopGameThereIsAWinner(1);
+          // stopGameThereIsAWinner(2);
         } else {
           console.log("That attack missed...");
+          // stopGameThereIsAWinner(1);
+          // stopGameThereIsAWinner(2);
         }
       }, currentSetTimeoutValue);
     }
   }
+
+  // function forPvsPTakeTurnsAttacking() {
+  //   if (playerTurn % 2 === 0 && placedShipListSet1.size === 5) {
+  //     manuallyAttackTargetCoordinates(1);
+  //   } else if (
+  //     player2.playerType === "human" &&
+  //     playerTurn % 2 !== 0 &&
+  //     placedShipListSet1.size === 5
+  //   ) {
+  //     manuallyAttackTargetCoordinates(2);
+  //   } else {
+  //   }
+  //   return manuallyAttackTargetCoordinates(1);
+  // }
 
   manuallyAttackTargetCoordinates(1);
   manuallyAttackTargetCoordinates(2);
@@ -820,7 +885,7 @@ document.addEventListener("DOMContentLoaded", () => {
       getBoardElements();
     const { player1ClickCellToAttack } = handleMessageContent();
 
-    if (player2.playerType === "computer") {
+    if (player2.playerType === "machine") {
       btnStartGame.addEventListener("click", () => {
         mp3Click();
         p1PlaceShips.style.display = "none";
@@ -857,44 +922,55 @@ document.addEventListener("DOMContentLoaded", () => {
   //   }
   // }
 
-  function checkForSunkFleet(board) {
-    if (board.ships.every((ship) => ship.isSunk())) {
-      mp3Sink();
-      stopGameHaveWinner = true; // When all ships are sunk...
-      console.log(`!!!!stopGameHaveWinner indicates ${stopGameHaveWinner}`);
-      if (board === testGame1) {
-        player1IsVictorious = true
-      } else if (board === testGame2) {
-        player2IsVictorious = true
-      }
-    }
-  }
+  function stopGameThereIsAWinner(board, boardNum) {
+ const { player1Wins, player2Wins } = handleMessageContent();   
+    // const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";
+    // const targetShipBoardId =
+    //   boardNum === 1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
 
-  // function winnerGetsAModal(board) {
-  //   if (stopGameHaveWinner) {
-  //     openModal();
+    // for (let i = 0; i < board.board.length; i++) {
+    //   for (let j = 0; j < board.board[i].length; j++) {
+    //     let cellShip = document.getElementById(
+    //       `SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+    //     );
+    //     let cellShipTarget = document.getElementById(
+    //       `T-SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
+    //     );
+
+        // ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
+        //   if (board.ships[index].isSunk() && board.board[i][j] === shipCode) {
+        //     // mp3Sink();
+        //     cellShip.style.backgroundColor = "var(--text)";
+        //     cellShipTarget.style.backgroundColor = "var(--text)";
+        //   }
+        // });
+// colorSunkShips
+        if (board.ships.every((ship) => ship.isSunk())) {
+          mp3Sink(); 
+          stopGameHaveWinner = true// When all ships are sunk...
+          // document.querySelector(shipBoardId).style.backgroundColor =
+          //   "var(--loser)";
+          // document.querySelector(targetShipBoardId).style.backgroundColor =
+          //   "var(--loser)";
+
+           // const board = player[boardNum].playerBoard.board;
+    // const { hitMissTargetCellsClass } = getBoardElements(boardNum);
+
+    // hitMissTargetCellsClass.forEach((cell) => {
+    //   cell.removeEventListener("click", () => {}); })
+
+
+          if (stopGameHaveWinner && board === testGame1) {
+            clearMessage();
+            addMessage(player2Wins);
+          } else if (stopGameHaveWinner && board === testGame2) {
+            clearMessage();
+            addMessage(player1Wins);
+          }
+        }
+      }
   //   }
   // }
-
-  //   //NEW CODE OF USING A CUSTOM MODAL
-
-  // function openModal() {
-  //   const modal = document.querySelector("custom-modal");
-  //   modal.style.display = "block";
-
-  //   const modalCloseBtn = document.querySelector("#modal-close-btn");
-  //   modalCloseBtn.addEventListener("click", closeModal);
-  // }
-
-  // function closeModal() {
-  //   const modal = document.querySelector("custom-modal");
-  //   modal.style.display = "none";
-  //   location.reload();
-  //   return false;
-  // }
-
-  // winnerGetsAModal();
-
 
   forPvsCMatchesBeginActualGameWithStartBtn();
 
@@ -921,7 +997,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // console.table(player1.playerBoard.board);
   // console.table(player2.playerBoard.board);
-
-  console.log(`!!!!stopGameHaveWinner indicates ${stopGameHaveWinner}`);
-
+  // }
 });

@@ -83,8 +83,8 @@ export function createBtnElements() {
   // buttons in #main-btn-container
   const { mainBtnContainer } = getBtnElements();
   const mainBtnConfigs = [
-    { label: "Player 1 vs Computer", id: "btn-pvsc" },
-    { label: "Player 1 vs Player 2", id: "btn-pvsp" },
+    { label: "PLAYER 1 vs COMPUTER", id: "btn-pvsc" },
+    { label: "PLAYER 1 vs PLAYER 2", id: "btn-pvsp" },
     { label: "Quit Game", id: "btn-quit-game" },
     { label: "Start Game", id: "btn-start-game" },
     { label: "Hide Screen", id: "btn-hide-screen" },
