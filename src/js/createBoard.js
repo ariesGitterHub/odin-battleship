@@ -141,7 +141,7 @@ function createPlayerBoardSection(playerNum) {
   return {
     fullBoard: createElement(
       "div",
-      { id: `p${playerNum}-full-board`, class: "flip-full-board", },
+      { id: `p${playerNum}-full-board`, class: "flip-full-board" },
       `Player ${playerNum}`
     ),
     placeShips: createElement("div", { id: `p${playerNum}-place-ships` }),
@@ -149,12 +149,14 @@ function createPlayerBoardSection(playerNum) {
     deploymentZone: createElement(
       "div",
       { id: `p${playerNum}-deployment-zone` },
-      `Player ${playerNum}'s Ship Deployment Zone`
+      // `Player ${playerNum}'s Ship Deployment Zone`
+      `Ship Deployment Zone`
     ),
     targetZone: createElement(
       "div",
       { id: `p${playerNum}-target-zone` },
-      `Player ${playerNum}'s Enemy Target Zone`
+      // `Player ${playerNum}'s Enemy Target Zone`
+      `Enemy Target Zone`
     ),
     shipBoard: createElement("div", { id: `p${playerNum}-ship-board` }),
     hitMissBoard: createElement("div", { id: `p${playerNum}-hit-miss-board` }),
