@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let randomRowStored;
   let randomColStored;
   let lastPlayer2ComputerPriorAttack;
-  const currentSetTimeoutValue = 0;
+  const currentSetTimeoutValue = 2500;
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
   let player2IsVictorious = false;
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Set up btn eventListeners that handle the number of players
   function setupPlayerNumBtnEventListeners() {
-    const { gifContainer } = getHeaderElements();
+    const { header, gifContainer } = getHeaderElements();
     const { messages } = getMessageElements();
     const { mainBtnContainer, btnPvsC, btnPvsP, btnQuitGame } =
       getBtnElements();
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnPvsC.addEventListener("click", () => {
       mp3Click();
-      gifContainer.style.display = "none";
+      header.style.display = "none";
       messages.style.display = "flex";
       mainBtnContainer.style.flexDirection = "row";
       btnPvsC.style.display = "none";
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnPvsP.addEventListener("click", () => {
       mp3Click();
-      gifContainer.style.display = "none";
+      header.style.display = "none";
       messages.style.display = "flex";
       mainBtnContainer.style.flexDirection = "row";
       btnPvsC.style.display = "none";

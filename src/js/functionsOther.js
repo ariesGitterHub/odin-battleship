@@ -69,9 +69,9 @@ function checkMessageFontSize(msg) {
     msg === player1DeployShipsMsg ||
     msg === player2DeployShipsMsg
   ) {
-    messages.style.fontSize = "1rem";
+    messages.style.fontSize = ".9rem";
   } else {
-    messages.style.fontSize = "1.5rem";
+    messages.style.fontSize = "1.125rem";
   }
 }
 
@@ -313,7 +313,6 @@ export function removeSingleShipSvgOnShipGrid(boardNum, lastShip) {
   }
 }
 
-
 export function highlightPlaceShipsHelper(boardNum) {
   const { allPlaceShipsClass } = getBoardElements(boardNum);
 
@@ -394,8 +393,6 @@ export function handleResetPlaceShips(boardNum) {
     }
   });
 }
-
-
 
 export function colorSunkShips(board, boardNum) {
   const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";

@@ -44,6 +44,8 @@
   --box-shadow-green: 0 5px 10px var(--green);
   --font-fancy: "Black Ops One", sans-serif;
   --font-emoji: "Noto Color Emoji", sans-serif;
+
+  --main-width: 20rem;
 }
 
 .font-fancy {
@@ -88,7 +90,7 @@ body {
 
 #title-text {
     /* font-size: 1.5rem; */
-  font-size: 2.5rem;
+  font-size: 1.35rem;
   text-align: center;
     /* text-decoration: underline; */
   text-transform: uppercase;
@@ -96,13 +98,14 @@ body {
 }
 
 #MMM {
-  font-size: 0.95rem;
+  font-size: 0.925rem;
   text-align: center;
 }
 
 #gif-container {
   height: auto;
-  width: 22rem;
+  /* width: 22rem; */
+  width: 19rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,8 +117,10 @@ body {
 }
 
 .gif {
-  height: 22rem;
-  width: 22rem;
+  /* height: 22rem; */
+  height: 19rem;
+  /* width: 22rem; */
+  width: 19rem;
   /* border: 0.5rem solid var(--text); */
     border: 0.5rem double var(--text);
   border-radius: 50%;
@@ -141,7 +146,8 @@ body {
 
 #messages {
   height: fit-content;
-  width: 24rem;
+  /* width: 24rem; */
+  width: 21.25rem;
   display: flex;
   /* display: none; */
   align-items: center;
@@ -151,14 +157,16 @@ body {
     background-color: var(--line);
   /* border: 0.5rem double var(--text); */
     /* border: .125rem solid var(--text); */
-        border: .125rem solid var(--loser);
+        /* border: .125rem solid var(--loser); */
+                border: .25rem solid var(--loser);
   border-radius: 1rem;
   box-shadow: var(--box-shadow-green);
   /* color: var(--line); */
   color: var(--loser);
   font-family: var(--font-fancy);
-  font-size: 1rem;
+  /* font-size: 1rem; */
   /* margin-bottom: 1rem; */
+  margin-top: .5rem;
   /* padding: 0.5rem; */
   /* text-align: center; */
   /* text-shadow: 
@@ -169,15 +177,17 @@ body {
 
 #message-bar {
   /* height: fit-content; */
-  height: 9rem;
-  /* height: fit-content; */
-  width: 22rem;
+  /* height: 9rem; */
+  height: fit-content;
+  /* width: 22rem; */
+  width: fit-content;
   display: flex;
   /* align-items: start;
   justify-content: start; */
   align-items: center;
   justify-content: center;
-  padding: .5rem;
+  /* padding: .5rem; */
+    padding: .25rem;
   /* text-wrap: wrap; */
   /* background-color: var(--enemy); */
 }
@@ -205,8 +215,10 @@ body {
   /* height: 3rem; */
   /* height: auto; */
   /* height: fit-content; */
-  height: 3.75rem;
-  width: 24rem;
+  /* height: 3.75rem; */
+  height: fit-content;
+  /* width: 24rem; */
+  width: 19rem;
   /* width: fit-content; */
   background-color: var(--line);
   border: .125rem solid var(--text);
@@ -234,7 +246,8 @@ body {
 
 .btn-b {
   height: 2rem;
-  width: 4.25rem;
+  /* width: 4.25rem; */
+  width: fit-content;
   background-color: var(--line);
   border: none;
   border-radius: 1rem;
@@ -243,9 +256,11 @@ body {
   font-family: var(--font-fancy);
   font-size: 0.875rem;
   /* gap: 1rem; */
-  margin: 0.25rem;
+  /* margin: 0.25rem; */
+    margin: 0.3rem;
   outline: none;
-  padding: 0.125rem;
+  /* padding: 0.125rem; */
+    padding: 0.5rem;
 }
 
 .btn-b:hover {
@@ -301,13 +316,17 @@ justify-content: center;
   /* height: 49rem; */
   /* height: 72.5rem; */
   height: fit-content;
-  width: 24rem;
+  /* width: 24rem; */
+  width: fit-content;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  border: .5rem double;
+  /* justify-content: center; */
+    justify-content: space-evenly;
+  /* border: .5rem double; */
+  border: .25rem solid;
   /* border-left: 1rem solid;
   border-right: 1rem solid;
   border-bottom: 1rem solid;
@@ -315,7 +334,8 @@ justify-content: center;
   border-radius: 1rem;
   color: var(--line);
   font-family: var(--font-fancy);
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
+    font-size: 1.25rem;
   margin: 0.25rem;
   padding: 0.25rem;
   overflow: visible;
@@ -348,7 +368,8 @@ justify-content: center;
 #p1-target-zone,
 #p2-deployment-zone,
 #p2-target-zone {
-  height: 23rem;
+  /* height: 23rem; */
+  height: 21.5rem;
   width: 20rem;
   display: flex;
   flex-direction: row;
@@ -551,7 +572,9 @@ margin: -1rem;
   width: 22rem;
   font-family: var(--font-emoji);
   /* z-index: -2; */
-  margin-top: -21.25rem;
+  /* Below is the key way to center effects */
+  /* margin-top: -21.25rem; */
+  margin-top: -20.25rem;
 }
 
 .ship-cells1,
