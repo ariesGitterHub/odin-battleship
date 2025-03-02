@@ -343,12 +343,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupUndoBtnEventListener(boardNum) {
-    const { btnHideScreen, btnUndo } = getBtnElements(boardNum);
+    const { btnStartGame, btnHideScreen, btnUndo } = getBtnElements(boardNum);
 
     btnUndo.addEventListener("click", () => {
       mp3Click();
+      btnStartGame.style.display = "none";
       btnHideScreen.style.display = "none";
-
       if (placedShipListSet[boardNum].size === 0) {
         console.log("Nothing to undo.");
         return;
@@ -573,6 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
       player2.playerType === "computer" &&
       placedShipListSet1.size === 5 &&
+      // placedShipListArr1.length === 5 &&
       p1TargetZone.style.display !== "flex"
     ) {
       console.log(player2.playerType);
@@ -603,7 +604,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.backgroundColor = "var(--player1)";
       btnHideScreen.style.borderColor = "var(--player1-text)";
       btnHideScreen.style.color = "var(--enemy)";
-      btnHideScreen.innerText = "Accept Deployment";
+      // btnHideScreen.innerText = "Accept Deployment";
+      btnHideScreen.innerText = "Accept";
     } else if (
       player2.playerType === "human" &&
       !isPvsPStarted &&
@@ -615,7 +617,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.backgroundColor = "var(--player2)";
       btnHideScreen.style.borderColor = "var(--player2-text)";
       btnHideScreen.style.color = "var(--enemy)";
-      btnHideScreen.innerText = "Accept Deployment";
+      // btnHideScreen.innerText = "Accept Deployment";
+      btnHideScreen.innerText = "Accept";
     } else if (
       player2.playerType === "human" &&
       isPvsPStarted &&
@@ -626,7 +629,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.backgroundColor = "var(--player2)";
       btnHideScreen.style.borderColor = "var(--player2-text)";
       btnHideScreen.style.color = "var(--enemy)";
-      btnHideScreen.innerText = "Switch to PLAYER 2";
+      // btnHideScreen.innerText = "Switch to PLAYER 2";
+      btnHideScreen.innerText = "Switch";
     } else if (
       player2.playerType === "human" &&
       isPvsPStarted &&
@@ -637,7 +641,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.backgroundColor = "var(--player1)";
       btnHideScreen.style.borderColor = "var(--player1-text)";
       btnHideScreen.style.color = "var(--enemy)";
-      btnHideScreen.innerText = "Switch to PLAYER 1";
+      // btnHideScreen.innerText = "Switch to PLAYER 1";
+      btnHideScreen.innerText = "Switch";
     } else {
       btnHideScreen.style.display = "none";
     }

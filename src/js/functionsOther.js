@@ -69,9 +69,9 @@ function checkMessageFontSize(msg) {
     msg === player1DeployShipsMsg ||
     msg === player2DeployShipsMsg
   ) {
-    messages.style.fontSize = ".9rem";
+    messages.style.fontSize = ".85rem";
   } else {
-    messages.style.fontSize = "1.125rem";
+    messages.style.fontSize = "1.1rem";
   }
 }
 
@@ -85,7 +85,7 @@ export function handleMessageContent() {
   const player2 = "PLAYER 2";
    const deployShips =
     `: Deploy your ships. ROTATE to select axis. Click a ship to highlight it in RED. Then, click on the desired "deployment zone" square below to place that ship. Or, click RANDOM to auto-deploy ships.`; 
-    const unlockScreen = `: Unlock screen.`;
+    const unlockScreen = `: UNLOCK screen.`;
     const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
     // Player vs Computer matches only.
     const clickStartGameInPvsC = `Click START GAME to begin your match against PLAYER 2 (run by the computer).`;
@@ -110,11 +110,16 @@ export function handleMessageContent() {
 export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
   // Define transformation and image data for each ship type
   const shipData = {
-    a: { translate: "4rem", rotate: 90, image: nA },
-    b: { translate: "3rem", rotate: 90, image: nB },
-    d: { translate: "2rem", rotate: 90, image: nD },
-    s: { translate: "2rem", rotate: 90, image: nS },
-    c: { translate: "1rem", rotate: 90, image: nC },
+    // a: { translate: "4rem", rotate: 90, image: nA },
+    // b: { translate: "3rem", rotate: 90, image: nB },
+    // d: { translate: "2rem", rotate: 90, image: nD },
+    // s: { translate: "2rem", rotate: 90, image: nS },
+    // c: { translate: "1rem", rotate: 90, image: nC },
+    a: { translate: "3rem", rotate: 90, image: nA },
+    b: { translate: "2.25rem", rotate: 90, image: nB },
+    d: { translate: "1.5rem", rotate: 90, image: nD },
+    s: { translate: "1.5rem", rotate: 90, image: nS },
+    c: { translate: ".75rem", rotate: 90, image: nC },
   };
 
   // Only process if the shipType exists in the shipData

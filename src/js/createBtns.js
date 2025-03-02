@@ -85,10 +85,13 @@ export function createBtnElements() {
   const mainBtnConfigs = [
     { label: "PLAYER 1 vs COMPUTER", id: "btn-pvsc" },
     { label: "PLAYER 1 vs PLAYER 2", id: "btn-pvsp" },
-    { label: "Quit Game", id: "btn-quit-game" },
-    { label: "Start Game", id: "btn-start-game" },
+    // { label: "Quit Game", id: "btn-quit-game" },
+    // { label: "Start Game", id: "btn-start-game" },
+    { label: "Quit", id: "btn-quit-game" },
+    { label: "Start", id: "btn-start-game" },
     { label: "Hide Screen", id: "btn-hide-screen" },
-    { label: "Unlock Screen", id: "btn-unlock-screen" },
+    // { label: "Unlock Screen", id: "btn-unlock-screen" },
+    { label: "Unlock", id: "btn-unlock-screen" },
   ];
 
   function createMainActionButtons(buttonConfigs) {
