@@ -1,5 +1,7 @@
 import "./styles/styles.css";
 import { createHeader } from "./js/createHeader.js";
+import gifBroadside2 from "./assets/gifBroadside2.gif";
+import gifSailing from "./assets/gifSailing.gif";
 import { createMessageElements } from "./js/createMessage.js";
 import {
   createBoardContainerDivs,
@@ -207,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupHideScreenBtnEventListener(boardNum) {
-    const { header } = getHeaderElements();
+    const { battleshipGif, header } = getHeaderElements();
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
     const { p1FullBoard, p1PlaceShips, p2FullBoard, p2PlaceShips } =
       getBoardElements();
@@ -217,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
       mp3Click();
       btnHideScreen.style.display = "none";
       btnUnlockScreen.style.display = "flex";
+      battleshipGif.src = gifSailing;
       if (
         player2.playerType === "human" &&
         !isPvsPStarted &&
@@ -705,6 +708,7 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log(`humanB: ${isPvsPStarted}`);
         }
         if (
+          !stopGameHaveWinner &&  
           matches &&
           cell.innerText === "" &&
           playerTurn % 2 === 0 &&

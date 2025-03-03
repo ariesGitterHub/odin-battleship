@@ -6,7 +6,7 @@ export function getHeaderElements() {
     titleText: document.querySelector("#title-text"),
     MMM: document.querySelector("#MMM"),
     gifContainer: document.querySelector("#gif-container"),
-    battleshipGif: document.querySelector(".gif"),
+    battleshipGif: document.querySelector("#battleship-gif"),
   };
 }
 

@@ -82,8 +82,9 @@ E.g., if your ship has coords [22, 23], then the opponent shot on coord 23, then
 # Images and Gifs
 All game ship markers were created for this app and are copyrighted by the Mad Muffin Man. 
 
-broadside1 = https://imgur.com/gallery/shockwave-from-battleship-broadside-h9SE7Fj#/t/broadside
-broadside2 = https://imgur.com/gallery/battleship-broadsides-d3U51G7#/t/broadside
+gifBroadside1 = https://imgur.com/gallery/shockwave-from-battleship-broadside-h9SE7Fj#/t/broadside
+gifBroadside2 = https://imgur.com/gallery/battleship-broadsides-d3U51G7#/t/broadside
+gifSailing = https://lex-for-lexington.tumblr.com/post/115112729557/imperial-japanese-navy-battle-line
 
 Anchor svg from https://www.svgrepo.com/svg/395772/anchor
 

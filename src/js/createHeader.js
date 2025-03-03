@@ -1,20 +1,28 @@
 import { createElement, createImg } from "./functionTemplates.js";
 import { getHeaderElements } from "./domQueries.js";
-import broadside from "../assets/broadside1.gif";
+import gifBroadside1 from "../assets/gifBroadside1.gif";
 
 export function createHeader() {
   const { header } = getHeaderElements();
   const titleContainer = createElement("div", {
     id: "title-container",
   });
-  const titleText = createElement(
+  const titleTextTop = createElement(
     "p",
     {
-      id: "title-text",
+      id: "title-text-top",
       class: "font-fancy text-effect-dark",
     },
-    "Battleship: World War II"
+    "Battleship:"
   );
+    const titleTextBot = createElement(
+      "p",
+      {
+        id: "title-text-bot",
+        class: "font-fancy text-effect-dark",
+      },
+      "World War II"
+    );
   const MMM = createElement(
     "p",
     {
@@ -27,12 +35,13 @@ export function createHeader() {
     id: "gif-container",
   });
   const battleshipGif = createImg({
-    src: broadside,
+    id: "battleship-gif",
+    src: gifBroadside1,
     alt: "A destroyer fires a massive broadside during World War II",
     class: "gif",
   });
   header.append(titleContainer, gifContainer);
-  titleContainer.appendChild(titleText);
+  titleContainer.append(titleTextTop, titleTextBot);
   titleContainer.appendChild(MMM);
   gifContainer.appendChild(battleshipGif);
 }
