@@ -7,8 +7,9 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 export default {
   entry: "./src/index.js", // Adjust to the entry file of your project
   output: {
-    path: path.resolve("dist"), // The output directory
     filename: "bundle.js", // The output file name
+    // path: path.resolve("dist"), // The output directory
+    path: path.resolve(__dirname, "dist"), // Output directory (absolute path)
   },
   mode: "development", // Add this line to specify the development mode
   module: {
