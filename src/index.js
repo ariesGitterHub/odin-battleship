@@ -207,6 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupHideScreenBtnEventListener(boardNum) {
+    const { header } = getHeaderElements();
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
     const { p1FullBoard, p1PlaceShips, p2FullBoard, p2PlaceShips } =
       getBoardElements();
@@ -222,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
         p1FullBoard.style.display === "flex" &&
         placedShipListSet1.size === 5
       ) {
+        header.style.display = "flex";
         p1FullBoard.style.display = "none";
         p1PlaceShips.style.display = "none";
         clearMessage();
@@ -233,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
         p2FullBoard.style.display === "flex" &&
         placedShipListSet2.size === 5
       ) {
+        header.style.display = "flex";
         p2FullBoard.style.display = "none";
         p2PlaceShips.style.display = "none";
         clearMessage();
@@ -244,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
         p1FullBoard.style.display === "flex" &&
         placedShipListSet1.size === 5
       ) {
+        header.style.display = "flex";
         p1FullBoard.style.display = "none";
         clearMessage();
         addMessage(player2UnlockScreen);
@@ -254,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
         p2FullBoard.style.display === "flex" &&
         placedShipListSet2.size === 5
       ) {
+        header.style.display = "flex";
         p2FullBoard.style.display = "none";
         clearMessage();
         addMessage(player1UnlockScreen);
@@ -262,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupUnlockScreenBtnEventListener(boardNum) {
+    const { header } = getHeaderElements();
     const { btnUnlockScreen } = getBtnElements();
     const {
       p1FullBoard,
@@ -286,6 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
         p2FullBoard.style.display !== "flex" &&
         placedShipListSet2.size !== 5
       ) {
+        header.style.display = "none";
         p2FullBoard.style.display = "flex";
         clearMessage();
         addMessage(player2DeployShipsMsg);
@@ -298,6 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
         p1FullBoard.style.display !== "flex" &&
         placedShipListSet2.size === 5
       ) {
+        header.style.display = "none";
         p1FullBoard.style.display = "flex";
         p1TargetZone.style.display = "flex"; // PULLS UP NEEDED TARGET ZONE
         clearMessage();
@@ -310,6 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
         playerTurn % 2 !== 0 &&
         p2FullBoard.style.display !== "flex"
       ) {
+        header.style.display = "none";
         p2FullBoard.style.display = "flex";
         p2TargetZone.style.display = "flex"; // PULLS UP NEEDED TARGET ZONE
         p1FullBoard.style.display = "none";
@@ -323,6 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
         playerTurn % 2 === 0 &&
         p1FullBoard.style.display !== "flex"
       ) {
+        header.style.display = "none";
         p1FullBoard.style.display = "flex";
         p1TargetZone.style.display = "flex";
         p2FullBoard.style.display = "none";

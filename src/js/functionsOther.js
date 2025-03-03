@@ -84,7 +84,7 @@ export function handleMessageContent() {
   const player1 = "PLAYER 1";
   const player2 = "PLAYER 2";
    const deployShips =
-    `: Deploy your ships. ROTATE to select axis. Click a ship to highlight it in RED. Then, click on the desired "deployment zone" square below to place that ship. Or, click RANDOM to auto-deploy ships.`; 
+    `: Deploy your ships. ROTATE to select axis. Click a ship to highlight it in RED. Then, click on the desired "deployment zone" square below to place that ship. Or, click RANDOM to auto-deploy your ships.`; 
     const unlockScreen = `: UNLOCK screen.`;
     const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
     // Player vs Computer matches only.

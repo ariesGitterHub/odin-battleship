@@ -21,7 +21,7 @@ export function createHeader() {
       id: "MMM",
       class: "font-fancy text-effect-dark",
     },
-    "A Mad Muffin Man Design Studio, ©2025"
+    "Mad Muffin Man Design Studio, ©2025"
   );
   const gifContainer = createElement("div", {
     id: "gif-container",
