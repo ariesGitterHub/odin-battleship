@@ -150,7 +150,8 @@ function createPlayerBoardSection(playerNum) {
       "div",
       { id: `p${playerNum}-deployment-zone` },
       // `Player ${playerNum}'s Ship Deployment Zone`
-      `Ship Deployment Zone`
+      // `Ship Deployment Zone`
+      `Deployment Zone`
     ),
     targetZone: createElement(
       "div",

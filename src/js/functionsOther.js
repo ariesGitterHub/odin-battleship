@@ -56,24 +56,24 @@ import sinkIntoDarkness from "../assets/soundSinkIntoDarkness.mp3";
 
 export function addMessage(msg) {
   const { messageBar } = getMessageElements();
-  checkMessageFontSize(msg);
+  // checkMessageFontSize(msg);
   messageBar.innerText = msg;
 }
 
-function checkMessageFontSize(msg) {
-  const { messages } = getMessageElements();
-  const { player1DeployShipsMsg, player2DeployShipsMsg } =
-    handleMessageContent();
+// function checkMessageFontSize(msg) {
+//   const { messages } = getMessageElements();
+//   const { player1DeployShipsMsg, player2DeployShipsMsg } =
+//     handleMessageContent();
 
-  if (
-    msg === player1DeployShipsMsg ||
-    msg === player2DeployShipsMsg
-  ) {
-    messages.style.fontSize = ".85rem";
-  } else {
-    messages.style.fontSize = "1.1rem";
-  }
-}
+//   if (
+//     msg === player1DeployShipsMsg ||
+//     msg === player2DeployShipsMsg
+//   ) {
+//     messages.style.fontSize = ".85rem";
+//   } else {
+//     messages.style.fontSize = "1rem";
+//   }
+// }
 
 export function clearMessage() {
   const { messageBar } = getMessageElements();
@@ -88,7 +88,7 @@ export function handleMessageContent() {
     const unlockScreen = `: UNLOCK screen.`;
     const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
     // Player vs Computer matches only.
-    const clickStartGameInPvsC = `Click START GAME to begin your match against PLAYER 2 (run by the computer).`;
+    const clickStartGameInPvsC = `Click START to begin your match against PLAYER 2 (run by the computer).`;
   const endGameWin = "WINS, and has defeated";
   return {
     player1DeployShipsMsg: `${player1}${deployShips}`,
