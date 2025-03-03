@@ -56,24 +56,24 @@ import sinkIntoDarkness from "../assets/soundSinkIntoDarkness.mp3";
 
 export function addMessage(msg) {
   const { messageBar } = getMessageElements();
-  // checkMessageFontSize(msg);
+  checkMessageFontSize(msg);
   messageBar.innerText = msg;
 }
 
-// function checkMessageFontSize(msg) {
-//   const { messages } = getMessageElements();
-//   const { player1DeployShipsMsg, player2DeployShipsMsg } =
-//     handleMessageContent();
+function checkMessageFontSize(msg) {
+  const { messageBar } = getMessageElements();
+  const { player1DeployShipsMsg, player2DeployShipsMsg } =
+    handleMessageContent();
 
-//   if (
-//     msg === player1DeployShipsMsg ||
-//     msg === player2DeployShipsMsg
-//   ) {
-//     messages.style.fontSize = ".85rem";
-//   } else {
-//     messages.style.fontSize = "1rem";
-//   }
-// }
+  if (
+    msg === player1DeployShipsMsg ||
+    msg === player2DeployShipsMsg
+  ) {
+    messageBar.style.fontSize = ".8rem";
+  } else {
+    messageBar.style.fontSize = "1rem";
+  }
+}
 
 export function clearMessage() {
   const { messageBar } = getMessageElements();

@@ -22,7 +22,7 @@
   /* --gray: #7f8680; */
   /* --green: #627264; */
   --green: #444e45;
-  --text: #1a1918;
+  --text: #212121;
   --sea: #8fa4bd;
   /* --sea-lt: #bdd2ed; */
   /* --sea-lt: #8297b1; */
@@ -35,10 +35,12 @@
   --loser: #903a3a;
   --radar: #374713;
   --player1: #2f2f4f;
-    --player1-inner: #26262d;
+    /* --player1-inner: #30303e; */
+        /* --player1-inner: var(--text); */
   --player1-text: #a8a8b4;
   --player2: #3c4a3e;
-      --player2-inner: #272d28;
+      /* --player2-inner: #323733; */
+              /* --player2-inner: var(--text); */
   --player2-text: #a8b4a9;
   /* --enemy: #fecc03; */
     --enemy: #fec803;
@@ -71,7 +73,7 @@ body {
   background: linear-gradient(5deg, var(--bkgd), var(--bkgd2));
 
   margin: 0;
-    overflow-y: hidden;
+  /* overflow-y: hidden; */
 
 }
 
@@ -273,6 +275,11 @@ body {
   scale: 0.95;
 }
 
+#btn-pvsc, #btn-pvsp {
+  height: 3rem;
+  font-size: 1.25rem;
+}
+
 .btn-b {
   /* height: 2rem; */
     height: 1.65rem;
@@ -446,7 +453,7 @@ justify-content: center;
   border: .125rem solid var(--enemy);
 }
 
-#p1-deployment-zone,
+/* #p1-deployment-zone,
 #p1-target-zone {
 background-color: var(--player1-inner);
 }
@@ -454,6 +461,13 @@ background-color: var(--player1-inner);
 #p2-deployment-zone,
 #p2-target-zone {
   background-color: var(--player2-inner);
+} */
+
+#p1-deployment-zone,
+#p1-target-zone,
+#p2-deployment-zone,
+#p2-target-zone  {
+background-color: var(--text);
 }
 
 #p1-place-ships,
