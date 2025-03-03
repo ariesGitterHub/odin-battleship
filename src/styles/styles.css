@@ -35,8 +35,10 @@
   --loser: #903a3a;
   --radar: #374713;
   --player1: #2f2f4f;
+    --player1-inner: #26262d;
   --player1-text: #a8a8b4;
   --player2: #3c4a3e;
+      --player2-inner: #272d28;
   --player2-text: #a8b4a9;
   /* --enemy: #fecc03; */
     --enemy: #fec803;
@@ -192,7 +194,7 @@ body {
   justify-content: start; */
   align-items: center;
   justify-content: center;
-  font-size: .8rem;
+  font-size: 1rem;
   /* padding: .5rem; */
     padding: .25rem;
   /* text-wrap: wrap; */
@@ -225,7 +227,8 @@ body {
   /* height: auto; */
   /* height: fit-content; */
   /* height: 3.75rem; */
-  height: fit-content;
+  height: 1.75rem;
+
   /* width: 24rem; */
   /* width: 15rem; */
     width: 98vw;
@@ -238,11 +241,12 @@ body {
   box-shadow: var(--box-shadow-green);
   color: var(--text);
   font-family: var(--font-fancy);
-  font-size: 1.1rem;
+  /* font-size: 1.1rem; */
+  font-size: 1rem;
   margin: 0.25rem;
   outline: none;
   /* padding: 0.25rem; */
-  padding: .25rem;
+  padding: .125rem;
 }
 
 .btn-a:hover {
@@ -267,7 +271,8 @@ body {
   box-shadow: var(--box-shadow-green);
   color: var(--text);
   font-family: var(--font-fancy);
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
+  font-size: 0.9rem;
   /* gap: 1rem; */
   /* margin: 0.25rem; */
     margin: 0.25rem;
@@ -340,7 +345,7 @@ justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   /* justify-content: center; */
-    justify-content: space-evenly;
+    justify-content: center;
   /* border: .5rem double; */
   border: .25rem solid;
   /* border-left: 1rem solid;
@@ -385,8 +390,8 @@ justify-content: center;
   /* height: 21.5rem;
   width: 20rem; */
 
-  height: 15rem;
-  width: 15rem;
+  height: 17rem;
+  width: 15.75rem;
 
   display: flex;
   flex-direction: row;
@@ -396,7 +401,8 @@ justify-content: center;
   font-family: var(--font-fancy);
   font-size: 1rem;
   /* margin: 0.125rem; */
-  margin: .5rem;
+  margin: .25rem;
+  padding: .25rem;
   overflow: visible;
   text-transform: uppercase;
   /* z-index: 0; */
@@ -413,8 +419,29 @@ justify-content: center;
 #p1-target-zone,
 #p2-deployment-zone,
 #p2-target-zone {
-  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  /* margin-bottom: 1rem; */
 } 
+
+#p1-deployment-zone,
+#p2-deployment-zone {
+  border: .125rem solid var(--line);
+}
+
+#p1-target-zone,
+#p2-target-zone {
+  border: .125rem solid var(--enemy);
+}
+
+#p1-deployment-zone,
+#p1-target-zone {
+background-color: var(--player1-inner);
+}
+
+#p2-deployment-zone,
+#p2-target-zone {
+  background-color: var(--player2-inner);
+}
 
 #p1-place-ships,
 #p2-place-ships {
@@ -589,6 +616,7 @@ margin: -1rem;
 #p2-ship-board {
   background-color: var(--sea);
   /* z-index: -1; */
+  /* border: .125rem solid red; */
 }
 
 #p1-target-ship-board,
@@ -638,17 +666,17 @@ margin: -1rem;
 
 .ship-cells1,
 .ship-cells2 {
-  border: 0.085rem dashed var(--line);
+  border: 0.0825rem dashed var(--line);
 }
 
-#ship-a1, #ship-b1, #ship-d1, #ship-s1, #ship-c1, #ship-a2, #ship-b2, #ship-d2, #ship-s2, #ship-c2 {
+/* #ship-a1, #ship-b1, #ship-d1, #ship-s1, #ship-c1, #ship-a2, #ship-b2, #ship-d2, #ship-s2, #ship-c2 {
   height: 1.5rem;
   width: auto;
-}
+} */
 
 .ship-target-cells1,
 .ship-target-cells2 {
-  border: 0.085rem dashed var(--enemy);
+  border: 0.0825rem dashed var(--enemy);
 }
 
 .hit-miss-cells1,

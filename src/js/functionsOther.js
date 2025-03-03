@@ -89,7 +89,7 @@ export function handleMessageContent() {
     const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
     // Player vs Computer matches only.
     const clickStartGameInPvsC = `Click START to begin your match against PLAYER 2 (run by the computer).`;
-  const endGameWin = "WINS, and has defeated";
+    const endGameWin = "is VICTORIOUS! The enemy fleet has been sent to the cold, dark depths.";
   return {
     player1DeployShipsMsg: `${player1}${deployShips}`,
     player2DeployShipsMsg: `${player2}${deployShips}`,
@@ -100,8 +100,8 @@ export function handleMessageContent() {
 
     clickStartGameInPvsC: `${clickStartGameInPvsC}`,
 
-    player1Wins: `${player1} ${endGameWin} ${player2}'s fleet!!!`,
-    player2Wins: `${player2} ${endGameWin} ${player1}'s fleet!!!`,
+    player1Wins: `${player1} ${endGameWin}`,
+    player2Wins: `${player2} ${endGameWin}`,
   };
 }
 

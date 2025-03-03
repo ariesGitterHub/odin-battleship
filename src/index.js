@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let randomRowStored;
   let randomColStored;
   let lastPlayer2ComputerPriorAttack;
-  const currentSetTimeoutValue = 2500;
+  const currentSetTimeoutValue = 2000;
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
   let player2IsVictorious = false;
@@ -725,16 +725,22 @@ document.addEventListener("DOMContentLoaded", () => {
           forPvsPMatchesShowHideScreenBtn();
           clearMessage();
           if (player2.playerType === "computer") {
+            // addMessage(
+            //   `PLAYER 1 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
+            // );
             addMessage(
-              `PLAYER 1 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
+              `PLAYER 1's attack is a ${hitOrMiss} at coordinates (${row}, ${col}). Wait for PLAYER 2's counterattack.`
             );
             endGame();
           } else {
             // addMessage(
             //   `PLAYER 1 attacks. It's ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 2 to start the next turn.`
             // );
+            // addMessage(
+            //   `PLAYER 1 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 2.`
+            // );
             addMessage(
-              `PLAYER 1 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 2.`
+              `PLAYER 1's attack is a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 2.`
             );
             endGame();
           }
@@ -766,8 +772,11 @@ document.addEventListener("DOMContentLoaded", () => {
           forPvsPMatchesShowHideScreenBtn();
           clearMessage();
           if (player2.playerType === "human") {
+            // addMessage(
+            //   `PLAYER 2 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1.`
+            // );
             addMessage(
-              `PLAYER 2 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1.`
+              `PLAYER 2's attack is a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1.`
             );
             endGame();
           }
@@ -789,8 +798,12 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
 
+        // addMessage(
+        //   `PLAYER 2 attacked! It's a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1, it is now your turn to attack.`
+        // );
+
         addMessage(
-          `PLAYER 2 attacked! It's a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1, it is now your turn to attack.`
+          `PLAYER 2's attack is a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}). PLAYER 1, it's your turn to attack.`
         );
         
         playerTurn += 1;
