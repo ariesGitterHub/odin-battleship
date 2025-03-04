@@ -95,12 +95,13 @@ body {
 }
 
 #title-text-top, #title-text-bot {
+  color: var(--loser);  
     /* font-size: 1.5rem; */
   font-size: 2.375rem;
   text-align: center;
     /* text-decoration: underline; */
   text-transform: uppercase;
-  /* color: #4b5320; */
+
 }
 
 /* #title-text-top {
