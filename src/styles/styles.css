@@ -209,7 +209,7 @@ body {
   justify-content: start; */
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: .9rem;
   /* padding: .5rem; */
     padding: .5rem;
   /* text-wrap: wrap; */
@@ -418,11 +418,14 @@ justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  background-color: var(--text);
+    border-radius: .5rem;
   font-family: var(--font-fancy);
   font-size: 1rem;
   /* margin: 0.125rem; */
   margin: .25rem;
-  padding: .25rem;
+  /* padding: .25rem; */
+    /* padding-bottom: 1rem; */
   overflow: visible;
   text-transform: uppercase;
   /* z-index: 0; */
@@ -435,13 +438,7 @@ justify-content: center;
   color: var(--line);
 }
 
-#p1-deployment-zone,
-#p1-target-zone,
-#p2-deployment-zone,
-#p2-target-zone {
-  border-radius: .5rem;
-  /* margin-bottom: 1rem; */
-} 
+
 
 #p1-deployment-zone,
 #p2-deployment-zone {
@@ -463,12 +460,12 @@ background-color: var(--player1-inner);
   background-color: var(--player2-inner);
 } */
 
-#p1-deployment-zone,
+/* #p1-deployment-zone,
 #p1-target-zone,
 #p2-deployment-zone,
 #p2-target-zone  {
 background-color: var(--text);
-}
+} */
 
 #p1-place-ships,
 #p2-place-ships {
@@ -667,7 +664,7 @@ margin: -1rem;
   /* Below is the key way to center effects */
   /* margin-top: -21.25rem; */
   /* margin-top: -20.25rem; */
-    margin-top: -15rem;
+    margin-top: -15.345rem;
 }
 
 .ship-cells1,

@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let randomRowStored;
   let randomColStored;
   let lastPlayer2ComputerPriorAttack;
-  const currentSetTimeoutValue = 2000;
+  const currentSetTimeoutValue = 2700;
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
   let player2IsVictorious = false;
@@ -411,11 +411,12 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.display = "none";
       btnUnlockScreen.style.display = "none";
       testGame[boardNum].removeAllShips();
-      placedShipListArr1 = [];
-      placedShipListArr2 = [];
-      placedShipListSet1.clear();
-      placedShipListSet2.clear();
 
+      // if (p1FullBoard.style.display === "flex") {
+      // } 
+      // if (p2FullBoard.style.display === "flex") {
+      // }
+    
       if (placedShipListSet[boardNum] === 0) {
         mp3RemovePop();
       }
@@ -423,8 +424,12 @@ document.addEventListener("DOMContentLoaded", () => {
       clearMessage();
       if (p1FullBoard.style.display === "flex") {
         addMessage(player1DeployShipsMsg);
+        placedShipListArr1 = [];
+        placedShipListSet1.clear();
       } else if (p2FullBoard.style.display === "flex") {
         addMessage(player2DeployShipsMsg);
+        placedShipListArr2 = [];
+        placedShipListSet2.clear();
       }
     });
   }
@@ -786,6 +791,7 @@ document.addEventListener("DOMContentLoaded", () => {
           forPvsPMatchesShowHideScreenBtn();
           clearMessage();
           if (player2.playerType === "human") {
+            
             // addMessage(
             //   `PLAYER 2 attacks. It's a ${hitOrMiss} at coordinates (${row}, ${col}). SWITCH to PLAYER 1.`
             // );

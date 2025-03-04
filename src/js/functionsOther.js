@@ -71,7 +71,7 @@ function checkMessageFontSize(msg) {
   ) {
     messageBar.style.fontSize = ".8rem";
   } else {
-    messageBar.style.fontSize = "1rem";
+    messageBar.style.fontSize = ".8rem";
   }
 }
 
