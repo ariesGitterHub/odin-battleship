@@ -86,7 +86,8 @@ export function handleMessageContent() {
    const deployShips =
     `: Deploy your ships. ROTATE to select axis. Click a ship to highlight it in RED. Then, click on the desired "deployment zone" square below to place that ship. Or, click RANDOM to auto-deploy your ships.`; 
     const unlockScreen = `: UNLOCK screen.`;
-    const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
+    // const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
+        const clickCellToAttack = `: Below, click on a square in the ENEMY TARGET ZONE grid to attack.`;
     // Player vs Computer matches only.
     const clickStartGameInPvsC = `Click START to begin your match against PLAYER 2 (run by the computer).`;
     const endGameWin = "is VICTORIOUS! The enemy fleet has been sent to the cold, dark depths.";
