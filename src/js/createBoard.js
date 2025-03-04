@@ -141,7 +141,7 @@ function createPlayerBoardSection(playerNum) {
   return {
     fullBoard: createElement(
       "div",
-      { id: `p${playerNum}-full-board`, class: "flip-full-board" },
+      { id: `p${playerNum}-full-board` },
       `Player ${playerNum}`
     ),
     placeShips: createElement("div", { id: `p${playerNum}-place-ships` }),

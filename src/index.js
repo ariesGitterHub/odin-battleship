@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { mainBtnContainer, btnPvsC, btnPvsP, btnQuitGame } =
       getBtnElements();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
-    const { player1DeployShipsMsg } = handleMessageContent();
+    const { deployShipsMsg } = handleMessageContent();
 
     btnPvsC.addEventListener("click", () => {
       mp3Click();
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
       p2FullBoard.style.display = "none";
 
       clearMessage();
-      addMessage(player1DeployShipsMsg);
+      addMessage(deployShipsMsg);
       player2.playerType = "computer";
     });
 
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
       p2FullBoard.style.display = "none";
       player2.playerType = "human";
       clearMessage();
-      addMessage(player1DeployShipsMsg);
+      addMessage(deployShipsMsg);
     });
   }
 
@@ -209,9 +209,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setupHideScreenBtnEventListener(boardNum) {
-    const { battleshipGif, header } = getHeaderElements();
+    const { battleshipGif, header, titleTextBot, titleTextTop } =
+      getHeaderElements();
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
-    const { p1FullBoard, p1PlaceShips, p2FullBoard, p2PlaceShips } =
+    const { body, p1FullBoard, p1PlaceShips, p2FullBoard, p2PlaceShips } =
       getBoardElements();
     const { player1UnlockScreen, player2UnlockScreen } = handleMessageContent();
 
@@ -226,7 +227,11 @@ document.addEventListener("DOMContentLoaded", () => {
         p1FullBoard.style.display === "flex" &&
         placedShipListSet1.size === 5
       ) {
+        body.style.background =
+          "linear-gradient(5deg, var(--player2-b), var(--player2-text))";
         header.style.display = "flex";
+        // titleTextTop.style.color = "var(--player2)";
+        // titleTextBot.style.color = "var(--player2)";
         p1FullBoard.style.display = "none";
         p1PlaceShips.style.display = "none";
         clearMessage();
@@ -238,7 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
         p2FullBoard.style.display === "flex" &&
         placedShipListSet2.size === 5
       ) {
+        body.style.background =
+          "linear-gradient(5deg, var(--player1-b), var(--player1-text))";
         header.style.display = "flex";
+        // titleTextTop.style.color = "var(--player1)";
+        // titleTextBot.style.color = "var(--player1)";
         p2FullBoard.style.display = "none";
         p2PlaceShips.style.display = "none";
         clearMessage();
@@ -250,7 +259,11 @@ document.addEventListener("DOMContentLoaded", () => {
         p1FullBoard.style.display === "flex" &&
         placedShipListSet1.size === 5
       ) {
+        body.style.background =
+          "linear-gradient(5deg, var(--player2-b), var(--player2-text))";
         header.style.display = "flex";
+        // titleTextTop.style.color = "var(--player2)";
+        // titleTextBot.style.color = "var(--player2)";
         p1FullBoard.style.display = "none";
         clearMessage();
         addMessage(player2UnlockScreen);
@@ -261,7 +274,11 @@ document.addEventListener("DOMContentLoaded", () => {
         p2FullBoard.style.display === "flex" &&
         placedShipListSet2.size === 5
       ) {
+        body.style.background =
+          "linear-gradient(5deg, var(--player1-b), var(--player1-text))";
         header.style.display = "flex";
+        // titleTextTop.style.color = "var(--player1)";
+        // titleTextBot.style.color = "var(--player1)";
         p2FullBoard.style.display = "none";
         clearMessage();
         addMessage(player1UnlockScreen);
@@ -273,6 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { header } = getHeaderElements();
     const { btnUnlockScreen } = getBtnElements();
     const {
+      body,
       p1FullBoard,
       p1TargetZone,
       p2FullBoard,
@@ -280,13 +298,15 @@ document.addEventListener("DOMContentLoaded", () => {
       p2TargetZone,
     } = getBoardElements();
     const {
-      player2DeployShipsMsg,
+      deployShipsMsg,
       player1ClickCellToAttack,
       player2ClickCellToAttack,
     } = handleMessageContent();
 
     btnUnlockScreen.addEventListener("click", () => {
       mp3Click();
+      body.style.background =
+        "linear-gradient(5deg, var(--bkgd), var(--bkgd2))";
       btnUnlockScreen.style.display = "none";
       // Player 1 has clicked ACCEPT DEPLOYMENT, now to unhide player 2 so they can place ships
       if (
@@ -298,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
         header.style.display = "none";
         p2FullBoard.style.display = "flex";
         clearMessage();
-        addMessage(player2DeployShipsMsg);
+        addMessage(deployShipsMsg);
       }
       // START PvsP GAME
       if (
@@ -349,19 +369,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupRotateBtnEventListener(boardNum) {
     const rotate = handleBtnRotateShips(boardNum);
     const { btnRotate } = getBtnElements(boardNum);
+    const { rotateMsg } = handleMessageContent();
     btnRotate.addEventListener("click", () => {
       mp3Click();
       rotate();
+      clearMessage();
+      addMessage(rotateMsg);
     });
   }
 
   function setupUndoBtnEventListener(boardNum) {
     const { btnStartGame, btnHideScreen, btnUndo } = getBtnElements(boardNum);
-
+    const { undoMsg } = handleMessageContent();
     btnUndo.addEventListener("click", () => {
       mp3Click();
       btnStartGame.style.display = "none";
       btnHideScreen.style.display = "none";
+      clearMessage();
+      addMessage(undoMsg);
       if (placedShipListSet[boardNum].size === 0) {
         console.log("Nothing to undo.");
         return;
@@ -400,7 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupClearBtnEventListener(boardNum) {
     const { btnClear, btnStartGame, btnHideScreen, btnUnlockScreen } =
       getBtnElements(boardNum);
-    const { player1DeployShipsMsg, player2DeployShipsMsg } =
+    const { deployShipsMsg } =
       handleMessageContent();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
     btnClear.addEventListener("click", () => {
@@ -423,11 +448,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       clearMessage();
       if (p1FullBoard.style.display === "flex") {
-        addMessage(player1DeployShipsMsg);
+        addMessage(deployShipsMsg);
         placedShipListArr1 = [];
         placedShipListSet1.clear();
       } else if (p2FullBoard.style.display === "flex") {
-        addMessage(player2DeployShipsMsg);
+        addMessage(deployShipsMsg);
         placedShipListArr2 = [];
         placedShipListSet2.clear();
       }

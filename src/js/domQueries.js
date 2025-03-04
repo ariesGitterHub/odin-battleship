@@ -3,7 +3,8 @@ export function getHeaderElements() {
   return {
     header: document.querySelector("#header"),
     titleContainer: document.querySelector("#title-container"),
-    titleText: document.querySelector("#title-text"),
+    titleTextTop: document.querySelector("#title-text-top"),
+    titleTextBot: document.querySelector("#title-text-bot"),
     MMM: document.querySelector("#MMM"),
     gifContainer: document.querySelector("#gif-container"),
     battleshipGif: document.querySelector("#battleship-gif"),
@@ -43,6 +44,7 @@ export function getBtnElements(boardNum) {
  // TODO - ORGANIZE THIS!!!!
 export function getBoardElements(boardNum) {
   return {
+    body: document.querySelector("body"),
     boardContainer: document.querySelector("#board-container"),
     p1FullBoard: document.querySelector("#p1-full-board"),
     p2FullBoard: document.querySelector("#p2-full-board"),

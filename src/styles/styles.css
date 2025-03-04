@@ -17,8 +17,8 @@
 
 :root {
   /* Colors */
-  --bkgd: #242a26;
-  --bkgd2: #a7aaac;
+  --bkgd: #242a2a;
+  --bkgd2: #b7c7c8;
   /* --gray: #7f8680; */
   /* --green: #627264; */
   --green: #444e45;
@@ -35,13 +35,13 @@
   --loser: #903a3a;
   --radar: #374713;
   --player1: #2f2f4f;
-    /* --player1-inner: #30303e; */
-        /* --player1-inner: var(--text); */
+    --player1-b: #212128;
+
   --player1-text: #a8a8b4;
   --player2: #3c4a3e;
-      /* --player2-inner: #323733; */
-              /* --player2-inner: var(--text); */
-  --player2-text: #a8b4a9;
+      --player2-b: #222821;
+
+  --player2-text: #8f9990;
   /* --enemy: #fecc03; */
     --enemy: #fec803;
   /* --box-shadow-gray: 0 3px 6px var(--gray); */
@@ -68,9 +68,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
   /* background-color: var(--bkgd); */
 
   background: linear-gradient(5deg, var(--bkgd), var(--bkgd2));
+    /* background: linear-gradient(5deg, var(--player1), var(--player1-text)); */
 
   margin: 0;
   /* overflow-y: hidden; */
@@ -95,7 +97,7 @@ body {
 }
 
 #title-text-top, #title-text-bot {
-  color: var(--loser);  
+  color: var(--text);  
     /* font-size: 1.5rem; */
   font-size: 2.375rem;
   text-align: center;
@@ -153,8 +155,8 @@ body {
 }
 
 .text-effect-dark {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3), -1px -1px 2px rgba(0, 0, 0, 0.3),
-    2px 2px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -2px -2px 4px rgba(0, 0, 0, 0.3),
+    4px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* .text-effect-light {
@@ -166,6 +168,7 @@ body {
 
 #messages {
   height: fit-content;
+  /* height: 4.25rem; */
     width: 93vw;
     
   /* width: 24rem; */
@@ -173,8 +176,8 @@ body {
   /* width: 18rem; */
   display: flex;
   /* display: none; */
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: start; */
   /* background-color: var(--text); */
   /* background-color: var(--enemy); */
     background-color: var(--line);
@@ -202,9 +205,9 @@ body {
 #message-bar {
   /* height: fit-content; */
   /* height: 9rem; */
-  height: fit-content;
+  /* height: fit-content; */
   /* width: 22rem; */
-  width: fit-content;
+  /* width: fit-content; */
   display: flex;
   /* align-items: start;
   justify-content: start; */
@@ -212,7 +215,7 @@ body {
   justify-content: center;
   font-size: .9rem;
   /* padding: .5rem; */
-    padding: .5rem;
+    padding: .45rem;
   /* text-wrap: wrap; */
   /* background-color: var(--enemy); */
 }
@@ -283,7 +286,7 @@ body {
 
 .btn-b {
   /* height: 2rem; */
-    height: 1.65rem;
+    height: 1.75rem;
   /* width: 4.25rem; */
   width: fit-content;
   background-color: var(--line);
@@ -293,13 +296,13 @@ body {
   color: var(--text);
   font-family: var(--font-fancy);
   /* font-size: 0.8rem; */
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   /* gap: 1rem; */
   /* margin: 0.25rem; */
     margin: 0.25rem;
   outline: none;
   /* padding: 0.125rem; */
-    padding: 0.2rem;
+    padding: 0.25rem;
 }
 
 .btn-b:hover {
@@ -344,6 +347,7 @@ justify-content: center;
 #board-container {
   height: fit-content;
   width: fit-content;
+  /* width: 94vw; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -379,6 +383,7 @@ justify-content: center;
   /* font-size: 1.5rem; */
     font-size: 1.25rem;
   margin: 0.25rem;
+
   /* padding: 0.25rem; */
     padding: 0.25rem;
   overflow: visible;
@@ -411,8 +416,8 @@ justify-content: center;
   /* height: 21.5rem;
   width: 20rem; */
 
-  height: 17rem;
-  width: 15.75rem;
+  height: 18rem;
+  width: 17rem;
 
   display: flex;
   flex-direction: row;
@@ -424,9 +429,9 @@ justify-content: center;
   font-family: var(--font-fancy);
   font-size: 1rem;
   /* margin: 0.125rem; */
-  margin: .25rem;
+  margin: .5rem;
   /* padding: .25rem; */
-    /* padding-bottom: 1rem; */
+
   overflow: visible;
   text-transform: uppercase;
   /* z-index: 0; */
@@ -665,7 +670,7 @@ margin: -1rem;
   /* Below is the key way to center effects */
   /* margin-top: -21.25rem; */
   /* margin-top: -20.25rem; */
-    margin-top: -15.345rem;
+    margin-top: -16rem;
 }
 
 .ship-cells1,

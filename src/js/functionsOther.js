@@ -83,17 +83,23 @@ export function clearMessage() {
 export function handleMessageContent() {
   const player1 = "PLAYER 1";
   const player2 = "PLAYER 2";
-   const deployShips =
-    `: Deploy your ships. ROTATE to select axis. Click a ship to highlight it in RED. Then, click on the desired "deployment zone" square below to place that ship. Or, click RANDOM to auto-deploy your ships.`; 
+  //  const deployShips =
+  //   `: Deploy your ships. Click ROTATE to select axis. Click any ship to highlight it in red. Then, click on the desired "deployment zone" square to place that highlighted ship. Or, click RANDOM to auto-deploy your ships.`; 
+     const deployShipsMsg = `Deploy fleet: click a ship to highlight it red. Then, click on the desired "deployment zone" square to place that ship. Or, click RANDOM.`; 
+     const rotateMsg = `This button rotates a ship's vertical/horizontal axis. Remember to highlight a ship prior to placing it.`;
+    const undoMsg = `This button undoes the last immediate ship placement made to the deployment zone. Re-highlight ships to place ships anew.`;
     const unlockScreen = `: UNLOCK screen.`;
     // const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
         const clickCellToAttack = `: Below, click on a square in the ENEMY TARGET ZONE grid to attack.`;
     // Player vs Computer matches only.
     const clickStartGameInPvsC = `Click START to begin your match against PLAYER 2 (run by the computer).`;
-    const endGameWin = "is VICTORIOUS! The enemy fleet has been sent to the cold, dark depths.";
+    const endGameWin = `is VICTORIOUS! The enemy fleet has been sent to the cold, dark depths.`;
   return {
-    player1DeployShipsMsg: `${player1}${deployShips}`,
-    player2DeployShipsMsg: `${player2}${deployShips}`,
+    // player1DeployShipsMsg: `${player1}${deployShipsMsg}`,
+    // player2DeployShipsMsg: `${player2}${deployShipsMsg}`,
+    deployShipsMsg: deployShipsMsg,
+    rotateMsg: rotateMsg,
+    undoMsg: undoMsg,
     player1UnlockScreen: `${player1}${unlockScreen}`,
     player2UnlockScreen: `${player2}${unlockScreen}`,
     player1ClickCellToAttack: `${player1}${clickCellToAttack}`,
