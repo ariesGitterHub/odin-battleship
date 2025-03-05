@@ -79,6 +79,15 @@ body {
 
 }
 
+#app-container {
+  height: 100vh;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 #header {
   display: flex;
   flex-direction: column;
@@ -120,9 +129,10 @@ body {
 }
 
 #gif-container {
-  height: auto;
+  /* height: auto; */
   /* width: 22rem; */
-  width: 19rem;
+  /* width: 19rem; */
+  /* width: auto; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,7 +166,7 @@ body {
 
 .text-effect-dark {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3), -1px -1px 2px rgba(0, 0, 0, 0.3),
-    3px 3px 5px rgba(0, 0, 0, 0.3);
+    2px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* .text-effect-light {
@@ -169,8 +179,9 @@ body {
 #messages {
   height: fit-content;
   /* height: 4.25rem; */
-    width: 93vw;
-    
+    /* width: 93vw; */
+    /* width: fit-content; */
+    width: 18.75rem;
   /* width: 24rem; */
   /* width: 21.25rem; */
   /* width: 18rem; */
@@ -228,7 +239,9 @@ body {
   height: auto;
   /* width: 22rem; */
     /* width: 15rem; */
-      width: 94vw;
+      /* width: 94vw; */
+      /* width: fit-content; */
+      width: 19.25rem;
   /* background-color: var(--line); */
   border-radius: 1rem;
   /* box-shadow: var(--box-shadow-green); */
@@ -250,8 +263,9 @@ body {
 
   /* width: 24rem; */
   /* width: 15rem; */
-    width: 94vw;
+    /* width: 94vw; */
   /* width: fit-content; */
+  width: 19rem;
   display: flex;
   flex-wrap: wrap;
   background-color: var(--line);
@@ -372,13 +386,13 @@ justify-content: center;
   /* justify-content: center; */
     justify-content: center;
   /* border: .5rem double; */
-  border: .25rem solid;
+  border: .125rem solid var(--text);
   /* border-left: 1rem solid;
   border-right: 1rem solid;
   border-bottom: 1rem solid;
   border-top: 0.75rem solid; */
-  border-radius: 1rem;
-  color: var(--line);
+  border-radius: .5rem;
+  /* color: var(--line); */
   font-family: var(--font-fancy);
   /* font-size: 1.5rem; */
     font-size: 1.25rem;
@@ -393,7 +407,7 @@ justify-content: center;
 
 #p1-full-board {
   background-color: var(--player1);
-  border-color: var(--player1-text);
+  /* border-color: var(--player1-text); */
   color: var(--player1-text);
   display: none;
   /* perspective: 1000px; */
@@ -401,7 +415,7 @@ justify-content: center;
 
 #p2-full-board {
   background-color: var(--player2);
-  border-color: var(--player2-text);
+  /* border-color: var(--player2-text); */
   color: var(--player2-text);
   display: none;
     /* display: flex; */
