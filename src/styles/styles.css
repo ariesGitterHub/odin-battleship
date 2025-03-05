@@ -24,7 +24,8 @@
   /* --green: #627264; */
   --green: #444e45;
   --text: #212121;
-  --sea: #8fa4bd;
+  /* --sea: #8fa4bd; */
+   --sea: #96bccb;
   /* --sea-lt: #bdd2ed; */
   /* --sea-lt: #8297b1; */
   /* --sea-dk: #2e64a6; */
@@ -745,7 +746,7 @@ margin: -1rem;
 
 .ship-cells1,
 .ship-cells2 {
-  border: 0.0825rem dashed var(--line);
+  border: 0.0785rem dashed var(--line);
 }
 
 /* #ship-a1, #ship-b1, #ship-d1, #ship-s1, #ship-c1, #ship-a2, #ship-b2, #ship-d2, #ship-s2, #ship-c2 {
@@ -755,7 +756,7 @@ margin: -1rem;
 
 .ship-target-cells1,
 .ship-target-cells2 {
-  border: 0.0825rem dashed var(--enemy);
+  border: 0.0785rem dashed var(--enemy);
 }
 
 .hit-miss-cells1,

@@ -90,10 +90,10 @@ export function handleMessageContent() {
     const undoMsg = `This button undoes the last immediate ship placement made to the deployment zone. Re-highlight ships to place ships anew.`;
     const unlockScreen = `: UNLOCK screen.`;
     // const clickCellToAttack = `: Below, click on a cell in your ENEMY TARGET ZONE grid to attack the enemy fleet.`;
-        const clickCellToAttack = `: Below, click on a square in the ENEMY TARGET ZONE grid to attack.`;
+        const clickCellToAttack = `: Click on a square in the ENEMY TARGET ZONE grid to attack.`;
     // Player vs Computer matches only.
     const clickStartGameInPvsC = `Click START to begin your match against PLAYER 2 (controlled by the computer).`;
-    const endGameWin = `is VICTORIOUS! The enemy fleet has been sent to the cold, dark depths.`;
+    const endGameWin = `is VICTORIOUS! The enemy fleet has been sunk.`;
   return {
     // player1DeployShipsMsg: `${player1}${deployShipsMsg}`,
     // player2DeployShipsMsg: `${player2}${deployShipsMsg}`,

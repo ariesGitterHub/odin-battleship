@@ -772,8 +772,11 @@ document.addEventListener("DOMContentLoaded", () => {
             // addMessage(
             //   `PLAYER 1 attacks. It's a ${hitOrMiss} at square: (${row}, ${col}). Wait for PLAYER 2's counterattack.`
             // );
+            // addMessage(
+            //   `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). Wait for PLAYER 2's counterattack.`
+            // );
             addMessage(
-              `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). Wait for PLAYER 2's counterattack.`
+              `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). PLAYER 2's TURN!`
             );
             endGame();
           } else {
@@ -846,8 +849,12 @@ document.addEventListener("DOMContentLoaded", () => {
         //   `PLAYER 2 attacked! It's a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1, it is now your turn to attack.`
         // );
 
+        // addMessage(
+        //   `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1, it's your turn to attack.`
+        // );
+
         addMessage(
-          `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1, it's your turn to attack.`
+          `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
         );
 
         playerTurn += 1;
