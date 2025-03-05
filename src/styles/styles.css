@@ -70,12 +70,12 @@ html, body {
   align-items: center;
   justify-content: start; */
 
-      height: 100%;
-    width: 100%;
-    font-size: 14px; /* Normalize base font size */
-    line-height: 1.5; /* Improve text readability */
-    -webkit-text-size-adjust: 100%; /* Prevent mobile browsers from resizing text */
-    -ms-text-size-adjust: 100%;
+  height: 100%;
+  width: 100%;
+  font-size: 14px; /* Normalize base font size */
+  line-height: 1.25; /* Improve text readability */
+  -webkit-text-size-adjust: 100%; /* Prevent mobile browsers from resizing text */
+  -ms-text-size-adjust: 100%;
 
   background: linear-gradient(5deg, var(--bkgd), var(--bkgd2));
     /* background: linear-gradient(5deg, var(--player1), var(--player1-text)); */
@@ -152,9 +152,9 @@ html, body {
 
 .gif {
   /* height: 22rem; */
-  height: 19rem;
+  height: 20rem;
   /* width: 22rem; */
-  width: 19rem;
+  width: 20rem;
   /* border: 0.5rem solid var(--text); */
     border: .5rem solid var(--text);
   border-radius: 50%;
@@ -188,7 +188,7 @@ html, body {
   /* height: 4.25rem; */
     /* width: 93vw; */
     /* width: fit-content; */
-    width: 18.75rem;
+    width: 20rem;
   /* width: 24rem; */
   /* width: 21.25rem; */
   /* width: 18rem; */
@@ -210,8 +210,8 @@ html, body {
   font-family: var(--font-fancy);
   /* font-size: 1rem; */
   /* margin-bottom: 1rem; */
-  /* margin-top: .25rem; */
-  margin: .25rem;
+  margin: .25rem 0 .25rem 0;
+  /* margin: .25rem; */
   /* padding: 0.5rem; */
   /* text-align: center; */
   /* text-shadow: 
@@ -248,7 +248,7 @@ html, body {
     /* width: 15rem; */
       /* width: 94vw; */
       /* width: fit-content; */
-      width: 19.25rem;
+      width: 20rem;
   /* background-color: var(--line); */
   border-radius: 1rem;
   /* box-shadow: var(--box-shadow-green); */
@@ -272,7 +272,7 @@ html, body {
   /* width: 15rem; */
     /* width: 94vw; */
   /* width: fit-content; */
-  width: 19rem;
+  width: 20rem;
   display: flex;
   flex-wrap: wrap;
   background-color: var(--line);
@@ -309,7 +309,8 @@ html, body {
   /* height: 2rem; */
     height: 1.75rem;
   /* width: 4.25rem; */
-  width: fit-content;
+  /* width: fit-content; */
+  width: 5rem;
   background-color: var(--line);
   border: none;
   border-radius: 1rem;
@@ -403,10 +404,10 @@ justify-content: center;
   font-family: var(--font-fancy);
   /* font-size: 1.5rem; */
     font-size: 1.25rem;
-  margin: 0.25rem;
+  margin-top: 0.25rem;
 
   /* padding: 0.25rem; */
-    padding: 0.25rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
   overflow: visible;
   text-transform: uppercase;
   /* z-index: -1; */
@@ -437,7 +438,7 @@ justify-content: center;
   /* height: 21.5rem;
   width: 20rem; */
 
-  height: 18rem;
+  height: 17rem;
   width: 17rem;
 
   display: flex;
@@ -448,12 +449,14 @@ justify-content: center;
   background-color: var(--text);
     border-radius: .5rem;
   font-family: var(--font-fancy);
-  font-size: 1rem;
+  font-size: .9rem;
+  line-height: 1.5;
   /* margin: 0.125rem; */
-  margin: .5rem;
+  /* margin: 0 .25rem .25rem .25rem; */
   /* padding: .25rem; */
 
   overflow: visible;
+  /* vertical-align: baseline; */
   text-transform: uppercase;
   /* z-index: 0; */
 }
@@ -475,6 +478,7 @@ justify-content: center;
 #p1-target-zone,
 #p2-target-zone {
   border: .125rem solid var(--enemy);
+  margin-top: .5rem;
 }
 
 /* #p1-deployment-zone,
@@ -503,7 +507,7 @@ background-color: var(--text);
 
   /* display: none; */
   /* display: flex; */
-  flex-direction: column;
+  flex-direction: row;
   /* flex-wrap: wrap; */
   align-items: center;
   justify-content: center;
@@ -511,7 +515,8 @@ background-color: var(--text);
   /* padding: .25rem; */
   font-family: var(--font-fancy);
   font-size: 1rem;
-  margin: 0.125rem;
+  /* margin: 0.125rem; */
+  margin-bottom: .5rem;
   text-align: center;
   text-transform: none;
 }
@@ -623,9 +628,11 @@ margin: -1rem;
   height: auto;
   width: fit-content;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   /* background-color: yellow; */
+  margin: 0;
 }
 
 #p1-target-zone,
@@ -673,6 +680,7 @@ margin: -1rem;
 #p1-target-ship-board,
 #p2-target-ship-board {
   background-color: var(--sea);
+    /* border: .01rem dashed var(--loser); */
   /* z-index: -1; */
 }
 
@@ -691,7 +699,7 @@ margin: -1rem;
   /* Below is the key way to center effects */
   /* margin-top: -21.25rem; */
   /* margin-top: -20.25rem; */
-    margin-top: -16rem;
+    margin-top: -15.55rem;
 }
 
 .ship-cells1,

@@ -199,8 +199,8 @@ export function createBoardContainerDivs() {
     p1Elements.targetZone
   );
   p1Elements.placeShips.append(
-    p1Elements.x5Grid,
-    p1Elements.placeShipBtnContainer
+    p1Elements.placeShipBtnContainer,
+    p1Elements.x5Grid    
   );
   p1Elements.x5Grid.append(
     p1PlaceShips.s,
@@ -224,8 +224,8 @@ export function createBoardContainerDivs() {
     p2Elements.targetZone
   );
   p2Elements.placeShips.append(
-    p2Elements.x5Grid,
-    p2Elements.placeShipBtnContainer
+    p2Elements.placeShipBtnContainer,
+    p2Elements.x5Grid
   );
   p2Elements.x5Grid.append(
     p2PlaceShips.s,
