@@ -142,6 +142,11 @@ function createPlayerBoardSection(playerNum) {
     fullBoard: createElement(
       "div",
       { id: `p${playerNum}-full-board` },
+      // `Player ${playerNum}`
+    ),
+    playerNumText: createElement(
+      "div",
+      {id: `p${playerNum}-player-num-text` },
       `Player ${playerNum}`
     ),
     placeShips: createElement("div", { id: `p${playerNum}-place-ships` }),
@@ -194,6 +199,7 @@ export function createBoardContainerDivs() {
   boardContainer.append(p1Elements.fullBoard, p2Elements.fullBoard);
 
   p1Elements.fullBoard.append(
+    p1Elements.playerNumText,
     p1Elements.placeShips,
     p1Elements.deploymentZone,
     p1Elements.targetZone
@@ -219,6 +225,7 @@ export function createBoardContainerDivs() {
   );
 
   p2Elements.fullBoard.append(
+    p2Elements.playerNumText,
     p2Elements.placeShips,
     p2Elements.deploymentZone,
     p2Elements.targetZone

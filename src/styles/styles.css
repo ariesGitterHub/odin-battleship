@@ -18,6 +18,7 @@
 :root {
   /* Colors */
   --bkgd: #242a2a;
+  --bkgd-trans: #242a2a00;
   --bkgd2: #b7c7c8;
   /* --gray: #7f8680; */
   /* --green: #627264; */
@@ -117,7 +118,7 @@ html, body {
 #title-text-top, #title-text-bot {
   color: var(--text);  
     /* font-size: 1.5rem; */
-  font-size: 2.375rem;
+  font-size: 2.25rem;
   text-align: center;
     /* text-decoration: underline; */
   text-transform: uppercase;
@@ -133,7 +134,7 @@ html, body {
 }
 
 #MMM {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   text-align: center;
 }
 
@@ -234,7 +235,7 @@ html, body {
   justify-content: start; */
   /* align-items: center;
   justify-content: center; */
-  font-size: .9rem;
+  font-size: 1rem;
   /* padding: .5rem; */
     padding: .45rem;
   /* text-wrap: wrap; */
@@ -316,7 +317,7 @@ html, body {
     height: 1.75rem;
   /* width: 4.25rem; */
   /* width: fit-content; */
-  width: 5rem;
+  width: 5.5rem;
   background-color: var(--line);
   border: none;
   border-radius: 1rem;
@@ -324,7 +325,7 @@ html, body {
   color: var(--text);
   font-family: var(--font-fancy);
   /* font-size: 0.8rem; */
-  font-size: 0.875rem;
+  font-size: .9rem;
   /* gap: 1rem; */
   /* margin: 0.25rem; */
     margin: 0.25rem;
@@ -401,7 +402,7 @@ justify-content: center;
   /* justify-content: center; */
     justify-content: center;
   /* border: .5rem double; */
-  border: .125rem solid var(--text);
+  /* border: .125rem solid var(--text); */
   /* border-left: 1rem solid;
   border-right: 1rem solid;
   border-bottom: 1rem solid;
@@ -410,18 +411,21 @@ justify-content: center;
   /* color: var(--line); */
   font-family: var(--font-fancy);
   /* font-size: 1.5rem; */
-    font-size: 1.25rem;
+    /* font-size: 1.5rem; */
   margin-top: 0.25rem;
 
   /* padding: 0.25rem; */
-    padding: 0.1rem 0.5rem .5rem 0.5rem;
+    /* padding: 0.1rem 0.5rem .5rem 0.5rem; */
+    padding: 0 0.25rem 0 0.25rem;
   overflow: visible;
   text-transform: uppercase;
   /* z-index: -1; */
  }
 
 #p1-full-board {
-  background-color: var(--player1);
+  /* background-color: var(--player1); */
+  background: linear-gradient(5deg, var(--bkgd-trans), var(--player1));
+
   /* border-color: var(--player1-text); */
   color: var(--player1-text);
   display: none;
@@ -429,11 +433,18 @@ justify-content: center;
 }
 
 #p2-full-board {
-  background-color: var(--player2);
+  /* background-color: var(--player2); */
+    background: linear-gradient(5deg, var(--bkgd-trans), var(--player2));
   /* border-color: var(--player2-text); */
   color: var(--player2-text);
   display: none;
     /* display: flex; */
+}
+
+#p1-player-num-text,
+#p2-player-num-text {
+font-size: 1.25rem;
+margin: .5rem;
 }
 
 #p1-deployment-zone,
@@ -453,10 +464,10 @@ justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  background-color: var(--text);
+  /* background-color: var(--text); */
     border-radius: .5rem;
   font-family: var(--font-fancy);
-  font-size: .9rem;
+  font-size: 1rem;
   line-height: 1.5;
   /* margin: 0.125rem; */
   /* margin: 0 .25rem .25rem .25rem; */
@@ -479,13 +490,15 @@ justify-content: center;
 
 #p1-deployment-zone,
 #p2-deployment-zone {
-  border: .125rem solid var(--line);
+  /* border: .125rem solid var(--line); */
+    /* margin-top: 1rem; */
+    margin-bottom: .5rem;
 }
 
 #p1-target-zone,
 #p2-target-zone {
-  border: .125rem solid var(--enemy);
-  margin-top: .5rem;
+  /* border: .125rem solid var(--enemy); */
+  /* margin-top: .5rem; */
 }
 
 /* #p1-deployment-zone,
@@ -523,7 +536,7 @@ background-color: var(--text);
   font-family: var(--font-fancy);
   font-size: 1rem;
   /* margin: 0.125rem; */
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
   text-align: center;
   text-transform: none;
 }
@@ -706,7 +719,7 @@ margin: -1rem;
   /* Below is the key way to center effects */
   /* margin-top: -21.25rem; */
   /* margin-top: -20.25rem; */
-    margin-top: -15.55rem;
+    margin-top: -15.35rem;
 }
 
 .ship-cells1,
