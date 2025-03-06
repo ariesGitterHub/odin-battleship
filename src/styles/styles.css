@@ -1,20 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap");
 
-/* *********************** TABLE OF CONTENTS ********************* */
-/* ROOT/SHARED                                                     */
-/* --> LVL-COLS/LVL-ROWS/SECTION-BOT-PAD                           */
-/* --> .NONE/.FLEX                                                 */
-/* HEADER AND NAV                                                  */
-/* --> STATUS BANNER                                               */
-/* --> NEW TASK FORM/NEW FOLDER FORM  & UPDATE TASK/UPDATE FOLDER  */
-/* --> NEW TASK FORM PRIORITY FLAG SWITCH                          */
-/* FOLDER CONTENT/TASK CONTENT                                     */
-/* MEDIA QUERIES                                                   */
-/* *********************** TABLE OF CONTENTS ********************* */
+/* ***** TABLE OF CONTENTS *********************************** */
 
-/* ROOT/SHARED                                                     */
+/* ROOT/SHARED/GLOBAL */
+/* BTN CONTROLS */
+/* HEADER */
+/* --> TITLE */
+/* --> GIF */
+/* MESSAGES */
+/* MAIN BTN CONTAINER */
+/* ALL THE VARIOUS BOARDS/ZONES/GRIDS */
+/* --> FULL-BOARDS */
+/* ----> PLAYER NUMBER TEXT */
+/* ----> PLACE SHIPS, DEPLOYMENT ZONE & TARGET ZONE */
+/* SPECIAL HOVER EFFECTS (for deployment and target zones) */
+/* MEDIA QUERIES */
 
+/* USE <CTRL-F Key Item>, to find CSS that maintains the grids */
+
+/* ***** TABLE OF CONTENTS *********************************** */
+
+/* ROOT/SHARED/GLOBAL */
 :root {
   /* Colors */
   --bkgd: #242a2a;
@@ -28,99 +35,25 @@
   --miss: #58769a;
   --sunk: #524753;
   --loser: #903a3a;
-  /* --radar: #374713; */
   --player1: #2f2f4f;
-  /* --player1-b: #212128; */
   --player1-text: #a8a8b4;
   --player2: #3c4a3e;
-  /* --player2-b: #222821; */
   --player2-text: #8f9990;
   --enemy: #fec803;
+
   --box-shadow-green: 0 5px 10px var(--green);
   --font-fancy: "Black Ops One", sans-serif;
   --font-emoji: "Noto Color Emoji", sans-serif;
+  --width-vw: 90vw;
+  --height-width-grid: 15rem;
+  --width-margin-offset: -15rem;
+  --linear-gradient-deg: 5deg;
+  --scale-big: 1.05;
+  --scale-small: 0.95;
 }
 
 .font-fancy {
   font-family: var(--font-fancy);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html, body {
-  height: 100%;
-  width: 100%;
-  font-size: 14px; /* Normalize base font size */
-  line-height: 1.25; /* Improve text readability */
-  -webkit-text-size-adjust: 100%; /* Prevent mobile browsers from resizing text */
-  -ms-text-size-adjust: 100%;
-}
-
-#app-container {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-  background: linear-gradient(5deg, var(--bkgd), var(--bkgd2));
-}
-
-#header {
-  display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  color: var(--text);
-  padding: 1rem;
-}
-
-#title-container {
-  display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#title-text-top, #title-text-bot {
-  color: var(--text);  
-  font-size: 2.25rem;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-#title-text-bot {
-  text-decoration:overline;
-}
-
-#MMM {
-  font-size: 0.8125rem;
-  text-align: center;
-}
-
-#gif-container {
-  display: flex;
-    align-items: center;
-    justify-content: center;
-  border-radius: 1rem;
-  margin: -.25rem;
-  padding: 1rem;
-}
-
-.gif {
-  height: 20rem;
-  width: 20rem;
-  border: .5rem solid var(--text);
-  border-radius: 50%;
-  box-shadow: var(--box-shadow-green);
-  filter: grayscale(60%) sepia(60%);
-  object-fit: cover;
-  object-position: 50%;
-  padding: .125rem;
 }
 
 .text-effect-dark {
@@ -128,41 +61,10 @@ html, body {
     2px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
-#messages {
-  height: fit-content;
-  width: 90vw;
-  display: flex;
-    align-items: center;
-    justify-content: center;
-  background-color: var(--line);
-  border: .125rem dashed var(--loser);
-  border-radius: 1rem;
-  box-shadow: var(--box-shadow-green);
-  color: var(--loser);
-  font-family: var(--font-fancy);
-  margin: .25rem 0 .25rem 0;
-}
-
-#message-bar {
-  display: flex;
-  font-size: 1rem;
-  padding: .45rem;
-}
-
-#main-btn-container {
-  height: auto;
-  width: 90vw;
-  border-radius: 1rem;
-  display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  font-family: var(--font-fancy);
-}
-
+/* BTN CONTROLS */
 .btn-a {
   height: 2rem;
-  width: 90vw;
+  width: var(--width-vw);
   display: flex;
     flex-wrap: wrap;
   background-color: var(--line);
@@ -179,13 +81,13 @@ html, body {
 
 .btn-a:hover {
   background-color: var(--enemy);
-  scale: 1.05;
+  transform: scale(var(--scale-big));
 }
 
 .btn-a:active {
   background-color: var(--text);
   color: var(--enemy);
-  scale: 0.95;
+  transform: scale(var(--scale-small));
 }
 
 #btn-pvsc, #btn-pvsp {
@@ -210,13 +112,13 @@ html, body {
 
 .btn-b:hover {
   background-color: var(--enemy);
-  scale: 1.05;
+  transform: scale(var(--scale-big));
 }
 
 .btn-b:active {
   background-color: var(--text);
   color: var(--enemy);
-  scale: 0.95;
+  transform: scale(var(--scale-small));
 }
 
 #btn-pvsc, #btn-pvsp, #btn-quit-game, #btn-start-game, #btn-hide-screen, #btn-unlock-screen  {
@@ -230,6 +132,122 @@ html, body {
   color: var(--enemy);
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 14px; /* Normalize base font size for mobile */
+  line-height: 1.25; /* Improve text readability for mobile */
+  -webkit-text-size-adjust: 100%; /* Prevent mobile browsers from resizing text */
+  -ms-text-size-adjust: 100%;
+}
+
+#app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  background: linear-gradient(var(--linear-gradient-deg), var(--bkgd), var(--bkgd2));
+}
+
+/* HEADER */
+#header {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  color: var(--text);
+  padding: 1rem;
+}
+
+/* --> TITLE */
+#title-container {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#title-text-top, #title-text-bot {
+  color: var(--text);  
+  font-size: 2.25rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#title-text-bot {
+  text-decoration: overline;
+}
+
+#MMM {
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+/* --> GIF */
+#gif-container {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  border-radius: 1rem;
+  margin: -.25rem;
+  padding: 1rem;
+}
+
+.gif {
+  height: 20rem;
+  width: 20rem;
+  border: .5rem solid var(--text);
+  border-radius: 50%;
+  box-shadow: var(--box-shadow-green);
+  filter: grayscale(60%) sepia(60%);
+  object-fit: cover;
+  object-position: 50%;
+  padding: .125rem;
+}
+
+/* MESSAGES */
+#messages {
+  height: fit-content;
+  width: var(--width-vw);
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  background-color: var(--line);
+  border: .125rem dashed var(--loser);
+  border-radius: 1rem;
+  box-shadow: var(--box-shadow-green);
+  color: var(--loser);
+  font-family: var(--font-fancy);
+  margin: .25rem 0 .25rem 0;
+}
+
+#message-bar {
+  display: flex;
+  font-size: 1rem;
+  padding: .45rem;
+}
+
+/* MAIN BTN CONTAINER */
+#main-btn-container {
+  height: auto;
+  width: var(--width-vw);
+  border-radius: 1rem;
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  font-family: var(--font-fancy);
+}
+
+/* ALL THE VARIOUS BOARDS/ZONES/GRIDS */
 #board-container {
   height: fit-content;
   width: fit-content;
@@ -239,10 +257,11 @@ html, body {
     justify-content: center;
 }
 
+/* --> FULL-BOARDS */
 #p1-full-board,
 #p2-full-board {
   height: fit-content;
-  width: 90vw;
+  width: var(--width-vw);
   display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -258,19 +277,21 @@ html, body {
 
 #p1-full-board {
   display: none;  
-  background: linear-gradient(5deg, var(--bkgd-trans), var(--player1));
+  background: linear-gradient(var(--linear-gradient-deg), var(--bkgd-trans), var(--player1));
   color: var(--player1-text);
 }
 
 #p2-full-board {
   display: none;
-  background: linear-gradient(5deg, var(--bkgd-trans), var(--player2));
+  background: linear-gradient(var(--linear-gradient-deg), var(--bkgd-trans), var(--player2));
   color: var(--player2-text);
 }
 
+/* ----> PLAYER NUMBER TEXT */
+
 #p1-player-num-text,
 #p2-player-num-text {
-  width: 15.785rem;
+  width: 15.5rem;
   display: flex;
     align-items: center;
     justify-content: center;
@@ -283,45 +304,7 @@ html, body {
   text-align: center;
 }
 
-#p1-deployment-zone,
-#p1-target-zone,
-#p2-deployment-zone,
-#p2-target-zone {
-  height: fit-content;
-  width: fit-content;
-  display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  border-radius: .5rem;
-  font-family: var(--font-fancy);
-  font-size: 1rem;
-  line-height: 1.5;
-  overflow: visible;
-  text-transform: uppercase;
-}
-
-#p1-place-ships,
-#p2-place-ships,
-#p1-deployment-zone,
-#p2-deployment-zone {
-  color: var(--line);
-}
-
-#p1-deployment-zone,
-#p2-deployment-zone {
-  border: .375rem solid var(--line);
-  margin-bottom: .5rem;
-}
-
-#p1-target-zone,
-#p2-target-zone {
-  border: .375rem solid var(--enemy);
-  margin-top: .5rem;
-}
-
+/* ----> PLACE SHIPS, DEPLOYMENT ZONE & TARGET ZONE */
 #p1-place-ships,
 #p2-place-ships {
   height: fit-content;
@@ -336,14 +319,6 @@ html, body {
   text-align: center;
   text-transform: none;
 }
-
-/* #p1-place-ships {
-  display: flex;
-}
-
-#p2-place-ships {
-  display: flex;
-} */
 
 .radar-screen {
   height: 14rem;
@@ -368,17 +343,18 @@ html, body {
 
 .all-p1-place-ships,
 .all-p2-place-ships {
+  /* Key Item: SVG ship height */
   height: 1.5rem;
 }
 
 .all-p1-place-ships:hover,
 .all-p2-place-ships:hover {
-  scale: 1.25;
+  transform: scale(1.25);
 }
 
 .all-p1-place-ships:active,
 .all-p2-place-ships:active {
-  scale: 1.1;
+  transform: scale(1.1);
 }
 
 #p1-place-ship-btn-container, #p2-place-ship-btn-container {
@@ -391,17 +367,44 @@ html, body {
   margin: 0;
 }
 
+#p1-place-ships,
+#p2-place-ships,
+#p1-deployment-zone,
+#p2-deployment-zone {
+  color: var(--line);
+}
+
+#p1-deployment-zone,
+#p1-target-zone,
+#p2-deployment-zone,
+#p2-target-zone {
+  height: fit-content;
+  width: fit-content;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  border-radius: .5rem;
+  font-family: var(--font-fancy);
+  font-size: 1rem;
+  line-height: 1.5;
+  overflow: visible;
+  text-transform: uppercase;
+}
+
+#p1-deployment-zone,
+#p2-deployment-zone {
+  display: flex;
+  border: .25rem solid var(--line);
+  margin-bottom: .5rem;
+}
+
 #p1-target-zone,
 #p2-target-zone {
+  display: none;
+  border: .25rem solid var(--enemy);
   color: var(--enemy);
-}
-
-#p1-target-zone {
-  display: none;
-}
-
-#p2-target-zone {
-  display: none;
+  margin-top: .5rem;
 }
 
 #p1-ship-board,
@@ -412,8 +415,8 @@ html, body {
 #p2-target-ship-board,
 #p1-target-hit-miss-board,
 #p2-target-hit-miss-board {
-  height: 15rem;
-  width: 15rem;
+  height: var(--height-width-grid);
+  width: var(--height-width-grid);
   display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -432,15 +435,15 @@ html, body {
   background-color: var(--sea);
 }
 
-/* Negative margin-top is the key to getting the proper grid overlap */
 #p1-hit-miss-board,
 #p2-hit-miss-board,
 #p1-target-hit-miss-board,
 #p2-target-hit-miss-board {
-  height: 15rem;
-  width: 15rem;
+  height: var(--height-width-grid);
+  width: var(--height-width-grid);
   font-family: var(--font-emoji);
-  margin-top: -15rem;
+  /* Key Item: Below negative margin-top is the key to getting the proper grid overlap */
+  margin-top: var(--width-margin-offset);
 }
 
 .ship-cells1,
@@ -451,12 +454,14 @@ html, body {
 .hit-miss-cells2,
 .hit-miss-target-cells1,
 .hit-miss-target-cells2 {
+  /* Key Item: Grid cell size */
   height: 1.5rem;
   width: 1.5rem;
   display: flex;
     align-items: center;
     justify-content: center;
   font-family: var(--font-emoji);
+  /* Key Item: Grid cell font-size */
   font-size: 70%;
   text-align: center;
 }
@@ -476,24 +481,22 @@ html, body {
   z-index: 10;
 }
 
-.sunk {
-  background-color: var(--sunk);
-}
-
 .ship {
   height: 1.5rem;
 }
 
+/* SPECIAL HOVER EFFECTS (for deployment and target zones) */
 .mouse-deploy:hover {
   background-color: var(--line);
   border: 0.125rem dashed var(--loser);
   opacity: 0.65;
-  scale: 1.15;
+  transform: scale(1.15);
+  transform: scale(var(--scale-big));
 }
 
 .mouse-deploy:active {
   border-radius: 50%;
-  scale: 1;
+  transform: scale(1);
 }
 
 .mouse-target:hover {
@@ -501,27 +504,12 @@ html, body {
   border: 0.5rem solid var(--loser);
   border-radius: 50%;
   opacity: 0.6;
-  scale: 1.75;
+  transform: scale(1.75);
 }
 
 .mouse-target:active {
   border-radius: 50%;
-  scale: 1;
+  transform: scale(1);
 }
 
-
-@supports (-webkit-touch-callout: none) {
-  /* Target WebKit browsers (Chrome, Brave, DuckDuckGo, etc.) */
-  body {
-    font-size: 16px; /* Adjust font-size specifically for Chromium browsers */
-  }
-}
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* Target WebKit-based browsers */
-  body {
-    font-size: 18px; /* Apply custom styles for Chromium browsers */
-  }
-}
-html {
-  zoom: 100%; /* Ensure everything is at 100% zoom level */
-}
+/* MEDIA QUERIES */
