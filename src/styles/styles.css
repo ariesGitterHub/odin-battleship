@@ -270,11 +270,12 @@ html, body {
 
 #p1-player-num-text,
 #p2-player-num-text {
-  width: 15rem;
+  width: 15.785rem;
   display: flex;
     align-items: center;
     justify-content: center;
   background-color: var(--text);
+  /* border: .375rem solid var(--text); */
   border-radius: .5rem;
   font-size: 1.25rem;
   margin: .5rem;
@@ -311,12 +312,13 @@ html, body {
 
 #p1-deployment-zone,
 #p2-deployment-zone {
+  border: .375rem solid var(--line);
   margin-bottom: .5rem;
 }
 
 #p1-target-zone,
 #p2-target-zone {
-  border: .125rem solid var(--enemy);
+  border: .375rem solid var(--enemy);
   margin-top: .5rem;
 }
 
