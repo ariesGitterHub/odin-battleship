@@ -45,6 +45,7 @@
   --font-fancy: "Black Ops One", sans-serif;
   --font-emoji: "Noto Color Emoji", sans-serif;
   --width-vw: 90vw;
+  --height-width-gif: 20rem;
   --height-width-place-ship-grid: 10.5rem;
   --height-width-radar-screen: 15rem;
   --player-num-width-add-on: .5rem;
@@ -200,8 +201,8 @@ html, body {
 }
 
 .gif {
-  height: 20rem;
-  width: 20rem;
+  height: var(--height-width-gif);
+  width: var(--height-width-gif);
   border: .5rem solid var(--text);
   border-radius: 50%;
   box-shadow: var(--box-shadow-green);
@@ -527,6 +528,12 @@ html, body {
 }
 
 @media only screen and (width >= 600px) {
+
+:root {
+  --width-vw: 26rem;
+  --height-width-gif: 23rem;
+  }
+
 html, body {
   font-size: 16px; /* Normalize base font size for mobile */
   line-height: 1.25; /* Improve text readability for mobile */
@@ -541,6 +548,55 @@ html, body {
 
 #MMM {
   font-size: .9rem;
+  text-align: center;
+}
+
+.btn-a {
+  height: 2.5rem;
+  width: var(--width-vw);
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  background-color: var(--line);
+  border: .125rem solid var(--text);
+  border-radius: .75rem;
+  box-shadow: var(--box-shadow-green);
+  color: var(--text);
+  font-family: var(--font-fancy);
+  font-size: 1.25rem;
+  margin: 0.5rem;
+  outline: none;
+  padding: .125rem;
+}
+
+#btn-pvsc, #btn-pvsp {
+  height: 3.25rem;
+  font-size: 1.25rem;
+  margin: 0.25rem;
+}
+
+}
+
+@media only screen and (width >= 800px) {
+:root {
+  --width-vw: 27rem;
+  --height-width-gif: 24rem;
+  }
+
+html, body {
+  font-size: 16px; /* Normalize base font size for mobile */
+  line-height: 1.25; /* Improve text readability for mobile */
+}
+
+#title-text-top, #title-text-bot {
+  color: var(--loser);  
+  font-size: 3.125rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#MMM {
+  font-size: 1.125rem;
   text-align: center;
 }
 
