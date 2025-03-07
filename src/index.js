@@ -26,6 +26,7 @@ import {
   // checkForSunkFleet,
   // clearColorSunkShips,
   // clearEmojiEffect,
+ checkViewportWidthToDynamicallyResizeWithScreen,
   clearMessage,
   colorSunkShips,
   getRandomAxis,
@@ -958,6 +959,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
+// function checkViewportWidthToDynamicallyResizeWithScreen() {
+//   const { shipA1 } = getBoardElements();
+
+//   if (window.innerWidth >= 500) {
+//     console.log("500px+ view");
+//     if (shipA1.data === "v") {
+//       shipA1.style.translate = "transformY(4rem)";
+//     } else {
+//       shipA1.style.translate = "transformX(4rem)";
+//     }
+//   } else {
+//     console.log("Mobile view");
+//     if (shipA1.data === "v") {
+//       shipA1.style.translate = "transformY(3rem)";
+//     } else {
+//       shipA1.style.translate = "transformX(3rem)";
+//     }
+//   }
+// }
+
+// // Set up the event listener for the window resize event
+// window.addEventListener(
+//   "resize",
+//   checkViewportWidthToDynamicallyResizeWithScreen
+// );
+
+// Call the function initially to check the current viewport width
 
 
   // function winnerGetsAModal(board) {

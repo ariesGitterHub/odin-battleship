@@ -95,6 +95,7 @@ export function getBoardElements(boardNum) {
     shipD: document.querySelector(`#ship-d${boardNum}`),
     shipS: document.querySelector(`#ship-s${boardNum}`),
     shipC: document.querySelector(`#ship-c${boardNum}`),
+    shipA1: document.querySelector(`#ship-a1`),
   };
 }
 

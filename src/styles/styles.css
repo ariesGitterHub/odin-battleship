@@ -45,8 +45,11 @@
   --font-fancy: "Black Ops One", sans-serif;
   --font-emoji: "Noto Color Emoji", sans-serif;
   --width-vw: 90vw;
-  --height-width-grid: 15rem;
-  --width-margin-offset: -15rem;
+  --player-num-width-add-on: .5rem;
+  --height-width-grid: 18rem;
+  --width-margin-offset: -18rem;
+  --height-width-grid-cell: 1.8rem;
+  --height-svg-ship: 1.8rem;
   --linear-gradient-deg: 5deg;
   --scale-big: 1.05;
   --scale-small: 0.95;
@@ -73,7 +76,7 @@
   box-shadow: var(--box-shadow-green);
   color: var(--text);
   font-family: var(--font-fancy);
-  font-size: 1rem;
+  font-size: 1.25rem;
   margin: 0.25rem;
   outline: none;
   padding: .125rem;
@@ -262,7 +265,7 @@ html, body {
 #p2-full-board {
   height: fit-content;
   width: var(--width-vw);
-  display: flex;
+  display: none;
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
@@ -276,13 +279,11 @@ html, body {
  }
 
 #p1-full-board {
-  display: none;  
   background: linear-gradient(var(--linear-gradient-deg), var(--bkgd-trans), var(--player1));
   color: var(--player1-text);
 }
 
 #p2-full-board {
-  display: none;
   background: linear-gradient(var(--linear-gradient-deg), var(--bkgd-trans), var(--player2));
   color: var(--player2-text);
 }
@@ -291,7 +292,7 @@ html, body {
 
 #p1-player-num-text,
 #p2-player-num-text {
-  width: 15.5rem;
+  width: calc(var(--height-width-grid) + var(--player-num-width-add-on));
   display: flex;
     align-items: center;
     justify-content: center;
@@ -455,8 +456,8 @@ html, body {
 .hit-miss-target-cells1,
 .hit-miss-target-cells2 {
   /* Key Item: Grid cell size */
-  height: 1.5rem;
-  width: 1.5rem;
+  height: var(--height-width-grid-cell);
+  width: var(--height-width-grid-cell);
   display: flex;
     align-items: center;
     justify-content: center;
@@ -481,9 +482,37 @@ html, body {
   z-index: 10;
 }
 
+  /* Key Item: individual ship svg sizes */
 .ship {
-  height: 1.5rem;
+  height: var(--height-svg-ship);
 }
+
+/* IMPORTANT: NEED TO ADJUST SVG SHIPS SLIGHT WHEN THINGS GET LARGER, DO IT HERE TO AVOID MESSING WITH orientShipSvgOnShipGrid function */
+
+/* Increments of 1 */
+/* #ship-a1, #ship-a2 {
+  transform: translateX(3rem);
+} */
+
+/* Increments of 0.75 */
+/* #ship-b1, #ship-b2 {
+  transform: translateX(2.25rem);
+} */
+
+/* Increments of 0.5 */
+/* #ship-d1, #ship-d2 {
+  transform: translateX(1.5rem);
+} */
+
+/* Increments of 0.5 */
+/* #ship-s1, #ship-s2 {
+  transform: translateX(1.5rem);
+} */
+
+/* Increments of 0.25 */
+/* #ship-c1, #ship-c2 {
+  transform: translateX(0.75rem);
+} */
 
 /* SPECIAL HOVER EFFECTS (for deployment and target zones) */
 .mouse-deploy:hover {
@@ -513,3 +542,374 @@ html, body {
 }
 
 /* MEDIA QUERIES */
+
+@media only screen and (width >= 500px) {
+
+/* ROOT/SHARED/GLOBAL */
+:root {
+  /* --width-vw: 70vw;
+  --height-width-grid: 20rem;
+  --width-margin-offset: -20rem;
+  --height-width-grid-cell: 2rem;
+  --height-svg-ship: 2rem; */
+  /* --linear-gradient-deg: 5deg; */
+  /* --scale-big: 1.05; */
+  /* --scale-small: 0.95; */
+}
+
+/* BTN CONTROLS */
+.btn-a {
+  height: 2.25rem;
+  width: var(--width-vw);
+  /* display: flex; */
+    /* flex-wrap: wrap; */
+  /* border: .125rem solid var(--text); */
+  /* border-radius: .5rem; */
+  font-size: 1.5rem;
+  /* margin: 0.25rem; */
+  /* padding: .125rem; */
+}
+
+#btn-pvsc, #btn-pvsp {
+  height: 3.5rem;
+  font-size: 1.5rem;
+}
+
+.btn-b {
+  height: 2rem;
+  width: 6rem;
+  /* border-radius: 1rem; */
+  font-size: 1.125rem;
+  margin: 0.375rem;
+  /* padding: 0.25rem; */
+}
+
+/* html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 14px; 
+  line-height: 1.25; 
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+} */
+
+/* #app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+} */
+
+/* HEADER */
+/* #header {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  color: var(--text);
+  padding: 1rem;
+} */
+
+/* --> TITLE */
+/* #title-container {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+} */
+
+#title-text-top, #title-text-bot {
+  font-size: 2.5rem;
+}
+
+#MMM {
+  font-size: 0.9rem;
+}
+
+/* --> GIF */
+#gif-container {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  border-radius: 1rem;
+  margin: -.25rem;
+  padding: 1rem;
+}
+
+.gif {
+  height: 22rem;
+  width: 22rem;
+  /* border: .5rem solid var(--text);
+  border-radius: 50%;
+  box-shadow: var(--box-shadow-green);
+  filter: grayscale(60%) sepia(60%);
+  object-fit: cover;
+  object-position: 50%;
+  padding: .125rem; */
+}
+
+/* MESSAGES */
+/* #messages {
+  height: fit-content;
+  width: var(--width-vw);
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  border: .125rem dashed var(--loser);
+  border-radius: 1rem;
+  margin: .25rem 0 .25rem 0;
+} */
+
+#message-bar {
+  display: flex;
+  font-size: 1.125rem;
+  padding: .5rem;
+}
+
+/* MAIN BTN CONTAINER */
+#main-btn-container {
+  height: auto;
+  width: var(--width-vw);
+  /* border-radius: 1rem;
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; */
+}
+
+/* ALL THE VARIOUS BOARDS/ZONES/GRIDS */
+/* #board-container {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* --> FULL-BOARDS */
+#p1-full-board,
+#p2-full-board {
+  /* height: fit-content; */
+  width: var(--width-vw);
+  /* display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  border-radius: .5rem;
+  margin-top: 0.25rem;
+  padding: 0 0.25rem 0 0.25rem;
+  overflow: visible; */
+ }
+
+/* ----> PLAYER NUMBER TEXT */
+/* ALTER BELOW  THEN COME BACK HERE... */
+#p1-player-num-text,
+#p2-player-num-text {
+  width: calc(var(--height-width-grid) + var(--player-num-width-add-on));
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  /* border: .375rem solid var(--text); */
+  border-radius: .5rem;
+  font-size: 1.25rem;
+  margin: .5rem;
+  padding: .125rem;
+}
+
+/* ----> PLACE SHIPS, DEPLOYMENT ZONE & TARGET ZONE */
+/* #p1-place-ships,
+#p2-place-ships {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+} */
+
+.radar-screen {
+  height: 15rem;
+  width: 15rem;
+}
+
+#p1-x5-grid,
+#p2-x5-grid {
+  height: 10.5rem;
+  width: 10.5rem;
+  /* display: flex;
+    flex-direction: column;
+    flex-wrap: no-wrap;
+    align-items: center;
+    justify-content: center;
+  gap: 0.25rem;
+  border-radius: 100%;
+  margin: .125rem; */
+}
+
+.all-p1-place-ships,
+.all-p2-place-ships {
+  /* Key Item: SVG ship height */
+  height: 1.75rem;
+}
+
+/* .all-p1-place-ships:hover,
+.all-p2-place-ships:hover {
+  transform: scale(1.25);
+}
+
+.all-p1-place-ships:active,
+.all-p2-place-ships:active {
+  transform: scale(1.1);
+} */
+
+/* #p1-place-ship-btn-container, #p2-place-ship-btn-container {
+  height: auto;
+  width: fit-content;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  margin: 0;
+} */
+
+/* #p1-deployment-zone,
+#p1-target-zone,
+#p2-deployment-zone,
+#p2-target-zone {
+  height: fit-content;
+  width: fit-content;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  border-radius: .5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  overflow: visible;
+} */
+
+/* #p1-deployment-zone,
+#p2-deployment-zone {
+  display: flex;
+  border: .25rem solid var(--line);
+  margin-bottom: .5rem;
+} */
+
+/* #p1-target-zone,
+#p2-target-zone {
+  display: none;
+  border: .25rem solid var(--enemy);
+  margin-top: .5rem;
+} */
+
+#p1-ship-board,
+#p2-ship-board,
+#p1-hit-miss-board,
+#p2-hit-miss-board,
+#p1-target-ship-board,
+#p2-target-ship-board,
+#p1-target-hit-miss-board,
+#p2-target-hit-miss-board {
+  height: var(--height-width-grid);
+  width: var(--height-width-grid);
+  /* display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  overflow: visible; */
+}
+
+/* #p1-ship-board,
+#p2-ship-board {
+  background-color: var(--sea);
+}
+
+#p1-target-ship-board,
+#p2-target-ship-board {
+  background-color: var(--sea);
+} */
+
+#p1-hit-miss-board,
+#p2-hit-miss-board,
+#p1-target-hit-miss-board,
+#p2-target-hit-miss-board {
+  height: var(--height-width-grid);
+  width: var(--height-width-grid);
+  /* font-family: var(--font-emoji); */
+  /* Key Item: Below negative margin-top is the key to getting the proper grid overlap */
+  margin-top: var(--width-margin-offset);
+}
+
+.ship-cells1,
+.ship-cells2,
+.ship-target-cells1,
+.ship-target-cells2,
+.hit-miss-cells1,
+.hit-miss-cells2,
+.hit-miss-target-cells1,
+.hit-miss-target-cells2 {
+  /* Key Item: Grid cell size */
+  height: var(--height-width-grid-cell);
+  width: var(--height-width-grid-cell);
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  font-family: var(--font-emoji);
+  /* Key Item: Grid cell font-size */
+  font-size: 70%;
+}
+
+.ship-cells1,
+.ship-cells2 {
+  border: 0.0785rem dashed var(--line);
+}
+
+.ship-target-cells1,
+.ship-target-cells2 {
+  border: 0.0785rem dashed var(--enemy);
+}
+
+.ship {
+  height: var(--height-svg-ship);
+}
+
+/* SPECIAL HOVER EFFECTS (for deployment and target zones) */
+.mouse-deploy:hover {
+  background-color: var(--line);
+  border: 0.125rem dashed var(--loser);
+  opacity: 0.65;
+  transform: scale(1.15);
+  transform: scale(var(--scale-big));
+}
+
+.mouse-deploy:active {
+  border-radius: 50%;
+  transform: scale(1);
+}
+
+.mouse-target:hover {
+  background-color: var(--enemy);
+  border: 0.5rem solid var(--loser);
+  border-radius: 50%;
+  opacity: 0.6;
+  transform: scale(1.75);
+}
+
+.mouse-target:active {
+  border-radius: 50%;
+  transform: scale(1);
+}
+
+}
+
+@media only screen and (width >= 800px) {}
+
+@media only screen and (width >= 1300px) {}

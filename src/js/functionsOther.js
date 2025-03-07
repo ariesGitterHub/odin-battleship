@@ -122,11 +122,18 @@ export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
     // d: { translate: "2rem", rotate: 90, image: nD },
     // s: { translate: "2rem", rotate: 90, image: nS },
     // c: { translate: "1rem", rotate: 90, image: nC },
-    a: { translate: "3rem", rotate: 90, image: nA },
-    b: { translate: "2.25rem", rotate: 90, image: nB },
-    d: { translate: "1.5rem", rotate: 90, image: nD },
-    s: { translate: "1.5rem", rotate: 90, image: nS },
-    c: { translate: ".75rem", rotate: 90, image: nC },
+
+    // a: { translate: "3rem", rotate: 90, image: nA },
+    // b: { translate: "2.25rem", rotate: 90, image: nB },
+    // d: { translate: "1.5rem", rotate: 90, image: nD },
+    // s: { translate: "1.5rem", rotate: 90, image: nS },
+    // c: { translate: ".75rem", rotate: 90, image: nC },
+
+    a: { translate: "3.6rem", rotate: 90, image: nA },
+    b: { translate: "2.7rem", rotate: 90, image: nB },
+    d: { translate: "1.8rem", rotate: 90, image: nD },
+    s: { translate: "1.8rem", rotate: 90, image: nS },
+    c: { translate: "0.9rem", rotate: 90, image: nC },
   };
 
   // Only process if the shipType exists in the shipData
@@ -154,6 +161,89 @@ export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
   shipBoardCellId.appendChild(ship);
   // shipBoardCellId.append(ship);
 }
+
+// export function checkViewportWidthToDynamicallyResizeWithScreen(boardNum) {
+//   const { shipA, shipB, shipD, shipS, shipC } = getBoardElements(boardNum);
+
+//   if (window.innerWidth >= 500) {
+//     console.log("500px+ view");
+//     if (shipA.data === "v") {
+//       shipA.style.translate = "transformY(4rem)";
+//     } else {
+//       shipA.style.translate = "transformX(4rem)";
+//     }
+//   } else {
+//     console.log("Mobile view");
+//     if (shipA.data === "v") {
+//       shipA.style.translate = "transformY(3rem)";
+//     } else {
+//       shipA.style.translate = "transformX(3rem)";
+//     }
+//   }
+// }
+
+// export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
+//   // Define transformation and image data for each ship type
+//   const shipRotateData = {
+//     a: { rotate: 90, image: nA },
+//     b: { rotate: 90, image: nB },
+//     d: { rotate: 90, image: nD },
+//     s: { rotate: 90, image: nS },
+//     c: { rotate: 90, image: nC },
+//   };
+
+//   const shipOffsetDataMobile = {
+//     a: { translate: "3rem" },
+//     b: { translate: "2.25rem" },
+//     d: { translate: "1.5rem" },
+//     s: { translate: "1.5rem" },
+//     c: { translate: ".75rem" },
+//   };
+
+//   const shipOffsetData500PX = {
+//     a: { translate: "4rem" },
+//     b: { translate: "3rem" },
+//     d: { translate: "2rem" },
+//     s: { translate: "2rem" },
+//     c: { translate: "1rem" },
+//   };
+
+//   // Only process if the shipType exists in the shipData
+//   if (!shipRotateData[shipType]) return;
+
+//   const shipRotateInfo = shipRotateData[shipType];
+//   const shipOffsetInfoSmall = shipOffsetDataMobile[shipType];
+//   const shipOffsetInfoMedium = shipOffsetData500PX[shipType];
+//   const baseId = `${boardNum === 1 ? "SG1" : "SG2"}: (${x},${y})`;
+//   const shipBoardCellId = document.getElementById(baseId);
+
+//   const ship = createImgShip(
+//     `ship-${shipType}${boardNum}`,
+//     shipType,
+//     shipRotateInfo.image,
+//     "ship"
+//   );
+//   // Apply transformations based on the axis
+//   if (window.innerWidth >= 500) {
+//     if (axis === "v") {
+//       ship.style.transform = `translateY(${shipOffsetInfoMedium.translate}) rotate(${shipRotateInfo.rotate}deg)`; 
+//     } else {
+//       ship.style.transform = `translateX(${shipOffsetInfoMedium.translate})`;
+//     }
+
+//   } else {
+//       if (axis === "v") {
+//         ship.style.transform = `translateY(${shipOffsetInfoSmall.translate}) rotate(${shipRotateInfo.rotate.rotate}deg)`;
+//       } else {
+//         ship.style.transform = `translateX(${shipOffsetInfoSmall.translate})`;
+//       }
+//   }
+
+
+//   // Append the ship image to the grid cell
+//   shipBoardCellId.appendChild(ship);
+//   // shipBoardCellId.append(ship);
+// }
 
 // export function removeAllShipSvgsOnShipGrid(boardNum) {
 //   const shipCellsClass = document.querySelectorAll(`.ship-cells${boardNum}`);
