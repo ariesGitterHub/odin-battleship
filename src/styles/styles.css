@@ -45,6 +45,8 @@
   --font-fancy: "Black Ops One", sans-serif;
   --font-emoji: "Noto Color Emoji", sans-serif;
   --width-vw: 90vw;
+  --height-width-place-ship-grid: 10.5rem;
+  --height-width-radar-screen: 15rem;
   --player-num-width-add-on: .5rem;
   --height-width-grid: 18rem;
   --width-margin-offset: -18rem;
@@ -66,7 +68,7 @@
 
 /* BTN CONTROLS */
 .btn-a {
-  height: 2rem;
+  height: 2.125rem;
   width: var(--width-vw);
   display: flex;
     flex-wrap: wrap;
@@ -99,16 +101,16 @@
 }
 
 .btn-b {
-  height: 1.75rem;
-  width: 5.5rem;
+  height: 2rem;
+  width: 6rem;
   background-color: var(--line);
   border: none;
   border-radius: 1rem;
   box-shadow: var(--box-shadow-green);
   color: var(--text);
   font-family: var(--font-fancy);
-  font-size: .9rem;
-  margin: 0.25rem;
+  font-size: 1.125rem;
+  margin: 0.3rem;
   outline: none;
   padding: 0.25rem;
 }
@@ -166,7 +168,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  color: var(--text);
+  /* color: var(--text); */
   padding: 1rem;
 }
 
@@ -179,7 +181,8 @@ html, body {
 }
 
 #title-text-top, #title-text-bot {
-  color: var(--text);  
+  /* color: var(--loser);   */
+    color: red;  
   font-size: 2.25rem;
   text-align: center;
   text-transform: uppercase;
@@ -270,7 +273,7 @@ html, body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-  border-radius: .5rem;
+  border-radius: 1.75rem;
   font-family: var(--font-fancy);
   margin-top: 0.25rem;
   padding: 0 0.25rem 0 0.25rem;
@@ -292,12 +295,12 @@ html, body {
 
 #p1-player-num-text,
 #p2-player-num-text {
-  width: calc(var(--height-width-grid) + var(--player-num-width-add-on));
+  /* width: calc(var(--height-width-grid) + var(--player-num-width-add-on)); */
   display: flex;
     align-items: center;
     justify-content: center;
-  background-color: var(--text);
-  /* border: .375rem solid var(--text); */
+  background-color: var(--bkgd-trans);
+  /* border: .25rem solid var(--bkgd-trans); */
   border-radius: .5rem;
   font-size: 1.25rem;
   margin: .5rem;
@@ -322,14 +325,14 @@ html, body {
 }
 
 .radar-screen {
-  height: 14rem;
-  width: 14rem;
+  height: var(--height-width-radar-screen);
+  width: var(--height-width-radar-screen);
 }
 
 #p1-x5-grid,
 #p2-x5-grid {
-  height: 9rem;
-  width: 9rem;
+  height: var(--height-width-place-ship-grid);
+  width: var(--height-width-place-ship-grid);
   display: flex;
     flex-direction: column;
     flex-wrap: no-wrap;
@@ -345,7 +348,7 @@ html, body {
 .all-p1-place-ships,
 .all-p2-place-ships {
   /* Key Item: SVG ship height */
-  height: 1.5rem;
+  height: var(--height-svg-ship);
 }
 
 .all-p1-place-ships:hover,
@@ -543,15 +546,21 @@ html, body {
 
 /* MEDIA QUERIES */
 
-@media only screen and (width >= 500px) {
+/* @media only screen and (width >= 400px) {
+  :root {
+  --width-vw: 25rem;
+  }
+} */
+
+@media only screen and (width >= 400px) {
 
 /* ROOT/SHARED/GLOBAL */
 :root {
-  /* --width-vw: 70vw;
-  --height-width-grid: 20rem;
-  --width-margin-offset: -20rem;
-  --height-width-grid-cell: 2rem;
-  --height-svg-ship: 2rem; */
+  --width-vw: 25rem;
+  /* --height-width-grid: 20rem; */
+  /* --width-margin-offset: -20rem; */
+  /* --height-width-grid-cell: 2rem; */
+  /* --height-svg-ship: 2rem; */
   /* --linear-gradient-deg: 5deg; */
   /* --scale-big: 1.05; */
   /* --scale-small: 0.95; */
@@ -566,7 +575,7 @@ html, body {
   /* border: .125rem solid var(--text); */
   /* border-radius: .5rem; */
   font-size: 1.5rem;
-  /* margin: 0.25rem; */
+  margin: 0.5rem;
   /* padding: .125rem; */
 }
 
@@ -576,11 +585,11 @@ html, body {
 }
 
 .btn-b {
-  height: 2rem;
-  width: 6rem;
+  /* height: 2rem; */
+  /* width: 6rem; */
   /* border-radius: 1rem; */
-  font-size: 1.125rem;
-  margin: 0.375rem;
+  /* font-size: 1.125rem; */
+  /* margin: 0.375rem; */
   /* padding: 0.25rem; */
 }
 
@@ -621,11 +630,11 @@ html, body {
 } */
 
 #title-text-top, #title-text-bot {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
 }
 
 #MMM {
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 /* --> GIF */
@@ -698,11 +707,11 @@ html, body {
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-  border-radius: .5rem;
-  margin-top: 0.25rem;
+    justify-content: center; */
+  /* border-radius: .5rem; */
+  /* margin-top: 0.25rem; */
   padding: 0 0.25rem 0 0.25rem;
-  overflow: visible; */
+  overflow: visible;
  }
 
 /* ----> PLAYER NUMBER TEXT */
@@ -910,6 +919,6 @@ html, body {
 
 }
 
-@media only screen and (width >= 800px) {}
+
 
 @media only screen and (width >= 1300px) {}
