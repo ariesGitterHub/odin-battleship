@@ -93,6 +93,7 @@ export function handleMessageContent() {
         const clickCellToAttack = `: Click on a square in the ENEMY TARGET ZONE grid to attack.`;
     // Player vs Computer matches only.
     const clickStartGameInPvsC = `Click START to begin your match against PLAYER 2 (controlled by the computer).`;
+    const clickAcceptGameInPvsP = `Click ACCEPT if your "deployment zone" ship placements are acceptable.`;
     const endGameWin = `is VICTORIOUS! The enemy fleet has been sunk.`;
   return {
     // player1DeployShipsMsg: `${player1}${deployShipsMsg}`,
@@ -105,7 +106,8 @@ export function handleMessageContent() {
     player1ClickCellToAttack: `${player1}${clickCellToAttack}`,
     player2ClickCellToAttack: `${player2}${clickCellToAttack}`,
 
-    clickStartGameInPvsC: `${clickStartGameInPvsC}`,
+    clickStartGameInPvsC: clickStartGameInPvsC,
+    clickAcceptGameInPvsP: clickAcceptGameInPvsP,
 
     player1Wins: `${player1} ${endGameWin}`,
     player2Wins: `${player2} ${endGameWin}`,

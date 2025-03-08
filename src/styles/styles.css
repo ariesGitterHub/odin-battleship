@@ -39,12 +39,12 @@
   --player1-text: #a8a8b4;
   --player2: #3c4a3e;
   --player2-text: #8f9990;
-  --enemy: #fec803;
+  --enemy: #febf03;
 
   --box-shadow-green: 0 5px 10px var(--green);
   --font-fancy: "Black Ops One", sans-serif;
   --font-emoji: "Noto Color Emoji", sans-serif;
-  --width-vw: 90vw;
+  --width-master: 90vw;
   --height-width-gif: 20rem;
   --height-width-place-ship-grid: 10.5rem;
   --height-width-radar-screen: 15rem;
@@ -70,7 +70,7 @@
 /* BTN CONTROLS */
 .btn-a {
   height: 2.25rem;
-  width: var(--width-vw);
+  width: var(--width-master);
   display: flex;
     align-items: center;
     justify-content: center;
@@ -80,8 +80,8 @@
   box-shadow: var(--box-shadow-green);
   color: var(--text);
   font-family: var(--font-fancy);
-  font-size: 1.125rem;
-  margin: 0.25rem;
+  font-size: 1.25rem;
+  margin: 0.25rem 0 0.25rem 0;
   outline: none;
   padding: .125rem;
 }
@@ -99,7 +99,7 @@
 
 #btn-pvsc, #btn-pvsp {
   height: 3rem;
-  font-size: 1.125rem;
+  font-size: 1.35rem;
 }
 
 .btn-b {
@@ -215,7 +215,7 @@ html, body {
 /* MESSAGES */
 #messages {
   height: fit-content;
-  width: var(--width-vw);
+  width: var(--width-master);
   display: flex;
     align-items: center;
     justify-content: center;
@@ -238,12 +238,13 @@ html, body {
 /* MAIN BTN CONTAINER */
 #main-btn-container {
   height: auto;
-  width: var(--width-vw);
+  width: var(--width-master);
   border-radius: 1rem;
   display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: .25rem;
   font-family: var(--font-fancy);
 }
 
@@ -261,7 +262,7 @@ html, body {
 #p1-full-board,
 #p2-full-board {
   height: fit-content;
-  width: var(--width-vw);
+  width: var(--width-master);
   display: none;
     flex-direction: column;
     flex-wrap: wrap;
@@ -515,7 +516,7 @@ html, body {
 
 /* @media only screen and (width >= 400px) {
   :root {
-  --width-vw: 25rem;
+  --width-master: 25rem;
   }
 } */
 
@@ -523,15 +524,17 @@ html, body {
 
 /* ROOT/SHARED/GLOBAL */
 :root {
-  --width-vw: 25rem;
+  --width-master: 25rem;
+  --gif-variable: 3rem;
+  --height-width-gif: calc(var(--width-master) - var(--gif-variable));
   }
 }
 
 @media only screen and (width >= 600px) {
 
 :root {
-  --width-vw: 26rem;
-  --height-width-gif: 23rem;
+  --width-master: 26rem;
+  /* --height-width-gif: 23rem; */
   }
 
 html, body {
@@ -540,64 +543,54 @@ html, body {
 }
 
 #title-text-top, #title-text-bot {
-  color: var(--loser);  
-  font-size: 2.5rem;
-  text-align: center;
-  text-transform: uppercase;
+  font-size: 2.65rem;
 }
 
 #MMM {
-  font-size: .9rem;
-  text-align: center;
+  font-size: .95rem;
 }
 
 .btn-a {
   height: 2.5rem;
-  width: var(--width-vw);
-  display: flex;
-    align-items: center;
-    justify-content: center;
-  background-color: var(--line);
-  border: .125rem solid var(--text);
-  border-radius: .75rem;
-  box-shadow: var(--box-shadow-green);
-  color: var(--text);
-  font-family: var(--font-fancy);
   font-size: 1.25rem;
-  margin: 0.5rem;
-  outline: none;
+  gap: .25rem;
+  margin: 0.5rem 0 .5rem 0;
   padding: .125rem;
 }
 
 #btn-pvsc, #btn-pvsp {
   height: 3.25rem;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   margin: 0.25rem;
+}
+
+#messages {
+  margin-top: 1rem;
+}
+
+#main-btn-container {
+  gap: .5rem;
 }
 
 }
 
 @media only screen and (width >= 800px) {
 :root {
-  --width-vw: 27rem;
-  --height-width-gif: 24rem;
+  --width-master: 27rem;
+  /* --height-width-gif: 24rem; */
   }
 
 html, body {
-  font-size: 16px; /* Normalize base font size for mobile */
+  font-size: 18px; /* Normalize base font size for mobile */
   line-height: 1.25; /* Improve text readability for mobile */
 }
 
 #title-text-top, #title-text-bot {
-  color: var(--loser);  
-  font-size: 3.125rem;
-  text-align: center;
-  text-transform: uppercase;
+  font-size: 2.75rem;
 }
 
 #MMM {
-  font-size: 1.125rem;
-  text-align: center;
+  font-size: .975rem;
 }
 
 }

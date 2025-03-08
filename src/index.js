@@ -635,6 +635,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function forPvsPMatchesShowHideScreenBtn() {
     const { btnHideScreen } = getBtnElements();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
+    const { clickAcceptGameInPvsP } = handleMessageContent();
 
     if (
       player2.playerType === "human" &&
@@ -650,6 +651,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.color = "var(--enemy)";
       // btnHideScreen.innerText = "Accept Deployment";
       btnHideScreen.innerText = "Accept";
+      clearMessage();
+      addMessage(clickAcceptGameInPvsP);
     } else if (
       player2.playerType === "human" &&
       !isPvsPStarted &&
@@ -663,6 +666,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.color = "var(--enemy)";
       // btnHideScreen.innerText = "Accept Deployment";
       btnHideScreen.innerText = "Accept";
+      clearMessage();
+      addMessage(clickAcceptGameInPvsP);
     } else if (
       player2.playerType === "human" &&
       isPvsPStarted &&
