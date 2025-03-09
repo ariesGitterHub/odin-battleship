@@ -438,6 +438,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: visible;
+  visibility: visible !important;
 }
 
 #p1-ship-board,

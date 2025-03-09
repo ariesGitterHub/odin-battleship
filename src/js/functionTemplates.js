@@ -28,8 +28,7 @@ export function createElement(tagName, attributes = {}, text = "") {
   return element;
 }
 
-
-// Examples
+// Examples --> KEEP THESE COMMENTS FOR REFERENCE
 // Creating a div with id and class
 // const div = createElement('div', { id: 'my-div', class: 'container' });
 // document.body.appendChild(div);
@@ -46,32 +45,12 @@ export function createElement(tagName, attributes = {}, text = "") {
 // const paragraph = createElement('p', {}, '<strong>Hello</strong>, world!');
 // document.body.appendChild(paragraph);
 
-
 /**
  * Creates an HTML image element with specified attributes.
  * @param {Object} attributes - An object of attributes to apply to the image element.
  * @returns {HTMLImageElement} The created image element.
  */
-// export function createImg(attributes = {}) {
-//   const img = document.createElement("img");
 
-//   // Set attributes dynamically
-//   for (const [key, value] of Object.entries(attributes)) {
-//     // Handle 'src' and 'alt' attributes specifically
-//     if (key === "id") {
-//       img.id = value;
-//     }
-//       else if (key === "src") {
-//       img.src = value;
-//     } else if (key === "alt") {
-//       img.alt = value;
-//     } else {
-//       img.setAttribute(key, value);
-//     }
-//   }
-
-//   return img;
-// }
 export function createImg(attributes = {}) {
   const img = document.createElement("img");
 
@@ -95,12 +74,12 @@ export function createImg(attributes = {}) {
   return img;
 }
 
-
+// Examples --> KEEP THESE COMMENTS FOR REFERENCE
 // import { createImg } from "./basicFunctions.js";
 
 // // Create an image with src, alt, and class attributes
 // const myImage = createImg({
-//   id: "boobs",
+//   id: "image-id",
 //   src: "path/to/your/image.png",
 //   alt: "Description of the image",
 //   class: "game-marker",
@@ -108,7 +87,6 @@ export function createImg(attributes = {}) {
 
 // // Append the image to the document body
 // document.body.appendChild(myImage);
-
 
 export function createImgShip(id, selectShip, src, classes) {
   if (selectShip === "a") {

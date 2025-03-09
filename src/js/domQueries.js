@@ -1,4 +1,3 @@
-// REMOVE UNUSED SELECTORS!!!!
 export function getHeaderElements() {
   return {
     header: document.querySelector("#header"),
@@ -30,10 +29,9 @@ export function getBtnElements(boardNum) {
     btnRotate: document.querySelector(`#p${boardNum}-btn-rotate`),
 
     // TODO - MOVE THESE TWO to getBoardElements
-    x5Grid: document.querySelector(`#p${boardNum}-x5-grid`),
-    allPlaceShipsClass: document.querySelectorAll(
-      `.all-p${boardNum}-place-ships`
-    ),
+    // x5Grid: document.querySelector(`#p${boardNum}-x5-grid`),
+    // allPlaceShipsClass: document.querySelectorAll(`.all-p${boardNum}-place-ships`),
+
     btnUndo: document.querySelector(`#p${boardNum}-btn-undo`),
     btnClear: document.querySelector(`#p${boardNum}-btn-clear`),
     p2BtnRandom: document.querySelector("#p2-btn-random"),
@@ -80,9 +78,8 @@ export function getBoardElements(boardNum) {
       `.hit-miss-target-cells${boardNum}`
     ),
 
-    allPlaceShipsClass: document.querySelectorAll(
-      `.all-p${boardNum}-place-ships`
-    ),
+    allPlaceShipsClass: document.querySelectorAll(`.all-p${boardNum}-place-ships`),
+    x5Grid: document.querySelector(`#p${boardNum}-x5-grid`),
 
     placeA: document.querySelector(`#place-a${boardNum}`),
     placeB: document.querySelector(`#place-b${boardNum}`),
@@ -95,7 +92,7 @@ export function getBoardElements(boardNum) {
     shipD: document.querySelector(`#ship-d${boardNum}`),
     shipS: document.querySelector(`#ship-s${boardNum}`),
     shipC: document.querySelector(`#ship-c${boardNum}`),
-    shipA1: document.querySelector(`#ship-a1`),
+    // shipA1: document.querySelector(`#ship-a1`),
   };
 }
 

@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1740781644670" clover="3.2.0">
-  <project timestamp="1740781644670" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1741559997204" clover="3.2.0">
+  <project timestamp="1741559997204" name="All files">
+    <metrics statements="97" coveredstatements="62" conditionals="79" coveredconditionals="60" methods="15" coveredmethods="11" elements="191" coveredelements="133" complexity="0" loc="97" ncloc="97" packages="1" files="3" classes="3"/>
+    <file name="classGameboard.js" path="/home/krios/repos/odin-battleship/src/js/classGameboard.js">
+      <metrics statements="81" coveredstatements="50" conditionals="67" coveredconditionals="52" methods="10" coveredmethods="7"/>
+      <line num="5" count="12" type="stmt"/>
+      <line num="6" count="12" type="stmt"/>
+      <line num="20" count="0" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+      <line num="23" count="0" type="stmt"/>
+      <line num="24" count="0" type="stmt"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="27" count="0" type="stmt"/>
+      <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="31" count="0" type="stmt"/>
+      <line num="37" count="0" type="stmt"/>
+      <line num="41" count="0" type="stmt"/>
+      <line num="42" count="0" type="stmt"/>
+      <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="44" count="0" type="stmt"/>
+      <line num="51" count="0" type="stmt"/>
+      <line num="52" count="0" type="stmt"/>
+      <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="54" count="0" type="stmt"/>
+      <line num="62" count="66" type="cond" truecount="2" falsecount="0"/>
+      <line num="63" count="65" type="stmt"/>
+      <line num="65" count="216" type="cond" truecount="2" falsecount="0"/>
+      <line num="67" count="64" type="cond" truecount="2" falsecount="0"/>
+      <line num="73" count="1" type="stmt"/>
+      <line num="76" count="63" type="cond" truecount="2" falsecount="0"/>
+      <line num="77" count="1" type="stmt"/>
+      <line num="81" count="214" type="cond" truecount="2" falsecount="0"/>
+      <line num="83" count="152" type="cond" truecount="2" falsecount="0"/>
+      <line num="89" count="1" type="stmt"/>
+      <line num="92" count="151" type="cond" truecount="2" falsecount="0"/>
+      <line num="93" count="2" type="stmt"/>
+      <line num="100" count="1" type="stmt"/>
+      <line num="113" count="66" type="stmt"/>
+      <line num="115" count="66" type="cond" truecount="2" falsecount="0"/>
+      <line num="116" count="6" type="stmt"/>
+      <line num="119" count="60" type="cond" truecount="2" falsecount="0"/>
+      <line num="120" count="24" type="stmt"/>
+      <line num="121" count="60" type="stmt"/>
+      <line num="125" count="60" type="cond" truecount="2" falsecount="0"/>
+      <line num="126" count="36" type="stmt"/>
+      <line num="127" count="144" type="stmt"/>
+      <line num="135" count="9" type="cond" truecount="2" falsecount="0"/>
+      <line num="141" count="2" type="stmt"/>
+      <line num="147" count="4" type="stmt"/>
+      <line num="149" count="4" type="stmt"/>
+      <line num="150" count="20" type="cond" truecount="2" falsecount="0"/>
+      <line num="151" count="4" type="stmt"/>
+      <line num="168" count="9" type="stmt"/>
+      <line num="171" count="9" type="cond" truecount="2" falsecount="0"/>
+      <line num="172" count="2" type="stmt"/>
+      <line num="176" count="7" type="stmt"/>
+      <line num="179" count="7" type="cond" truecount="4" falsecount="0"/>
+      <line num="180" count="1" type="stmt"/>
+      <line num="183" count="6" type="cond" truecount="2" falsecount="0"/>
+      <line num="187" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="188" count="2" type="stmt"/>
+      <line num="189" count="2" type="stmt"/>
+      <line num="190" count="2" type="stmt"/>
+      <line num="192" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="193" count="0" type="stmt"/>
+      <line num="194" count="0" type="stmt"/>
+      <line num="195" count="0" type="stmt"/>
+      <line num="197" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="198" count="0" type="stmt"/>
+      <line num="199" count="0" type="stmt"/>
+      <line num="200" count="0" type="stmt"/>
+      <line num="202" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="203" count="0" type="stmt"/>
+      <line num="204" count="0" type="stmt"/>
+      <line num="205" count="0" type="stmt"/>
+      <line num="207" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="208" count="2" type="stmt"/>
+      <line num="209" count="2" type="stmt"/>
+      <line num="210" count="2" type="stmt"/>
+      <line num="212" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="213" count="0" type="stmt"/>
+      <line num="214" count="0" type="stmt"/>
+      <line num="215" count="0" type="stmt"/>
+      <line num="220" count="2" type="stmt"/>
+      <line num="221" count="2" type="stmt"/>
+    </file>
+    <file name="classPlayer.js" path="/home/krios/repos/odin-battleship/src/js/classPlayer.js">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="3" count="2" type="stmt"/>
+      <line num="4" count="2" type="stmt"/>
+      <line num="5" count="2" type="stmt"/>
+    </file>
+    <file name="classShip.js" path="/home/krios/repos/odin-battleship/src/js/classShip.js">
+      <metrics statements="13" coveredstatements="9" conditionals="12" coveredconditionals="8" methods="4" coveredmethods="3"/>
+      <line num="10" count="64" type="stmt"/>
+      <line num="14" count="64" type="stmt"/>
+      <line num="18" count="17" type="cond" truecount="2" falsecount="0"/>
+      <line num="19" count="16" type="stmt"/>
+      <line num="24" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="25" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="26" count="2" type="stmt"/>
+      <line num="28" count="3" type="stmt"/>
+      <line num="30" count="1" type="stmt"/>
+      <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="35" count="0" type="stmt"/>
+      <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="38" count="0" type="stmt"/>
+    </file>
   </project>
 </coverage>

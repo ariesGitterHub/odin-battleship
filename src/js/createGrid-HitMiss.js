@@ -20,4 +20,3 @@ export function createHitMissGrid(board, boardNum, gridType) {
   }
   return grid;
 }
-

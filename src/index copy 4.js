@@ -1,6 +1,6 @@
 import "./styles/styles.css";
 import { createHeader } from "./js/createHeader.js";
-import gifBroadside2 from "./assets/gifBroadside2.gif";
+// import gifBroadside2 from "./assets/gifBroadside2.gif";
 import gifSailing from "./assets/gifSailing.gif";
 import { createMessageElements } from "./js/createMessage.js";
 import {
@@ -931,7 +931,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function checkForSunkFleet(board) {
     if (board.ships.every((ship) => ship.isSunk())) {
-      mp3Sink();
+      // mp3Sink();
       stopGameHaveWinner = true; // When all ships are sunk...
       console.log(`!!!!stopGameHaveWinner indicates ${stopGameHaveWinner}`);
       if (board === testGame1) {

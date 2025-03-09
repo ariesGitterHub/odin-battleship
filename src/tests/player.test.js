@@ -1,5 +1,5 @@
-import { Gameboard } from "../js/gameboard.js";
-import { Player } from "../js/player.js";
+import { Gameboard } from "../js/classGameboard.js";
+import { Player } from "../js/classPlayer.js";
 
 describe("Player", () => {
   let playerOne;

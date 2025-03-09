@@ -15,14 +15,14 @@ export function createHeader() {
     },
     "Battleship:"
   );
-    const titleTextBot = createElement(
-      "p",
-      {
-        id: "title-text-bot",
-        class: "font-fancy text-effect-dark",
-      },
-      "World War II"
-    );
+  const titleTextBot = createElement(
+    "p",
+    {
+      id: "title-text-bot",
+      class: "font-fancy text-effect-dark",
+    },
+    "World War II"
+  );
   const MMM = createElement(
     "p",
     {

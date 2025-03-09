@@ -4,9 +4,6 @@ import {
   getHeaderElements,
 } from "./domQueries.js";
 import {
-  addMessage, 
-  clearMessage,
-  handleMessageContent,
   handleResetPlaceShips,
   removeAllShipSvgsOnShipGrid,
 } from "./functionsOther.js";
@@ -22,50 +19,28 @@ function swapInPlaceShipScreenElements() {
   btnQuitGame.style.display = "flex";
 }
 
-// TODO - Delete this?
-export function handleBtnNumPlayer(playerNum) {
-  const { p1FullBoard, p2FullBoard } = getBoardElements();
-
-  if (playerNum === 1) {
-    swapInPlaceShipScreenElements();
-    p1FullBoard.style.display = "flex";
-    p2FullBoard.style.display = "none"; // Commented out for testing
-    // p2FullBoard.style.display = "flex";
-  }
-
-  if (playerNum === 2) {
-    swapInPlaceShipScreenElements();
-    p1FullBoard.style.display = "none";
-    p2FullBoard.style.display = "flex";
-  }
-}
-
-
-
-// export function handleBtnQuitGame() {
-//   const { gifContainer } = getHeaderElements();
-//   const { btnPvsC, btnPvsP, btnQuitGame, btnStartGame } = getBtnElements();
+// TODO - REMOVE THIS FUNCTION IF NOTHING BREAKS
+// export function handleBtnNumPlayer(playerNum) {
 //   const { p1FullBoard, p2FullBoard } = getBoardElements();
-//   const { startGameMsg } = handleMessageContent();
 
-//   gifContainer.style.display = "flex";
-//   btnPvsC.style.display = "flex";
-//   btnPvsP.style.display = "flex";
-//   btnQuitGame.style.display = "none";
-//   btnStartGame.style.display = "none";
-//   p1FullBoard.style.display = "none";
-//   p2FullBoard.style.display = "none";
+//   if (playerNum === 1) {
+//     swapInPlaceShipScreenElements();
+//     p1FullBoard.style.display = "flex";
+//     p2FullBoard.style.display = "none";
+//   }
 
-//   clearMessage();
-//   addMessage(startGameMsg);
+//   if (playerNum === 2) {
+//     swapInPlaceShipScreenElements();
+//     p1FullBoard.style.display = "none";
+//     p2FullBoard.style.display = "flex";
+//   }
 // }
 
 export function handleBtnStartGame() {}
 
 export function handleBtnRotateShips(boardNum) {
-  // const { btnRotateId } = getBtnElements(boardNum);
-  const { x5Grid } = getBtnElements(boardNum);
-  const { allPlaceShipsClass } = getBtnElements(boardNum);
+  const { x5Grid } = getBoardElements(boardNum);
+  const { allPlaceShipsClass } = getBoardElements(boardNum);
 
   let currentRotation = 0; // 0 = horizontal axis
   let rotationCount = 0;
@@ -88,9 +63,6 @@ export function handleBtnRotateShips(boardNum) {
     x5Grid.style.transform = `rotate(${currentRotation}deg)`;
   };
 
-  // console.log(x5Grid, allPlaceShipsClass); // Add a log to check if elements are being retrieved properly.
-
-  // Return the rotation handler function to be called externally
   return rotateShips;
 }
 
@@ -99,24 +71,12 @@ export function handleBtnUndoLastShip() {}
 export function handleBtnClearAllShips(boardNum) {
   const { placeA, placeB, placeD, placeS, placeC } = getBoardElements(boardNum);
 
-  //   placeA.style.display = "flex";
-  //   placeB.style.display = "flex";
-  //   placeD.style.display = "flex";
-  //   placeS.style.display = "flex";
-  //   placeC.style.display = "flex";
-
   const placeShips = [placeA, placeB, placeD, placeS, placeC];
   placeShips.forEach((placeShip) => (placeShip.style.display = "flex"));
 
   handleResetPlaceShips(boardNum);
   removeAllShipSvgsOnShipGrid(boardNum);
-
-  //   }
-  // return clearShips;
-  //   console.log(boardNum);
 }
-
-
 
 export function randomShipPlacementCoordinateHelper() {
   const row = Math.floor(Math.random() * 10);
@@ -124,38 +84,3 @@ export function randomShipPlacementCoordinateHelper() {
   const randomShipCoordinateResult = `(${row}, ${col})`;
   return randomShipCoordinateResult;
 }
-
-// export function handleBtnRandomShipPlacement() {
- 
-
-//           if (ship) {
-//             const result = testGame[boardNum].placeShip(
-//               ship,
-//               getDataAxis,
-//               row,
-//               col
-//             );
-
-//             if (result !== "invalid") {
-//               orientShipSvgOnShipGrid(
-//                 boardNum,
-//                 getDataShip,
-//                 getDataAxis,
-//                 row,
-//                 col
-//               );
-
-//               // Hide the corresponding place element and reset selection
-//               shipPlaces[getDataShip].style.display = "none";
-//               shipPlaces[getDataShip].dataset.selected = "";
-//               placedShipListArr[boardNum].push(ship.boardCode);
-//               console.log(testGame[boardNum].allShipsArePlaced());
-//               console.log(player[boardNum].playerBoard.board);
-//               console.log(placedShipListArr[boardNum]);
-//               checkIfPlaceShipsAreAllPlaced(boardNum);
-//             }
-//           }
-//         }
-//       });
-//     });
-//   }
