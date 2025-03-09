@@ -43,7 +43,7 @@
 
   --box-shadow-green: 0 5px 10px var(--green);
   --font-fancy: "Black Ops One", sans-serif;
-  --font-emoji: "Noto Color Emoji", sans-serif;
+  --font-emoji: "Noto Color Emoji", 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
   --width-master: 90vw;
   --height-width-gif: 20rem;
   --height-width-place-ship-grid: 10.5rem;
