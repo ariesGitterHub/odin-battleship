@@ -31,8 +31,8 @@
   --text: #212121;
   --sea: #96bccb;
   --line: #ceced6;
-  --hit: #aa7763;
-  --miss: #58769a;
+    --hit: #e7ce83;
+  --miss: #b7c9bd;
   --sunk: #524753;
   --loser: #903a3a;
   --player1: #2f2f4f;
@@ -186,8 +186,7 @@ body {
 
 #title-text-top,
 #title-text-bot {
-  /* color: var(--loser); */
-    color: darkorange;
+  color: var(--loser);
   font-size: 2.25rem;
   text-transform: uppercase;
 }
@@ -478,7 +477,7 @@ body {
   justify-content: center;
   font-family: var(--font-emoji);
   /* Key Item: Grid cell font-size */
-  font-size: 70%;
+  font-size: 100%;
   text-align: center;
 }
 

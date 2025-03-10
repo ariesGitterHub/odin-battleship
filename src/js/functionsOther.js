@@ -351,16 +351,19 @@ export function addEmojiEffect(board, boardNum) {
         cellTarget.innerText = "💥";
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
-        // mp3Hit();
-      } else if (board[i][j] === "mm") {
-        cell.innerText = "💨";
-        cell.style.transform = "rotate(-90deg)";
-        cellTarget.innerText = "💨";
-        cellTarget.style.transform = "rotate(-90deg)";
-        cellShip.style.backgroundColor = "var(--miss)";
-        cellShipTarget.style.backgroundColor = "var(--miss)";
-        // mp3Miss();
-      } else {
+        // mp3Hit(); // PUT INTO ITS OWN FUNCTION
+         } else if (board[i][j] === "mm") {
+           cell.innerText = "❌";
+           cellTarget.innerText = "❌";
+           // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO 🔹, experimented with ❌ as a close second for the "Enemy Target Zone" only.
+           // cell.innerText = "💨";
+           // cell.style.transform = "rotate(-90deg)";
+           // cellTarget.innerText = "💨";
+           // cellTarget.style.transform = "rotate(-90deg)";
+           cellShip.style.backgroundColor = "var(--miss)";
+           cellShipTarget.style.backgroundColor = "var(--miss)";
+           // mp3Miss(); // PUT INTO ITS OWN FUNCTION
+         } else {
         cell.innerText = "  ";
         cellTarget.innerText = "  ";
       }
@@ -692,13 +695,25 @@ export function mp3Sink() {
   sink.play();
 }
 
+// export function attackSoundEffects(hitOrMiss) {
+//   setTimeout(() => {
+//     mp3Fire();
+//     if (hitOrMiss === "hit") {
+//       mp3Hit();
+//     } else {
+//       mp3Miss();
+//     }
+//   }, 0);
+// }
+
 export function attackSoundEffects(hitOrMiss) {
-  setTimeout(() => {
+
     mp3Fire();
-    if (hitOrMiss === "hit") {
-      mp3Hit();
-    } else {
-      mp3Miss();
-    }
-  }, 0);
+      setTimeout(() => {
+        if (hitOrMiss === "hit") {
+          mp3Hit();
+        } else {
+          mp3Miss();
+        }
+      }, 500);
 }
