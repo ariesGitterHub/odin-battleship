@@ -351,7 +351,7 @@ export function addEmojiEffect(board, boardNum) {
         cellTarget.innerText = "💥";
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
-        mp3Hit();
+        // mp3Hit();
       } else if (board[i][j] === "mm") {
         cell.innerText = "💨";
         cell.style.transform = "rotate(-90deg)";
@@ -359,7 +359,7 @@ export function addEmojiEffect(board, boardNum) {
         cellTarget.style.transform = "rotate(-90deg)";
         cellShip.style.backgroundColor = "var(--miss)";
         cellShipTarget.style.backgroundColor = "var(--miss)";
-        mp3Miss();
+        // mp3Miss();
       } else {
         cell.innerText = "  ";
         cellTarget.innerText = "  ";
@@ -690,4 +690,15 @@ sink.preload = "auto";
 export function mp3Sink() {
   sink.currentTime = 0; // Resets the audio to the beginning
   sink.play();
+}
+
+export function attackSoundEffects(hitOrMiss) {
+  setTimeout(() => {
+    mp3Fire();
+    if (hitOrMiss === "hit") {
+      mp3Hit();
+    } else {
+      mp3Miss();
+    }
+  }, 0);
 }

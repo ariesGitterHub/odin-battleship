@@ -20,6 +20,7 @@ import {
 import {
   addEmojiEffect,
   addMessage,
+  attackSoundEffects,
   clearMessage,
   colorSunkShips,
   getRandomAxis,
@@ -33,7 +34,7 @@ import {
   mp3Click,
   mp3PlacePop,
   mp3RemovePop,
-  mp3Fire,
+  // mp3Fire,
   // mp3Hit,
   // mp3Miss,
   mp3Sink,
@@ -77,7 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let randomColStored;
   let lastPlayer2ComputerPriorAttack;
   // const currentSetTimeoutValue = 2700;
-  const currentSetTimeoutValue = 0;
+  const currentSetTimeoutValue = 3000;
+  const setTimeoutBlockTrick = 0;
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
   let player2IsVictorious = false;
@@ -189,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // clearEmojiEffect(board, boardNum);
       // placedShipListArr[boardNum] = [];
       // playerTurn = 0;
-   
+
       // p1PlaceShips.style.display = "flex";
       // p2PlaceShips.style.display = "flex";
       // p1TargetZone.style.display = "none";
@@ -635,7 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.backgroundColor = "var(--player2)";
       btnHideScreen.style.borderColor = "var(--player2-text)";
       btnHideScreen.style.color = "var(--enemy)";
-      btnHideScreen.innerText = "Switch Player";
+      btnHideScreen.innerText = "Switch";
     } else if (
       player2.playerType === "human" &&
       isPvsPStarted &&
@@ -646,7 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnHideScreen.style.backgroundColor = "var(--player1)";
       btnHideScreen.style.borderColor = "var(--player1-text)";
       btnHideScreen.style.color = "var(--enemy)";
-      btnHideScreen.innerText = "Switch Player";
+      btnHideScreen.innerText = "Switch";
     } else {
       btnHideScreen.style.display = "none";
     }
@@ -704,37 +706,39 @@ document.addEventListener("DOMContentLoaded", () => {
           playerTurn % 2 === 0 &&
           p1FullBoard.style.display === "flex"
         ) {
+          setTimeout(() => {
+            row = +matches[1]; // Reminder, +matches converts the string to a number
+            col = +matches[2]; // Same as above
+            hitOrMiss = testGame[boardNum].receiveAttack(row, col);
 
-          row = +matches[1]; // Reminder, +matches converts the string to a number
-          col = +matches[2]; // Same as above
-          hitOrMiss = testGame[boardNum].receiveAttack(row, col);
+            // mp3Fire();
+            attackSoundEffects(hitOrMiss);
+            addEmojiEffect(board, boardNum);
+            // colorSunkShips(testGame[boardNum], boardNum);
+            colorSunkShips(testGame[boardNum], boardNum);
+            checkForSunkFleet(testGame[boardNum], boardNum);
+            // Highlight the board again
+            highlightEmptyCellOnlyOnHover(board, boardNum);
 
-          mp3Fire();
-          addEmojiEffect(board, boardNum);
-          // colorSunkShips(testGame[boardNum], boardNum);
-                    colorSunkShips(testGame[boardNum], boardNum);
-          checkForSunkFleet(testGame[boardNum], boardNum);
-          // Highlight the board again
-          highlightEmptyCellOnlyOnHover(board, boardNum);
-
-          playerTurn += 1;
-          // console.log(
-          //   `Attack on testGame${boardNum} by P1, Turn flips to: ${playerTurn}`
-          // );
-          player2ComputerAttack();
-          forPvsPMatchesShowHideScreenBtn();
-          clearMessage();
-          if (player2.playerType === "computer") {
-            addMessage(
-              `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). PLAYER 2's TURN!`
-            );
-            endGame();
-          } else {
-            addMessage(
-              `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 2.`
-            );
-            endGame();
-          }
+            playerTurn += 1;
+            // console.log(
+            //   `Attack on testGame${boardNum} by P1, Turn flips to: ${playerTurn}`
+            // );
+            player2ComputerAttack();
+            forPvsPMatchesShowHideScreenBtn();
+            clearMessage();
+            if (player2.playerType === "computer") {
+              addMessage(
+                `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). PLAYER 2's TURN!`
+              );
+              endGame();
+            } else {
+              addMessage(
+                `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 2.`
+              );
+              endGame();
+            }
+          }, setTimeoutBlockTrick);
         }
         if (
           !stopGameHaveWinner &&
@@ -744,30 +748,32 @@ document.addEventListener("DOMContentLoaded", () => {
           playerTurn % 2 !== 0 &&
           p2FullBoard.style.display === "flex"
         ) {
-          row = +matches[1]; // Reminder, +matches converts the string to a number
-          col = +matches[2]; // Same as above
+          setTimeout(() => {
+            row = +matches[1]; // Reminder, +matches converts the string to a number
+            col = +matches[2]; // Same as above
+            hitOrMiss = testGame[boardNum].receiveAttack(row, col);
+            // mp3Fire();
+            attackSoundEffects(hitOrMiss);
+            addEmojiEffect(board, boardNum);
+            // colorSunkShips(testGame[boardNum], boardNum);
+            colorSunkShips(testGame[boardNum], boardNum);
+            checkForSunkFleet(testGame[boardNum], boardNum);
+            // Highlight the board again
+            highlightEmptyCellOnlyOnHover(board, boardNum);
 
-    hitOrMiss = testGame[boardNum].receiveAttack(row, col);
-    mp3Fire();
-    addEmojiEffect(board, boardNum);
-    // colorSunkShips(testGame[boardNum], boardNum);
-    colorSunkShips(testGame[boardNum], boardNum);
-    checkForSunkFleet(testGame[boardNum], boardNum);
-    // Highlight the board again
-    highlightEmptyCellOnlyOnHover(board, boardNum);
-
-    playerTurn += 1;
-    // console.log(
-    //   `Attack on testGame${boardNum} by P2, Turn flips to: ${playerTurn}`
-    // );
-    forPvsPMatchesShowHideScreenBtn();
-    clearMessage();
-    if (player2.playerType === "human") {
-      addMessage(
-        `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 1.`
-      );
-      endGame();
-    }
+            playerTurn += 1;
+            // console.log(
+            //   `Attack on testGame${boardNum} by P2, Turn flips to: ${playerTurn}`
+            // );
+            forPvsPMatchesShowHideScreenBtn();
+            clearMessage();
+            if (player2.playerType === "human") {
+              addMessage(
+                `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 1.`
+              );
+              endGame();
+            }
+          }, setTimeoutBlockTrick);
         }
       });
     });
@@ -793,10 +799,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         playerTurn += 1;
         // console.log(`Attack on testGame1 by P2, Turn flips to: ${playerTurn}`);
-        mp3Fire();
+        // mp3Fire();
+        attackSoundEffects(hitOrMiss);
         addEmojiEffect(player1.playerBoard.board, 1);
         // colorSunkShips(testGame1, 1);
-                colorSunkShips(testGame1, 1);
+        colorSunkShips(testGame1, 1);
         checkForSunkFleet(testGame1);
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
         endGame();
@@ -804,11 +811,11 @@ document.addEventListener("DOMContentLoaded", () => {
           // console.log("This attack was a hit!");
           randomRowStored = randomRow;
           randomColStored = randomCol;
-        } 
+        }
         // else {
         //   console.log("That attack missed...");
         // }
-      }, currentSetTimeoutValue);
+      }, currentSetTimeoutValue); // Allows player 2 messages to be seen
     }
   }
 
@@ -893,5 +900,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // console.table(player1.playerBoard.board);
   // console.table(player2.playerBoard.board);
-
 });
