@@ -355,7 +355,7 @@ export function addEmojiEffect(board, boardNum) {
          } else if (board[i][j] === "mm") {
            cell.innerText = "❌";
            cellTarget.innerText = "❌";
-           // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO 🔹, experimented with ❌ as a close second for the "Enemy Target Zone" only.
+           // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹  as a close second for the "Enemy Target Zone" only.
            // cell.innerText = "💨";
            // cell.style.transform = "rotate(-90deg)";
            // cellTarget.innerText = "💨";
