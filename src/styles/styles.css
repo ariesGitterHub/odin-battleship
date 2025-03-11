@@ -36,12 +36,29 @@
   --sunk: #524753;
   --loser: #903a3a;
   --player1: #2f2f4f;
+  --player1-b: #040f21;
   --player1-text: #a8a8b4;
   --player2: #3c4a3e;
+  --player2-b: #032012;
   --player2-text: #8f9990;
   --enemy: #febf03;
 
   --box-shadow-green: 0 5px 10px var(--green);
+  --background-main: linear-gradient(
+    var(--linear-gradient-deg),
+    var(--bkgd),
+    var(--bkgd2)
+  );
+  --background-player1: linear-gradient(
+    var(--linear-gradient-deg), 
+    var(--player1-b), 
+    var(--bkgd2)
+  );
+  --background-player2: linear-gradient(
+    var(--linear-gradient-deg), 
+    var(--player2-b),
+    var(--bkgd2)
+  );
   --font-fancy: "Black Ops One", sans-serif;
   --font-emoji: "Noto Color Emoji", 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
   --width-master: 90vw;
@@ -71,9 +88,6 @@
 .btn-a {
   height: 2.25rem;
   width: var(--width-master);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: var(--line);
   border: 0.125rem solid var(--text);
   border-radius: 0.75rem;
@@ -95,6 +109,12 @@
   background-color: var(--text);
   color: var(--enemy);
   transform: scale(var(--scale-small));
+}
+
+#btn-pvsc, #btn-pvsp, #btn-quit-game, #btn-start-game, #btn-hide-screen, #btn-unlock-screen {
+  display: none;
+    align-items: center;
+    justify-content: center;
 }
 
 #btn-pvsc,
@@ -160,16 +180,18 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  background: linear-gradient(
+  /* background: linear-gradient(
     var(--linear-gradient-deg),
     var(--bkgd),
     var(--bkgd2)
-  );
+  ); */
+  background: var(--background-main);
 }
 
 /* HEADER */
 #header {
-  display: flex;
+  /* display: flex; */
+    display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -226,7 +248,8 @@ body {
 #messages {
   height: fit-content;
   width: var(--width-master);
-  display: flex;
+  /* display: flex; */
+  display: none;
   align-items: center;
   justify-content: center;
   background-color: var(--line);

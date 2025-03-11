@@ -42,6 +42,7 @@ export function getBtnElements(boardNum) {
  // TODO - ORGANIZE THIS!!!!
 export function getBoardElements(boardNum) {
   return {
+    appContainer: document.querySelector("#app-container"),
     body: document.querySelector("body"),
     boardContainer: document.querySelector("#board-container"),
     p1FullBoard: document.querySelector("#p1-full-board"),
