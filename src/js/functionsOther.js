@@ -352,18 +352,18 @@ export function addEmojiEffect(board, boardNum) {
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
         // mp3Hit(); // PUT INTO ITS OWN FUNCTION
-         } else if (board[i][j] === "mm") {
-           cell.innerText = "❌";
-           cellTarget.innerText = "❌";
-           // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹  as a close second for the "Enemy Target Zone" only.
-           // cell.innerText = "💨";
-           // cell.style.transform = "rotate(-90deg)";
-           // cellTarget.innerText = "💨";
-           // cellTarget.style.transform = "rotate(-90deg)";
-           cellShip.style.backgroundColor = "var(--miss)";
-           cellShipTarget.style.backgroundColor = "var(--miss)";
-           // mp3Miss(); // PUT INTO ITS OWN FUNCTION
-         } else {
+      } else if (board[i][j] === "mm") {
+        cell.innerText = "❌";
+        cellTarget.innerText = "❌";
+        // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹  as a close second for the "Enemy Target Zone" only.
+        // cell.innerText = "💨";
+        // cell.style.transform = "rotate(-90deg)";
+        // cellTarget.innerText = "💨";
+        // cellTarget.style.transform = "rotate(-90deg)";
+        cellShip.style.backgroundColor = "var(--miss)";
+        cellShipTarget.style.backgroundColor = "var(--miss)";
+        // mp3Miss(); // PUT INTO ITS OWN FUNCTION
+      } else {
         cell.innerText = "  ";
         cellTarget.innerText = "  ";
       }
@@ -371,98 +371,7 @@ export function addEmojiEffect(board, boardNum) {
   }
 }
 
-// TRIED requestAnimationFrame()...got emojis to work on Apple but affected colorSunkShips() adversely.
-// export function addEmojiEffect(board, boardNum) {
-//   // Create an animation function that will be applied to each cell.
-//   function animateEmoji(cell, targetCell, cellShip, cellShipTarget, emojiType) {
-//     let startTime = null;
-//     const duration = 500; // Duration of the effect in milliseconds
-//     const initialTransform = cell.style.transform || "rotate(0deg)"; // Starting transform state
-//     const initialOpacity = cell.style.opacity || 0;
-
-//     // Animation function using requestAnimationFrame
-//     function animate(timestamp) {
-//       if (!startTime) startTime = timestamp;
-//       const progress = timestamp - startTime;
-
-//       // Calculate the progress of the animation
-//       const progressRatio = Math.min(progress / duration, 1);
-
-//       // Apply smooth transitions for rotation and opacity
-//       if (emojiType === "hit") {
-//         // For "💥", we could animate a quick fade-in and background change
-//         cell.style.opacity = progressRatio; // Fading in the hit emoji
-//         targetCell.style.opacity = progressRatio;
-//         cellShip.style.backgroundColor = "var(--hit)";
-//         cellShipTarget.style.backgroundColor = "var(--hit)";
-//       } else if (emojiType === "miss") {
-//         // For "💨", we could animate rotation and fading in
-//         cell.style.transform = `rotate(${progressRatio * -90}deg)`; // Rotate from 0deg to -90deg
-//         targetCell.style.transform = `rotate(${progressRatio * -90}deg)`;
-//         cell.style.opacity = progressRatio;
-//         targetCell.style.opacity = progressRatio;
-//         cellShip.style.backgroundColor = "var(--miss)";
-//         cellShipTarget.style.backgroundColor = "var(--miss)";
-//       }
-
-//       // If the animation hasn't finished, request the next frame
-//       if (progress < duration) {
-//         requestAnimationFrame(animate);
-//       } else {
-//         // Ensure final states are applied once the animation ends
-//         cell.style.opacity = 1;
-//         targetCell.style.opacity = 1;
-//         if (emojiType === "miss") {
-//           cell.style.transform = "rotate(-90deg)";
-//           targetCell.style.transform = "rotate(-90deg)";
-//         }
-//       }
-//     }
-
-//     // Start the animation loop
-//     requestAnimationFrame(animate);
-//   }
-
-//   for (let i = 0; i < board.length; i++) {
-//     for (let j = 0; j < board[i].length; j++) {
-//       const baseId = `${boardNum === 1 ? "HMG1" : "HMG2"}: (${i},${j})`;
-//       let cell = document.getElementById(baseId);
-//       let cellTarget = document.getElementById(`T-${baseId}`);
-//       let cellShip = document.getElementById(`SG${boardNum}: (${i},${j})`);
-//       let cellShipTarget = document.getElementById(
-//         `T-SG${boardNum}: (${i},${j})`
-//       );
-
-//       if (
-//         board[i][j] === "A!" ||
-//         board[i][j] === "B!" ||
-//         board[i][j] === "D!" ||
-//         board[i][j] === "S!" ||
-//         board[i][j] === "C!"
-//       ) {
-//         cell.innerText = "💥";
-//         cellTarget.innerText = "💥";
-//         // Call the animateEmoji function with the "hit" emoji type
-//         animateEmoji(cell, cellTarget, cellShip, cellShipTarget, "hit");
-//         mp3Hit();
-//       } else if (board[i][j] === "mm") {
-//         cell.innerText = "💨";
-//         cellTarget.innerText = "💨";
-//         // Call the animateEmoji function with the "miss" emoji type
-//         animateEmoji(cell, cellTarget, cellShip, cellShipTarget, "miss");
-//         mp3Miss();
-//       } else {
-//         cell.innerText = "  ";
-//         cellTarget.innerText = "  ";
-//         // Reset to default state if the cell isn't a hit or miss
-//         cell.style.opacity = 0;
-//         cellTarget.style.opacity = 0;
-//         cell.style.transform = "rotate(0deg)";
-//         cellTarget.style.transform = "rotate(0deg)";
-//       }
-//     }
-//   }
-// }
+// NOte: I tried using requestAnimationFrame()...got emojis to work on Apple but affected colorSunkShips() adversely.
 
 export function clearEmojiEffect(board, boardNum) {
   for (let i = 0; i < board.length; i++) {
@@ -554,85 +463,39 @@ function everyOtherColDependingOnRow(row) {
 
 // Put these sets outside of function so that it accumulate new coordinates and not refresh itself when called
 const noRepeatCoordinatesSet = new Set();
-const priorHitCoordinatesSet = new Set();
+// const priorHitCoordinatesSet = new Set();
 const hunterCoordinatesSet = new Set();
-let randomRow, randomCol, coordinates, hunterCoordinates;
+// const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
 
-const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
+let randomRow, randomCol, coordinates;
+
+// const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
 
 // Keep below?
-// const lastHitTargetCoordinates = priorHitCoordinatesArray[priorHitCoordinatesArray.length - 1];
+// const lastHitTargetCoordinates =
+//   priorHitCoordinatesArray[priorHitCoordinatesArray.length - 1];
 // const hunterCoordinatesArray = Array.from(hunterCoordinatesSet);
 
-export function getUniqueRandomCoordinates(
-  hitOrMiss,
-  randomRowStored,
-  randomColStored
-) {
-  let attempts = 0;
-  let foundValidCoordinate = false;
-  let coordinateDistance = 1;
-
-  // List of adjacent coordinates to target after a hit
-  let adjacentCoordinates = [
-    `${randomRowStored + coordinateDistance},${randomColStored}`, // Down
-    `${randomRowStored - coordinateDistance},${randomColStored}`, // Up
-    `${randomRowStored},${randomColStored + coordinateDistance}`, // Right
-    `${randomRowStored},${randomColStored - coordinateDistance}`, // Left
-  ];
-
-  // Handle hit or miss updates
-  if (hitOrMiss === "hit") {
-    const currentHitCoordinates = `${randomRowStored},${randomColStored}`;
-    priorHitCoordinatesSet.add(currentHitCoordinates); // Add the hit coordinates to the set
+export function getUniqueRandomCoordinates() {
+  if (hunterCoordinatesSet.size >= 50) {
+    // We assume 50 is the number of cells already targeted in the checkerboard pattern
+    // Basic random attacks
+    do {
+      console.log("Attack Style: Basic Random Attack Pattern");
+      randomRow = getRandomRow();
+      randomCol = getRandomCol();
+      coordinates = `${randomRow},${randomCol}`;
+    } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
+  } else {
+    // Start off attacks by hunting every other square
+    do {
+      console.log("Attack Style: Checkerboard 'Hunter' Attack Pattern");
+      randomRow = getRandomRow();
+      randomCol = everyOtherColDependingOnRow(randomRow);
+      coordinates = `${randomRow},${randomCol}`;
+    } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
   }
 
-  // If the AI has hit something before, prioritize adjacent cells for the next move
-  if (priorHitCoordinatesSet.size > 0) {
-    // Search for a valid adjacent coordinate to the last hit
-    while (attempts < 10 && !foundValidCoordinate) {
-      let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
-      coordinates = adjacentCoordinates[randomIndex];
-      [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
-
-      // Check if the coordinates are valid (within bounds and not used before)
-      if (
-        randomRow >= 0 &&
-        randomRow < 10 &&
-        randomCol >= 0 &&
-        randomCol < 10 &&
-        !noRepeatCoordinatesSet.has(coordinates) // Ensure it's not a previously used coordinate
-      ) {
-        foundValidCoordinate = true; // A valid coordinate is found
-      } else {
-        attempts++; // Increase the number of attempts
-      }
-    }
-  }
-
-  // If no valid adjacent coordinate is found after 10 attempts, or there are no hits yet
-  if (!foundValidCoordinate || priorHitCoordinatesSet.size === 0) {
-    // If the checkerboard pattern cells are exhausted, go back to random coordinates
-    if (hunterCoordinatesSet.size >= 50) {
-      // We assume 50 is the number of cells already targeted in the checkerboard pattern
-      do {
-        // console.log("Attack Style: Basic Random Approach");
-        randomRow = getRandomRow();
-        randomCol = getRandomCol();
-        coordinates = `${randomRow},${randomCol}`;
-      } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
-    } else {
-      // Continue targeting in the checkerboard pattern if not all cells have been targeted
-      do {
-        // console.log("Attack Style: Checkerboard 'Hunter' Approach");
-        randomRow = getRandomRow();
-        randomCol = everyOtherColDependingOnRow(randomRow);
-        coordinates = `${randomRow},${randomCol}`;
-      } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
-    }
-  }
-
-  // Add the unique coordinate to the set
   noRepeatCoordinatesSet.add(coordinates);
   hunterCoordinatesSet.add(coordinates);
 
@@ -707,13 +570,12 @@ export function mp3Sink() {
 // }
 
 export function attackSoundEffects(hitOrMiss) {
-
-    mp3Fire();
-      setTimeout(() => {
-        if (hitOrMiss === "hit") {
-          mp3Hit();
-        } else {
-          mp3Miss();
-        }
-      }, 500);
+  mp3Fire();
+  setTimeout(() => {
+    if (hitOrMiss === "hit") {
+      mp3Hit();
+    } else {
+      mp3Miss();
+    }
+  }, 500);
 }

@@ -23,6 +23,7 @@ import {
   attackSoundEffects,
   clearMessage,
   colorSunkShips,
+  everyOtherColDependingOnRow,
   getRandomAxis,
   getRandomCol,
   getRandomRow,
@@ -70,14 +71,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isPvsPStarted = false;
   let playerTurn = 0;
+
+  // No longer using this globally, scope to particular functions
   // const isPlayer1Turn = playerTurn % 2 === 0;
   // const isPlayer2Turn = playerTurn % 2 !== 0;
-  let hitOrMiss;
-  let randomRowStored;
-  let randomColStored;
-  let lastPlayer2ComputerPriorAttack;
+  // let hitOrMiss;
+  // let randomRowStored;
+  // let randomColStored;
+  // let lastPlayer2ComputerPriorAttack;
+
   const currentSetTimeoutValue = 2500; // Use on player2 computer attacks
-  const setTimeoutBlockTrick = 0; // Used to try and get Apple mobile browser to work better with code
+  // const setTimeoutBlockTrick = 0; // Used to try and get Apple mobile browser to work better with code
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
   let player2IsVictorious = false;
@@ -714,7 +718,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //   }
   // }
 
-  let deleteLater = 0
+  let deleteLater = 0;
 
   // function updateHideScreenBtn(styles, message, buttonText) {
   //   const { btnHideScreen } = getBtnElements();
@@ -944,129 +948,139 @@ document.addEventListener("DOMContentLoaded", () => {
   //   }
   // }
 
+  function processAttack(boardNum, row, col) {
+    const board = player[boardNum].playerBoard.board;
+    const hitOrMiss = testGame[boardNum].receiveAttack(row, col);
 
-function processAttack(boardNum, row, col) {
-  const board = player[boardNum].playerBoard.board;
-  const hitOrMiss = testGame[boardNum].receiveAttack(row, col);
+    attackSoundEffects(hitOrMiss);
+    addEmojiEffect(board, boardNum);
+    colorSunkShips(testGame[boardNum], boardNum);
+    checkForSunkFleet(testGame[boardNum], boardNum);
+    highlightEmptyCellOnlyOnHover(board, boardNum);
 
-  attackSoundEffects(hitOrMiss);
-  addEmojiEffect(board, boardNum);
-  colorSunkShips(testGame[boardNum], boardNum);
-  checkForSunkFleet(testGame[boardNum], boardNum);
-  highlightEmptyCellOnlyOnHover(board, boardNum);
-
-  playerTurn += 1;
-  forPvsPMatchesShowHideScreenBtn();
-  return hitOrMiss;
-}
-
-function updateTurnMessage(hitOrMiss, row, col, isPlayer1) {
-  const player1Message = `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
-  const player2Message = `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
-
-  if (player2.playerType === "computer") {
-    addMessage(
-      isPlayer1
-        ? `${player1Message}PLAYER 2's TURN!`
-        : `${player2Message}SWITCH to PLAYER 1.`
-    );
-    endGame();
-  } else if (player2.playerType === "human") {
-    addMessage(
-      isPlayer1
-        ? `${player1Message}SWITCH to PLAYER 2.`
-        : `${player2Message}SWITCH to PLAYER 1.`
-    );
-    endGame();
-  }
-}
-
-function handleCellClick(boardNum, cell) {
-  const { p1FullBoard, p2FullBoard } = getBoardElements();
-  const targetId = cell.id;
-  const regex = /\((\d+),(\d+)\)/;
-  const matches = targetId.match(regex);
-  let row, col;
-
-  if (!matches || cell.innerText !== "") return;
-
-  row = +matches[1];
-  col = +matches[2];
-
-  // Determine if the attack is valid based on the turn and board visibility
-  if (player2.playerType === "human") {
-    isPvsPStarted = true;
-  } else {
-    isPvsPStarted = false;
+    playerTurn += 1;
+    forPvsPMatchesShowHideScreenBtn();
+    return hitOrMiss;
   }
 
-  const isPlayer1Turn = playerTurn % 2 === 0;
-  const isPlayer2Turn = playerTurn % 2 !== 0;
+  function updateTurnMessage(hitOrMiss, row, col, isPlayer1) {
+    const player1Message = `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
+    const player2Message = `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
 
-  // Check if player 1 or player 2 can attack based on the game state
-  if (
-    !stopGameHaveWinner &&
-    matches &&
-    cell.innerText === "" &&
-    ((isPlayer1Turn && p1FullBoard.style.display === "flex") ||
-      (isPlayer2Turn && p2FullBoard.style.display === "flex"))
-  ) {
-    console.log(playerTurn);
-    
-    const hitOrMiss = processAttack(boardNum, row, col);
-    updateTurnMessage(hitOrMiss, row, col, isPlayer1Turn);
-
-    // If it's player 2's turn and they are a computer, trigger their attack
-    if (player2.playerType === "computer" && isPlayer1Turn) {
-      // Trigger player 2's computer attack after player 1's turn
-      setTimeout(() => {
-        player2ComputerAttack();
-      }, 0); // We use a short timeout to ensure the game state has been updated
+    if (player2.playerType === "computer") {
+      addMessage(
+        isPlayer1
+          ? `${player1Message}PLAYER 2's TURN!`
+          : `${player2Message}SWITCH to PLAYER 1.`
+      );
+      endGame();
+    } else if (player2.playerType === "human") {
+      addMessage(
+        isPlayer1
+          ? `${player1Message}SWITCH to PLAYER 2.`
+          : `${player2Message}SWITCH to PLAYER 1.`
+      );
+      endGame();
     }
   }
-}
 
-function manuallyAttackTargetCoordinates(boardNum) {
-  const { hitMissTargetCellsClass } = getBoardElements(boardNum);
+  function handleCellClick(boardNum, cell) {
+    const { p1FullBoard, p2FullBoard } = getBoardElements();
+    const targetId = cell.id;
+    const regex = /\((\d+),(\d+)\)/;
+    const matches = targetId.match(regex);
+    let row, col;
 
-  hitMissTargetCellsClass.forEach((cell) => {
-    cell.addEventListener("click", () => handleCellClick(boardNum, cell));
-  });
-}
+    if (!matches || cell.innerText !== "") return;
 
-function player2ComputerAttack() {
-  if (
-    !stopGameHaveWinner &&
-    player2.playerType === "computer" &&
-    playerTurn % 2 !== 0
-  ) {
-    setTimeout(() => {
-      clearMessage();
-      let { randomRow, randomCol } = getUniqueRandomCoordinates(
-        hitOrMiss,
-        randomRowStored,
-        randomColStored,
-        lastPlayer2ComputerPriorAttack
-      );
-      const hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-      addMessage(
-        `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
-      );
-      playerTurn += 1;
-      attackSoundEffects(hitOrMiss);
-      addEmojiEffect(player1.playerBoard.board, 1);
-      colorSunkShips(testGame1, 1);
-      checkForSunkFleet(testGame1);
-      highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-      endGame();
-      if (hitOrMiss === "hit") {
-        randomRowStored = randomRow;
-        randomColStored = randomCol;
+    row = +matches[1];
+    col = +matches[2];
+
+    // Determine if the attack is valid based on the turn and board visibility
+    if (player2.playerType === "human") {
+      isPvsPStarted = true;
+    } else {
+      isPvsPStarted = false;
+    }
+
+    const isPlayer1Turn = playerTurn % 2 === 0;
+    const isPlayer2Turn = playerTurn % 2 !== 0;
+
+    // Check if player 1 or player 2 can attack based on the game state
+    if (
+      !stopGameHaveWinner &&
+      matches &&
+      cell.innerText === "" &&
+      ((isPlayer1Turn && p1FullBoard.style.display === "flex") ||
+        (isPlayer2Turn && p2FullBoard.style.display === "flex"))
+    ) {
+      console.log(playerTurn);
+
+      const hitOrMiss = processAttack(boardNum, row, col);
+      updateTurnMessage(hitOrMiss, row, col, isPlayer1Turn);
+
+      // If it's player 2's turn and they are a computer, trigger their attack
+      if (player2.playerType === "computer" && isPlayer1Turn) {
+        // Trigger player 2's computer attack after player 1's turn
+        setTimeout(() => {
+          player2ComputerAttack();
+        }, 0); // We use a short timeout to ensure the game state has been updated
       }
-    }, currentSetTimeoutValue); // Allows for message/sound effect play
+    }
   }
-}
 
+  function manuallyAttackTargetCoordinates(boardNum) {
+    const { hitMissTargetCellsClass } = getBoardElements(boardNum);
+
+    hitMissTargetCellsClass.forEach((cell) => {
+      cell.addEventListener("click", () => handleCellClick(boardNum, cell));
+    });
+  }
+
+  function player2ComputerAttack() {
+    if (
+      !stopGameHaveWinner &&
+      player2.playerType === "computer" &&
+      playerTurn % 2 !== 0
+    ) {
+      const player2AttackInfo = {
+        randomRowStored: null,
+        randomColStored: null,
+        lastAttackWasHit: null,
+      };
+      setTimeout(() => {
+        clearMessage();
+        let { randomRow, randomCol } = getUniqueRandomCoordinates(
+          player2AttackInfo.randomRowStored,
+          player2AttackInfo.randomColStored,
+          player2AttackInfo.lastAttackWasHit,
+        );
+        const hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        console.log(`It's a ${hitOrMiss}`);
+        
+        addMessage(
+          `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
+        );
+        playerTurn += 1;
+        attackSoundEffects(hitOrMiss);
+        addEmojiEffect(player1.playerBoard.board, 1);
+        colorSunkShips(testGame1, 1);
+        checkForSunkFleet(testGame1);
+        highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+        endGame();
+        if (hitOrMiss === "hit") {
+          player2AttackInfo.randomRowStored = randomRow;
+          player2AttackInfo.randomColStored = randomCol;
+          player2AttackInfo.lastAttackWasHit = hitOrMiss;
+        }
+        console.log(
+          player2AttackInfo.randomRowStored,
+          player2AttackInfo.randomColStored
+        );
+        console.log(player2AttackInfo.lastAttackWasHit);
+      }, currentSetTimeoutValue); // Allows for message/sound effect play
+    }
+  }
 
   // End refactor of manuallyAttackTargetCoordinates(boardNum)
 
@@ -1108,7 +1122,7 @@ function player2ComputerAttack() {
 
   function endGame() {
     const { messages } = getMessageElements();
-    const { appContainer } = getBoardElements()
+    const { appContainer } = getBoardElements();
     const { player1Wins, player2Wins } = handleMessageContent();
 
     if (player1IsVictorious) {
