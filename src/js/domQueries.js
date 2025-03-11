@@ -39,7 +39,7 @@ export function getBtnElements(boardNum) {
     // const shipCellsId = document.querySelectorAll(`.ship-cells${boardNum}`);
   };
 }
- // TODO - ORGANIZE THIS!!!!
+// TODO - ORGANIZE THIS!!!!
 export function getBoardElements(boardNum) {
   return {
     appContainer: document.querySelector("#app-container"),
@@ -79,7 +79,9 @@ export function getBoardElements(boardNum) {
       `.hit-miss-target-cells${boardNum}`
     ),
 
-    allPlaceShipsClass: document.querySelectorAll(`.all-p${boardNum}-place-ships`),
+    allPlaceShipsClass: document.querySelectorAll(
+      `.all-p${boardNum}-place-ships`
+    ),
     x5Grid: document.querySelector(`#p${boardNum}-x5-grid`),
 
     placeA: document.querySelector(`#place-a${boardNum}`),
@@ -97,579 +99,246 @@ export function getBoardElements(boardNum) {
   };
 }
 
+ // Start refactor of manuallyAttackTargetCoordinates(boardNum)
 
-  // function takeTurnsPvsC() {
-  //   const { player1Attack, player2ComputerAttack } = handleMessageContent();
-  //   if (player2.playerType === "machine") {
-  //     // console.log(player2.playerType);
-  //     if (playerTurn > 0 && playerTurn % 2 === 0) {
-  //       // clearMessage();
-  //       // addMessage(player1Attack);
-  //     }
-  //     if (playerTurn > 0 && playerTurn % 2 !== 0) {
+  // Old code...keep for future reference to show what was chopped up in the refactor
+
+  // function manuallyAttackTargetCoordinates(boardNum) {
+  //   const { p1FullBoard, p2FullBoard } = getBoardElements();
+  //   const { hitMissTargetCellsClass } = getBoardElements(boardNum);
+  //   const board = player[boardNum].playerBoard.board;
+  //   highlightEmptyCellOnlyOnHover(board, boardNum);
+
+  //   hitMissTargetCellsClass.forEach((cell) => {
+  //     cell.addEventListener("click", () => {
+  //       let targetId = cell.id;
+  //       let regex = /\((\d+),(\d+)\)/;
+  //       let matches = targetId.match(regex);
+  //       let row, col;
+
+  //       if (player2.playerType === "human") {
+  //         isPvsPStarted = true;
+  //       } else {
+  //         isPvsPStarted = false;
+  //       }
+  //       if (
+  //         !stopGameHaveWinner &&
+  //         matches &&
+  //         cell.innerText === "" &&
+  //         playerTurn % 2 === 0 &&
+  //         p1FullBoard.style.display === "flex"
+  //       ) {
+  //         setTimeout(() => {
+  //           row = +matches[1]; // Reminder, +matches converts the string to a number
+  //           col = +matches[2]; // Same as above
+  //           hitOrMiss = testGame[boardNum].receiveAttack(row, col);
+  //           attackSoundEffects(hitOrMiss);
+  //           addEmojiEffect(board, boardNum);
+  //           colorSunkShips(testGame[boardNum], boardNum);
+  //           checkForSunkFleet(testGame[boardNum], boardNum);
+  //           // Highlight the board again
+  //           highlightEmptyCellOnlyOnHover(board, boardNum);
+
+  //           playerTurn += 1;
+  //           player2ComputerAttack();
+  //           forPvsPMatchesShowHideScreenBtn();
+  //           clearMessage();
+  //           if (player2.playerType === "computer") {
+  //             addMessage(
+  //               `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). PLAYER 2's TURN!`
+  //             );
+  //             endGame();
+  //           } else {
+  //             addMessage(
+  //               `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 2.`
+  //             );
+  //             endGame();
+  //           }
+  //         }, setTimeoutBlockTrick);
+  //       }
+  //       if (
+  //         !stopGameHaveWinner &&
+  //         matches &&
+  //         cell.innerText === "" &&
+  //         player2.playerType === "human" &&
+  //         playerTurn % 2 !== 0 &&
+  //         p2FullBoard.style.display === "flex"
+  //       ) {
+  //         setTimeout(() => {
+  //           row = +matches[1]; // Reminder, +matches converts the string to a number
+  //           col = +matches[2]; // Same as above
+  //           hitOrMiss = testGame[boardNum].receiveAttack(row, col);
+  //           attackSoundEffects(hitOrMiss);
+  //           addEmojiEffect(board, boardNum);
+  //           colorSunkShips(testGame[boardNum], boardNum);
+  //           checkForSunkFleet(testGame[boardNum], boardNum);
+  //           // Highlight the board again
+  //           highlightEmptyCellOnlyOnHover(board, boardNum);
+  //           playerTurn += 1;
+  //           forPvsPMatchesShowHideScreenBtn();
+  //           clearMessage();
+  //           if (player2.playerType === "human") {
+  //             addMessage(
+  //               `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 1.`
+  //             );
+  //             endGame();
+  //           }
+  //         }, setTimeoutBlockTrick);
+  //       }
+  //     });
+  //   });
+  // }
+
+  // function player2ComputerAttack() {
+  //   if (
+  //     !stopGameHaveWinner &&
+  //     player2.playerType === "computer" &&
+  //     playerTurn % 2 !== 0
+  //   ) {
+  //     setTimeout(() => {
   //       clearMessage();
-
-  //       let { randomRow, randomCol } = getUniqueRandomCoordinates();
-  //       let hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-  //       // setTimeout(() => {
-  //       // hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-  //       // }, 500);
-  //       addMessage(
-  //         `${player2ComputerAttack} and it is a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}).`
+  //       let { randomRow, randomCol } = getUniqueRandomCoordinates(
+  //         hitOrMiss,
+  //         randomRowStored,
+  //         randomColStored,
+  //         lastPlayer2ComputerPriorAttack
   //       );
-  //       // console.log(
-  //       //   `Last attack by P2 was a ${hitOrMiss} at (${randomRow}, ${randomCol})`
-  //       // );
-
-  //       //console.log(testGame1.receiveAttack(randomRow, randomCol));
-  //       // console.log(`Turn before P2 = ${playerTurn}`);
+  //       hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+  //       addMessage(
+  //         `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
+  //       );
   //       playerTurn += 1;
-  //       // console.log(`Turn after P2 = ${playerTurn}`);
-  //       mp3Fire();
-  //       // console.log(randomRow, randomCol);
-  //       // START HERE ON THURSDAY...
-
-  //       // testGame1.receiveAttack(randomRow, randomCol);
+  //       attackSoundEffects(hitOrMiss);
   //       addEmojiEffect(player1.playerBoard.board, 1);
   //       colorSunkShips(testGame1, 1);
+  //       checkForSunkFleet(testGame1);
   //       highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-  //       // console.table(player1.playerBoard.board);
-  //     }
+  //       endGame();
+  //       if (hitOrMiss === "hit") {
+  //         randomRowStored = randomRow;
+  //         randomColStored = randomCol;
+  //       }
+  //     }, currentSetTimeoutValue); // setTimeout allows player 2 messages to be seen and sound effects to get some play
   //   }
   // }
 
-  //   function manageTurns(boardNum) {
-  //     const { player2ComputerAttack } = handleMessageContent();
-  //     if (player2.playerType === "machine" && playerTurn === 0) {
-  //       clearMessage();
-  //             addMessage(
-  //               `${player2ComputerAttack} and it is a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}).`
-  //             );
-  //       manuallyAttackTargetCoordinates(boardNum);
-  //       // console.log(`p1 turn = ${playerTurn}`);
-  //     }
-  //     if (player2.playerType === "machine" && playerTurn > 0 && playerTurn % 2 !== 0) {
-  //       clearMessage();
-  //       let { randomRow, randomCol } = getUniqueRandomCoordinates();
-  //       let hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-  //       addMessage(
-  //         `${player2ComputerAttack} and it is a ${hitOrMiss} at coordinates: (${randomRow}, ${randomCol}).`
-  //       );
-  //       playerTurn += 1;
-  //       // console.log(`p2 turn = ${playerTurn}`);
-  //       mp3Fire();
-  //       addEmojiEffect(player1.playerBoard.board, 1);
-  //       colorSunkShips(testGame1, 1);
-  //       highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-  //     }
-  //    console.log(`turn = ${playerTurn}`);
-  //   }
+function processAttack(boardNum, row, col) {
+  const board = player[boardNum].playerBoard.board;
+  const hitOrMiss = testGame[boardNum].receiveAttack(row, col);
 
-  
+  attackSoundEffects(hitOrMiss);
+  addEmojiEffect(board, boardNum);
+  colorSunkShips(testGame[boardNum], boardNum);
+  checkForSunkFleet(testGame[boardNum], boardNum);
+  highlightEmptyCellOnlyOnHover(board, boardNum);
 
-// export function getRandomRow(min = 0, max = 9) {
-//   const randomRow = Math.floor(Math.random() * (max - min + 1)) + min;
-//   return randomRow;
-// }
-
-// export function getRandomCol(min = 0, max = 9) {
-//   const randomCol = Math.floor(Math.random() * (max - min + 1)) + min;
-//   return randomCol;
-// }
-
-// function everyOtherColDependingOnRow(row) {
-//   const even = [0, 2, 4, 6, 8];
-//   const odd = [1, 3, 5, 7, 9];
-//   const randomIndex = Math.floor(Math.random() * even.length); // Generates a random index
-//   const randomEvenNumber = even[randomIndex]; // Gets the random number from the array
-//   const randomOddNumber = odd[randomIndex]; // Gets the random number from the array
-
-//   let everyOtherColEven = randomEvenNumber;
-//   let everyOtherColOdd = randomOddNumber;
-//   if (row % 2 === 0) {
-//     return everyOtherColEven;
-//   } else if (row % 2 !== 0) {
-//     return everyOtherColOdd;
-//   }
-// }
-
-// export function getRandomAxis(min = 0, max = 9) {
-//   const randomAxisNum = Math.floor(Math.random() * (max - min + 1)) + min;
-//   let randomAxis;
-//   if (randomAxisNum % 2 === 0) {
-//     randomAxis = "v";
-//   } else {
-//     randomAxis = "h";
-//   }
-//   return randomAxis;
-// }
-
-// // export function getUniqueRandomCoordinates() {
-// //   const noRepeatSet = new Set();
-// //   let randomRow = getRandomRow;
-// //   let randomCol = getRandomCol;
-// //   let coordinates = [randomRow, randomCol]
-// //     getUniqueRandomCoordinates();
-// //   if (noRepeatSet.has(coordinates)) {
-
-// //   } else {
-// //     noRepeatSet.set(coordinates);
-// //     return {
-// //       randomRow,
-// //       randomCol
-// //     }
-// //   }
-// // }
-
-// // TODO - REFACTOR!!! A mess
-// const noRepeatSet = new Set(); // Put set outside of function so that it accumulate new coordinates and not refresh itself when called
-// let randomRow, randomCol, coordinates;
-
-// const priorHitsSet = new Set();
-// const priorHitsArray = Array.from(priorHitsSet);
-// // const lastHitTargetTheseCoordinates = priorHitsArray[priorHitsArray.length - 1];
-// const hunterCoordinateSet = new Set();
-// const hunterCoordinateArray = Array.from(hunterCoordinateSet);
-// // function getRandomValueFromArray(array) {
-// //   const randomIndex = Math.floor(Math.random() * array.length);
-// //   return array[randomIndex];
-// // }
-
-// // const myArray = [-1, 1];
-// // const randomValue = getRandomValueFromArray(myArray);
-
-// // console.log(randomValue);
-
-// // export function getUniqueRandomCoordinates() {
-// //   // const noRepeatSet = new Set();
-
-// //   // Repeat until we find unique coordinates
-// //   // let randomRow, randomCol, coordinates;
-
-// //   do {
-// //     randomRow = getRandomRow();
-// //     randomCol = getRandomCol();
-// //     coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
-// //   } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
-
-// //   // Store the unique coordinate
-// //   noRepeatSet.add(coordinates);
-// //   console.log(noRepeatSet);
-// //   return {
-// //     randomRow,
-// //     randomCol,
-// //   };
-// // }
-
-// // export function getUniqueEnhancedCoordinates(
-// // export function getUniqueRandomCoordinates(
-// //   lastPlayer2ComputerAttack,
-// //   randomRowStored,
-// //   randomColStored
-// // ) {
-// //   // const noRepeatSet = new Set();
-
-// //   // Repeat until we find unique coordinates
-// //   // let randomRow, randomCol, coordinates;
-
-// //   if (lastPlayer2ComputerAttack === "HIT!!!") {
-// //     let randomRow1 = randomRowStored + randomValue;
-// //     randomCol = randomColStored;
-// //     let coordinates1 = `${randomRow1},${randomCol}`;
-
-// //     randomRow = randomRowStored;
-// //     let randomCol2 = randomColStored + randomValue;
-// //     let coordinates2 = `${randomRow},${randomCol2}`;
-
-// //     if (randomRow1 >= 0 && randomRow1 < 10 && !noRepeatSet.has(coordinates1)) {
-// //       randomRow = randomRow1;
-// //       return {
-// //         randomRow,
-// //         randomCol,
-// //       };
-// //     } else if (
-// //       randomCol2 >= 0 &&
-// //       randomCol2 < 10 &&
-// //       !noRepeatSet.has(coordinates2)
-// //     ) {
-// //       randomCol = randomCol2;
-// //       return {
-// //         randomRow,
-// //         randomCol,
-// //       };
-// //     }
-// //   } else if (lastPlayer2ComputerAttack !== "HIT!!!") {
-// //       do {
-// //         randomRow = getRandomRow();
-// //         randomCol = getRandomCol();
-// //         coordinates = `${randomRow},${randomCol}`; // Create a string representation for easy comparison
-// //       } while (noRepeatSet.has(coordinates)); // Check if the coordinate has already been used
-// //       // Store the unique coordinate
-// //       noRepeatSet.add(coordinates);
-// //       console.log(noRepeatSet);
-// //       return {
-// //         randomRow,
-// //         randomCol,
-// //       };
-// //   }
-// // }
-
-// // This function ensures that all random coordinates are unique and that a player2Computer hit will snoop around with attacks on adjacent squares if its last attack was a hit.
-
-// export function getUniqueRandomCoordinates(
-//   lastPlayer2ComputerAttack,
-//   randomRowStored,
-//   randomColStored
-//   // lastPlayer2ComputerPriorAttack,
-//   // randomRowPriorStored,
-//   // randomColPriorStored
-// ) {
-//   // let randomRow, randomCol, coordinates;
-
-//   // Random value from [-1, 0, 1] to target neighboring cells
-//   // const myArray = [-1, 0, 1];
-//   // const randomValue = getRandomValueFromArray(myArray);
-
-//   // If last attack was a hit, attempt to target nearby coordinates
-//   if (lastPlayer2ComputerAttack === "HIT!!!") {
-//     const lastHitCoordinates = `${randomRowStored},${randomColStored}`;
-//     priorHitsSet.add(lastHitCoordinates);
-
-//     console.log(lastHitCoordinates); // Output: "4,5"
-//     console.log(priorHitsSet);
-
-//     let adjacentCoordinates = [
-//       `${randomRowStored + 1},${randomColStored}`, // Down
-//       `${randomRowStored - 1},${randomColStored}`, // Up
-//       `${randomRowStored},${randomColStored + 1}`, // Right
-//       `${randomRowStored},${randomColStored - 1}`, // Left
-//       // `${randomRowStored + 1},${randomColStored + 1}`, // Down-right (diagonal)
-//       // `${randomRowStored - 1},${randomColStored - 1}`, // Up-left (diagonal)
-//       // `${randomRowStored + 1},${randomColStored - 1}`, // Down-left (diagonal)
-//       // `${randomRowStored - 1},${randomColStored + 1}`, // Up-right (diagonal)
-//     ];
-
-//     let attempts = 0;
-//     let foundValidCoordinate = false;
-
-//     // randomRowPriorStored = randomRowStored;
-//     // randomColPriorStored = randomColStored;
-
-//     // Try to find a valid adjacent coordinate that hasn't been used
-//     while (attempts < 10 && !foundValidCoordinate) {
-//       let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
-//       coordinates = adjacentCoordinates[randomIndex];
-//       [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
-
-//       // Check if the coordinates are valid (within bounds and not used before)
-//       if (
-//         randomRow >= 0 &&
-//         randomRow < 10 && // Ensure it's within bounds
-//         randomCol >= 0 &&
-//         randomCol < 10 &&
-//         !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
-//       ) {
-//         foundValidCoordinate = true; // A valid coordinate is found
-//       } else {
-//         attempts++; // Increase the number of attempts
-//       }
-//     }
-
-//     // If no valid coordinate found after 10 attempts, default to a random one
-//     if (!foundValidCoordinate) {
-//       console.log(
-//         "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
-//       );
-//       do {
-//         randomRow = getRandomRow();
-//         randomCol = getRandomCol();
-//         coordinates = `${randomRow},${randomCol}`;
-//       } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//     }
-//   } else if (
-//     lastPlayer2ComputerAttack === "Double or nothing!!"
-//     // || lastPlayer2ComputerAttack === "Triple or nothing!"
-//   ) {
-//     // Get the last hit coordinates from the set
-//     const priorHitsArray = Array.from(priorHitsSet);
-//     const lastHitTargetTheseCoordinates =
-//       priorHitsArray[priorHitsArray.length - 1];
-//     const [randomRowDoubleOrNothing, randomColDoubleOrNothing] =
-//       lastHitTargetTheseCoordinates.split(",").map(Number); // Split and map to row and col
-
-//     console.log(
-//       `Prior coordinates: ${randomRowDoubleOrNothing},${randomColDoubleOrNothing}`
-//     );
-
-//     let adjacentCoordinates = [
-//       `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing}`, // Down
-//       `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing}`, // Up
-//       `${randomRowDoubleOrNothing},${randomColDoubleOrNothing + 1}`, // Right
-//       `${randomRowDoubleOrNothing},${randomColDoubleOrNothing - 1}`, // Left
-//       // Uncomment these if you want to include diagonals
-//       // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing + 1}`, // Down-right (diagonal)
-//       // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing - 1}`, // Up-left (diagonal)
-//       // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing - 1}`, // Down-left (diagonal)
-//       // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing + 1}`, // Up-right (diagonal)
-//     ];
-
-//     let attempts = 0;
-//     let foundValidCoordinate = false;
-
-//     // Try to find a valid adjacent coordinate that hasn't been used
-//     while (attempts < 10 && !foundValidCoordinate) {
-//       let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
-//       coordinates = adjacentCoordinates[randomIndex];
-//       [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
-
-//       // Check if the coordinates are valid (within bounds and not used before)
-//       if (
-//         randomRow >= 0 &&
-//         randomRow < 10 && // Ensure it's within bounds
-//         randomCol >= 0 &&
-//         randomCol < 10 &&
-//         !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
-//       ) {
-//         foundValidCoordinate = true; // A valid coordinate is found
-//       } else {
-//         attempts++; // Increase the number of attempts
-//       }
-//     }
-
-//     // If no valid coordinate found after 10 attempts, default to a random one
-//     if (!foundValidCoordinate) {
-//       console.log(
-//         "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
-//       );
-//       do {
-//         randomRow = getRandomRow();
-//         randomCol = getRandomCol();
-//         coordinates = `${randomRow},${randomCol}`;
-//       } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//     }
-//   } else if (
-//     lastPlayer2ComputerAttack === "miss" &&
-//     hunterCoordinateArray.length > 20
-//   ) {
-//     do {
-//       randomRow = getRandomRow();
-//       randomCol = getRandomCol();
-//       coordinates = `${randomRow},${randomCol}`;
-//     } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//   } else {
-//     do {
-//       randomRow = getRandomRow();
-//       randomCol = everyOtherColDependingOnRow(randomRow);
-//       coordinates = `${randomRow},${randomCol}`;
-//       hunterCoordinateSet.add(coordinates);
-//       console.log(`every other ${coordinates}`);
-//       console.log(hunterCoordinateArray);
-//     } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//   }
-
-//   // Add the unique coordinate to the set
-//   noRepeatSet.add(coordinates);
-//   console.log(noRepeatSet);
-//   console.log(hunterCoordinateSet);
-
-//   return {
-//     randomRow,
-//     randomCol,
-//   };
-// }
-
-// SUNDAY...2/23/2025
-export function getRandomRow(min = 0, max = 9) {
-  const randomRow = Math.floor(Math.random() * (max - min + 1)) + min;
-  return randomRow;
+  playerTurn += 1;
+  forPvsPMatchesShowHideScreenBtn();
+  return hitOrMiss;
 }
 
-export function getRandomCol(min = 0, max = 9) {
-  const randomCol = Math.floor(Math.random() * (max - min + 1)) + min;
-  return randomCol;
+function updateTurnMessage(hitOrMiss, row, col, isPlayer1) {
+  const player1Message = `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
+  const player2Message = `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
+
+  if (player2.playerType === "computer") {
+    addMessage(
+      isPlayer1
+        ? `${player1Message}PLAYER 2's TURN!`
+        : `${player2Message}SWITCH to PLAYER 1.`
+    );
+    endGame();
+  } else if (player2.playerType === "human") {
+    addMessage(
+      isPlayer1
+        ? `${player1Message}SWITCH to PLAYER 2.`
+        : `${player2Message}SWITCH to PLAYER 1.`
+    );
+    endGame();
+  }
 }
 
-export function getRandomAxis(min = 0, max = 9) {
-  const randomAxisNum = Math.floor(Math.random() * (max - min + 1)) + min;
-  let randomAxis;
-  if (randomAxisNum % 2 === 0) {
-    randomAxis = "v";
+function handleCellClick(boardNum, cell) {
+  const { p1FullBoard, p2FullBoard } = getBoardElements();
+  const targetId = cell.id;
+  const regex = /\((\d+),(\d+)\)/;
+  const matches = targetId.match(regex);
+  let row, col;
+
+  if (!matches || cell.innerText !== "") return;
+
+  row = +matches[1];
+  col = +matches[2];
+
+  // Determine if the attack is valid based on the turn and board visibility
+  if (player2.playerType === "human") {
+    isPvsPStarted = true;
   } else {
-    randomAxis = "h";
+    isPvsPStarted = false;
   }
-  return randomAxis;
+
+  const isPlayer1Turn = playerTurn % 2 === 0;
+  const isPlayer2Turn = playerTurn % 2 !== 0;
+
+  // Check if player 1 or player 2 can attack based on the game state
+  if (
+    !stopGameHaveWinner &&
+    matches &&
+    cell.innerText === "" &&
+    ((isPlayer1Turn && p1FullBoard.style.display === "flex") ||
+      (isPlayer2Turn && p2FullBoard.style.display === "flex"))
+  ) {
+    const hitOrMiss = processAttack(boardNum, row, col);
+    updateTurnMessage(hitOrMiss, row, col, isPlayer1Turn);
+
+    // If it's player 2's turn and they are a computer, trigger their attack
+    if (player2.playerType === "computer" && isPlayer2Turn) {
+      player2ComputerAttack();
+    }
+  }
 }
 
-function everyOtherColDependingOnRow(row) {
-  const even = [0, 2, 4, 6, 8];
-  const odd = [1, 3, 5, 7, 9];
-  const randomIndex = Math.floor(Math.random() * even.length); // Generates a random index
-  const randomEvenNumber = even[randomIndex]; // Gets the random number from the array
-  const randomOddNumber = odd[randomIndex]; // Gets the random number from the array
+function manuallyAttackTargetCoordinates(boardNum) {
+  const { hitMissTargetCellsClass } = getBoardElements(boardNum);
 
-  let everyOtherColEven = randomEvenNumber;
-  let everyOtherColOdd = randomOddNumber;
-  if (row % 2 === 0) {
-    return everyOtherColEven;
-  } else if (row % 2 !== 0) {
-    return everyOtherColOdd;
+  hitMissTargetCellsClass.forEach((cell) => {
+    cell.addEventListener("click", () => handleCellClick(boardNum, cell));
+  });
+}
+
+function player2ComputerAttack() {
+  if (
+    !stopGameHaveWinner &&
+    player2.playerType === "computer" &&
+    playerTurn % 2 !== 0
+  ) {
+    setTimeout(() => {
+      clearMessage();
+      let { randomRow, randomCol } = getUniqueRandomCoordinates(
+        hitOrMiss,
+        randomRowStored,
+        randomColStored,
+        lastPlayer2ComputerPriorAttack
+      );
+      const hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+      addMessage(
+        `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
+      );
+      playerTurn += 1;
+      attackSoundEffects(hitOrMiss);
+      addEmojiEffect(player1.playerBoard.board, 1);
+      colorSunkShips(testGame1, 1);
+      checkForSunkFleet(testGame1);
+      highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+      endGame();
+      if (hitOrMiss === "hit") {
+        randomRowStored = randomRow;
+        randomColStored = randomCol;
+      }
+    }, currentSetTimeoutValue); // Allows for message/sound effect play
   }
 }
 
-const noRepeatSet = new Set(); // Put set outside of function so that it accumulate new coordinates and not refresh itself when called
-let randomRow, randomCol, coordinates;
+  // End refactor of manuallyAttackTargetCoordinates(boardNum)
 
-const priorHitsSet = new Set();
-const priorHitsArray = Array.from(priorHitsSet);
-const lastHitTargetWereTheseCoordinates =
-  priorHitsArray[priorHitsArray.length - 1];
-const hunterCoordinateSet = new Set();
-const hunterCoordinateArray = Array.from(hunterCoordinateSet);
-
-// let adjacentCoordinates = [
-//   `${randomRowStored + 1},${randomColStored}`, // Down
-//   `${randomRowStored - 1},${randomColStored}`, // Up
-//   `${randomRowStored},${randomColStored + 1}`, // Right
-//   `${randomRowStored},${randomColStored - 1}`, // Left
-//   // `${randomRowStored + 1},${randomColStored + 1}`, // Down-right (diagonal)
-//   // `${randomRowStored - 1},${randomColStored - 1}`, // Up-left (diagonal)
-//   // `${randomRowStored + 1},${randomColStored - 1}`, // Down-left (diagonal)
-//   // `${randomRowStored - 1},${randomColStored + 1}`, // Up-right (diagonal)
-// ];
-
-// export function getUniqueRandomCoordinates(
-//   lastPlayer2ComputerAttack,
-//   randomRowStored,
-//   randomColStored
-// ) {
-//   // If last attack was a hit, attempt to target nearby coordinates
-//   if (lastPlayer2ComputerAttack === "HIT!!!") {
-//     const lastHitCoordinates = `${randomRowStored},${randomColStored}`;
-//     priorHitsSet.add(lastHitCoordinates);
-
-//     console.log(lastHitCoordinates); // Output: "4,5"
-//     console.log(priorHitsSet);
-
-//     let attempts = 0;
-//     let foundValidCoordinate = false;
-
-//     // Try to find a valid adjacent coordinate that hasn't been used
-//     while (attempts < 10 && !foundValidCoordinate) {
-//       let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
-//       coordinates = adjacentCoordinates[randomIndex];
-//       [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
-
-//       // Check if the coordinates are valid (within bounds and not used before)
-//       if (
-//         randomRow >= 0 &&
-//         randomRow < 10 && // Ensure it's within bounds
-//         randomCol >= 0 &&
-//         randomCol < 10 &&
-//         !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
-//       ) {
-//         foundValidCoordinate = true; // A valid coordinate is found
-//       } else {
-//         attempts++; // Increase the number of attempts
-//       }
-//     }
-
-//     // If no valid coordinate found after 10 attempts, default to a random one
-//     if (!foundValidCoordinate) {
-//       console.log(
-//         "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
-//       );
-//       do {
-//         randomRow = getRandomRow();
-//         randomCol = getRandomCol();
-//         coordinates = `${randomRow},${randomCol}`;
-//       } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//     }
-//   } else if (
-//     lastPlayer2ComputerAttack === "Double or nothing!!"
-//     // || lastPlayer2ComputerAttack === "Triple or nothing!"
-//   ) {
-//     // Get the last hit coordinates from the set
-//     const [randomRowDoubleOrNothing, randomColDoubleOrNothing] =
-//       lastHitTargetWereTheseCoordinates.split(",").map(Number); // Split and map to row and col
-
-//     console.log(
-//       `Prior coordinates: ${randomRowDoubleOrNothing},${randomColDoubleOrNothing}`
-//     );
-
-//     let adjacentCoordinates = [
-//       `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing}`, // Down
-//       `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing}`, // Up
-//       `${randomRowDoubleOrNothing},${randomColDoubleOrNothing + 1}`, // Right
-//       `${randomRowDoubleOrNothing},${randomColDoubleOrNothing - 1}`, // Left
-//       // Uncomment these if you want to include diagonals
-//       // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing + 1}`, // Down-right (diagonal)
-//       // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing - 1}`, // Up-left (diagonal)
-//       // `${randomRowDoubleOrNothing + 1},${randomColDoubleOrNothing - 1}`, // Down-left (diagonal)
-//       // `${randomRowDoubleOrNothing - 1},${randomColDoubleOrNothing + 1}`, // Up-right (diagonal)
-//     ];
-
-//     let attempts = 0;
-//     let foundValidCoordinate = false;
-
-//     // Try to find a valid adjacent coordinate that hasn't been used
-//     while (attempts < 10 && !foundValidCoordinate) {
-//       let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
-//       coordinates = adjacentCoordinates[randomIndex];
-//       [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
-
-//       // Check if the coordinates are valid (within bounds and not used before)
-//       if (
-//         randomRow >= 0 &&
-//         randomRow < 10 && // Ensure it's within bounds
-//         randomCol >= 0 &&
-//         randomCol < 10 &&
-//         !noRepeatSet.has(coordinates) // Ensure it's not a previously used coordinate
-//       ) {
-//         foundValidCoordinate = true; // A valid coordinate is found
-//       } else {
-//         attempts++; // Increase the number of attempts
-//       }
-//     }
-
-//     // If no valid coordinate found after 10 attempts, default to a random one
-//     if (!foundValidCoordinate) {
-//       console.log(
-//         "No valid adjacent coordinate found after 10 attempts, picking random coordinate."
-//       );
-//       do {
-//         randomRow = getRandomRow();
-//         randomCol = getRandomCol();
-//         coordinates = `${randomRow},${randomCol}`;
-//       } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//     }
-//   } else if (
-//     lastPlayer2ComputerAttack === "miss" &&
-//     hunterCoordinateArray.length > 20
-//   ) {
-//     do {
-//       randomRow = getRandomRow();
-//       randomCol = getRandomCol();
-//       coordinates = `${randomRow},${randomCol}`;
-//     } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//   } else {
-//     do {
-//       randomRow = getRandomRow();
-//       randomCol = everyOtherColDependingOnRow(randomRow);
-//       coordinates = `${randomRow},${randomCol}`;
-//       hunterCoordinateSet.add(coordinates);
-//       console.log(`every other ${coordinates}`);
-//       console.log(hunterCoordinateArray);
-//     } while (noRepeatSet.has(coordinates)); // Ensure uniqueness
-//   }
-
-//   // Add the unique coordinate to the set
-//   noRepeatSet.add(coordinates);
-//   console.log(noRepeatSet);
-//   console.log(hunterCoordinateSet);
-
-//   return {
-//     randomRow,
-//     randomCol,
-//   };
-// }
-// PLAYER 1: DEPLOY YOUR SHIPS. Rotate ships to select axis. Click on any ship to highlight it in red, then click the desired deployment zone square to place ship. Or, click RANDOM BUTTON to make random ship placements.
+  const { p1FullBoard, p2FullBoard } = getBoardElements();

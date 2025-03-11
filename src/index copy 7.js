@@ -70,8 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isPvsPStarted = false;
   let playerTurn = 0;
-  // const isPlayer1Turn = playerTurn % 2 === 0;
-  // const isPlayer2Turn = playerTurn % 2 !== 0;
   let hitOrMiss;
   let randomRowStored;
   let randomColStored;
@@ -122,6 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
+
   // PHASE 1 - Start with the basic splash screen
   function splashScreenStart() {
     // const { gifContainer } = getHeaderElements();
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     flexShowIt([header, btnPvsC, btnPvsP]);
     mainBtnContainer.style.flexDirection = "column";
     // messages.style.display = "none";
-    // btnPvsC.style.display = "flex";
+        // btnPvsC.style.display = "flex";
     // btnPvsP.style.display = "flex";
     // btnQuitGame.style.display = "none";
     // btnStartGame.style.display = "none";
@@ -251,13 +251,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupHideScreenBtnEventListener(boardNum) {
     const { battleshipGif, header } = getHeaderElements();
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
-    const {
-      appContainer,
-      p1FullBoard,
-      p1PlaceShips,
-      p2FullBoard,
-      p2PlaceShips,
-    } = getBoardElements();
+    const { appContainer, p1FullBoard, p1PlaceShips, p2FullBoard, p2PlaceShips } =
+      getBoardElements();
     const { player1UnlockScreen, player2UnlockScreen } = handleMessageContent();
 
     btnHideScreen.addEventListener("click", () => {
@@ -333,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { header } = getHeaderElements();
     const { btnUnlockScreen } = getBtnElements();
     const {
-      appContainer,
+      appContainer, 
       p1FullBoard,
       p1TargetZone,
       p2FullBoard,
@@ -650,161 +645,67 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // function forPvsPMatchesShowHideScreenBtn() {
-  //   const { btnHideScreen } = getBtnElements();
-  //   const { p1FullBoard, p2FullBoard } = getBoardElements();
-  //   const { clickAcceptGameInPvsP } = handleMessageContent();
-
-  //   if (
-  //     player2.playerType === "human" &&
-  //     !isPvsPStarted &&
-  //     placedShipListSet1.size === 5 &&
-  //     placedShipListSet2.size !== 5 &&
-  //     p2FullBoard.style.display !== "flex"
-  //   ) {
-  //     flexShowIt([btnHideScreen]);
-  //     // btnHideScreen.style.display = "flex";
-  //     btnHideScreen.style.backgroundColor = "var(--player1)";
-  //     btnHideScreen.style.borderColor = "var(--player1-text)";
-  //     btnHideScreen.style.color = "var(--enemy)";
-  //     btnHideScreen.innerText = "Accept";
-  //     clearMessage();
-  //     addMessage(clickAcceptGameInPvsP);
-  //   } else if (
-  //     player2.playerType === "human" &&
-  //     !isPvsPStarted &&
-  //     placedShipListSet2.size === 5 &&
-  //     p1FullBoard.style.display !== "flex"
-  //   ) {
-  //     flexShowIt([btnHideScreen]);
-  //     // btnHideScreen.style.display = "flex";
-  //     btnHideScreen.style.backgroundColor = "var(--player2)";
-  //     btnHideScreen.style.borderColor = "var(--player2-text)";
-  //     btnHideScreen.style.color = "var(--enemy)";
-  //     btnHideScreen.innerText = "Accept";
-  //     clearMessage();
-  //     addMessage(clickAcceptGameInPvsP);
-  //   } else if (
-  //     player2.playerType === "human" &&
-  //     isPvsPStarted &&
-  //     p2FullBoard.style.display !== "flex" &&
-  //     playerTurn % 2 !== 0
-  //   ) {
-  //     flexShowIt([btnHideScreen]);
-  //     // btnHideScreen.style.display = "flex";
-  //     btnHideScreen.style.backgroundColor = "var(--player2)";
-  //     btnHideScreen.style.borderColor = "var(--player2-text)";
-  //     btnHideScreen.style.color = "var(--enemy)";
-  //     btnHideScreen.innerText = "Switch";
-  //   } else if (
-  //     player2.playerType === "human" &&
-  //     isPvsPStarted &&
-  //     p1FullBoard.style.display !== "flex" &&
-  //     playerTurn % 2 === 0
-  //   ) {
-  //     flexShowIt([btnHideScreen]);
-  //     // btnHideScreen.style.display = "flex";
-  //     btnHideScreen.style.backgroundColor = "var(--player1)";
-  //     btnHideScreen.style.borderColor = "var(--player1-text)";
-  //     btnHideScreen.style.color = "var(--enemy)";
-  //     btnHideScreen.innerText = "Switch";
-  //   } else {
-  //     flexHideIt([btnHideScreen]);
-  //     // btnHideScreen.style.display = "none";
-  //   }
-  // }
-
-  let deleteLater = 0
-
-  // function updateHideScreenBtn(styles, message, buttonText) {
-  //   const { btnHideScreen } = getBtnElements();
-
-  //   flexShowIt([btnHideScreen]);
-
-  //   btnHideScreen.style.backgroundColor = styles.backgroundColor;
-  //   btnHideScreen.style.borderColor = styles.borderColor;
-  //   btnHideScreen.style.color = styles.textColor;
-  //   btnHideScreen.innerText = buttonText;
-
-  //   clearMessage();
-  //   addMessage(message);
-  // }
-
-  function updateHideScreenBtn(styles, message, buttonText) {
-    const { btnHideScreen } = getBtnElements();
-
-    flexShowIt([btnHideScreen]);
-
-    btnHideScreen.style.backgroundColor = styles.backgroundColor;
-    btnHideScreen.style.borderColor = styles.borderColor;
-    btnHideScreen.style.color = styles.textColor;
-    btnHideScreen.innerText = buttonText;
-
-    clearMessage();
-    addMessage(message);
-  }
-
   function forPvsPMatchesShowHideScreenBtn() {
+    const { btnHideScreen } = getBtnElements();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
     const { clickAcceptGameInPvsP } = handleMessageContent();
 
-    // Condition for Player 2 human and Player 1 ship placement
-    if (player2.playerType === "human" && !isPvsPStarted) {
-      if (
-        placedShipListSet1.size === 5 &&
-        placedShipListSet2.size !== 5 &&
-        p2FullBoard.style.display !== "flex"
-      ) {
-        updateHideScreenBtn(
-          {
-            backgroundColor: "var(--player1)",
-            borderColor: "var(--player1-text)",
-            textColor: "var(--enemy)",
-          },
-          clickAcceptGameInPvsP,
-          "Accept"
-        );
-      } else if (
-        placedShipListSet2.size === 5 &&
-        p1FullBoard.style.display !== "flex"
-      ) {
-        updateHideScreenBtn(
-          {
-            backgroundColor: "var(--player2)",
-            borderColor: "var(--player2-text)",
-            textColor: "var(--enemy)",
-          },
-          clickAcceptGameInPvsP,
-          "Accept"
-        );
-      }
-    }
-    // Conditions for Player 2 human and the game started
-    else if (player2.playerType === "human" && isPvsPStarted) {
-      if (p2FullBoard.style.display !== "flex" && playerTurn % 2 !== 0) {
-        updateHideScreenBtn(
-          {
-            backgroundColor: "var(--player2)",
-            borderColor: "var(--player2-text)",
-            textColor: "var(--enemy)",
-          },
-          null,
-          "Switch"
-        );
-      } else if (p1FullBoard.style.display !== "flex" && playerTurn % 2 === 0) {
-        updateHideScreenBtn(
-          {
-            backgroundColor: "var(--player1)",
-            borderColor: "var(--player1-text)",
-            textColor: "var(--enemy)",
-          },
-          null,
-          "Switch"
-        );
-      }
+    if (
+      player2.playerType === "human" &&
+      !isPvsPStarted &&
+      placedShipListSet1.size === 5 &&
+      placedShipListSet2.size !== 5 &&
+      p2FullBoard.style.display !== "flex"
+    ) {
+      flexShowIt([btnHideScreen]);
+      // btnHideScreen.style.display = "flex";
+      btnHideScreen.style.backgroundColor = "var(--player1)";
+      btnHideScreen.style.borderColor = "var(--player1-text)";
+      btnHideScreen.style.color = "var(--enemy)";
+      btnHideScreen.innerText = "Accept";
+      clearMessage();
+      addMessage(clickAcceptGameInPvsP);
+    } else if (
+      player2.playerType === "human" &&
+      !isPvsPStarted &&
+      placedShipListSet2.size === 5 &&
+      p1FullBoard.style.display !== "flex"
+    ) {
+      flexShowIt([btnHideScreen]);
+      // btnHideScreen.style.display = "flex";
+      btnHideScreen.style.backgroundColor = "var(--player2)";
+      btnHideScreen.style.borderColor = "var(--player2-text)";
+      btnHideScreen.style.color = "var(--enemy)";
+      btnHideScreen.innerText = "Accept";
+      clearMessage();
+      addMessage(clickAcceptGameInPvsP);
+    } else if (
+      player2.playerType === "human" &&
+      isPvsPStarted &&
+      p2FullBoard.style.display !== "flex" &&
+      playerTurn % 2 !== 0
+    ) {
+      flexShowIt([btnHideScreen]);
+      // btnHideScreen.style.display = "flex";
+      btnHideScreen.style.backgroundColor = "var(--player2)";
+      btnHideScreen.style.borderColor = "var(--player2-text)";
+      btnHideScreen.style.color = "var(--enemy)";
+      btnHideScreen.innerText = "Switch";
+    } else if (
+      player2.playerType === "human" &&
+      isPvsPStarted &&
+      p1FullBoard.style.display !== "flex" &&
+      playerTurn % 2 === 0
+    ) {
+      flexShowIt([btnHideScreen]);
+      // btnHideScreen.style.display = "flex";
+      btnHideScreen.style.backgroundColor = "var(--player1)";
+      btnHideScreen.style.borderColor = "var(--player1-text)";
+      btnHideScreen.style.color = "var(--enemy)";
+      btnHideScreen.innerText = "Switch";
     } else {
-      // Hide the button if no conditions are met
-      flexHideIt([getBtnElements().btnHideScreen]);
+      flexHideIt([btnHideScreen]);
+      // btnHideScreen.style.display = "none";
     }
   }
 
@@ -821,254 +722,124 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Start refactor of manuallyAttackTargetCoordinates(boardNum)
+  function manuallyAttackTargetCoordinates(boardNum) {
+    const { p1FullBoard, p2FullBoard } = getBoardElements();
+    const { hitMissTargetCellsClass } = getBoardElements(boardNum);
+    const board = player[boardNum].playerBoard.board;
+    highlightEmptyCellOnlyOnHover(board, boardNum);
 
-  // Old code...keep for future reference to show what was chopped up in the refactor
+    hitMissTargetCellsClass.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        let targetId = cell.id;
+        let regex = /\((\d+),(\d+)\)/;
+        let matches = targetId.match(regex);
+        let row, col;
 
-  // function manuallyAttackTargetCoordinates(boardNum) {
-  //   const { p1FullBoard, p2FullBoard } = getBoardElements();
-  //   const { hitMissTargetCellsClass } = getBoardElements(boardNum);
-  //   const board = player[boardNum].playerBoard.board;
-  //   highlightEmptyCellOnlyOnHover(board, boardNum);
+        if (player2.playerType === "human") {
+          isPvsPStarted = true;
+        } else {
+          isPvsPStarted = false;
+        }
+        if (
+          !stopGameHaveWinner &&
+          matches &&
+          cell.innerText === "" &&
+          playerTurn % 2 === 0 &&
+          p1FullBoard.style.display === "flex"
+        ) {
+          setTimeout(() => {
+            row = +matches[1]; // Reminder, +matches converts the string to a number
+            col = +matches[2]; // Same as above
+            hitOrMiss = testGame[boardNum].receiveAttack(row, col);
+            attackSoundEffects(hitOrMiss);
+            addEmojiEffect(board, boardNum);
+            colorSunkShips(testGame[boardNum], boardNum);
+            checkForSunkFleet(testGame[boardNum], boardNum);
+            // Highlight the board again
+            highlightEmptyCellOnlyOnHover(board, boardNum);
 
-  //   hitMissTargetCellsClass.forEach((cell) => {
-  //     cell.addEventListener("click", () => {
-  //       let targetId = cell.id;
-  //       let regex = /\((\d+),(\d+)\)/;
-  //       let matches = targetId.match(regex);
-  //       let row, col;
-
-  //       if (player2.playerType === "human") {
-  //         isPvsPStarted = true;
-  //       } else {
-  //         isPvsPStarted = false;
-  //       }
-  //       if (
-  //         !stopGameHaveWinner &&
-  //         matches &&
-  //         cell.innerText === "" &&
-  //         playerTurn % 2 === 0 &&
-  //         p1FullBoard.style.display === "flex"
-  //       ) {
-  //         setTimeout(() => {
-  //           row = +matches[1]; // Reminder, +matches converts the string to a number
-  //           col = +matches[2]; // Same as above
-  //           hitOrMiss = testGame[boardNum].receiveAttack(row, col);
-  //           attackSoundEffects(hitOrMiss);
-  //           addEmojiEffect(board, boardNum);
-  //           colorSunkShips(testGame[boardNum], boardNum);
-  //           checkForSunkFleet(testGame[boardNum], boardNum);
-  //           // Highlight the board again
-  //           highlightEmptyCellOnlyOnHover(board, boardNum);
-
-  //           playerTurn += 1;
-  //           player2ComputerAttack();
-  //           forPvsPMatchesShowHideScreenBtn();
-  //           clearMessage();
-  //           if (player2.playerType === "computer") {
-  //             addMessage(
-  //               `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). PLAYER 2's TURN!`
-  //             );
-  //             endGame();
-  //           } else {
-  //             addMessage(
-  //               `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 2.`
-  //             );
-  //             endGame();
-  //           }
-  //         }, setTimeoutBlockTrick);
-  //       }
-  //       if (
-  //         !stopGameHaveWinner &&
-  //         matches &&
-  //         cell.innerText === "" &&
-  //         player2.playerType === "human" &&
-  //         playerTurn % 2 !== 0 &&
-  //         p2FullBoard.style.display === "flex"
-  //       ) {
-  //         setTimeout(() => {
-  //           row = +matches[1]; // Reminder, +matches converts the string to a number
-  //           col = +matches[2]; // Same as above
-  //           hitOrMiss = testGame[boardNum].receiveAttack(row, col);
-  //           attackSoundEffects(hitOrMiss);
-  //           addEmojiEffect(board, boardNum);
-  //           colorSunkShips(testGame[boardNum], boardNum);
-  //           checkForSunkFleet(testGame[boardNum], boardNum);
-  //           // Highlight the board again
-  //           highlightEmptyCellOnlyOnHover(board, boardNum);
-  //           playerTurn += 1;
-  //           forPvsPMatchesShowHideScreenBtn();
-  //           clearMessage();
-  //           if (player2.playerType === "human") {
-  //             addMessage(
-  //               `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 1.`
-  //             );
-  //             endGame();
-  //           }
-  //         }, setTimeoutBlockTrick);
-  //       }
-  //     });
-  //   });
-  // }
-
-  // function player2ComputerAttack() {
-  //   if (
-  //     !stopGameHaveWinner &&
-  //     player2.playerType === "computer" &&
-  //     playerTurn % 2 !== 0
-  //   ) {
-  //     setTimeout(() => {
-  //       clearMessage();
-  //       let { randomRow, randomCol } = getUniqueRandomCoordinates(
-  //         hitOrMiss,
-  //         randomRowStored,
-  //         randomColStored,
-  //         lastPlayer2ComputerPriorAttack
-  //       );
-  //       hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-  //       addMessage(
-  //         `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
-  //       );
-  //       playerTurn += 1;
-  //       attackSoundEffects(hitOrMiss);
-  //       addEmojiEffect(player1.playerBoard.board, 1);
-  //       colorSunkShips(testGame1, 1);
-  //       checkForSunkFleet(testGame1);
-  //       highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-  //       endGame();
-  //       if (hitOrMiss === "hit") {
-  //         randomRowStored = randomRow;
-  //         randomColStored = randomCol;
-  //       }
-  //     }, currentSetTimeoutValue); // setTimeout allows player 2 messages to be seen and sound effects to get some play
-  //   }
-  // }
-
-
-function processAttack(boardNum, row, col) {
-  const board = player[boardNum].playerBoard.board;
-  const hitOrMiss = testGame[boardNum].receiveAttack(row, col);
-
-  attackSoundEffects(hitOrMiss);
-  addEmojiEffect(board, boardNum);
-  colorSunkShips(testGame[boardNum], boardNum);
-  checkForSunkFleet(testGame[boardNum], boardNum);
-  highlightEmptyCellOnlyOnHover(board, boardNum);
-
-  playerTurn += 1;
-  forPvsPMatchesShowHideScreenBtn();
-  return hitOrMiss;
-}
-
-function updateTurnMessage(hitOrMiss, row, col, isPlayer1) {
-  const player1Message = `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
-  const player2Message = `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). `;
-
-  if (player2.playerType === "computer") {
-    addMessage(
-      isPlayer1
-        ? `${player1Message}PLAYER 2's TURN!`
-        : `${player2Message}SWITCH to PLAYER 1.`
-    );
-    endGame();
-  } else if (player2.playerType === "human") {
-    addMessage(
-      isPlayer1
-        ? `${player1Message}SWITCH to PLAYER 2.`
-        : `${player2Message}SWITCH to PLAYER 1.`
-    );
-    endGame();
-  }
-}
-
-function handleCellClick(boardNum, cell) {
-  const { p1FullBoard, p2FullBoard } = getBoardElements();
-  const targetId = cell.id;
-  const regex = /\((\d+),(\d+)\)/;
-  const matches = targetId.match(regex);
-  let row, col;
-
-  if (!matches || cell.innerText !== "") return;
-
-  row = +matches[1];
-  col = +matches[2];
-
-  // Determine if the attack is valid based on the turn and board visibility
-  if (player2.playerType === "human") {
-    isPvsPStarted = true;
-  } else {
-    isPvsPStarted = false;
+            playerTurn += 1;
+            player2ComputerAttack();
+            forPvsPMatchesShowHideScreenBtn();
+            clearMessage();
+            if (player2.playerType === "computer") {
+              addMessage(
+                `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). PLAYER 2's TURN!`
+              );
+              endGame();
+            } else {
+              addMessage(
+                `PLAYER 1's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 2.`
+              );
+              endGame();
+            }
+          }, setTimeoutBlockTrick);
+        }
+        if (
+          !stopGameHaveWinner &&
+          matches &&
+          cell.innerText === "" &&
+          player2.playerType === "human" &&
+          playerTurn % 2 !== 0 &&
+          p2FullBoard.style.display === "flex"
+        ) {
+          setTimeout(() => {
+            row = +matches[1]; // Reminder, +matches converts the string to a number
+            col = +matches[2]; // Same as above
+            hitOrMiss = testGame[boardNum].receiveAttack(row, col);
+            attackSoundEffects(hitOrMiss);
+            addEmojiEffect(board, boardNum);
+            colorSunkShips(testGame[boardNum], boardNum);
+            checkForSunkFleet(testGame[boardNum], boardNum);
+            // Highlight the board again
+            highlightEmptyCellOnlyOnHover(board, boardNum);
+            playerTurn += 1;
+            forPvsPMatchesShowHideScreenBtn();
+            clearMessage();
+            if (player2.playerType === "human") {
+              addMessage(
+                `PLAYER 2's attack is a ${hitOrMiss} at square: (${row}, ${col}). SWITCH to PLAYER 1.`
+              );
+              endGame();
+            }
+          }, setTimeoutBlockTrick);
+        }
+      });
+    });
   }
 
-  const isPlayer1Turn = playerTurn % 2 === 0;
-  const isPlayer2Turn = playerTurn % 2 !== 0;
-
-  // Check if player 1 or player 2 can attack based on the game state
-  if (
-    !stopGameHaveWinner &&
-    matches &&
-    cell.innerText === "" &&
-    ((isPlayer1Turn && p1FullBoard.style.display === "flex") ||
-      (isPlayer2Turn && p2FullBoard.style.display === "flex"))
-  ) {
-    console.log(playerTurn);
-    
-    const hitOrMiss = processAttack(boardNum, row, col);
-    updateTurnMessage(hitOrMiss, row, col, isPlayer1Turn);
-
-    // If it's player 2's turn and they are a computer, trigger their attack
-    if (player2.playerType === "computer" && isPlayer1Turn) {
-      // Trigger player 2's computer attack after player 1's turn
+  function player2ComputerAttack() {
+    if (
+      !stopGameHaveWinner &&
+      player2.playerType === "computer" &&
+      playerTurn % 2 !== 0
+    ) {
       setTimeout(() => {
-        player2ComputerAttack();
-      }, 0); // We use a short timeout to ensure the game state has been updated
+        clearMessage();
+        let { randomRow, randomCol } = getUniqueRandomCoordinates(
+          hitOrMiss,
+          randomRowStored,
+          randomColStored,
+          lastPlayer2ComputerPriorAttack
+        );
+        hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        addMessage(
+          `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
+        );
+        playerTurn += 1;
+        attackSoundEffects(hitOrMiss);
+        addEmojiEffect(player1.playerBoard.board, 1);
+        colorSunkShips(testGame1, 1);
+        checkForSunkFleet(testGame1);
+        highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
+        endGame();
+        if (hitOrMiss === "hit") {
+          randomRowStored = randomRow;
+          randomColStored = randomCol;
+        }
+      }, currentSetTimeoutValue); // setTimeout allows player 2 messages to be seen and sound effects to get some play
     }
   }
-}
-
-function manuallyAttackTargetCoordinates(boardNum) {
-  const { hitMissTargetCellsClass } = getBoardElements(boardNum);
-
-  hitMissTargetCellsClass.forEach((cell) => {
-    cell.addEventListener("click", () => handleCellClick(boardNum, cell));
-  });
-}
-
-function player2ComputerAttack() {
-  if (
-    !stopGameHaveWinner &&
-    player2.playerType === "computer" &&
-    playerTurn % 2 !== 0
-  ) {
-    setTimeout(() => {
-      clearMessage();
-      let { randomRow, randomCol } = getUniqueRandomCoordinates(
-        hitOrMiss,
-        randomRowStored,
-        randomColStored,
-        lastPlayer2ComputerPriorAttack
-      );
-      const hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-      addMessage(
-        `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
-      );
-      playerTurn += 1;
-      attackSoundEffects(hitOrMiss);
-      addEmojiEffect(player1.playerBoard.board, 1);
-      colorSunkShips(testGame1, 1);
-      checkForSunkFleet(testGame1);
-      highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
-      endGame();
-      if (hitOrMiss === "hit") {
-        randomRowStored = randomRow;
-        randomColStored = randomCol;
-      }
-    }, currentSetTimeoutValue); // Allows for message/sound effect play
-  }
-}
-
-
-  // End refactor of manuallyAttackTargetCoordinates(boardNum)
 
   manuallyAttackTargetCoordinates(1);
   manuallyAttackTargetCoordinates(2);
@@ -1108,20 +879,17 @@ function player2ComputerAttack() {
 
   function endGame() {
     const { messages } = getMessageElements();
-    const { appContainer } = getBoardElements()
     const { player1Wins, player2Wins } = handleMessageContent();
 
     if (player1IsVictorious) {
       clearMessage();
       addMessage(player1Wins);
-      appContainer.style.background = "var(--background-player1)";
       messages.style.backgroundColor = "var(--player1)";
       messages.style.borderColor = "var(--player1-text)";
       messages.style.color = "var(--enemy)";
     } else if (player2IsVictorious) {
       clearMessage();
       addMessage(player2Wins);
-      appContainer.style.background = "var(--background-player2)";
       messages.style.backgroundColor = "var(--player2)";
       messages.style.borderColor = "var(--player1-text)";
       messages.style.color = "var(--enemy)";
