@@ -450,7 +450,7 @@ export function getRandomAxis(min = 0, max = 9) {
   return randomAxis;
 }
 
-function everyOtherColDependingOnRow(row) {
+export function everyOtherColDependingOnRow(row) {
   const even = [0, 2, 4, 6, 8];
   const odd = [1, 3, 5, 7, 9];
 
@@ -476,7 +476,11 @@ let randomRow, randomCol, coordinates;
 //   priorHitCoordinatesArray[priorHitCoordinatesArray.length - 1];
 // const hunterCoordinatesArray = Array.from(hunterCoordinatesSet);
 
-export function getUniqueRandomCoordinates() {
+export function targetAdjacentCoordinates() {}
+
+export function targetLikelyCoordinates() {}
+
+export function targetRandomCoordinates() {
   if (hunterCoordinatesSet.size >= 50) {
     // We assume 50 is the number of cells already targeted in the checkerboard pattern
     // Basic random attacks

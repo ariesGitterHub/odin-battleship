@@ -27,7 +27,6 @@ import {
   getRandomAxis,
   getRandomCol,
   getRandomRow,
-  getUniqueRandomCoordinates,
   handleHighlightPlaceShip,
   handleMessageContent,
   highlightEmptyCellOnlyOnHover,
@@ -38,6 +37,9 @@ import {
   mp3Sink,
   orientShipSvgOnShipGrid,
   removeSingleShipSvgOnShipGrid,
+  // targetAdjacentCoordinates,
+  // targetLikelyCoordinates,
+  // targetRandomCoordinates,
 } from "./js/functionsOther.js";
 import { Gameboard } from "./js/classGameboard.js";
 import { Player } from "./js/classPlayer.js";
@@ -80,7 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // let randomColStored;
   // let lastPlayer2ComputerPriorAttack;
 
-  const currentSetTimeoutValue = 2500; // Use on player2 computer attacks
+  const currentSetTimeoutValue = 2500; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
+  // const currentSetTimeoutValue = 0 // No delay - speedier for testing purposes
   // const setTimeoutBlockTrick = 0; // Used to try and get Apple mobile browser to work better with code
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
@@ -638,6 +641,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { btnStartGame, p2BtnRandom } = getBtnElements();
     const { p1PlaceShips, p1TargetZone } = getBoardElements();
     const { clickStartGameInPvsC } = handleMessageContent();
+
     if (
       player2.playerType === "computer" &&
       placedShipListSet1.size === 5 &&
@@ -923,7 +927,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //   ) {
   //     setTimeout(() => {
   //       clearMessage();
-  //       let { randomRow, randomCol } = getUniqueRandomCoordinates(
+  //       let { randomRow, randomCol } = targetRandomCoordinates(
   //         hitOrMiss,
   //         randomRowStored,
   //         randomColStored,
@@ -1037,27 +1041,123 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Put these sets outside of function so that it accumulate new coordinates and not refresh itself when called
+  const noRepeatCoordinatesSet = new Set();
+  // const priorHitCoordinatesSet = new Set();
+  const hunterCoordinatesSet = new Set();
+  // const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
+
+  let hitOrMiss,
+    randomRow,
+    randomCol,
+    randomRowStored,
+    randomColStored,
+    lastPlayer2ComputerAttack,
+    // lastLastPlayer2ComputerAttack,
+    // lastLastLastPlayer2ComputerAttack,
+    coordinates;
+
+  let player2IsStubbornOpponent = 0;
+
+  // Keep below?
+  // const lastHitTargetCoordinates =
+  //   priorHitCoordinatesArray[priorHitCoordinatesArray.length - 1];
+  // const hunterCoordinatesArray = Array.from(hunterCoordinatesSet);
+
+  function targetAdjacentCoordinates() {
+    let attempts = 0;
+    let foundValidCoordinate = false;
+    let coordinateDistance = 1;
+    if (testGame1.ships[4].sunkStatus) {
+      coordinateDistance = 2; // Expands search field after smallest ship is sunk; for more efficient hunting
+    }
+
+    let adjacentCoordinates = [
+      `${randomRowStored + coordinateDistance},${randomColStored}`, // Down
+      `${randomRowStored - coordinateDistance},${randomColStored}`, // Up
+      `${randomRowStored},${randomColStored + coordinateDistance}`, // Right
+      `${randomRowStored},${randomColStored - coordinateDistance}`, // Left
+    ];
+
+    while (attempts < 10 && !foundValidCoordinate) {
+      let randomIndex = Math.floor(Math.random() * adjacentCoordinates.length);
+      coordinates = adjacentCoordinates[randomIndex];
+      [randomRow, randomCol] = coordinates.split(",").map(Number); // Split into row and col
+
+      // Check if the coordinates are valid (within bounds and not used before)
+      if (
+        randomRow >= 0 &&
+        randomRow < 10 &&
+        randomCol >= 0 &&
+        randomCol < 10 &&
+        !noRepeatCoordinatesSet.has(coordinates) // Ensure it's not a previously used coordinate
+      ) {
+        foundValidCoordinate = true; // A valid coordinate is found
+      } else {
+        attempts++; // Increase the number of attempts
+      }
+    }
+    console.log("Attack Style: Targeted Attack Pattern");
+    noRepeatCoordinatesSet.add(coordinates);
+    hunterCoordinatesSet.add(coordinates);
+
+    return { randomRow, randomCol };
+  }
+
+  // function targetLikelyCoordinates() {}
+
+  function targetRandomCoordinates() {
+    if (hunterCoordinatesSet.size >= 50) {
+      // We assume 50 is the number of cells already targeted in the checkerboard pattern
+      // Basic random attacks
+      do {
+        console.log("Attack Style: Basic Random Attack Pattern");
+        randomRow = getRandomRow();
+        randomCol = getRandomCol();
+        coordinates = `${randomRow},${randomCol}`;
+      } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
+    } else {
+      // Start off attacks by hunting every other square
+      do {
+        console.log("Attack Style: Checkerboard 'Hunter' Attack Pattern");
+        randomRow = getRandomRow();
+        randomCol = everyOtherColDependingOnRow(randomRow);
+        coordinates = `${randomRow},${randomCol}`;
+      } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
+    }
+
+    noRepeatCoordinatesSet.add(coordinates);
+    hunterCoordinatesSet.add(coordinates);
+
+    return { randomRow, randomCol };
+  }
+
   function player2ComputerAttack() {
     if (
       !stopGameHaveWinner &&
       player2.playerType === "computer" &&
       playerTurn % 2 !== 0
     ) {
-      const player2AttackInfo = {
-        randomRowStored: null,
-        randomColStored: null,
-        lastAttackWasHit: null,
-      };
       setTimeout(() => {
-        clearMessage();
-        let { randomRow, randomCol } = getUniqueRandomCoordinates(
-          player2AttackInfo.randomRowStored,
-          player2AttackInfo.randomColStored,
-          player2AttackInfo.lastAttackWasHit,
-        );
-        const hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        if (
+          lastPlayer2ComputerAttack === "hit" ||
+          player2IsStubbornOpponent > 0
+        ) {
+          let { randomRow, randomCol } = targetAdjacentCoordinates();
+          hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+          if (lastPlayer2ComputerAttack !== "hit") {
+            player2IsStubbornOpponent--;
+            console.log(`Stubborn Factor = ${player2IsStubbornOpponent}`);
+          }
+        }
+        if (lastPlayer2ComputerAttack !== "hit") {
+          let { randomRow, randomCol } = targetRandomCoordinates();
+          hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
+        }
+
         console.log(`It's a ${hitOrMiss}`);
-        
+
+        clearMessage();
         addMessage(
           `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
         );
@@ -1069,15 +1169,20 @@ document.addEventListener("DOMContentLoaded", () => {
         highlightEmptyCellOnlyOnHover(player1.playerBoard.board, 1);
         endGame();
         if (hitOrMiss === "hit") {
-          player2AttackInfo.randomRowStored = randomRow;
-          player2AttackInfo.randomColStored = randomCol;
-          player2AttackInfo.lastAttackWasHit = hitOrMiss;
+          randomRowStored = randomRow;
+          randomColStored = randomCol;
+          lastPlayer2ComputerAttack = hitOrMiss;
+          player2IsStubbornOpponent = 3;
+        } else {
+          lastPlayer2ComputerAttack = "miss";
         }
-        console.log(
-          player2AttackInfo.randomRowStored,
-          player2AttackInfo.randomColStored
-        );
-        console.log(player2AttackInfo.lastAttackWasHit);
+
+        console
+          .log
+          // player2AttackInfo.randomRowStored,
+          // player2AttackInfo.randomColStored
+          ();
+        // console.log(player2AttackInfo.lastAttackWasHit);
       }, currentSetTimeoutValue); // Allows for message/sound effect play
     }
   }
@@ -1095,6 +1200,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (player2.playerType === "computer") {
       btnStartGame.addEventListener("click", () => {
+        console.log(testGame1);
+
         mp3Click();
         flexHideIt([p1PlaceShips, btnStartGame]);
         // p1PlaceShips.style.display = "none";
