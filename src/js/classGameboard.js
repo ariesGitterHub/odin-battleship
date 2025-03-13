@@ -12,14 +12,13 @@ class Gameboard {
             new Ship("destroyer", 3, "d", "D!"),
             new Ship("submarine", 3, "s", "S!"),
             new Ship("corvette", 2, "c", "C!"),
-            // new Ship("patrol boat", 1, "p"), // Remove patrol boat, it's too small, and slows down game-play
+            // new Ship("patrol boat", 1, "p"), // Commented out patrol boat, because it's too small, and slows down game-play, keep for reference in case I ever add it back on a whim
           ];
   }
 
   allShipsArePlaced() {
     const requiredCodes = new Set(["a", "b", "d", "s", "c"]);
     let foundCodes = new Set();
-
     for (let i = 0; i < this.board.length; i++) {
       for (let j = 0; j < this.board[i].length; j++) {
         const cell = this.board[i][j];
@@ -32,7 +31,6 @@ class Gameboard {
         }
       }
     }
-
     // If we finish and haven't found all the codes, return false
     return false;
   }
@@ -109,9 +107,7 @@ class Gameboard {
     // Edge case: check each row/col using a loop to ensure all are within the bounds of the board
     // Make sure two ships don't try to occupy or overwrite each other
     // Make sure you only place ships in the ship array, e.g., x5 ships have an index range of [0] to [4], ship [5] is not there
-
     let placementCheck = this.checkShipPlacementCell(ship, axis, row, col);
-
     if (placementCheck === "invalid") {
       return "invalid";
     } else {
@@ -145,7 +141,6 @@ class Gameboard {
   // Checks the value this.board[row][col] to see if its value is a ship's boardCode (e.g., "a", an aircraft carrier, or "d", a destroyer); it then tells that given ship that it has been hit
   checkShipBoardCodeNotifyShip(row, col) {
     let hitTarget = this.board[row][col];
-
     this.ships.forEach((ship) => {
       if (hitTarget === ship.boardCode) {
         ship.hit();
@@ -153,33 +148,15 @@ class Gameboard {
     });
   }
 
-  // EVEN BETTER CODE, USES FIND() FOR BETTER PERFORMANCE
-  // checkShipBoardCodeNotifyShip(row, col) {
-  //   let hitTarget = this.board[row][col];
-
-  //   const ship = this.ships.find((ship) => hitTarget === ship.boardCode);
-  //   if (ship) {
-  //     ship.hit();
-  //   }
-  // }
-
   // Method to receive an attack
   receiveAttack(row, col) {
     let placementCheck = this.checkGridPlacement(row, col);
-
     // Check for out of bounds
     if (placementCheck === "invalid") {
       return "invalid";
     }
-
     // The target at [row][col]
     let target = this.board[row][col];
-
-    // If the target was already selected, it should have a "!!"" or "mm".
-    // if (target === "!!" || target === "mm") {
-    //   return "retry"; // The cell has already been attacked or is not a valid target
-    // }
-
     if (
       target === "A!" ||
       target === "B!" ||
@@ -190,11 +167,8 @@ class Gameboard {
     ) {
       return "retry"; // The cell has already been attacked or is not a valid target
     }
-
     if (this.board[row][col] !== "--") {
-      // Hit = "!!": Change the target to "!!" and return the result
       // Notify the correct ship that it was
-
       if (this.board[row][col] === "a") {
         this.checkShipBoardCodeNotifyShip(row, col);
         this.board[row][col] = "A!";
@@ -220,11 +194,11 @@ class Gameboard {
         this.board[row][col] = "C!";
         return "hit";
       }
-      if (this.board[row][col] === "p") {
-        this.checkShipBoardCodeNotifyShip(row, col);
-        this.board[row][col] = "P!";
-        return "hit";
-      }
+      // if (this.board[row][col] === "p") {
+      //   this.checkShipBoardCodeNotifyShip(row, col);
+      //   this.board[row][col] = "P!";
+      //   return "hit";
+      // }
     }
     // Miss = "mm": Change the target to "mm" and return the result
     else {

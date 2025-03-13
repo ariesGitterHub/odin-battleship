@@ -17,6 +17,37 @@ describe("Gameboard", () => {
     testGame.placeShip(testGame.ships[4], "h", 8, 7);
   });
 
+  // New Addition
+  describe("allShipsArePlaced", () => {
+    it("should return true when all ships are placed", () => {
+      // After placing all ships, we expect allShipsArePlaced to return true
+      expect(testGame.allShipsArePlaced()).toBe(true);
+    });
+
+    it("should return false if any ship is not placed", () => {
+      // Remove one ship to test for false
+      testGame.removeShip("a"); // Removes aircraft carrier
+      expect(testGame.allShipsArePlaced()).toBe(false);
+    });
+  });
+
+  // New Addition
+  describe("removeShip", () => {
+    it("should correctly remove a ship from the board", () => {
+      testGame.removeShip("a");
+      expect(testGame.board[1][7]).toBe("--"); // The cell should be empty now
+    });
+  });
+
+  // New Addition
+  describe("removeAllShips", () => {
+    it("should remove all ships from the board", () => {
+      testGame.removeAllShips();
+      expect(testGame.board.flat().includes("A!")).toBe(false); // Ensures no ships are present
+      expect(testGame.board.flat().includes("B!")).toBe(false);
+    });
+  });
+
   describe("placeShip", () => {
     it("should place the ship correctly", () => {
       const spy = jest.spyOn(testGame, "placeShip");
@@ -25,33 +56,44 @@ describe("Gameboard", () => {
     });
   });
 
-describe("invalid ship placements", () => {
-  it("should render ship placement as 'invalid' when ship is placed out of bounds horizontally", () => {
-    const result = testGame.placeShip(testGame.ships[0], "h", 0, 8);
-    expect(result).toBe("invalid");
+  describe("invalid ship placements", () => {
+    it("should render ship placement as 'invalid' when ship is placed out of bounds horizontally", () => {
+      const result = testGame.placeShip(testGame.ships[0], "h", 0, 8);
+      expect(result).toBe("invalid");
+    });
+
+    it("should render ship placement as 'invalid' when a ship collides with another ship due to placement overlap", () => {
+      const result = testGame.placeShip(testGame.ships[2], "h", 1, 7);
+      expect(result).toBe("invalid");
+    });
+
+    it("should render ship placement as 'invalid' when ship is placed out of bounds vertically", () => {
+      const result = testGame.placeShip(testGame.ships[0], "v", 6, 9);
+      expect(result).toBe("invalid");
+    });
+
+    it("should render ship placement as 'invalid' when a ship collides with another ship due to placement overlap", () => {
+      const result = testGame.placeShip(testGame.ships[2], "v", 4, 5);
+      expect(result).toBe("invalid");
+    });
+
+    it("should render ship placement as 'invalid' when trying to place a ship that does not exist, e.g., a sixth ship at index [5] taht is beyond the five available ships", () => {
+      const result = testGame.placeShip(testGame.ships[9], "h", 0, 0);
+      expect(result).toBe("invalid");
+    });
   });
 
-  it("should render ship placement as 'invalid' when a ship collides with another ship due to placement overlap", () => {
-    const result = testGame.placeShip(testGame.ships[2], "h", 1, 7);
-    expect(result).toBe("invalid");
-  });
+  // New Addition
+  describe("checkGridPlacement", () => {
+    it("should return 'invalid' for out-of-bounds grid placement", () => {
+      expect(testGame.checkGridPlacement(-1, 0)).toBe("invalid");
+      expect(testGame.checkGridPlacement(10, 10)).toBe("invalid");
+    });
 
-  it("should render ship placement as 'invalid' when ship is placed out of bounds vertically", () => {
-    const result = testGame.placeShip(testGame.ships[0], "v", 6, 9);
-    expect(result).toBe("invalid");
+    it("should return 'valid' for valid grid placement", () => {
+      expect(testGame.checkGridPlacement(0, 0)).toBe(undefined); // In-bounds, no return value
+    });
   });
-
-  it("should render ship placement as 'invalid' when a ship collides with another ship due to placement overlap", () => {
-    const result = testGame.placeShip(testGame.ships[2], "v", 4, 5);
-    expect(result).toBe("invalid");
-  });
-
-  it("should render ship placement as 'invalid' when trying to place a ship that does not exist, e.g., a sixth ship at index [5] taht is beyond the five available ships", () => {
-    const result = testGame.placeShip(testGame.ships[9], "h", 0, 0);
-    expect(result).toBe("invalid");
-  });
-});
-
 
   describe("when attacking", () => {
     it("should return 'invalid' for an attack outside the board", () => {
@@ -85,4 +127,28 @@ describe("invalid ship placements", () => {
       expect(testGame.ships[4].isSunk()).toBe(true);
     });
   });
+
+  // New Addition
+  describe("checkGridPlacement", () => {
+    it("should return 'invalid' for out-of-bounds grid placement", () => {
+      expect(testGame.checkGridPlacement(-1, 0)).toBe("invalid");
+      expect(testGame.checkGridPlacement(10, 10)).toBe("invalid");
+    });
+
+    it("should return 'valid' for valid grid placement", () => {
+      expect(testGame.checkGridPlacement(0, 0)).toBe(undefined); // In-bounds, no return value
+    });
+  });
+
+  // New Addition
+  describe("checkShipBoardCodeNotifyShip", () => {
+    it("should notify the correct ship when it is hit", () => {
+      const spy = jest.spyOn(testGame.ships[0], "hit");
+      testGame.receiveAttack(1, 7); // Hits the first ship
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
 });
+
+

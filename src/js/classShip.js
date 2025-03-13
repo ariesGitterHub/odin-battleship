@@ -29,15 +29,6 @@ class Ship {
     }
     return false;
   }
-
-  clearHitsAndSunkStatus() {
-    if (this.numHits > 0) {
-      this.numHits = 0;
-    }
-    if (this.sunkStatus) {
-      this.sunkStatus = false;
-    }
-  }
 }
 
 export { Ship };

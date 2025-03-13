@@ -5,9 +5,9 @@
  * @param {string|HTMLElement} [innerContent=''] - Optional inner content (text or HTML).
  * @returns {HTMLElement} The created element.
  */
+
 export function createElement(tagName, attributes = {}, text = "") {
   const element = document.createElement(tagName);
-
   // Set attributes dynamically
   for (const [key, value] of Object.entries(attributes)) {
     // Handle 'class' special case (className is the property used in JS)
@@ -19,12 +19,10 @@ export function createElement(tagName, attributes = {}, text = "") {
       element.setAttribute(key, value);
     }
   }
-
   // Set inner content if provided
   if (text) {
     element.innerText = text; // Could also use innerText if you want plain text
   }
-
   return element;
 }
 
@@ -53,7 +51,6 @@ export function createElement(tagName, attributes = {}, text = "") {
 
 export function createImg(attributes = {}) {
   const img = document.createElement("img");
-
   // Set attributes dynamically
   for (const [key, value] of Object.entries(attributes)) {
     // Handle 'id', 'src', and 'alt' attributes specifically
@@ -70,7 +67,6 @@ export function createImg(attributes = {}) {
       img.setAttribute(key, value);
     }
   }
-
   return img;
 }
 
@@ -101,7 +97,6 @@ export function createImgShip(id, selectShip, src, classes) {
     });
     return a;
   }
-
   if (selectShip === "b") {
     const b = createImg({
       id: id,
@@ -114,7 +109,6 @@ export function createImgShip(id, selectShip, src, classes) {
     });
     return b;
   }
-
   if (selectShip === "d") {
     const d = createImg({
       id: id,
@@ -127,7 +121,6 @@ export function createImgShip(id, selectShip, src, classes) {
     });
     return d;
   }
-
   if (selectShip === "s") {
     const s = createImg({
       id: id,
@@ -140,7 +133,6 @@ export function createImgShip(id, selectShip, src, classes) {
     });
     return s;
   }
-
   if (selectShip === "c") {
     const c = createImg({
       id: id,
@@ -153,7 +145,6 @@ export function createImgShip(id, selectShip, src, classes) {
     });
     return c;
   }
-
   // if (selectShip === "p") {
   //   const p = createImg({
   //     id: id,

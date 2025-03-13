@@ -1,8 +1,6 @@
 import { createImgShip } from "./functionTemplates.js";
 import {
   getBoardElements,
-  getBtnElements,
-  getHeaderElements,
   getMessageElements,
 } from "./domQueries.js";
 
@@ -40,13 +38,13 @@ import missSplash from "../assets/soundMissSplash.mp3";
 import sinkIntoDarkness from "../assets/soundSinkIntoDarkness.mp3";
 
 // Message related
-
 export function addMessage(msg) {
   const { messageBar } = getMessageElements();
   // checkMessageFontSize(msg);
   messageBar.innerText = msg;
 }
 
+// Allowed for dynamically rendered font sizes based on message content
 // function checkMessageFontSize(msg) {
 //   const { messageBar } = getMessageElements();
 //   const { player1DeployShipsMsg, player2DeployShipsMsg } =
@@ -58,7 +56,7 @@ export function addMessage(msg) {
 //   ) {
 //     messageBar.style.fontSize = ".8rem";
 //   } else {
-//     messageBar.style.fontSize = ".8rem";
+//     messageBar.style.fontSize = "1rem";
 //   }
 // }
 
@@ -105,28 +103,23 @@ export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
     s: { translate: "1.8rem", rotate: 90, image: nS },
     c: { translate: "0.9rem", rotate: 90, image: nC },
   };
-
   // Only process if the shipType exists in the shipData
   if (!shipData[shipType]) return;
-
   const shipInfo = shipData[shipType];
   const baseId = `${boardNum === 1 ? "SG1" : "SG2"}: (${x},${y})`;
   const shipBoardCellId = document.getElementById(baseId);
-
   const ship = createImgShip(
     `ship-${shipType}${boardNum}`,
     shipType,
     shipInfo.image,
     "ship"
   );
-
   // Apply transformations based on the axis
   if (axis === "v") {
     ship.style.transform = `translateY(${shipInfo.translate}) rotate(${shipInfo.rotate}deg)`;
   } else {
     ship.style.transform = `translateX(${shipInfo.translate})`;
   }
-
   // Append the ship image to the grid cell
   shipBoardCellId.appendChild(ship);
 }
@@ -134,7 +127,6 @@ export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
 export function removeAllShipSvgsOnShipGrid(boardNum) {
   const { shipCellsClass } = getBoardElements(boardNum);
   const { ships } = getBoardElements();
-
   // Iterate over each grid cell (div with the ship-cells class)
   shipCellsClass.forEach((div) => {
     // For each ship, check if it's a child of the current div
@@ -160,7 +152,6 @@ export function removeSingleShipSvgOnShipGrid(boardNum, lastShip) {
     shipS,
     shipC,
   } = getBoardElements(boardNum);
-
   // Define the ships and their corresponding elements
   const ships = [
     { boardCode: "a", ship: shipA, place: placeA },
@@ -169,10 +160,8 @@ export function removeSingleShipSvgOnShipGrid(boardNum, lastShip) {
     { boardCode: "s", ship: shipS, place: placeS },
     { boardCode: "c", ship: shipC, place: placeC },
   ];
-
   // Find the ship with the matching `lastShip` code
   const shipToRemove = ships.find((ship) => ship.boardCode === lastShip);
-
   // If a matching ship is found, remove it and update its place display
   if (shipToRemove) {
     mp3RemovePop();
@@ -180,10 +169,8 @@ export function removeSingleShipSvgOnShipGrid(boardNum, lastShip) {
     shipToRemove.place.style.display = "flex";
   }
 }
-
 export function highlightPlaceShipsHelper(boardNum) {
   const { allPlaceShipsClass } = getBoardElements(boardNum);
-
   const shipData = {
     a: { blackImg: bA, highlightImg: hA },
     b: { blackImg: bB, highlightImg: hB },
@@ -191,7 +178,6 @@ export function highlightPlaceShipsHelper(boardNum) {
     s: { blackImg: bS, highlightImg: hS },
     c: { blackImg: bC, highlightImg: hC },
   };
-
   allPlaceShipsClass.forEach((ship) => {
     // Here we just set up the handler but don't attach the event listener
     ship.dataset.boardNum = boardNum; // Store boardNum for later use in the handler
@@ -201,20 +187,16 @@ export function highlightPlaceShipsHelper(boardNum) {
 
 export function handleHighlightPlaceShip(ship, boardNum, shipData) {
   const shipKey = ship.dataset.ship;
-
   // This hits ALL ship keys for the current board
   const allShipKeys = Object.keys(shipData);
   const otherShipKeys = allShipKeys.filter((key) => key !== shipKey);
-
   // Black and highlight images
   const blackImg = shipData[shipKey].blackImg;
   const highlightImg = shipData[shipKey].highlightImg;
-
   // If the ship is not highlighted, highlight it, then reset others for this board
   if (ship.src === blackImg && ship.dataset.selected === "") {
     ship.src = highlightImg;
     ship.dataset.selected = "yes";
-
     // Reset all other ships for this board to black images and unselect
     otherShipKeys.forEach((key) => {
       const otherShip = shipData[key];
@@ -227,7 +209,6 @@ export function handleHighlightPlaceShip(ship, boardNum, shipData) {
   else if (ship.src === highlightImg && ship.dataset.selected === "yes") {
     ship.src = blackImg;
     ship.dataset.selected = "";
-
     // Reset all other ships for this board to black images and unselect
     otherShipKeys.forEach((key) => {
       const otherShip = shipData[key];
@@ -242,7 +223,6 @@ export function handleResetPlaceShips(boardNum) {
   const allPlaceShipsClass = document.querySelectorAll(
     `.all-p${boardNum}-place-ships`
   );
-
   const shipData = {
     a: { blackImg: bA },
     b: { blackImg: bB },
@@ -250,11 +230,9 @@ export function handleResetPlaceShips(boardNum) {
     s: { blackImg: bS },
     c: { blackImg: bC },
   };
-
   allPlaceShipsClass.forEach((ship) => {
     const shipKey = ship.dataset.ship;
     const blackImg = shipData[shipKey].blackImg;
-
     if (ship.src !== blackImg) {
       ship.src = blackImg;
       ship.dataset.selected = "";
@@ -266,7 +244,6 @@ export function colorSunkShips(board, boardNum) {
   const shipBoardId = boardNum === 1 ? "#p1-ship-board" : "#p2-ship-board";
   const targetShipBoardId =
     boardNum === 1 ? "#p2-target-ship-board" : "#p1-target-ship-board";
-
   for (let i = 0; i < board.board.length; i++) {
     for (let j = 0; j < board.board[i].length; j++) {
       let cellShip = document.getElementById(
@@ -275,7 +252,6 @@ export function colorSunkShips(board, boardNum) {
       let cellShipTarget = document.getElementById(
         `T-SG${boardNum === 1 ? 1 : 2}: (${i},${j})`
       );
-
       ["A!", "B!", "D!", "S!", "C!"].forEach((shipCode, index) => {
         if (board.ships[index].isSunk() && board.board[i][j] === shipCode) {
           cellShip.style.backgroundColor = "var(--text)";
@@ -292,45 +268,6 @@ export function colorSunkShips(board, boardNum) {
   }
 }
 
-// export function addEmojiEffect(board, boardNum) {
-//   for (let i = 0; i < board.length; i++) {
-//     for (let j = 0; j < board[i].length; j++) {
-//       const baseId = `${boardNum === 1 ? "HMG1" : "HMG2"}: (${i},${j})`;
-//       let cell = document.getElementById(baseId);
-//       let cellTarget = document.getElementById(`T-${baseId}`);
-//       let cellShip = document.getElementById(`SG${boardNum}: (${i},${j})`);
-//       let cellShipTarget = document.getElementById(
-//         `T-SG${boardNum}: (${i},${j})`
-//       );
-
-//       if (
-//         board[i][j] === "A!" ||
-//         board[i][j] === "B!" ||
-//         board[i][j] === "D!" ||
-//         board[i][j] === "S!" ||
-//         board[i][j] === "C!"
-//       ) {
-//         cell.innerText = "💥";
-//         cellTarget.innerText = "💥";
-//         cellShip.style.backgroundColor = "var(--hit)";
-//         cellShipTarget.style.backgroundColor = "var(--hit)";
-//         mp3Hit();
-//       } else if (board[i][j] === "mm") {
-//         cell.innerText = "💨";
-//         cell.style.transform = "rotate(-90deg)";
-//         cellTarget.innerText = "💨";
-//         cellTarget.style.transform = "rotate(-90deg)";
-//         cellShip.style.backgroundColor = "var(--miss)";
-//         cellShipTarget.style.backgroundColor = "var(--miss)";
-//         mp3Miss();
-//       } else {
-//         cell.innerText = "  ";
-//         cellTarget.innerText = "  ";
-//       }
-//     }
-//   }
-// }
-
 export function addEmojiEffect(board, boardNum) {
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
@@ -341,7 +278,6 @@ export function addEmojiEffect(board, boardNum) {
       let cellShipTarget = document.getElementById(
         `T-SG${boardNum}: (${i},${j})`
       );
-
       if (
         board[i][j] === "A!" ||
         board[i][j] === "B!" ||
@@ -353,18 +289,16 @@ export function addEmojiEffect(board, boardNum) {
         cellTarget.innerText = "💥";
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
-        // mp3Hit(); // PUT INTO ITS OWN FUNCTION
       } else if (board[i][j] === "mm") {
         cell.innerText = "❌";
         cellTarget.innerText = "❌";
-        // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹  as a close second for the "Enemy Target Zone" only.
+        // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER (MOSTLY FIXED) THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹 (Note: I also tried using requestAnimationFrame()...got emojis to work on Apple Browser (work great), BUT affected colorSunkShips() adversely)
         // cell.innerText = "💨";
         // cell.style.transform = "rotate(-90deg)";
         // cellTarget.innerText = "💨";
         // cellTarget.style.transform = "rotate(-90deg)";
         cellShip.style.backgroundColor = "var(--miss)";
         cellShipTarget.style.backgroundColor = "var(--miss)";
-        // mp3Miss(); // PUT INTO ITS OWN FUNCTION
       } else {
         cell.innerText = "  ";
         cellTarget.innerText = "  ";
@@ -372,8 +306,6 @@ export function addEmojiEffect(board, boardNum) {
     }
   }
 }
-
-// NOte: I tried using requestAnimationFrame()...got emojis to work on Apple but affected colorSunkShips() adversely.
 
 export function clearEmojiEffect(board, boardNum) {
   for (let i = 0; i < board.length; i++) {
@@ -413,13 +345,11 @@ export function highlightEmptyCellOnlyOnHover(board, boardNum) {
       let cellTarget = document.getElementById(
         `T-HMG${boardNum === 1 ? 1 : 2}: (${i},${j})`
       );
-
       if (validTargetSymbols.includes(board[i][j])) {
         cellTarget.classList.add("mouse-target");
       } else {
         cellTarget.classList.remove("mouse-target");
       }
-
       if (placeShips.style === "none") {
         cellDeploy.classList.remove("mouse-deploy");
       } else if (targetZone.style.display === "flex") {
@@ -455,57 +385,11 @@ export function getRandomAxis(min = 0, max = 9) {
 export function everyOtherColDependingOnRow(row) {
   const even = [0, 2, 4, 6, 8];
   const odd = [1, 3, 5, 7, 9];
-
   if (row % 2 === 0) {
     return even[Math.floor(Math.random() * even.length)];
   } else {
     return odd[Math.floor(Math.random() * odd.length)];
   }
-}
-
-// Put these sets outside of function so that it accumulate new coordinates and not refresh itself when called
-const noRepeatCoordinatesSet = new Set();
-// const priorHitCoordinatesSet = new Set();
-const hunterCoordinatesSet = new Set();
-// const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
-
-let randomRow, randomCol, coordinates;
-
-// const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
-
-// Keep below?
-// const lastHitTargetCoordinates =
-//   priorHitCoordinatesArray[priorHitCoordinatesArray.length - 1];
-// const hunterCoordinatesArray = Array.from(hunterCoordinatesSet);
-
-export function targetAdjacentCoordinates() {}
-
-export function targetLikelyCoordinates() {}
-
-export function targetRandomCoordinates() {
-  if (hunterCoordinatesSet.size >= 50) {
-    // We assume 50 is the number of cells already targeted in the checkerboard pattern
-    // Basic random attacks
-    do {
-      console.log("Attack Style: Basic Random Attack Pattern");
-      randomRow = getRandomRow();
-      randomCol = getRandomCol();
-      coordinates = `${randomRow},${randomCol}`;
-    } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
-  } else {
-    // Start off attacks by hunting every other square
-    do {
-      console.log("Attack Style: Checkerboard 'Hunter' Attack Pattern");
-      randomRow = getRandomRow();
-      randomCol = everyOtherColDependingOnRow(randomRow);
-      coordinates = `${randomRow},${randomCol}`;
-    } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
-  }
-
-  noRepeatCoordinatesSet.add(coordinates);
-  hunterCoordinatesSet.add(coordinates);
-
-  return { randomRow, randomCol };
 }
 
 const click = new Audio(btnClick);
@@ -563,17 +447,6 @@ export function mp3Sink() {
   sink.currentTime = 0; // Resets the audio to the beginning
   sink.play();
 }
-
-// export function attackSoundEffects(hitOrMiss) {
-//   setTimeout(() => {
-//     mp3Fire();
-//     if (hitOrMiss === "hit") {
-//       mp3Hit();
-//     } else {
-//       mp3Miss();
-//     }
-//   }, 0);
-// }
 
 export function attackSoundEffects(hitOrMiss) {
   mp3Fire();

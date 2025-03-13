@@ -8,7 +8,6 @@ export function createHitMissGrid(board, boardNum, gridType) {
     gridType === "targetZone"
       ? `hit-miss-target-cells${boardNum}`
       : `hit-miss-cells${boardNum}`;
-
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       const gridCell = createElement("div", {
