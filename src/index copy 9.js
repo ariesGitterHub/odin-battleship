@@ -37,6 +37,9 @@ import {
   mp3Sink,
   orientShipSvgOnShipGrid,
   removeSingleShipSvgOnShipGrid,
+  // targetAdjacentCoordinates,
+  // targetLikelyCoordinates,
+  // targetRandomCoordinates,
 } from "./js/functionsOther.js";
 import { Gameboard } from "./js/classGameboard.js";
 import { Player } from "./js/classPlayer.js";
@@ -71,9 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let isPvsPStarted = false;
   let playerTurn = 0;
 
+  // No longer using this globally, scope to particular functions
+  // const isPlayer1Turn = playerTurn % 2 === 0;
+  // const isPlayer2Turn = playerTurn % 2 !== 0;
+  // let hitOrMiss;
+  // let randomRowStored;
+  // let randomColStored;
+  // let lastPlayer2ComputerPriorAttack;
+
   // const currentSetTimeoutValue = 2500; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
   const currentSetTimeoutValue = 0; // No delay - speedier for testing purposes
-
+  // const setTimeoutBlockTrick = 0; // Used to try and get Apple mobile browser to work better with code
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
   let player2IsVictorious = false;
@@ -1007,7 +1018,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ((isPlayer1Turn && p1FullBoard.style.display === "flex") ||
         (isPlayer2Turn && p2FullBoard.style.display === "flex"))
     ) {
-      console.log(`Player 1's turn is ${playerTurn + 1}`);
+      console.log(playerTurn);
 
       const hitOrMiss = processAttack(boardNum, row, col);
       updateTurnMessage(hitOrMiss, row, col, isPlayer1Turn);
@@ -1094,8 +1105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function targetRandomCoordinates() {
     let coordinatesOnlyHunter;
-    if (hunterCoordinatesSet.size >= 38) {
-      // Guard against runaway loops; Reduced to 38 from 41 (was 50 initially and erroneously) to prevent stack overflows
+    if (hunterCoordinatesSet.size >= 38) { // Guard against runaway loops; Reduced to 38 from 41 (was 50 initially and erroneously) to prevent stack overflows
       // Basic random attacks
       do {
         console.log("Attack Style: Basic Random Attack Pattern");
@@ -1118,14 +1128,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return { randomRow, randomCol };
   }
 
-  function player2ComputerAttack() {   
+  function player2ComputerAttack() {
     if (
       !stopGameHaveWinner &&
       player2.playerType === "computer" &&
       playerTurn % 2 !== 0
     ) {
       setTimeout(() => {
-        console.log(`Player 2's turn is ${playerTurn + 1 }`);
         if (
           lastPlayer2ComputerAttack === "hit" ||
           player2FocusesOnAdjacentSquares > 0
@@ -1243,12 +1252,12 @@ document.addEventListener("DOMContentLoaded", () => {
       messages.style.backgroundColor = "var(--player1)";
       messages.style.borderColor = "var(--player1-text)";
       messages.style.color = "var(--enemy)";
-    } else if (player2IsVictorious) {
+      } else if (player2IsVictorious) {
       clearMessage();
       if (player2.playerType === "human") {
         addMessage(`${player2Wins}${playerTurn} turns.`);
       } else {
-        addMessage(`${player2ComputerWins}${playerTurn} turns.`);
+        addMessage(`${player2ComputerWins}${playerTurn} turns.`);   
       }
       appContainer.style.background = "var(--background-player2)";
       messages.style.backgroundColor = "var(--player2)";

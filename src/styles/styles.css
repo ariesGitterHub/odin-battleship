@@ -208,7 +208,11 @@ body {
 
 #title-text-top,
 #title-text-bot {
-  color: var(--loser);
+  /* color: var(--loser); */
+  /* color: DarkSlateGray; */
+    /* color: IndianRed; */
+        /* color: crimson; */
+                color: navy;
   font-size: 2.25rem;
   text-transform: uppercase;
 }

@@ -37,6 +37,9 @@ import {
   mp3Sink,
   orientShipSvgOnShipGrid,
   removeSingleShipSvgOnShipGrid,
+  // targetAdjacentCoordinates,
+  // targetLikelyCoordinates,
+  // targetRandomCoordinates,
 } from "./js/functionsOther.js";
 import { Gameboard } from "./js/classGameboard.js";
 import { Player } from "./js/classPlayer.js";
@@ -71,9 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let isPvsPStarted = false;
   let playerTurn = 0;
 
-  // const currentSetTimeoutValue = 2500; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
-  const currentSetTimeoutValue = 0; // No delay - speedier for testing purposes
+  // No longer using this globally, scope to particular functions
+  // const isPlayer1Turn = playerTurn % 2 === 0;
+  // const isPlayer2Turn = playerTurn % 2 !== 0;
+  // let hitOrMiss;
+  // let randomRowStored;
+  // let randomColStored;
+  // let lastPlayer2ComputerPriorAttack;
 
+  // const currentSetTimeoutValue = 2500; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
+  const currentSetTimeoutValue = 0 // No delay - speedier for testing purposes
+  // const setTimeoutBlockTrick = 0; // Used to try and get Apple mobile browser to work better with code
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
   let player2IsVictorious = false;
@@ -1007,7 +1018,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ((isPlayer1Turn && p1FullBoard.style.display === "flex") ||
         (isPlayer2Turn && p2FullBoard.style.display === "flex"))
     ) {
-      console.log(`Player 1's turn is ${playerTurn + 1}`);
+      console.log(playerTurn);
 
       const hitOrMiss = processAttack(boardNum, row, col);
       updateTurnMessage(hitOrMiss, row, col, isPlayer1Turn);
@@ -1032,25 +1043,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Put these sets outside of function so that it accumulate new coordinates and not refresh itself when called
   const noRepeatCoordinatesSet = new Set();
-  // const priorHitCoordinatesSet = new Set(); // Not used, I had planned on using this to make player2ComputerAttacks deadlier. Would have combined the sunkStatuses of ships out of play to change up computer attach schemes. Currently, most games are close enough with a player 1 victory
+  const priorHitCoordinatesSet = new Set();
   const hunterCoordinatesSet = new Set();
-  // const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet); // Part of above plans to make player2ComputerAttacks deadlier
+  const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet);
 
   let hitOrMiss,
     randomRow,
     randomCol,
     randomRowStored,
     randomColStored,
+    // lastLastPlayer2ComputerAttack,
+    // lastLastLastPlayer2ComputerAttack,
     coordinates;
-
+  
   let lastPlayer2ComputerAttack = "start";
   let player2FocusesOnAdjacentSquares = 0;
-  let doNotMoveOnToNextAttackType = false; // Prevents double attacks by player2Computer when targetAdjacentCoordinates() can't find a valid target
+  let moveOnToNextAttackType = false;
+  // Keep below?
+  // const lastHitTargetCoordinates =
+  //   priorHitCoordinatesArray[priorHitCoordinatesArray.length - 1];
+  // const hunterCoordinatesArray = Array.from(hunterCoordinatesSet);
 
   function targetAdjacentCoordinates() {
     let attempts = 0;
     let foundValidCoordinate = false;
     let coordinateDistance = 1;
+    // if (testGame1.ships[4].sunkStatus) {
+    //   console.log(`Corvette is sunk: ${testGame1.ships[4].sunkStatus}`);
+
+    //   coordinateDistance = 2; // Expands search field after smallest ship is sunk; for more efficient hunting
+    // }
 
     let adjacentCoordinates = [
       `${randomRowStored + coordinateDistance},${randomColStored}`, // Down
@@ -1073,29 +1095,44 @@ document.addEventListener("DOMContentLoaded", () => {
         !noRepeatCoordinatesSet.has(coordinates) // Ensure it's not a previously used coordinate
       ) {
         foundValidCoordinate = true; // A valid coordinate is found
+
         console.log("Attack Style: Targeted Attack Pattern");
         noRepeatCoordinatesSet.add(coordinates);
         // hunterCoordinatesSet.add(coordinates);
         return { randomRow, randomCol };
+        
       } else {
         attempts++; // Increase the number of attempts
       }
     }
     if (attempts >= 10 && !foundValidCoordinate) {
       console.log("No valid targets found!!!!!!!!!!");
-      doNotMoveOnToNextAttackType = true;
-      console.log(`DON'T MOVE ON = ${doNotMoveOnToNextAttackType}`);
+      moveOnToNextAttackType = true;
+      console.log(`MOVE ON = ${moveOnToNextAttackType}`);
+      // return null
       randomRow = null;
       randomCol = null;
       let { randomRow, randomCol } = targetRandomCoordinates();
       return { randomRow, randomCol };
+      
     }
+
+
+    // if (hitOrMiss === "hit") {
+    //   priorHitCoordinatesSet.add(coordinates);
+    // }
+    // console.log("Attack Style: Targeted Attack Pattern");
+    // noRepeatCoordinatesSet.add(coordinates);
+    // hunterCoordinatesSet.add(coordinates);
+    // return { randomRow, randomCol };
   }
+
+  // function targetLikelyCoordinates() {}
 
   function targetRandomCoordinates() {
     let coordinatesOnlyHunter;
-    if (hunterCoordinatesSet.size >= 38) {
-      // Guard against runaway loops; Reduced to 38 from 41 (was 50 initially and erroneously) to prevent stack overflows
+    if (hunterCoordinatesSet.size >= 41) {
+  
       // Basic random attacks
       do {
         console.log("Attack Style: Basic Random Attack Pattern");
@@ -1113,19 +1150,24 @@ document.addEventListener("DOMContentLoaded", () => {
         coordinatesOnlyHunter = coordinates;
       } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
     }
+
     noRepeatCoordinatesSet.add(coordinates);
     hunterCoordinatesSet.add(coordinatesOnlyHunter);
+
+    // if (hitOrMiss === "hit") {
+    //   priorHitCoordinatesSet.add(coordinates);
+    // }
+
     return { randomRow, randomCol };
   }
 
-  function player2ComputerAttack() {   
+  function player2ComputerAttack() {
     if (
       !stopGameHaveWinner &&
       player2.playerType === "computer" &&
       playerTurn % 2 !== 0
     ) {
       setTimeout(() => {
-        console.log(`Player 2's turn is ${playerTurn + 1 }`);
         if (
           lastPlayer2ComputerAttack === "hit" ||
           player2FocusesOnAdjacentSquares > 0
@@ -1134,23 +1176,21 @@ document.addEventListener("DOMContentLoaded", () => {
           hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
           if (lastPlayer2ComputerAttack === "miss") {
             player2FocusesOnAdjacentSquares--;
-            console.log(
-              `Computer is looking at adjacent squares = ${player2FocusesOnAdjacentSquares}`
-            );
-            doNotMoveOnToNextAttackType = false;
+            console.log(`Computer is looking at adjacent squares = ${player2FocusesOnAdjacentSquares}`);
+            moveOnToNextAttackType = false;
           }
         } else if (
           (lastPlayer2ComputerAttack === "miss" &&
             player2FocusesOnAdjacentSquares === 0 &&
-            !doNotMoveOnToNextAttackType) ||
+            !moveOnToNextAttackType) ||
           (lastPlayer2ComputerAttack === "start" &&
             player2FocusesOnAdjacentSquares === 0 &&
-            !doNotMoveOnToNextAttackType)
+            !moveOnToNextAttackType)
         ) {
           let { randomRow, randomCol } = targetRandomCoordinates();
           hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
           console.log("Alternate input scheme for retry and undefined");
-          doNotMoveOnToNextAttackType = false;
+          moveOnToNextAttackType = false;
         }
 
         console.log(`It's a ${hitOrMiss}`);
@@ -1159,9 +1199,9 @@ document.addEventListener("DOMContentLoaded", () => {
         addMessage(
           `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's TURN!`
         );
-        console.log(
-          `PLAYER 2's attack is a ${hitOrMiss} at (${randomRow}, ${randomCol}).`
-        );
+  console.log(
+    `PLAYER 2's attack is a ${hitOrMiss} at (${randomRow}, ${randomCol}).`
+  );
         playerTurn += 1;
         attackSoundEffects(hitOrMiss);
         addEmojiEffect(player1.playerBoard.board, 1);
@@ -1174,18 +1214,20 @@ document.addEventListener("DOMContentLoaded", () => {
           randomColStored = randomCol;
           lastPlayer2ComputerAttack = hitOrMiss;
           player2FocusesOnAdjacentSquares = 3;
-          // priorHitCoordinatesSet.add(coordinates);
+          priorHitCoordinatesSet.add(coordinates);
         } else if (hitOrMiss === "miss") {
           lastPlayer2ComputerAttack = hitOrMiss;
         } else {
-          // Catches when hitOrMiss is a "retry" or "undefined"
+          // catches retry and undefined
           lastPlayer2ComputerAttack = hitOrMiss;
           let { randomRow, randomCol } = targetRandomCoordinates();
           hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
         }
+
         console.log(noRepeatCoordinatesSet);
         console.log(hunterCoordinatesSet);
-        // console.log(priorHitCoordinatesSet);
+        console.log(priorHitCoordinatesSet);
+
       }, currentSetTimeoutValue); // Allows for message/sound effect play
     }
   }
@@ -1233,23 +1275,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function endGame() {
     const { messages } = getMessageElements();
     const { appContainer } = getBoardElements();
-    const { player1Wins, player2Wins, player2ComputerWins } =
-      handleMessageContent();
+    const { player1Wins, player2Wins } = handleMessageContent();
 
     if (player1IsVictorious) {
       clearMessage();
-      addMessage(`${player1Wins}${playerTurn} turns.`);
+      addMessage(player1Wins);
       appContainer.style.background = "var(--background-player1)";
       messages.style.backgroundColor = "var(--player1)";
       messages.style.borderColor = "var(--player1-text)";
       messages.style.color = "var(--enemy)";
     } else if (player2IsVictorious) {
       clearMessage();
-      if (player2.playerType === "human") {
-        addMessage(`${player2Wins}${playerTurn} turns.`);
-      } else {
-        addMessage(`${player2ComputerWins}${playerTurn} turns.`);
-      }
+      addMessage(player2Wins);
       appContainer.style.background = "var(--background-player2)";
       messages.style.backgroundColor = "var(--player2)";
       messages.style.borderColor = "var(--player1-text)";

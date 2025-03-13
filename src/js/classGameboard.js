@@ -176,7 +176,18 @@ class Gameboard {
     let target = this.board[row][col];
 
     // If the target was already selected, it should have a "!!"" or "mm".
-    if (target === "!!" || target === "mm") {
+    // if (target === "!!" || target === "mm") {
+    //   return "retry"; // The cell has already been attacked or is not a valid target
+    // }
+
+    if (
+      target === "A!" ||
+      target === "B!" ||
+      target === "D!" ||
+      target === "S!" ||
+      target === "C!" ||
+      target === "mm"
+    ) {
       return "retry"; // The cell has already been attacked or is not a valid target
     }
 
