@@ -87,5 +87,3 @@ gifBroadside2 = https://imgur.com/gallery/battleship-broadsides-d3U51G7#/t/broad
 gifSailing = https://lex-for-lexington.tumblr.com/post/115112729557/imperial-japanese-navy-battle-line
 
 Anchor svg from https://www.svgrepo.com/svg/395772/anchor
-
-*** Having issues with deploying this on gitHub presently...

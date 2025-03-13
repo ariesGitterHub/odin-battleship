@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let isPvsPStarted = false;
   let playerTurn = 0;
 
-  const currentSetTimeoutValue = 2400; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
-  // const currentSetTimeoutValue = 0; // No delay - speedier for testing purposes, keep for future testing
+  // const currentSetTimeoutValue = 2400; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
+  const currentSetTimeoutValue = 0; // No delay - speedier for testing purposes, keep for future testing
 
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const player = { 1: player1, 2: player2 };
   const testGame = { 1: testGame1, 2: testGame2 };
   const placedShipListSet = { 1: placedShipListSet1, 2: placedShipListSet2 };
-  const placedShipListArr = { 1: placedShipListArr1, 2: placedShipListArr2 };
+  // const placedShipListArr = { 1: placedShipListArr1, 2: placedShipListArr2 };
 
   // Create UI elements
   createHeader();
@@ -862,6 +862,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function endGame() {
+    const { btnHideScreen } = getBtnElements()
     const { messages } = getMessageElements();
     const { appContainer } = getBoardElements();
     const { player1Wins, player2Wins, player2ComputerWins } =
@@ -869,6 +870,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (player1IsVictorious) {
       clearMessage();
       addMessage(`${player1Wins}${playerTurn} turns.`);
+      flexHideIt([btnHideScreen]);
       appContainer.style.background = "var(--background-player1)";
       messages.style.backgroundColor = "var(--player1)";
       messages.style.borderColor = "var(--player1-text)";
@@ -880,6 +882,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         addMessage(`${player2ComputerWins}${playerTurn} turns.`);
       }
+      flexHideIt([btnHideScreen]);
       appContainer.style.background = "var(--background-player2)";
       messages.style.backgroundColor = "var(--player2)";
       messages.style.borderColor = "var(--player1-text)";

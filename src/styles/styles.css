@@ -31,7 +31,7 @@
   --text: #212121;
   --sea: #96bccb;
   --line: #ceced6;
-  --hit: #e7ce83;
+  --hit: #dfb22c;
   --miss: #b7c9bd;
   --sunk: #524753;
   --loser: #903a3a;
@@ -180,11 +180,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  /* background: linear-gradient(
-    var(--linear-gradient-deg),
-    var(--bkgd),
-    var(--bkgd2)
-  ); */
   background: var(--background-main);
 }
 
@@ -248,7 +243,6 @@ body {
 #messages {
   height: fit-content;
   width: var(--width-master);
-  /* display: flex; */
   display: none;
   align-items: center;
   justify-content: center;
@@ -515,16 +509,10 @@ body {
 }
 
 .hit-miss-cells1,
-.hit-miss-cells2 {
-  /* z-index: 10; */
-    
-}
-
-.hit-miss-cells1,
 .hit-miss-cells2,
 .hit-miss-target-cells1,
 .hit-miss-target-cells2 {
-  /* TESTING - APPLE BROWSERS ARE NOT SHOW EMOJIS CONSISTENTLY, BELOW IS AN ATTEMPT TO REMEDY */
+  /* TESTING - APPLE BROWSERS ARE NOT SHOWING EMOJIS CONSISTENTLY, BELOW IS AN ATTEMPT TO REMEDY (AMONG OTHER SOLUTIONS TRIED ELSEWHERE) */
   visibility: visible !important;
   -webkit-transform:translate3d(0,0,0);
   z-index: 1;
