@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let isPvsPStarted = false;
   let playerTurn = 0;
 
-  // const currentSetTimeoutValue = 2400; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
-  const currentSetTimeoutValue = 0; // No delay - speedier for testing purposes, keep for future testing
+  const currentSetTimeoutValue = 2300; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
+  // const currentSetTimeoutValue = 0; // No delay - speedier for testing purposes, keep for future testing
 
   let stopGameHaveWinner = false;
   let player1IsVictorious = false;
@@ -596,6 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { allPlaceShipsClass } = getBoardElements(boardNum);
     allPlaceShipsClass.forEach((ship) => {
       ship.addEventListener("click", () => {
+        mp3Click();
         // Call the handler with the necessary parameters
         handleHighlightPlaceShip(ship, boardNum, shipData);
       });

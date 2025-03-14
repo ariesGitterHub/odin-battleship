@@ -125,7 +125,7 @@
 
 .btn-b {
   height: 2rem;
-  width: 6rem;
+  width: 6.25rem;
   background-color: var(--line);
   border: none;
   border-radius: 1rem;
@@ -557,12 +557,22 @@ body {
     --width-master: 25rem;
     --gif-variable: 3rem;
     --height-width-gif: calc(var(--width-master) - var(--gif-variable));
+    --message-height: 7.5rem;
+  }
+
+  #messages {
+    height: var(--message-height);
+    align-items: start;
+  }
+  #message-bar {
+    padding: 0.5rem 0.5rem 0.5rem 0.75rem;
   }
 }
 
 @media only screen and (width >= 600px) {
   :root {
     --width-master: 26rem;
+    --message-height: 6.25rem;
   }
 
   html,
