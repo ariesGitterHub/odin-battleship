@@ -26,27 +26,39 @@
 ### Create a Player class/factory.
 
 1. There will be two types of players in the game, ‘real’ players and ‘computer’ players.
+~ Did it.
+
 2. Each player object should contain its own gameboard.
+~ Did it.
 
 ### Import your classes/factories into another file, and drive the game using event listeners to interact with your objects. Create a module that helps you manage actions that should happen in the DOM.
 
 1. At this point it is appropriate to begin crafting your User Interface.
+~ Did it.
 
 2. Set up a new game by creating Players. For now just populate each player’s Gameboard with predetermined coordinates. You are going to implement a system for allowing players to place their ships later.
+~ Did it.
 
 3. We’ll leave the HTML implementation up to you for now, but you should display both the player’s boards and render them using information from the Gameboard class/factory.
+~ Did it.
 
 - You’ll need methods to render each player’s Gameboard, so put them in an appropriate module.
+~ I think I did it. 
 
 4. Your event listeners should step through the game turn by turn using only methods from other objects. If at any point you are tempted to write a new function, step back and figure out which class or module that function should belong to.
+~ Did it. Most stuff is modular. 
 
 5. For attacks, let the user click on a coordinate in the enemy Gameboard. Send the user input to methods on your objects, and re-render the boards to display the new information.
+~ Did it.
 
 - Players should take turns playing the game by attacking the enemy Gameboard. If you feel the need to keep track of the current player’s turn, it’s appropriate to manage that in this module, instead of another mentioned object.
+~ Did it.
 
 - The game is played against the computer, so make the ‘computer’ players capable of making random plays. The computer does not have to be smart, but it should know whether or not a given move is legal (i.e. it shouldn’t shoot the same coordinate twice).
+~ Did it.
 
 6. Create conditions so that the game ends once one player’s ships have all been sunk. This function is also appropriate for this module.
+~ Did it.
 
 ### Finish it up by implementing a system that allows players to place their ships. For example, you can let them type coordinates for each ship or have a button to cycle through random placements.
 
@@ -54,11 +66,14 @@
 
 Make your battleship project more impressive by introducing any of these modifications.
 
-1. Implement drag and drop to allow players to place their ships.
+1. Implement drag and drop to allow players to place their ships. 
+~ I did something close that works better on mobile screens, so as not to mess with gestures that x-out a screen or go back a screen.
 
 2. Create a 2-player option that lets users take turns by passing the laptop back and forth, or by spinning the monitor around on a desktop. Implement a ‘pass device’ screen so that players don’t see each other’s boards!
+~ Did it.
 
 3. Polish the intelligence of the computer player by having it try adjacent slots after getting a ‘hit’.
+~ Did it. Player 1 should just barely win over Player 2 (Computer), more or less, by about 5 hits or less.
 
 ## Different Variants of Battleship
 https://www.ultraboardgames.com/battleship/variations.php
@@ -73,11 +88,11 @@ Emulate how this breaks down in small viewports.
 ### Hint 1
 "Player object creates a Gameboard object which creates Ship objects.
 
-So a player will have a board and multiple ships. Each ship will have a length (each piece occupying a coordinate on the board). So you'll need to know that ships coords (where the player positioned it). You also will need to know if ship was hit and sunk. Ok, so you got the key/value pairs. Now you need the methods that will receive information from outside of the object, and possibly change the values of these keys. Like, what information do you need as a function's argument to check whether the ship got a hit? Then what method to check whether all ships coords were hit?
+So a player will have a board and multiple ships. Each ship will have a length (each piece occupying a coordinate on the board). So you'll need to know that ships coordinates (where the player positioned it). You also will need to know if ship was hit and sunk. Ok, so you got the key/value pairs. Now you need the methods that will receive information from outside of the object, and possibly change the values of these keys. Like, what information do you need as a function's argument to check whether the ship got a hit? Then what method to check whether all ships coordinates were hit?
 
-These methods might get information from the outside (like a coord), checks its position, then decide whether it was a hit, for instance. This has to be tested. Like: creating a ship, set dummy values, then test the method on it, see if you got the expected result.
+These methods might get information from the outside (like a coordinate), checks its position, then decide whether it was a hit, for instance. This has to be tested. Like: creating a ship, set dummy values, then test the method on it, see if you got the expected result.
 
-E.g., if your ship has coords [22, 23], then the opponent shot on coord 23, then you should store the hit. If the opponent then shoots on 22, your object should store the information that the ship sank. Now, if the opponent shot on coord 24 instead, your ship object should not count that as a hit."
+E.g., if your ship has coordinates [22, 23], then the opponent shot on coordinate 23, then you should store the hit. If the opponent then shoots on 22, your object should store the information that the ship sank. Now, if the opponent shot on coordinate 24 instead, your ship object should not count that as a hit."
 
 # Images and Gifs
 All game ship markers were created for this app and are copyrighted by the Mad Muffin Man. 
