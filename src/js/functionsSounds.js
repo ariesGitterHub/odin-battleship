@@ -164,8 +164,6 @@ export function attackSoundEffects(hitOrMiss) {
 //   }, 500);
 // }
 
-
-
 // ATTEMPT 1: Below works well on everything save for Brave mobile and Apple Safari
 
 // const click = new Audio(btnClick);

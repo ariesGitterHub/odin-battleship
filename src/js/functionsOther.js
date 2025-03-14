@@ -283,9 +283,9 @@ export function addEmojiEffect(board, boardNum) {
         cell.innerText = "❌";
         cellTarget.innerText = "❌";
         // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE SAFARI BROWSER (MOSTLY FIXED) THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹 (NOTE: I also tried using requestAnimationFrame()...which got emojis to stop vanishing on Safari (worked great), BUT, it affected colorSunkShips() adversely)
-        // cell.innerText = "💨"; // Giant splash!!!
+        // cell.innerText = "💨"; // Goes sploosh!!!
         // cell.style.transform = "rotate(-90deg)";
-        // cellTarget.innerText = "💨"; // Giant splash!!!
+        // cellTarget.innerText = "💨"; // Goes sploosh!!!
         // cellTarget.style.transform = "rotate(-90deg)";
         cellShip.style.backgroundColor = "var(--miss)";
         cellShipTarget.style.backgroundColor = "var(--miss)";
