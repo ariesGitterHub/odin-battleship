@@ -1,4 +1,8 @@
 import "./styles/styles.css";
+
+import { Gameboard } from "./js/classGameboard.js";
+import { Player } from "./js/classPlayer.js";
+
 import { createHeader } from "./js/createHeader.js";
 import gifSailing from "./assets/gifSailing.gif";
 import { createMessageElements } from "./js/createMessage.js";
@@ -20,7 +24,6 @@ import {
 import {
   addEmojiEffect,
   addMessage,
-  attackSoundEffects,
   clearMessage,
   colorSunkShips,
   everyOtherColDependingOnRow,
@@ -31,15 +34,17 @@ import {
   handleMessageContent,
   highlightEmptyCellOnlyOnHover,
   highlightPlaceShipsHelper,
+  orientShipSvgOnShipGrid,
+  removeSingleShipSvgOnShipGrid,
+} from "./js/functionsOther.js";
+import {
+  attackSoundEffects,
   mp3Click,
   mp3PlacePop,
   mp3RemovePop,
   mp3Sink,
-  orientShipSvgOnShipGrid,
-  removeSingleShipSvgOnShipGrid,
-} from "./js/functionsOther.js";
-import { Gameboard } from "./js/classGameboard.js";
-import { Player } from "./js/classPlayer.js";
+} from "./js/functionsSounds.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // Input the number of desired rows and cols here.
@@ -55,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .map(() => Array(gridNumCols).fill("--"));
 
   // Create instances of the gameboards
-  // NOTE: Calling it "testGame" is a holdover from the initial purpose of this code, i.e., to test using jest; Keep the legacy name.
+  // NOTE/REMINDER: Calling it "testGame" is a holdover from the initial purpose of this code, i.e., to test using jest; Keep the legacy name.
   const testGame1 = new Gameboard(seaBoard1);
   const testGame2 = new Gameboard(seaBoard2);
 
@@ -169,19 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function adjustMessageHeightOnUnlockScreenAtCertainViewWidths() {
-    const { messages } = getMessageElements();
-    const { btnUnlockScreen } = getBtnElements();
-    if (btnUnlockScreen.style.display === "flex") {
-      messages.style.height = "fit-content";
-    } else {
-      messages.style.height = "var-(height-message)";
-    }
-  }
-
   function setupHideScreenBtnEventListener(boardNum) {
     const { battleshipGif, header } = getHeaderElements();
-    // const { messages } = getMessageElements();
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
     const {
       appContainer,
@@ -207,7 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player2UnlockScreen);
-        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
       }
       if (
         player2.playerType === "human" &&
@@ -220,8 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player1UnlockScreen);
-        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
-      }
+        }
       if (
         player2.playerType === "human" &&
         isPvsPStarted &&
@@ -233,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player2UnlockScreen);
-        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
       }
       if (
         player2.playerType === "human" &&
@@ -246,7 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player1UnlockScreen);
-        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
       }
     });
   }
@@ -638,14 +628,14 @@ document.addEventListener("DOMContentLoaded", () => {
       addMessage(
         isPlayer1
           ? `${player1Message}Wait for PLAYER 2 to make an attack.`
-          : `${player2Message}SWITCH to PLAYER 1.`
+          : `${player2Message}Please SWITCH to PLAYER 1.`
       );
       endGame();
     } else if (player2.playerType === "human") {
       addMessage(
         isPlayer1
-          ? `${player1Message}SWITCH to PLAYER 2.`
-          : `${player2Message}SWITCH to PLAYER 1.`
+          ? `${player1Message}Please SWITCH to PLAYER 2.`
+          : `${player2Message}Please SWITCH to PLAYER 1.`
       );
       endGame();
     }
@@ -712,6 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let player2FocusesOnAdjacentSquares = 0;
   let doNotMoveOnToNextAttackType = false; // Prevents double attacks by player2Computer when targetAdjacentCoordinates() can't find a valid target
 
+  // Attack Style: Targeted Attack Pattern
   function targetAdjacentCoordinates() {
     let attempts = 0;
     let foundValidCoordinate = false;
@@ -735,7 +726,6 @@ document.addEventListener("DOMContentLoaded", () => {
         !noRepeatCoordinatesSet.has(coordinates) // Ensure it's not a previously used coordinate
       ) {
         foundValidCoordinate = true; // A valid target is found
-        // console.log("Attack Style: Targeted Attack Pattern");
         noRepeatCoordinatesSet.add(coordinates);
         return { randomRow, randomCol };
       } else {
@@ -743,9 +733,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     if (attempts >= 10 && !foundValidCoordinate) {
-      // console.log("No valid targets found");
+      // No valid targets found, if doNotMoveOnToNextAttackType flag is true, it stops computer from taking more than one attack on a turn
       doNotMoveOnToNextAttackType = true;
-      console.log(`DON'T MOVE ON = ${doNotMoveOnToNextAttackType}`);
       randomRow = null;
       randomCol = null;
       let { randomRow, randomCol } = targetRandomCoordinates();
@@ -758,16 +747,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (hunterCoordinatesSet.size >= 38) {
       // Guard against runaway loops; Reduced to 38 from 41 (was 50 initially, which was too high)
       // Basic random attacks
+      // Attack Style: Basic Random Attack Pattern
       do {
-        // console.log("Attack Style: Basic Random Attack Pattern");
         randomRow = getRandomRow();
         randomCol = getRandomCol();
         coordinates = `${randomRow},${randomCol}`;
       } while (noRepeatCoordinatesSet.has(coordinates)); // Ensure uniqueness
     } else {
       // Start off attacks by hunting every other square
+      // Attack Style: Checkerboard 'Hunter' Attack Pattern
       do {
-        // console.log("Attack Style: Checkerboard 'Hunter' Attack Pattern");
         randomRow = getRandomRow();
         randomCol = everyOtherColDependingOnRow(randomRow);
         coordinates = `${randomRow},${randomCol}`;
@@ -806,16 +795,12 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
           let { randomRow, randomCol } = targetRandomCoordinates();
           hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
-          // console.log("Alternate input scheme for retry and undefined");
           doNotMoveOnToNextAttackType = false;
         }
         clearMessage();
         addMessage(
           `PLAYER 2's attack is a ${hitOrMiss} at square: (${randomRow}, ${randomCol}). PLAYER 1's turn, make your attack!.`
         );
-        // console.log(
-        //   `PLAYER 2's attack is a ${hitOrMiss} at (${randomRow}, ${randomCol}).`
-        // );
         playerTurn += 1;
         attackSoundEffects(hitOrMiss);
         addEmojiEffect(player1.playerBoard.board, 1);
@@ -837,9 +822,6 @@ document.addEventListener("DOMContentLoaded", () => {
           let { randomRow, randomCol } = targetRandomCoordinates();
           hitOrMiss = testGame1.receiveAttack(randomRow, randomCol);
         }
-        // console.log(noRepeatCoordinatesSet);
-        // console.log(hunterCoordinatesSet);
-        // console.log(priorHitCoordinatesSet);
       }, currentSetTimeoutValue); // Allows for message/sound effect to play more fully
     }
   }
@@ -854,6 +836,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { player1ClickCellToAttack } = handleMessageContent();
     if (player2.playerType === "computer") {
       btnStartGame.addEventListener("click", () => {
+        // Keep for testing to identify enemy targets
         // console.log(testGame1); // Map of the current board state for player 1
         // console.log(testGame2); // Map of the current board state for player 2
         mp3Click();
@@ -878,7 +861,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function endGame() {
-    const { btnHideScreen } = getBtnElements()
+    const { btnHideScreen } = getBtnElements();
     const { messages } = getMessageElements();
     const { appContainer } = getBoardElements();
     const { player1Wins, player2Wins, player2ComputerWins } =

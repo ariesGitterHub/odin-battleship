@@ -204,8 +204,7 @@ body {
 
 #title-text-top,
 #title-text-bot {
-  /* color: var(--loser); */
-  color: lightcyan;
+  color: var(--loser);
   font-size: 2.25rem;
   text-transform: uppercase;
 }
@@ -565,7 +564,6 @@ body {
 @media only screen and (width >= 600px) {
   :root {
     --width-master: 26rem;
-    --height-message: 6.25rem;
   }
 
   html,
@@ -599,8 +597,6 @@ body {
   }
 
   #messages {
-    height: var(--height-message);
-    align-items: start;
     margin-top: .6rem;
   }
 
