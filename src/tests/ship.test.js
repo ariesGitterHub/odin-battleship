@@ -1,7 +1,6 @@
-// const { Ship } = require("../js/ship.js");
 import { Ship } from "../js/classShip.js";
 
-//Reminder that it and test do the same thing.
+//Reminder that "it" and "test" do the same thing.
 
 describe("Ship", () => {
   let ac5;
@@ -41,7 +40,7 @@ describe("Ship", () => {
   it("should determine if the ship is sunk based on numHits", () => {
     expect(ac5.isSunk()).toBe(false);
 
-    // Simulate hits
+    // Simulates hits
     ac5.hit();
     ac5.hit();
     ac5.hit();

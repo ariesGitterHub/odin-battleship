@@ -148,7 +148,6 @@ describe("Gameboard", () => {
       expect(spy).toHaveBeenCalled();
     });
   });
-
 });
 
 

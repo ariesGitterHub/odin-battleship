@@ -63,6 +63,7 @@
   --font-emoji: "Noto Color Emoji", 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
   --width-master: 90vw;
   --height-width-gif: 20rem;
+  --height-message: fit-content;
   --height-width-place-ship-grid: 10.5rem;
   --height-width-radar-screen: 15rem;
   --player-num-width-add-on: 0.5rem;
@@ -186,7 +187,7 @@ body {
 /* HEADER */
 #header {
   /* display: flex; */
-    display: none;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -204,7 +205,7 @@ body {
 #title-text-top,
 #title-text-bot {
   /* color: var(--loser); */
-    color: green;
+  color: lightcyan;
   font-size: 2.25rem;
   text-transform: uppercase;
 }
@@ -242,7 +243,7 @@ body {
 
 /* MESSAGES */
 #messages {
-  height: fit-content;
+  height: var(--height-message);
   width: var(--width-master);
   display: none;
   align-items: center;
@@ -564,7 +565,7 @@ body {
 @media only screen and (width >= 600px) {
   :root {
     --width-master: 26rem;
-    --message-height: 6.25rem;
+    --height-message: 6.25rem;
   }
 
   html,
@@ -598,9 +599,9 @@ body {
   }
 
   #messages {
-    height: var(--message-height);
+    height: var(--height-message);
     align-items: start;
-    margin-top: 1rem;
+    margin-top: .6rem;
   }
 
   #message-bar {
@@ -610,6 +611,7 @@ body {
   #main-btn-container {
     gap: 0.5rem;
   }
+
 }
 
 @media only screen and (width >= 800px) {

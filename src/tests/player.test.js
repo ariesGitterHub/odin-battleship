@@ -6,7 +6,7 @@ describe("Player", () => {
 
   beforeEach(() => {
     playerOne = new Player(1, "human");
-    playerTwo = new Player(2, "machine");
+    playerTwo = new Player(2, "computer");
   });
 
   it("should console.log the results for now", () => console.log(playerOne));

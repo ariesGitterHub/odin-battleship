@@ -8,7 +8,6 @@ export function createShipGrid(board, boardNum, gridType) {
     gridType === "targetZone"
       ? `ship-target-cells${boardNum}`
       : `ship-cells${boardNum}`;
-
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       const gridCell = createElement("div", {

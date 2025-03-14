@@ -43,19 +43,19 @@ import { Player } from "./js/classPlayer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Input the number of desired rows and cols here.
-  const numRows = 10;
-  const numCols = 10;
+  const gridNumRows = 10;
+  const gridNumCols = 10;
 
   // Create the grids
-  let seaBoard1 = Array(numRows)
+  let seaBoard1 = Array(gridNumRows)
     .fill()
-    .map(() => Array(numCols).fill("--"));
-  let seaBoard2 = Array(numRows)
+    .map(() => Array(gridNumCols).fill("--"));
+  let seaBoard2 = Array(gridNumRows)
     .fill()
-    .map(() => Array(numCols).fill("--"));
+    .map(() => Array(gridNumCols).fill("--"));
 
   // Create instances of the gameboards
-  // Calling it "testGame" is a holdover from the initial purpose of this code, i.e., to test using jest; keep the name
+  // NOTE: Calling it "testGame" is a holdover from the initial purpose of this code, i.e., to test using jest; Keep the legacy name.
   const testGame1 = new Gameboard(seaBoard1);
   const testGame2 = new Gameboard(seaBoard2);
 
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let isPvsPStarted = false;
   let playerTurn = 0;
 
-  const currentSetTimeoutValue = 2300; // Time Delay: uses on player2 computer attacks too sounds to execute more fully
+  const currentSetTimeoutValue = 2300; // Time Delay: used on player2ComputerAttack() to allow sounds to execute more fully and to give player 1 (human) a chance to read message indicating where player 2 (computer) attacked
   // const currentSetTimeoutValue = 0; // No delay - speedier for testing purposes, keep for future testing
 
   let stopGameHaveWinner = false;
@@ -165,12 +165,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const { btnQuitGame } = getBtnElements();
     btnQuitGame.addEventListener("click", () => {
       mp3Click();
-      window.location.reload(); // Not proper per se, but it's quick and it works; also refreshes deploys
+      window.location.reload(); // Not proper per se, but it's quick and it works; it also refreshes new deploys nicely
     });
+  }
+
+  function adjustMessageHeightOnUnlockScreenAtCertainViewWidths() {
+    const { messages } = getMessageElements();
+    const { btnUnlockScreen } = getBtnElements();
+    if (btnUnlockScreen.style.display === "flex") {
+      messages.style.height = "fit-content";
+    } else {
+      messages.style.height = "var-(height-message)";
+    }
   }
 
   function setupHideScreenBtnEventListener(boardNum) {
     const { battleshipGif, header } = getHeaderElements();
+    // const { messages } = getMessageElements();
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
     const {
       appContainer,
@@ -196,6 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player2UnlockScreen);
+        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
       }
       if (
         player2.playerType === "human" &&
@@ -208,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player1UnlockScreen);
+        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
       }
       if (
         player2.playerType === "human" &&
@@ -220,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player2UnlockScreen);
+        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
       }
       if (
         player2.playerType === "human" &&
@@ -232,6 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player1UnlockScreen);
+        adjustMessageHeightOnUnlockScreenAtCertainViewWidths();
       }
     });
   }
@@ -310,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // This eventListener that handles place ship rotation from h to v
+  // This eventListener that handles place ship rotation from h to v/v to h
   function setupRotateBtnEventListener(boardNum) {
     const rotate = handleBtnRotateShips(boardNum);
     const { btnRotate } = getBtnElements(boardNum);
@@ -682,7 +697,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Put these sets outside of function so that it accumulate new coordinates and not refresh itself when called
   const noRepeatCoordinatesSet = new Set();
-  // const priorHitCoordinatesSet = new Set(); // Not used, I had planned on using this to make player2ComputerAttacks deadlier. Would have combined the sunkStatuses of ships out of play to change up computer attach schemes. Currently, most games are close enough with a player 1 victory
+  // const priorHitCoordinatesSet = new Set(); // Not used, I had planned on using this to make player2ComputerAttack() attacks deadlier. It would have combined the sunkStatuses of ships out of play to change up computer attack schemes. Currently, most games are just close enough to only mildly stress out player 1 (human), player 2 (computer) will win if player 1 is careless or very unlucky
   const hunterCoordinatesSet = new Set();
   // const priorHitCoordinatesArray = Array.from(priorHitCoordinatesSet); // Part of above plans to make player2ComputerAttacks deadlier
 
@@ -730,7 +745,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (attempts >= 10 && !foundValidCoordinate) {
       // console.log("No valid targets found");
       doNotMoveOnToNextAttackType = true;
-      // console.log(`DON'T MOVE ON = ${doNotMoveOnToNextAttackType}`);
+      console.log(`DON'T MOVE ON = ${doNotMoveOnToNextAttackType}`);
       randomRow = null;
       randomCol = null;
       let { randomRow, randomCol } = targetRandomCoordinates();
@@ -853,7 +868,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function checkForSunkFleet(board) {
     if (board.ships.every((ship) => ship.isSunk())) {
       mp3Sink();
-      stopGameHaveWinner = true; // When all ships are sunk...
+      stopGameHaveWinner = true; // When all ships are sunk
       if (board === testGame1) {
         player2IsVictorious = true;
       } else if (board === testGame2) {

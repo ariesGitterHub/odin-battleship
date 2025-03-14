@@ -10,8 +10,9 @@ class Ship {
     (this.name = name),
       (this.length = length),
       (this.boardCode = boardCode),
-      (this.boardHitCode = boardHitCode);
-    (this.numHits = numHits), (this.sunkStatus = sunkStatus);
+      (this.boardHitCode = boardHitCode),
+      (this.numHits = numHits),
+      (this.sunkStatus = sunkStatus);
   }
 
   hit() {

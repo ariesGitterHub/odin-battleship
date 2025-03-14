@@ -3,30 +3,26 @@ import {
   getBoardElements,
   getMessageElements,
 } from "./domQueries.js";
-
-// Normal ships
+// n = Normal ships
 import nA from "../assets/ship5A.svg";
 import nB from "../assets/ship4B.svg";
 import nD from "../assets/ship3D.svg";
 import nS from "../assets/ship3S.svg";
 import nC from "../assets/ship2C.svg";
-// import nP from "../assets/ship1P.svg";
 
-// Black ships
+// b = Black ships
 import bA from "../assets/ship5A-b.svg";
 import bB from "../assets/ship4B-b.svg";
 import bD from "../assets/ship3D-b.svg";
 import bS from "../assets/ship3S-b.svg";
 import bC from "../assets/ship2C-b.svg";
-// import bP from "../assets/ship1P-b.svg";
 
-// Highlighted ships
+// h = Highlighted ships
 import hA from "../assets/ship5A-h.svg";
 import hB from "../assets/ship4B-h.svg";
 import hD from "../assets/ship3D-h.svg";
 import hS from "../assets/ship3S-h.svg";
 import hC from "../assets/ship2C-h.svg";
-// import hP from "../assets/ship1P-r.svg";
 
 // Sound effects
 import btnClick from "../assets/soundClick.mp3";
@@ -40,11 +36,12 @@ import sinkIntoDarkness from "../assets/soundSinkIntoDarkness.mp3";
 // Message related
 export function addMessage(msg) {
   const { messageBar } = getMessageElements();
-  // checkMessageFontSize(msg);
+  // checkMessageFontSize(msg); // See function below
   messageBar.innerText = msg;
 }
 
-// Allowed for dynamically rendered font sizes based on message content
+// This function allowed for dynamically rendered font sizes based on message content
+// I've been tempted to reimplement this many times
 // function checkMessageFontSize(msg) {
 //   const { messageBar } = getMessageElements();
 //   const { player1DeployShipsMsg, player2DeployShipsMsg } =
@@ -95,7 +92,7 @@ export function handleMessageContent() {
 
 // Ship placement related
 export function orientShipSvgOnShipGrid(boardNum, shipType, axis, x, y) {
-  // Define transformation and image data for each ship type
+  // Define transformation and image data for each ship type; the translate numbers below are basically "fine tuning" to fit them properly on the grid
   const shipData = {
     a: { translate: "3.6rem", rotate: 90, image: nA },
     b: { translate: "2.7rem", rotate: 90, image: nB },
@@ -285,17 +282,17 @@ export function addEmojiEffect(board, boardNum) {
         board[i][j] === "S!" ||
         board[i][j] === "C!"
       ) {
-        cell.innerText = "💥";
-        cellTarget.innerText = "💥";
+        cell.innerText = "💥"; // Goes boom-boom!!!
+        cellTarget.innerText = "💥"; // Goes boom-boom!!!
         cellShip.style.backgroundColor = "var(--hit)";
         cellShipTarget.style.backgroundColor = "var(--hit)";
       } else if (board[i][j] === "mm") {
         cell.innerText = "❌";
         cellTarget.innerText = "❌";
-        // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE BROWSER (MOSTLY FIXED) THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹 (Note: I also tried using requestAnimationFrame()...got emojis to work on Apple Browser (work great), BUT affected colorSunkShips() adversely)
-        // cell.innerText = "💨";
+        // THE ROTATION OF THE 💨 EMOJI IN JS (BY -90DEG) WAS CAUSING RE-PAINTS IN THE APPLE SAFARI BROWSER (MOSTLY FIXED) THAT CAUSED THE EMOJI TO VANISH AND RE-RENDER RANDOMLY, CHANGED EMOJI TO ❌ , experimented with 🔹 (NOTE: I also tried using requestAnimationFrame()...which got emojis to stop vanishing on Safari (worked great), BUT, it affected colorSunkShips() adversely)
+        // cell.innerText = "💨"; // Giant splash!!!
         // cell.style.transform = "rotate(-90deg)";
-        // cellTarget.innerText = "💨";
+        // cellTarget.innerText = "💨"; // Giant splash!!!
         // cellTarget.style.transform = "rotate(-90deg)";
         cellShip.style.backgroundColor = "var(--miss)";
         cellShipTarget.style.backgroundColor = "var(--miss)";
@@ -317,7 +314,6 @@ export function clearEmojiEffect(board, boardNum) {
       let cellShipTarget = document.getElementById(
         `T-SG${boardNum}: (${i},${j})`
       );
-
       if (board[i][j] !== "  ") {
         cell.innerText = "  ";
         cellTarget.innerText = "  ";
@@ -336,7 +332,6 @@ export function highlightEmptyCellOnlyOnHover(board, boardNum) {
   const targetZone = document.querySelector(targetZoneId);
   const validTargetSymbols = ["--", "a", "b", "d", "s", "c"];
   const validDeploySymbols = ["--"];
-
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       let cellDeploy = document.getElementById(
@@ -392,12 +387,83 @@ export function everyOtherColDependingOnRow(row) {
   }
 }
 
+// Below is the old code, changed to code (far below) to get sounds to work properly Apple's Safari and on Brave mobile
+// const click = new Audio(btnClick);
+// click.preload = "auto";
+
+// export function mp3Click() {
+//   click.currentTime = 0; // Resets the audio to the beginning
+//   click.play();
+// }
+
+// const placePop = new Audio(placeShipPop);
+// placePop.preload = "auto";
+
+// export function mp3PlacePop() {
+//   placePop.currentTime = 0; // Resets the audio to the beginning
+//   placePop.play();
+// }
+
+// const removePop = new Audio(removeShipPop);
+// removePop.preload = "auto";
+
+// export function mp3RemovePop() {
+//   removePop.currentTime = 0; // Resets the audio to the beginning
+//   removePop.play();
+// }
+
+// const fire = new Audio(fireAtTarget);
+// fire.preload = "auto";
+
+// export function mp3Fire() {
+//   fire.currentTime = 0; // Resets the audio to the beginning
+//   fire.play();
+// }
+
+// const hit = new Audio(hitExplosion);
+// hit.preload = "auto";
+
+// export function mp3Hit() {
+//   hit.currentTime = 0; // Resets the audio to the beginning
+//   hit.play();
+// }
+
+// const miss = new Audio(missSplash);
+// miss.preload = "auto";
+
+// export function mp3Miss() {
+//   miss.currentTime = 0; // Resets the audio to the beginning
+//   miss.play();
+// }
+
+// const sink = new Audio(sinkIntoDarkness);
+// sink.preload = "auto";
+
+// export function mp3Sink() {
+//   sink.currentTime = 0; // Resets the audio to the beginning
+//   sink.play();
+// }
+
+// export function attackSoundEffects(hitOrMiss) {
+//   mp3Fire();
+//   setTimeout(() => {
+//     if (hitOrMiss === "hit") {
+//       mp3Hit();
+//     } else {
+//       mp3Miss();
+//     }
+//   }, 500);
+// }
+
+// New code below; sound effects play a bit smoother on Apple's Safari now, Brave mobile browser still has sound issues
 const click = new Audio(btnClick);
 click.preload = "auto";
 
 export function mp3Click() {
   click.currentTime = 0; // Resets the audio to the beginning
-  click.play();
+  click.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 }
 
 const placePop = new Audio(placeShipPop);
@@ -405,7 +471,9 @@ placePop.preload = "auto";
 
 export function mp3PlacePop() {
   placePop.currentTime = 0; // Resets the audio to the beginning
-  placePop.play();
+  placePop.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 }
 
 const removePop = new Audio(removeShipPop);
@@ -413,7 +481,9 @@ removePop.preload = "auto";
 
 export function mp3RemovePop() {
   removePop.currentTime = 0; // Resets the audio to the beginning
-  removePop.play();
+  removePop.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 }
 
 const fire = new Audio(fireAtTarget);
@@ -421,7 +491,9 @@ fire.preload = "auto";
 
 export function mp3Fire() {
   fire.currentTime = 0; // Resets the audio to the beginning
-  fire.play();
+  fire.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 }
 
 const hit = new Audio(hitExplosion);
@@ -429,7 +501,9 @@ hit.preload = "auto";
 
 export function mp3Hit() {
   hit.currentTime = 0; // Resets the audio to the beginning
-  hit.play();
+  hit.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 }
 
 const miss = new Audio(missSplash);
@@ -437,7 +511,9 @@ miss.preload = "auto";
 
 export function mp3Miss() {
   miss.currentTime = 0; // Resets the audio to the beginning
-  miss.play();
+  miss.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 }
 
 const sink = new Audio(sinkIntoDarkness);
@@ -445,7 +521,9 @@ sink.preload = "auto";
 
 export function mp3Sink() {
   sink.currentTime = 0; // Resets the audio to the beginning
-  sink.play();
+  sink.play().catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 }
 
 export function attackSoundEffects(hitOrMiss) {

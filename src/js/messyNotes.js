@@ -20,6 +20,8 @@
 
 // Finish it up by implementing a system that allows players to place their ships. For example, you can let them type coordinates for each ship or have a button to cycle through random placements.
 
+// REMINDER: Initially, I had planned on using six ships, but the smallest, the patrol boat, was only 1 square by 1 square and proved to slow the game down too much hunting for it on the gameboard.
+
 import { Gameboard } from "./gameboard.js";
 import { Player } from "./player.js";
 

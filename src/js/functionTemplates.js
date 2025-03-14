@@ -145,16 +145,4 @@ export function createImgShip(id, selectShip, src, classes) {
     });
     return c;
   }
-  // if (selectShip === "p") {
-  //   const p = createImg({
-  //     id: id,
-  //     src: src,
-  //     alt: "corvette image",
-  //     "data-ship": "p",
-  //     "data-axis": "h",
-  //     "data-selected": "",
-  //     class: classes,
-  //   });
-  //   return p;
-  // }
 }

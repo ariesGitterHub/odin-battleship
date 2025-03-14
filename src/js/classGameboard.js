@@ -12,7 +12,6 @@ class Gameboard {
             new Ship("destroyer", 3, "d", "D!"),
             new Ship("submarine", 3, "s", "S!"),
             new Ship("corvette", 2, "c", "C!"),
-            // new Ship("patrol boat", 1, "p"), // Commented out patrol boat, because it's too small, and slows down game-play, keep for reference in case I ever add it back on a whim
           ];
   }
 
@@ -194,11 +193,6 @@ class Gameboard {
         this.board[row][col] = "C!";
         return "hit";
       }
-      // if (this.board[row][col] === "p") {
-      //   this.checkShipBoardCodeNotifyShip(row, col);
-      //   this.board[row][col] = "P!";
-      //   return "hit";
-      // }
     }
     // Miss = "mm": Change the target to "mm" and return the result
     else {
