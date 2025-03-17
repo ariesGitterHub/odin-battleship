@@ -155,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set up btn eventListeners that handle the number of players
   function setupPlayerNumBtnEventListeners() {
     const { btnPvsC, btnPvsP } = getBtnElements();
-    const {appContainer } = getBoardElements();
     btnPvsC.addEventListener("click", () => {
       mp3Click();
       clickedPlayerNumBtnEffects("computer");
@@ -167,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Set up btn eventListener to quit the game
-  function setupQuitBtnEventListener(boardNum) {
+  function setupQuitBtnEventListener() {
     const { btnQuitGame } = getBtnElements();
     btnQuitGame.addEventListener("click", () => {
       mp3Click();

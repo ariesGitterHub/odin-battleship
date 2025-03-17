@@ -59,7 +59,7 @@ export function handleMessageContent() {
   const player1 = "PLAYER 1";
   const player2 = "PLAYER 2";
   const deployShipsMsg = `Deploy your fleet: Click on a ship to highlight it in red. Then, click on the desired "deployment zone" square to place that ship. Or, click RANDOM to auto-deploy your ships.`;
-  const rotateMsg = `This button rotates a ship's vertical/horizontal axis. Remember to highlight a ship prior to placing it.`;
+  const rotateMsg = `This button rotates a ship's vertical or horizontal axis. Remember to highlight a ship prior to placing it.`;
   const undoMsg = `This button undoes the last immediate ship placement made to the deployment zone. Re-highlight ships to place ships anew.`;
   const unlockScreen = `: UNLOCK screen.`;
   const clickCellToAttack = `: Click on a square in the ENEMY TARGET ZONE grid to attack.`;
