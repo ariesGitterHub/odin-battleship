@@ -24,7 +24,7 @@ export function handleBtnRotateShips(boardNum) {
       });
     }
     x5Grid.style.transform = `rotate(${currentRotation}deg)`;
-    x5Grid.style.transition = `1s`;
+    x5Grid.style.transition = `transform 1s ease`;
   };
   return rotateShips;
 }
