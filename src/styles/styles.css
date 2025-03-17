@@ -50,17 +50,18 @@
     var(--bkgd2)
   );
   --background-player1: linear-gradient(
-    var(--linear-gradient-deg), 
-    var(--player1-b), 
+    var(--linear-gradient-deg),
+    var(--player1-b),
     var(--bkgd2)
   );
   --background-player2: linear-gradient(
-    var(--linear-gradient-deg), 
+    var(--linear-gradient-deg),
     var(--player2-b),
     var(--bkgd2)
   );
   --font-fancy: "Black Ops One", sans-serif;
-  --font-emoji: "Noto Color Emoji", 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  --font-emoji: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji",
+    sans-serif;
   --width-master: 90vw;
   --height-width-gif: 20rem;
   --height-message: fit-content;
@@ -113,10 +114,15 @@
   transform: scale(var(--scale-small));
 }
 
-#btn-pvsc, #btn-pvsp, #btn-quit-game, #btn-start-game, #btn-hide-screen, #btn-unlock-screen {
+#btn-pvsc,
+#btn-pvsp,
+#btn-quit-game,
+#btn-start-game,
+#btn-hide-screen,
+#btn-unlock-screen {
   display: none;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 #btn-pvsc,
@@ -519,14 +525,14 @@ body {
   transition: transform 1s ease;
   /* TESTING - APPLE BROWSERS ARE NOT SHOWING EMOJIS CONSISTENTLY, BELOW IS AN ATTEMPT TO REMEDY (AMONG OTHER SOLUTIONS TRIED ELSEWHERE) */
   visibility: visible !important;
-  -webkit-transform:translate3d(0,0,0);
+  -webkit-transform: translate3d(0, 0, 0);
   z-index: 1;
 }
 
 .ship {
   /* Key Item: individual ship svg sizes */
   height: var(--height-svg-ship);
-  opacity: .95;
+  opacity: 0.95;
 }
 
 /* SPECIAL HOVER EFFECTS (for deployment and target zones) */
@@ -601,7 +607,7 @@ body {
   }
 
   #messages {
-    margin-top: .6rem;
+    margin-top: 0.6rem;
   }
 
   #message-bar {
@@ -611,7 +617,6 @@ body {
   #main-btn-container {
     gap: 0.5rem;
   }
-
 }
 
 @media only screen and (width >= 800px) {

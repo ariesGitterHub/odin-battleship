@@ -155,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set up btn eventListeners that handle the number of players
   function setupPlayerNumBtnEventListeners() {
     const { btnPvsC, btnPvsP } = getBtnElements();
+    const {appContainer } = getBoardElements();
     btnPvsC.addEventListener("click", () => {
       mp3Click();
       clickedPlayerNumBtnEffects("computer");
@@ -241,7 +242,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // function setupUnlockScreenBtnEventListener(boardNum) {
   function setupUnlockScreenBtnEventListener() {
     const { header } = getHeaderElements();
     const { btnUnlockScreen } = getBtnElements();
