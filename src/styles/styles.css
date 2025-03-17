@@ -574,6 +574,7 @@ body {
 @media only screen and (width >= 600px) {
   :root {
     --width-master: 26rem;
+    --height-messages: 6.5rem;
   }
 
   html,
@@ -607,6 +608,8 @@ body {
   }
 
   #messages {
+    height: var(--height-messages);
+    align-items: start;
     margin-top: 0.6rem;
   }
 

@@ -174,8 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function setupHideScreenBtnEventListener(boardNum) {
+  function setupHideScreenBtnEventListener() {
     const { battleshipGif, header } = getHeaderElements();
+    const { messages } = getMessageElements();
     const { btnHideScreen, btnUnlockScreen } = getBtnElements();
     const {
       appContainer,
@@ -190,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       flexHideIt([btnHideScreen]);
       flexShowIt([btnUnlockScreen]);
       battleshipGif.src = gifSailing;
+      messages.style.height = "fit-content";
       if (
         player2.playerType === "human" &&
         !isPvsPStarted &&
@@ -243,6 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setupUnlockScreenBtnEventListener() {
     const { header } = getHeaderElements();
+    const { messages } = getMessageElements();
     const { btnUnlockScreen } = getBtnElements();
     const {
       appContainer,
@@ -260,6 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
       mp3Click();
       appContainer.style.background = "var(--background-main)";
       flexHideIt([btnUnlockScreen]);
+      messages.style.height = "var(--height-messages)";
       // Player 1 has clicked ACCEPT, now to unhide player 2 so they can place ships
       if (
         player2.playerType === "human" &&
