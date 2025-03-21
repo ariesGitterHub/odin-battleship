@@ -155,11 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set up btn eventListeners that handle the number of players
   function setupPlayerNumBtnEventListeners() {
     const { btnPvsC, btnPvsP } = getBtnElements();
-    btnPvsC.addEventListener("click", () => {
+    btnPvsC.addEventListener("pointerdown", () => {
       mp3Click();
       clickedPlayerNumBtnEffects("computer");
     });
-    btnPvsP.addEventListener("click", () => {
+    btnPvsP.addEventListener("pointerdown", () => {
       mp3Click();
       clickedPlayerNumBtnEffects("human");
     });
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set up btn eventListener to quit the game
   function setupQuitBtnEventListener() {
     const { btnQuitGame } = getBtnElements();
-    btnQuitGame.addEventListener("click", () => {
+    btnQuitGame.addEventListener("pointerdown", () => {
       mp3Click();
       window.location.reload(); // Not proper per se, but it's quick and it works; it also refreshes new deploys nicely
     });
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
       p2PlaceShips,
     } = getBoardElements();
     const { player1UnlockScreen, player2UnlockScreen } = handleMessageContent();
-    btnHideScreen.addEventListener("click", () => {
+    btnHideScreen.addEventListener("pointerdown", () => {
       mp3Click();
       flexHideIt([btnHideScreen]);
       flexShowIt([btnUnlockScreen]);
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flexShowIt([header]);
         clearMessage();
         addMessage(player1UnlockScreen);
-        }
+      }
       if (
         player2.playerType === "human" &&
         isPvsPStarted &&
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
       player1ClickCellToAttack,
       player2ClickCellToAttack,
     } = handleMessageContent();
-    btnUnlockScreen.addEventListener("click", () => {
+    btnUnlockScreen.addEventListener("pointerdown", () => {
       mp3Click();
       appContainer.style.background = "var(--background-main)";
       flexHideIt([btnUnlockScreen]);
@@ -323,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rotate = handleBtnRotateShips(boardNum);
     const { btnRotate } = getBtnElements(boardNum);
     const { rotateMsg } = handleMessageContent();
-    btnRotate.addEventListener("click", () => {
+    btnRotate.addEventListener("pointerdown", () => {
       mp3Click();
       rotate();
       clearMessage();
@@ -335,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupUndoBtnEventListener(boardNum) {
     const { btnStartGame, btnHideScreen, btnUndo } = getBtnElements(boardNum);
     const { undoMsg } = handleMessageContent();
-    btnUndo.addEventListener("click", () => {
+    btnUndo.addEventListener("pointerdown", () => {
       mp3Click();
       btnStartGame.style.display = "none";
       btnHideScreen.style.display = "none";
@@ -368,7 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
       getBtnElements(boardNum);
     const { deployShipsMsg } = handleMessageContent();
     const { p1FullBoard, p2FullBoard } = getBoardElements();
-    btnClear.addEventListener("click", () => {
+    btnClear.addEventListener("pointerdown", () => {
       mp3Click();
       handleBtnClearAllShips(boardNum);
       flexHideIt([btnStartGame, btnHideScreen, btnUnlockScreen]);
@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { ship: testGame[boardNum].ships[3], place: placeS },
       { ship: testGame[boardNum].ships[4], place: placeC },
     ];
-    btnRandom.addEventListener("click", () => {
+    btnRandom.addEventListener("pointerdown", () => {
       mp3Click();
       // Iterate over the ships and place them
       ships.forEach(({ ship, place }) => {
@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // );
 
     hitMissCellsClass.forEach((cell) => {
-      cell.addEventListener("click", () => {
+      cell.addEventListener("pointerdown", () => {
         const selectedShipImg = document.querySelector('[data-selected="yes"]');
         if (!selectedShipImg) return; // If no ship is selected, return
         let cellId = cell.id;
@@ -603,7 +603,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const shipData = highlightPlaceShipsHelper(boardNum); // Set up ships and get ship data
     const { allPlaceShipsClass } = getBoardElements(boardNum);
     allPlaceShipsClass.forEach((ship) => {
-      ship.addEventListener("click", () => {
+      ship.addEventListener("pointerdown", () => {
         mp3Click();
         // Call the handler with the necessary parameters
         handleHighlightPlaceShip(ship, boardNum, shipData);
@@ -684,7 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function manuallyAttackTargetCoordinates(boardNum) {
     const { hitMissTargetCellsClass } = getBoardElements(boardNum);
     hitMissTargetCellsClass.forEach((cell) => {
-      cell.addEventListener("click", () => handleCellClick(boardNum, cell));
+      cell.addEventListener("pointerdown", () => handleCellClick(boardNum, cell));
     });
   }
 
@@ -838,7 +838,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { p1PlaceShips, p1TargetZone } = getBoardElements();
     const { player1ClickCellToAttack } = handleMessageContent();
     if (player2.playerType === "computer") {
-      btnStartGame.addEventListener("click", () => {
+      btnStartGame.addEventListener("pointerdown", () => {
         // Keep for testing to identify enemy targets
         // console.log(testGame1); // Map of the current board state for player 1
         // console.log(testGame2); // Map of the current board state for player 2
